@@ -20,6 +20,6 @@ module.exports = function () {
   app.use('/', express.static(process.env.CLIENT_FILES));
 
   /* Required Routes */
-
+  require('../routes/emailList.routes')(app);
   return app;
 };

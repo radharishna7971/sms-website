@@ -16,7 +16,13 @@ db.knex.schema.hasTable('email_list').then(function(exists) {
       user.string('email', 30);
       user.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
-      console.log('Created Users Table');
+      console.log('Created Email List Table');
     });
   }
+});
+
+
+
+var EmailListEntry = exports.EmailListEntry = db.Model.extend({
+  tableName: 'email_list'
 });
