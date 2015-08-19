@@ -1,8 +1,8 @@
  #!/bin/bash
 
 echo COPYING CLIENT/SERVER FILES
-scp -r client/ chris@45.55.23.74:codesnap
-scp -r server/ chris@45.55.23.74:codesnap
+scp -r client/ root@107.170.195.138:smstudios-app
+scp -r server/ root@107.170.195.138:smstudios-app
 echo TUNNELING
 ssh root@107.170.195.138 <<'ENDSSH'
 export NODE_ENV=production
