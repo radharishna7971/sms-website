@@ -11,10 +11,10 @@ db.knex.schema.hasTable('email_list').then(function(exists) {
 
   /* Create users table if it doesn't exist. */
   if (!exists) {
-    db.knex.schema.createTable('email_list', function(user) {
-      user.increments('id').primary();
-      user.string('email', 30);
-      user.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
+    db.knex.schema.createTable('email_list', function(email) {
+      email.increments('id').primary();
+      email.string('email', 50);
+      email.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
       console.log('Created Email List Table');
     });
