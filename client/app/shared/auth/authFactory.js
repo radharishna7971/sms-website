@@ -14,7 +14,6 @@
         }).then(function(res) {
             window.localStorage.smstudiosJwtToken = res.data.token;
             $state.go('home');
-            return res.data;
         }, function() {
             return "Invalid credentials";
         });

@@ -68,18 +68,11 @@
   function run($rootScope, $state, authFactory, topnavDirective) {
     /* If user is not logged in, redirect to home page if private is not in url, otherwise redirect to login */
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-     $('#topnav').show();
-
-      $rootScope.topNav = true;
       if (toState.authenticate && !authFactory.loggedIn()) {
-        if (window.location.pathname.indexOf('private') !== -1) {
-          $state.go('login');
-          event.preventDefault();
-        } else {
           $state.go('landing');
-          event.preventDefault();
-        }
-      } 
+      } else if (toState.authenticate) {
+        $('#topnav').show();
+      }
     });
     
   }

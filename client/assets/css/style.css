@@ -2,6 +2,7 @@
   font-family: 'Lato';
   font-weight: 300;
   margin: 0;
+  color: #2a2d33;
 }
 
 body {
@@ -17,7 +18,7 @@ body {
   padding: 20px;
 }
 
-.email-form-div {
+.email-form-container {
   width: 350px;
   padding: 20px;
   margin-top: 20px;
@@ -32,7 +33,7 @@ body {
   margin-bottom: 10px;
 }
 
-.email-form {
+.centered-form {
   display: inline-block;
   overflow: hidden;
   margin-left: auto;
@@ -104,4 +105,20 @@ body {
     width: 320px;
   }
 
+}
+
+/* SHARED */
+
+.sub-header {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 400;
+  padding: 20px;
+}
+
+.input-label {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: -2px;
+  padding-top: 5px;
 }
