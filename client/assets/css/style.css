@@ -2,10 +2,10 @@
   font-family: 'Lato';
   font-weight: 300;
   margin: 0;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
+  -webkit-text-size-adjust: 100%;
   /*background-color: #F7F7F7*/
 }
 
