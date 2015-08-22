@@ -2,6 +2,7 @@
   font-family: 'Lato';
   font-weight: 300;
   margin: 0;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -79,7 +80,7 @@ body {
 
 .jumbo-img {
   width: 40%;
-  max-width: 300px;
+  width: 400px;
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -87,23 +88,20 @@ body {
 
 /* SCREEN SIZES <= 786px */
 @media screen and (max-width: 1024px){
-  .jumbo-img {
-    min-width: 600px;
-  }
 }
 
 /* SCREEN SIZES <= 786px */
 @media screen and (max-width: 786px){
   .jumbo-img {
-    min-width: 400px;
+    width: 375px;
   }
 }
 
 
 /* SCREEN SIZES <= 400px */
-@media screen and (max-width: 400px){
+@media screen and (max-width: 401px){
   .jumbo-img {
-    min-width: 360px;
+    width: 320px;
   }
 
 }
