@@ -28,6 +28,15 @@
             controller: 'homeController'
           },
         }
+      })
+      .state('login', {
+        url: '/login',
+        views: {
+          content: {
+            templateUrl: 'app/components/login/login.html',
+            controller: 'loginController'
+          },
+        }
       });
   }
 

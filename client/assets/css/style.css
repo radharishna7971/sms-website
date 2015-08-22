@@ -17,7 +17,7 @@ body {
 }
 
 .email-form-div {
-  width: 220px;
+  width: 350px;
   padding: 20px;
   margin-top: 20px;
   margin-left: auto;
@@ -56,21 +56,24 @@ body {
   padding: 0;
   padding-left: 3px;
   padding-right: 3px;
-  height: 25px;
-  line-height: 14px;
+  height: 35px;
+  line-height: 35px;
   border: 1px solid #66B3F1;
+  font-size: 16px;
+
 }
 
 .email-text {
-  width: 150px;
+  width: 250px;
 }
 
 .email-submit {
   background-color: #66B3F1;
   color: white;
-  box-sizing: content-box;
   cursor: pointer;
-  width: 50px;
+  width: 80px;
+  height: 37px;
+  line-height: 35px;
   margin-left: -5px;
 }
 
@@ -80,4 +83,27 @@ body {
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+/* SCREEN SIZES <= 786px */
+@media screen and (max-width: 1024px){
+  .jumbo-img {
+    min-width: 600px;
+  }
+}
+
+/* SCREEN SIZES <= 786px */
+@media screen and (max-width: 786px){
+  .jumbo-img {
+    min-width: 400px;
+  }
+}
+
+
+/* SCREEN SIZES <= 400px */
+@media screen and (max-width: 400px){
+  .jumbo-img {
+    min-width: 360px;
+  }
+
 }
