@@ -1,4 +1,13 @@
-
 <h1 class="home-header">Log In</h1>
+<p>{{errorMessage}}</p>
+<form>
+  <p>Email</p>
+  <input ng-model="email" type="text" />
+  <p>Password</p>
+  <input ng-model="password" type="text" />
+  <input ng-click="login()" type="submit" />
+
+
+</form>
 
 

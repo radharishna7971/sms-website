@@ -7,20 +7,20 @@
     "type": "git",
     "url": "git+https://github.com/bdstein33/sms-website.git"
   },
-  "scripts" : {
+  "scripts": {
     "start": "nodemon server/server.js"
   },
   "author": "Ben Steinberg",
   "license": "ISC",
-  "devDependencies": {
-    
-  },
-  "dependencies" : {
+  "devDependencies": {},
+  "dependencies": {
+    "bcrypt": "^0.8.5",
     "bluebird": "^2.9.33",
     "body-parser": "^1.13.2",
     "bookshelf": "^0.8.1",
     "bower": "^1.4.1",
     "express": "^4.13.3",
+    "jwt-simple": "^0.3.0",
     "knex": "^0.8.6",
     "morgan": "^1.6.1"
   }

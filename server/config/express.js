@@ -21,5 +21,13 @@ module.exports = function () {
 
   /* Required Routes */
   require('../routes/emailList.routes')(app);
+  require('../routes/auth.routes')(app);
+  require('../routes/redirect.routes')(app);
+  
+  /* Redirect all bad routes to landing page */
+  app.use(function(req, res) {
+    res.redirect("/");
+  });
+
   return app;
 };
