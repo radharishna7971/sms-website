@@ -10,7 +10,8 @@
     'homeController',
 
     // Shared
-    'authFactory'
+    'authFactory',
+    'topnavDirective'
   ])
   .config(config)
   .run(run);
@@ -18,7 +19,7 @@
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 
-  function config($stateProvider, $urlRouterProvider, $locationProvider) {
+  function config($stateProvider, $urlRouterProvider, $locationProvider, $state, authFactory) {
     
     $locationProvider.html5Mode(true);
     // Default to index view if the URL loaded is not found
@@ -43,6 +44,14 @@
             templateUrl: 'app/components/login/login.html',
             controller: 'loginController'
           }
+        },
+        resolve: {
+          /* Redirect to home page if user is already logged in */
+          loggedIn: function(authFactory, $location) {
+            if (authFactory.loggedIn()) {
+              $location.path('/private/home');
+            }
+          }
         }
       }).state('home', {
         url: '/private/home',
@@ -56,9 +65,12 @@
       });
   }
 
-  function run($rootScope, $state, authFactory) {
-
+  function run($rootScope, $state, authFactory, topnavDirective) {
+    /* If user is not logged in, redirect to home page if private is not in url, otherwise redirect to login */
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+     $('#topnav').show();
+
+      $rootScope.topNav = true;
       if (toState.authenticate && !authFactory.loggedIn()) {
         if (window.location.pathname.indexOf('private') !== -1) {
           $state.go('login');
@@ -67,7 +79,7 @@
           $state.go('landing');
           event.preventDefault();
         }
-      }
+      } 
     });
     
   }

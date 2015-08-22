@@ -16,7 +16,7 @@
             $state.go('home');
             return res.data;
         }, function() {
-            return {"Error": "Invalid credentials"};
+            return "Invalid credentials";
         });
       },
 
@@ -29,9 +29,9 @@
             password: password
           }
         }).then(function(res) {
-          if (res.status === 422) {
-            console.log("INVALID CREDENTIALS");
-          }
+          return "Successfully created new user";
+          }, function() {
+          return "Unable to create new user";
         });
       },
       /* Returns true or false depending on whether the current user is logged in. A user is logged in */

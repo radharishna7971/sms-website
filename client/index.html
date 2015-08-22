@@ -3,7 +3,7 @@
 <head>
   <base href="/">
   <title>Social Media Studios</title>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 
@@ -14,13 +14,17 @@
   <script src="app/components/home/homeController.js"></script>
 
   <script src="app/shared/auth/authFactory.js"></script>
+  <script src="app/shared/topnav/topnavDirective.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
   <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+  <!-- CSS (TO BE CONSOLIDATED) -->
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/topnav.css">
 
 </head>
 <body>
+  <topnav></topnav>
   <ui-view name="content"></ui-view>
 </body>
 
