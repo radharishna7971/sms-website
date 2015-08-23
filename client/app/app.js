@@ -19,7 +19,7 @@
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 
-  function config($stateProvider, $urlRouterProvider, $locationProvider, $state, authFactory) {
+  function config($stateProvider, $urlRouterProvider, $locationProvider, $state) {
     
     $locationProvider.html5Mode(true);
     // Default to index view if the URL loaded is not found
@@ -39,20 +39,18 @@
       .state('login', {
         url: '/login',
         authenticate: false,
+        redirect: true,
         views: {
           content: {
             templateUrl: 'app/components/login/login.html',
             controller: 'loginController'
           }
-        },
-        resolve: {
-          /* Redirect to home page if user is already logged in */
-          loggedIn: function(authFactory, $location) {
-            if (authFactory.loggedIn()) {
-              $location.path('/private/home');
-            }
-          }
         }
+        // resolve: {
+        //   redirectIfLoggedIn: function() {
+
+        //   }
+        // }
       }).state('home', {
         url: '/private/home',
         authenticate: true,
@@ -65,14 +63,19 @@
       });
   }
 
-  function run($rootScope, $state, authFactory, topnavDirective) {
+  function run($rootScope, $state, authFactory, topnavDirective, $location) {
     /* If user is not logged in, redirect to home page if private is not in url, otherwise redirect to login */
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-      if (toState.authenticate && !authFactory.loggedIn()) {
-          $state.go('landing');
-      } else if (toState.authenticate) {
-        $('#topnav').show();
-      }
+      authFactory.loggedIn(function(status) {
+        if (toState.authenticate && !status) {
+          $location.path('landing');
+        } else if (toState.redirect && status) {
+          $location.path('private/home');
+        } else if (toState.authenticate) {
+          $('#topnav').show();
+        }
+      });
+
     });
     
   }

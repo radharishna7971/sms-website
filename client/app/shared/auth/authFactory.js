@@ -34,8 +34,25 @@
         });
       },
       /* Returns true or false depending on whether the current user is logged in. A user is logged in */
-      loggedIn: function() {
-        return !!window.localStorage.smstudiosJwtToken;
+      loggedIn: function(callback) {
+        // if no token exists in local storage, user is not logged in
+        if (!window.localStorage.smstudiosJwtToken) {
+          callback(false);
+        } else {
+          $http({
+            method: 'POST',
+            url: 'api/auth/validate',
+            data: {
+              token: window.localStorage.smstudiosJwtToken
+            }
+          }).then(function(res) {
+            // If token is invalid, delete it
+            if (!res.data) {
+              delete window.localStorage.smstudiosJwtToken;
+            }
+            callback(res.data);
+          });
+        }
       },
 
       /* When user logs out, remove the token from client and redirect to home page */

@@ -50,4 +50,13 @@ User.create = function(userData, callback) {
   });
 };
 
+User.validate = function(id, callback) {
+  new User({'id': id})
+  .fetch()
+  .then(function(user) {
+    // return true or false depending on whether or not the user exists
+    return callback(!!user);
+  })
+}
+
 module.exports = User;
