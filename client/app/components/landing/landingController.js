@@ -15,7 +15,8 @@
         $scope.errorMessage = "";
         // Then remove the email form and replace it with success text
         $('.centered-form').remove();
-        $('.email-form-div').append('<p class="success-text">Email successfully submitted</p>');
+
+        $('.email-form-container').append('<p class="success-text">Email successfully submitted</p>');
 
         return $http({
           method: 'POST',
