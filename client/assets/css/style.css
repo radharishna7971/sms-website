@@ -62,7 +62,7 @@ body {
   line-height: 35px;
   border: 1px solid #66B3F1;
   font-size: 16px;
-
+  -webkit-appearance: none;
 }
 
 .email-text {
@@ -77,6 +77,7 @@ body {
   height: 37px;
   line-height: 35px;
   margin-left: -5px;
+  -webkit-appearance: none;
 }
 
 .jumbo-img {
@@ -100,9 +101,9 @@ body {
 
 
 /* SCREEN SIZES <= 400px */
-@media screen and (max-width: 401px){
+@media screen and (max-width: 400px){
   .jumbo-img {
-    width: 320px;
+    width: 240px;
   }
 
 }
