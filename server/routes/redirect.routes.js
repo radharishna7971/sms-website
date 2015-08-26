@@ -7,4 +7,7 @@
   app.get('/private/home', function(req, res) {
     res.redirect('/#/private/home');
   });
+  app.get('/private/users', function(req, res) {
+    res.redirect('/#/private/users');
+  });
  };

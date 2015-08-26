@@ -8,6 +8,7 @@
     'landingController',
     'loginController',
     'homeController',
+    'usersController',
 
     // Shared
     'authFactory',
@@ -58,6 +59,20 @@
           content: {
             templateUrl: 'app/components/home/home.html',
             controller: 'homeController'
+          }
+        }
+      }).state('users', {
+        url: '/private/users',
+        authenticate: true,
+        views: {
+          content: {
+            templateUrl: 'app/components/users/users.html',
+            controller: 'usersController'
+          }
+        },
+        resolve: {
+          checkUserCreationAccess: function() {
+            console.log("NEED TO CHECK USER CREATION ACCESS");
           }
         }
       });

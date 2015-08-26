@@ -50,13 +50,22 @@ User.create = function(userData, callback) {
   });
 };
 
+// Validates the token saved in localStorage
 User.validate = function(id, callback) {
   new User({'id': id})
   .fetch()
   .then(function(user) {
     // return true or false depending on whether or not the user exists
     return callback(!!user);
-  })
-}
+  });
+};
+
+// Returns array of all users
+User.getAll = function(callback) {
+  db.knex.select('first_name', 'last_name', 'email', 'permission').from('users')
+  .then(function(users) {
+    callback(users);
+  });
+};
 
 module.exports = User;

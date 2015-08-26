@@ -19,20 +19,6 @@
         });
       },
 
-      createUser: function(email, password) {
-        $http({
-          method: 'POST',
-          url: 'api/auth/create',
-          data: {
-            email: email,
-            password: password
-          }
-        }).then(function(res) {
-          return "Successfully created new user";
-          }, function() {
-          return "Unable to create new user";
-        });
-      },
       /* Returns true or false depending on whether the current user is logged in. A user is logged in */
       loggedIn: function(callback) {
         // if no token exists in local storage, user is not logged in
@@ -59,6 +45,35 @@
       logout: function() {
         delete window.localStorage.smstudiosJwtToken;
         $state.go('login');
+      },
+
+      createUser: function(email, password) {
+        $http({
+          method: 'POST',
+          url: 'api/auth/create',
+          data: {
+            email: email,
+            password: password
+          }
+        }).then(function(res) {
+          return "Successfully created new user";
+          }, function() {
+          return "Unable to create new user";
+        });
+      },
+
+      getUsers: function(callback) {
+        $http({
+          method: 'GET',
+          url: 'api/auth/users',
+          params: {
+            token: window.localStorage.smstudiosJwtToken
+          }
+        }).then(function(res) {
+          callback(res.data);
+          }, function() {
+          return "Unable to create new user";
+        });
       }
     };
   });

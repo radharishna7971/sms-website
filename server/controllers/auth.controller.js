@@ -37,9 +37,9 @@ exports.create = function(req, res) {
 };
 
 exports.validate = function(req, res) {
-  var token = req.body.token, userId;
+  var token = req.body.token;
   try {
-    var userId = jwt.decode(token, jwtSecret)
+    var userId = jwt.decode(token, jwtSecret);
     User.validate(userId, function(valid) {
       res.send(valid);
     });
@@ -47,5 +47,22 @@ exports.validate = function(req, res) {
   catch(err) {
     res.send(false);
   }
+};
+
+exports.getUsers = function(req, res) {
+  // Make sure that user accessing data has proper access
+  var token = req.query.token;
+
+  console.log(token);
+  var userId = jwt.decode(token, jwtSecret);
+  User.validate(userId, function(valid) {
+    if (valid) {
+      User.getAll(function(users) {
+        res.json(users);
+      });
+    } else {
+      res.send("Invalid credentials");
+    }
+  });
 
 };
