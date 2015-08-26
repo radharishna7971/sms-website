@@ -11,7 +11,7 @@ EmailListEntry.add = function(emailAddress, callback) {
       .save()
       .then(function(email) {
         callback(email);
-      })
+      });
     } else {
       callback(email);
     }

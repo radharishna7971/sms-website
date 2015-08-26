@@ -1,4 +1,25 @@
-
-<h1 class="home-header">HOME PAGE</h1>
-
-
+<div class="home-main-container">
+  <table class="home-table">
+    <tr class="home-table-header">
+      <td class="home-col-width">Name</td>
+      <td class="home-col-width">Role 1</td>
+      <td class="home-col-width">Role 2</td>
+      <td class="home-col-width">Genre 1</td>
+      <td class="home-col-width">Genre 2</td>
+      <td class="home-col-width">Gender</td>
+      <td class="home-col-width">Location</td>
+    </tr>
+    <tr ng-repeat="person in talent" class="home-table-row">
+      <td class="row-table-colum home-col-width">{{person.first_name}} {{person.last_name}}</td>
+      <td class="row-table-colum home-col-width">{{person.primary_role_id}}</td>
+      <td class="row-table-colum home-col-width">{{person.secondary_role_id}}</td>
+      <td class="row-table-colum home-col-width">{{person.primary_genre_id}}</td>
+      <td class="row-table-colum home-col-width">{{person.secondary_genre_id}}</td>
+      <td class="row-table-colum home-col-width">{{person.gender}}</td>
+      <td class="row-table-colum home-col-width">{{person.location}}</td>
+    </tr>
+  </table>
+</div>
+<div class="home-right-container">
+  
+</div>

@@ -63,6 +63,7 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.integer('primary_genre_id', 50).unsigned().references('genres.id');
       talent.integer('secondary_genre_id', 50).unsigned().references('genres.id');
       talent.string('imdb_url', 100);
+      talent.string('linkedin_url', 100);
       talent.integer('self_id').unsigned().references('contacts.id');
       talent.integer('manager_id').unsigned().references('contacts.id');
       talent.integer('agent_id').unsigned().references('contacts.id');

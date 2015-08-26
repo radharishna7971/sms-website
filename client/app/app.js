@@ -12,6 +12,7 @@
 
     // Shared
     'authFactory',
+    'talentFactory',
     'topnavDirective'
   ])
   .config(config)
@@ -47,11 +48,7 @@
             controller: 'loginController'
           }
         }
-        // resolve: {
-        //   redirectIfLoggedIn: function() {
 
-        //   }
-        // }
       }).state('home', {
         url: '/private/home',
         authenticate: true,
