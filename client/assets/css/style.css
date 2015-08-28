@@ -10,6 +10,13 @@ body {
   /*background-color: #F7F7F7*/
 }
 
+.content {
+  position: fixed;
+  top: 48px;
+  width: 100%;
+  height: 100%;
+}
+
 /* HOME PAGE */
 .home-header {
   text-align: center;

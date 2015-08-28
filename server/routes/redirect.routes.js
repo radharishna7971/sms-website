@@ -13,4 +13,7 @@
   app.get('/private/talent', function(req, res) {
     res.redirect('/#/private/talent');
   });
+  app.get('/private/data-entry', function(req, res) {
+    res.redirect('/#/private/data-entry');
+  });
  };

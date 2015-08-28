@@ -10,6 +10,7 @@
     'homeController',
     'talentController',
     'usersController',
+    'dataEntryController',
 
     // Shared
     'authFactory',
@@ -66,6 +67,15 @@
           content: {
             templateUrl: 'app/components/talent/talent.html',
             controller: 'talentController'
+          }
+        }
+      }).state('data', {
+        url: '/private/data-entry',
+        authenticate: true,
+        views: {
+          content: {
+            templateUrl: 'app/components/dataEntry/dataEntry.html',
+            controller: 'dataEntryController'
           }
         }
       }).state('users', {
