@@ -8,6 +8,7 @@
     'landingController',
     'loginController',
     'homeController',
+    'talentController',
     'usersController',
 
     // Shared
@@ -56,6 +57,15 @@
           content: {
             templateUrl: 'app/components/home/home.html',
             controller: 'homeController'
+          }
+        }
+      }).state('talent', {
+        url: '/private/talent',
+        authenticate: true,
+        views: {
+          content: {
+            templateUrl: 'app/components/talent/talent.html',
+            controller: 'talentController'
           }
         }
       }).state('users', {

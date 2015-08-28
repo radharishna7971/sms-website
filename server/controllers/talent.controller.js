@@ -8,3 +8,10 @@ exports.getAll = function(req, res) {
   });
 };
 
+exports.getProfile = function(req, res) {
+  var talentId = req.query.talent_id;
+  Talent.getProfile(talentId, function(result) {
+    res.json(result);
+  });
+};
+

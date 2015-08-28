@@ -10,4 +10,7 @@
   app.get('/private/users', function(req, res) {
     res.redirect('/#/private/users');
   });
+  app.get('/private/talent', function(req, res) {
+    res.redirect('/#/private/talent');
+  });
  };

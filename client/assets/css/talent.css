@@ -1,0 +1,143 @@
+/* Main content */
+.talent-main-container {
+  position: fixed;
+  top: 48px;
+  left: 0px;
+  width: calc(100% - 351px);
+  height: 100%;
+  overflow-x: hidden;
+  font-size: 13px;
+  min-width: 750px;
+}
+
+.filter-div {
+  width: 100%;
+  height: 100px;
+  background-color: red;
+}
+
+.talent-table, .talent-table-row, .talent-table-column {
+   /*border-top: 1px solid black;*/
+   border-bottom: 1px solid black;
+   border-collapse:collapse;
+   table-layout: fixed;
+}
+
+.talent-table {
+  width: 100%;
+}
+
+.talent-table-header {
+  background-color: #66B3F1;
+}
+
+.talent-table-header td {
+  color: white;
+  height: 30px;
+  text-align: center;
+}
+
+.talent-table-row {
+  padding-left: 3px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.talent-table-row:hover {
+  background-color: #E4FDE7;
+}
+
+/* Right content */
+
+/* Top section */
+.talent-right-container {
+  position: fixed;
+  right: 0px;
+  top: 48px;
+  height: 100%;
+  width: 350px;
+  background-color: #EDEDED;
+  padding-top: 5px;
+}
+
+.talent-right-container-top-div {
+  width: 100%;
+  height: 100px;
+  padding-left: 5px;
+  margin-bottom: 10px;
+}
+
+.talent-pic {
+  border-radius: 100%;
+  border: 1px solid grey;
+  margin-right: 10px;
+  max-width: 98px;
+  float: left;
+}
+.talent-contact-info {
+  width: calc(100% - 120px);
+  height: 90px;
+  margin-top: 10px;
+  float: left;
+  clear: right;
+}
+
+.talent-name {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.right-talent-container-menu {
+  width: 317px;
+  height: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #66B3F1;
+  border-radius: 10px;
+}
+
+/* Menu */
+.right-talent-container-menu-link {
+  float: left;
+  width: 105px;
+  height: 25px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 25px;
+  border-collapse:collapse;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.center-link {
+  border-left: 1px solid #66B3F1;
+  border-right: 1px solid #66B3F1;
+}
+
+.left-link {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.right-link {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.right-talent-container-menu-link:hover {
+  background-color: #66B3F1;
+  color: white;
+}
+
+.active-talent-link {
+  background-color: #66B3F1;
+  color: white;
+}
+
+
+/* Bottom content */
+.talent-right-container-other-div {
+  width: 100%;
+  height: 100%;
+  padding-left: 5px;
+}
+

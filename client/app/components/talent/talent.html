@@ -1,0 +1,64 @@
+<div class="talent-main-container">
+  <table class="talent-table">
+    <div class="filter-div"></div>
+    <tr class="talent-table-header">
+      <td class="talent-col-width">Name</td>
+      <td class="talent-col-width">Primary Role</td>
+      <td class="talent-col-width">Secondary Role</td>
+      <td class="talent-col-width">Primary Genre</td>
+      <td class="talent-col-width">Secondary Genre</td>
+      <td class="talent-col-width">Sex</td>
+      <td class="talent-col-width">Location</td>
+    </tr>
+    <tr ng-repeat="person in talent" class="talent-table-row" ng-click="updateMainTalent(person.id)">
+      <td class="row-table-colum talent-col-width center">{{person.name}}</td>
+      <td class="row-table-colum talent-col-width center">{{person.primary_role}}</td>
+      <td class="row-table-colum talent-col-width center">{{person.secondary_role}}</td>
+      <td class="row-table-colum talent-col-width center">{{person.primary_genre}}</td>
+      <td class="row-table-colum talent-col-width center">{{person.secondary_genre}}</td>
+      <td class="row-table-colum talent-col-width center">{{person.gender}}</td>
+      <td class="row-table-colum talent-col-width center">{{person.location}}</td>
+    </tr>
+  </table>
+</div>
+<div class="talent-right-container">
+  <div class="talent-right-container-content" ng-show="!!mainTalent">
+    <div class="talent-right-container-top-div">
+      <img class="talent-pic" src="assets/img/default-talent-pic.png">
+      <div class="talent-contact-info">
+        <p class="talent-name">{{mainTalent.name}}</p>
+        <p class="talent-contact">{{mainTalent.email}}</p>
+        <p class="talent-contact">{{mainTalent.phone}}</p>
+      </div>
+    </div>
+    <div class="right-talent-container-menu">
+      <div class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">INFO</div>
+      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'contacts')">CONTACTS</div>
+      <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'comments')">COMMENTS (X)</div>
+    </div>
+
+    <div class="talent-right-container-other-div" ng-show="activeSection==='info'">
+      <p>Primary Role: {{mainTalent.primary_role}}</p>
+      <p>Secondary Role: {{mainTalent.secondary_role}}</p>
+      <p>Primary Genre: {{mainTalent.primary_genre}}</p>
+      <p>Secondary Genre: {{mainTalent.secondary_genre}}</p>
+
+      <p>Credits: {{mainTalent.credits}}</p>
+    </div>
+
+    <div class="talent-right-container-other-div contacts" ng-show="activeSection==='contacts'">
+      <p>Manager: {{mainTalent.manager}}</p>
+      <p>Partner: {{mainTalent.partner}}</p>
+      <p>Agent: {{mainTalent.agent}}</p>
+    </div>
+
+    <div class="talent-right-container-other-div contacts" ng-show="activeSection==='comments'">
+      Comments
+    </div>
+  </div>
+
+
+  
+
+
+</div>
