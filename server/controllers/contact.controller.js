@@ -8,3 +8,19 @@ exports.getNames = function(req, res) {
   });
 };
 
+exports.getContact = function(req, res) {
+  Contact.get(req.query.id, function(result) {
+    res.json(result);
+  })
+};
+
+exports.addOrEdit = function(req, res) {
+  Contact.addOrEdit(req.body, function(err, result) {
+    if (!err) {
+      res.json(result);
+    } else {
+      res.json(err);
+    }
+  });
+};
+

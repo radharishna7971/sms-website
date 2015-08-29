@@ -18,7 +18,7 @@
   <form ng-show="section==='Role'">
     <input class="id-input" ng-model="activeElement.id" type="text">
     <p>Name</p>
-    <input ng-model="activeElement.name" type="text" name="name" required="true">
+    <input ng-model="activeElement.name" type="text" required="true">
     <input ng-click="submitData()" type="submit">
   </form>
 
@@ -26,17 +26,32 @@
   <form ng-show="section==='Genre'">
     <input class="id-input" ng-model="activeElement.id" type="text">
     <p>Name</p>
-    <input ng-model="activeElement.name" type="text" name="name" required="true">
+    <input ng-model="activeElement.name" type="text" required="true">
     <input ng-click="submitData()" type="submit">
   </form>
 
-  <!-- CREIDT FORM -->
+  <!-- CREDIT FORM -->
   <form ng-show="section==='Credit'">
     <input class="id-input" ng-model="activeElement.id" type="text">
     <p>Name</p>
-    <input ng-model="activeElement.name" type="text" name="name" required="true">
+    <input ng-model="activeElement.name" type="text" required="true">
     <p>Release Date</p>
-    <input ng-model="activeElement.release_date" type="date" name="date" required="true">
+    <input ng-model="activeElement.release_date" type="date" required="true">
+    <input ng-click="submitData()" type="submit">
+  </form>
+
+  <!-- CONTACT FORM -->
+  <form ng-show="section==='Contact'">
+    <input class="id-input" ng-model="activeElement.id" type="text">
+    <p>First Name</p>
+    <input ng-model="activeElement.first_name" type="text" required="true">
+    <p>Last Name</p>
+    <input ng-model="activeElement.last_name" type="text" required="true">
+    <p>Email</p>
+    <input ng-model="activeElement.email" type="text">
+    <p>Phone</p>
+    <input ng-model="activeElement.phone" type="text">
+
     <input ng-click="submitData()" type="submit">
   </form>
 </div>

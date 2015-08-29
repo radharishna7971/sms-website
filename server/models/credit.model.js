@@ -13,6 +13,7 @@ Credit.getNames = function(callback) {
   });
 };
 
+  // Convert date format to be SQL-friendly
 Credit.get = function(id, callback) {
   db.knex.raw(' \
     SELECT \
@@ -31,14 +32,12 @@ Credit.addOrEdit = function(creditData, callback) {
   new Credit({name: creditData.name})
   .fetch()
   .then(function(credit) {
-    // console.log("A", credit);
     if (credit) {
       if (credit.get('id') === creditData.id) {
         for (var key in creditData) {
           credit.set(key, creditData[key]);
           credit.save();
         }
-        console.log(credit);
         callback(null, {status: 'edit', id: credit.get('id'), name: credit.get('name')});
 
       } else {

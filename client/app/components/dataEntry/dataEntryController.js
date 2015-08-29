@@ -58,6 +58,11 @@
           creditData.release_date = new Date(creditData.release_date);
           $scope.activeElement = creditData;
         });
+      },
+      Contact: function() {
+        contactFactory.getContact($scope.editElement.id, function(contactData) {
+          $scope.activeElement = contactData;
+        });
       }
     }
 
@@ -112,15 +117,34 @@
               $scope.editElement.name = $scope.activeElement.name;
             } else {
               // Add new genre to list and reset active genre
-              console.log("AAAA", res);
               $scope.data[$scope.section].push(res);
               $scope.editElement = {};
               $scope.activeElement = {};
             }
-          })
+          });
+        }
+      },
+      Contact: function() {
+        if (!checkInputs()) {
+          $scope.errorText = 'Please make sure all required fields are entered';
+        } else {
+          $scope.errorText = '';
+          contactFactory.addOrEdit($scope.activeElement, function(res) {
+            console.log(res);
+            if (res.status === 'error') {
+              $scope.errorText = res.text;
+            } else if (res.status === 'edit') {
+              $scope.editElement.name = res.name;
+            } else {
+              // Add new genre to list and reset active genre
+              $scope.data[$scope.section].push(res);
+              $scope.editElement = {};
+              $scope.activeElement = {};
+            }
+          });
         }
       }
-    }
+    };
 
     // storage for all data points that are added or pulled from database
     $scope.data = {
