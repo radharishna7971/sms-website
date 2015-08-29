@@ -2,6 +2,7 @@
  module.exports = function(app) {
 
   app.get('/api/talent/all', talent.getAll);
+  app.get('/api/talent/all/names', talent.getNames);
   app.get('/api/talent/profile', talent.getProfile);
   
  };

@@ -15,3 +15,9 @@ exports.getProfile = function(req, res) {
   });
 };
 
+exports.getNames = function(req, res) {
+  Talent.getNames(function(result) {
+    res.json(result);
+  });
+};
+

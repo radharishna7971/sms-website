@@ -15,6 +15,10 @@
     // Shared
     'authFactory',
     'talentFactory',
+    'contactFactory',
+    'creditFactory',
+    'roleFactory',
+    'genreFactory',
     'topnavDirective'
   ])
   .config(config)

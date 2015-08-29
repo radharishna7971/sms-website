@@ -11,6 +11,14 @@
             callback(res.data);
         });
       },
+      getNames: function(callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/talent/all/names'
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
       talentProfile: function(talentId, callback) {
         return $http({
           method: 'GET',

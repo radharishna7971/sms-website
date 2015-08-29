@@ -1,10 +1,32 @@
 <div class="data-left-column">
-  <div class="data-left-column-div active-data-entry-link" ng-click="updateActiveSection($event, 'Talent')">TALENT</div>
-  <div class="data-left-column-div" ng-click="updateActiveSection($event, 'Contact')">CONTACT</div>
-  <div class="data-left-column-div" ng-click="updateActiveSection($event, 'Credit')">CREDIT</div>
-  <div class="data-left-column-div" ng-click="updateActiveSection($event, 'Role')">ROLE</div>
-  <div class="data-left-column-div" ng-click="updateActiveSection($event, 'Genre')">GENRE</div>
+  <div class="data-left-column-categories">
+    <div class="data-left-column-categories-div active-data-right-column-link" ng-click="updateActiveSection($event, 'Talent')">TALENT</div>
+    <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Contact')">CONTACT</div>
+    <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Credit')">CREDIT</div>
+    <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Role')">ROLE</div>
+    <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Genre')">GENRE</div>
+  </div>
+  <div class="data-left-column-data">
+    <div class="data-left-column-data-row" ng-repeat="element in activeData | orderBy: 'name'" ng-click="setActiveElement($event, element)">{{element.name}}</div>
+  </div>
 </div>
 <div class="data-main-section">
   <h1 class="data-form-title">{{section}} Form</h1>
+  <p class="data-main-error-text">{{errorText}}</p>
+
+  <!-- ROLE FORM -->
+  <form ng-show="section==='Role'">
+    <input class="id-input" ng-model="activeElement.id" type="text">
+    <p>Name</p>
+    <input ng-model="activeElement.name" type="text">
+    <input ng-click="submitData()" type="submit">
+  </form>
+
+  <!-- GENRE FORM -->
+  <form ng-show="section==='Genre'">
+    <input class="id-input" ng-model="activeElement.id" type="text">
+    <p>Name</p>
+    <input ng-model="activeElement.name" type="text">
+    <input ng-click="submitData()" type="submit">
+  </form>
 </div>

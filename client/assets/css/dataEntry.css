@@ -1,14 +1,21 @@
 
 .data-left-column {
-  width: 199px;
+  width: 400px;
+  height: 100%;
+  
+  border-right: 1px solid grey;
+  float: left;
+}
+
+.data-left-column-categories {
+  width: 100px;
   height: 100%;
   background-color: #EDEDED;
   border-right: 1px solid grey;
-  float: left;
-
+  float: left
 }
 
-.data-left-column-div {
+.data-left-column-categories-div {
   width: 100%;
   height: 40px;
   text-align: center;
@@ -19,14 +26,35 @@
   cursor: pointer;
 }
 
-.data-left-column-div:hover {
+.data-left-column-categories-div:hover {
   background-color: #66B3F1;
   color: white;
 }
 
-.active-data-entry-link {
+.active-data-right-column-link {
   background-color: #66B3F1;
   color: white;
+}
+
+.data-left-column-data {
+  width: auto;
+  overflow:hidden;
+  height: 100%;
+}
+.data-left-column-data-row {
+  border-bottom: 1px solid grey;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.data-left-column-data-row:hover {
+  background-color: #E4FDE7;
+}
+
+.active-element {
+  background-color: #E4FDE7;
 }
 
 .data-main-section {
@@ -38,4 +66,15 @@
 
 .data-form-title {
   text-align: center;
+}
+
+.data-main-error-text {
+  text-align: center;
+  color: red;
+  font-size: 14px;
+  min-height: 17px;
+}
+
+.id-input {
+  display: none;
 }

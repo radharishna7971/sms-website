@@ -71,4 +71,18 @@ Talent.getProfile= function(talentId, callback) {
   });
 };
 
+// Return list of all talent names
+Talent.getNames = function(callback) {
+  db.knex.raw(' \
+    SELECT \
+      self.id AS id, \
+      CONCAT(self.first_name, \' \', self.last_name) AS name \
+    FROM talent \
+      LEFT JOIN contacts AS self ON talent.self_id = self.id \
+  ')
+  .then(function(results) {
+     callback(results[0]);
+  });
+}
+
 module.exports = Talent;
