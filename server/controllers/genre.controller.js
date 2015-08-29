@@ -16,6 +16,5 @@ exports.addOrEdit = function(req, res) {
     } else {
       res.json(err);
     }
-    
   });
 };

@@ -192,7 +192,7 @@ var Genre = exports.Genre = db.Model.extend({
 });
 
 var Credit = exports.Credit = db.Model.extend({
-  tableName: 'creditss',
+  tableName: 'credits',
   talentCreditJoin: function() {
     this.hasMany(TalentCreditJoin);
   }

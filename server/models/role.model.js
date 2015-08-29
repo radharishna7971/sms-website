@@ -13,7 +13,7 @@ Role.getNames = function(callback) {
   });
 }
 
-// If id is passed in, check to see that name does not already exists.  If it doesn't either edit or add new
+// Check to see that name does not already exists.  If it doesn't either edit or add new
 Role.addOrEdit = function(roleData, callback) {
   new Role({name: roleData.name})
   .fetch()
@@ -38,6 +38,6 @@ Role.addOrEdit = function(roleData, callback) {
       }
     }
   });
-}
+};
 
 module.exports = Role;

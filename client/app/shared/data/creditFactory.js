@@ -10,7 +10,28 @@
         }).then(function(res) {
           callback(res.data);
         });
+      },
+      getCredit: function(id, callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/credit',
+          params: {
+            id: id
+          }
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
+      addOrEdit: function(creditData, callback) {
+        return $http({
+          method: 'POST',
+          url: 'api/credit/add-edit',
+          data: creditData
+        }).then(function(res) {
+          callback(res.data);
+        })
       }
+
      };
   });
 })();

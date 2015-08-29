@@ -13,7 +13,7 @@ Genre.getNames = function(callback) {
   });
 };
 
-// If id is passed in, check to see that name does not already exists.  If it doesn't either edit or add new
+// Check to see that name does not already exists.  If it doesn't either edit or add new
 Genre.addOrEdit = function(genreData, callback) {
   new Genre({name: genreData.name})
   .fetch()
@@ -38,7 +38,7 @@ Genre.addOrEdit = function(genreData, callback) {
       }
     }
   });
-}
+};
 
 
 
