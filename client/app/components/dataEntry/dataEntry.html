@@ -18,7 +18,7 @@
   <form ng-show="section==='Role'">
     <input class="id-input" ng-model="activeElement.id" type="text">
     <p>Name</p>
-    <input ng-model="activeElement.name" type="text">
+    <input ng-model="activeElement.name" type="text" name="name" required="true">
     <input ng-click="submitData()" type="submit">
   </form>
 
@@ -26,7 +26,7 @@
   <form ng-show="section==='Genre'">
     <input class="id-input" ng-model="activeElement.id" type="text">
     <p>Name</p>
-    <input ng-model="activeElement.name" type="text">
+    <input ng-model="activeElement.name" type="text" name="name" required="true">
     <input ng-click="submitData()" type="submit">
   </form>
 
@@ -34,9 +34,9 @@
   <form ng-show="section==='Credit'">
     <input class="id-input" ng-model="activeElement.id" type="text">
     <p>Name</p>
-    <input ng-model="activeElement.name" type="text">
+    <input ng-model="activeElement.name" type="text" name="name" required="true">
     <p>Release Date</p>
-    <input ng-model="activeElement.release_date" type="date">
+    <input ng-model="activeElement.release_date" type="date" name="date" required="true">
     <input ng-click="submitData()" type="submit">
   </form>
 </div>

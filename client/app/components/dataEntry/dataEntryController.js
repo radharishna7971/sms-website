@@ -63,50 +63,62 @@
 
     var dataSubmitter = {
       Role: function() {
-        $scope.errorText = '';
-        roleFactory.addOrEdit($scope.activeElement, function(res) {
-          if (res.status === 'error') {
-            $scope.errorText = res.text;
-          } else if (res.status === 'edit') {
-            $scope.editElement.name = $scope.activeElement.name;
-          } else {
-            // Add new role to list and reset active role
-            $scope.data[$scope.section].push(res);
-            $scope.editElement = {};
-            $scope.activeElement = {};
-          }
-        });
+        if (!checkInputs()) {
+           $scope.errorText = 'Please make sure all required fields are entered';
+        } else {
+          $scope.errorText = '';
+          roleFactory.addOrEdit($scope.activeElement, function(res) {
+            if (res.status === 'error') {
+              $scope.errorText = res.text;
+            } else if (res.status === 'edit') {
+              $scope.editElement.name = $scope.activeElement.name;
+            } else {
+              // Add new role to list and reset active role
+              $scope.data[$scope.section].push(res);
+              $scope.editElement = {};
+              $scope.activeElement = {};
+            }
+          });
+        }
       },
       Genre: function() {
-        $scope.errorText = '';
-        genreFactory.addOrEdit($scope.activeElement, function(res) {
-          if (res.status === 'error') {
-            $scope.errorText = res.text;
-          } else if (res.status === 'edit') {
-            $scope.editElement.name = $scope.activeElement.name;
-          } else {
-            // Add new genre to list and reset active genre
-            $scope.data[$scope.section].push(res);
-            $scope.editElement = {};
-            $scope.activeElement = {};
-          }
-        });
+        if (!checkInputs()) {
+           $scope.errorText = 'Please make sure all required fields are entered';
+        } else {
+          $scope.errorText = '';
+          genreFactory.addOrEdit($scope.activeElement, function(res) {
+            if (res.status === 'error') {
+              $scope.errorText = res.text;
+            } else if (res.status === 'edit') {
+              $scope.editElement.name = $scope.activeElement.name;
+            } else {
+              // Add new genre to list and reset active genre
+              $scope.data[$scope.section].push(res);
+              $scope.editElement = {};
+              $scope.activeElement = {};
+            }
+          });
+        }
       },
       Credit: function() {
-        $scope.errorText = '';
-        creditFactory.addOrEdit($scope.activeElement, function(res) {
-          if (res.status === 'error') {
-            $scope.errorText = res.text;
-          } else if (res.status === 'edit') {
-            $scope.editElement.name = $scope.activeElement.name;
-          } else {
-            // Add new genre to list and reset active genre
-            console.log("AAAA", res);
-            $scope.data[$scope.section].push(res);
-            $scope.editElement = {};
-            $scope.activeElement = {};
-          }
-        })
+        if (!checkInputs()) {
+           $scope.errorText = 'Please make sure all required fields are entered';
+        } else {
+          $scope.errorText = '';
+          creditFactory.addOrEdit($scope.activeElement, function(res) {
+            if (res.status === 'error') {
+              $scope.errorText = res.text;
+            } else if (res.status === 'edit') {
+              $scope.editElement.name = $scope.activeElement.name;
+            } else {
+              // Add new genre to list and reset active genre
+              console.log("AAAA", res);
+              $scope.data[$scope.section].push(res);
+              $scope.editElement = {};
+              $scope.activeElement = {};
+            }
+          })
+        }
       }
     }
 
@@ -134,7 +146,18 @@
       })
     }
 
-
+    // Ensures all required inputs have data
+    var checkInputs = function() {
+      var result = true;
+      $('input:visible').each(function() {
+          if ($(this).attr('required')) {
+            if ($(this).val().length === 0) {
+              result = false;
+            }
+          }
+      });
+      return result;
+    }
 
 
     $scope.submitData = function() {
