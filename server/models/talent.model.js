@@ -75,7 +75,7 @@ Talent.getProfile= function(talentId, callback) {
 Talent.getNames = function(callback) {
   db.knex.raw(' \
     SELECT \
-      self.id AS id, \
+      talent.id AS id, \
       CONCAT(self.first_name, \' \', self.last_name) AS name \
     FROM talent \
       LEFT JOIN contacts AS self ON talent.self_id = self.id \
@@ -83,6 +83,99 @@ Talent.getNames = function(callback) {
   .then(function(results) {
      callback(results[0]);
   });
+};
+
+Talent.getName = function(id, callback) {
+  console.log("ID: ", id);
+  db.knex.raw(' \
+    SELECT \
+      CONCAT(self.first_name, \' \', self.last_name) AS name \
+    FROM talent \
+      LEFT JOIN contacts AS self ON talent.self_id = self.id \
+    WHERE talent.id = ' + id)
+  .then(function(results) {
+    console.log(results[0][0]);
+    console.log(results[0][0].name);
+    callback(results[0][0].name);
+  });
 }
+
+Talent.get = function(id, callback) {
+  db.knex.raw(' \
+    SELECT \
+      id AS id, \
+      self_id, \
+      gender, \
+      location, \
+      primary_role_id, \
+      secondary_role_id, \
+      primary_genre_id, \
+      secondary_genre_id, \
+      imdb_url, \
+      linkedin_url, \
+      agent_id, \
+      manager_id, \
+      partner_id \
+    FROM talent \
+    WHERE id = ' + id)
+  .then(function(results) {
+     var data = results[0];
+     callback(data[0]);
+  });
+};
+
+Talent.addOrEdit = function(talentData, callback) {
+  // Check to see if talent exists with same self_id (for same person)
+  new Talent({self_id: talentData.self_id})
+  .fetch()
+  .then(function(talent) {
+    // If talent exists for given contact, check to see if the id matches
+    if (talent) {
+      // if the id matches, update talent info
+      if (talent.get('id') === talentData.id) {
+        for (var key in talentData) {
+          talent.set(key, talentData[key]);
+          talent.save();
+        }
+        talent.save()
+        .then(function() {
+          Talent.getName(talent.get('id'), function(name) {
+            callback(null, {status: 'edit', id: talent.get('id'), name: name});
+          });
+        })
+ 
+      } else { // Otherwise the contact is already assigned to a different talent 
+        return callback({status: 'error', text: "Contact already assigned to another talent"});
+      }
+    } else {
+      // if id already exists, update existing talent model
+      if (talentData.hasOwnProperty('id')) {
+        new Talent({id: talentData.id})
+        .fetch()
+        .then(function(talent) {
+          for (var key in talentData) {
+            talent.set(key, talentData[key]);
+            talent.save();
+          }
+          talent.save()
+          .then(function() {
+            Talent.getName(talent.get('id'), function(name) {
+              callback(null, {status: 'edit', id: talent.get('id'), name: name});
+            });
+          });
+
+        })
+      } else { // otherwise make a new talent
+        new Talent(talentData)
+        .save()
+        .then(function(talent) {
+          Talent.getName(talent.get('id'), function(name) {
+           callback(null, {id: talent.get('id'), name: name});
+          });
+        });
+      }
+    }
+  });
+};
 
 module.exports = Talent;

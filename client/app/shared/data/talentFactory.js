@@ -19,16 +19,36 @@
           callback(res.data);
         });
       },
-      talentProfile: function(talentId, callback) {
+      talentProfile: function(id, callback) {
         return $http({
           method: 'GET',
           url: 'api/talent/profile',
           params: {
-            'talent_id': talentId
+            'talent_id': id
           }
         }).then(function(res) {
           callback(res.data);
         });
+      },
+      getTalent: function(id, callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/talent',
+          params: {
+            'id': id
+          }
+        }).then(function(res) {
+          callback(res.data);
+        })
+      },
+      addOrEdit: function(talentData, callback) {
+        return $http({
+          method: 'POST',
+          url: 'api/talent/add-edit',
+          data: talentData
+        }).then(function(res) {
+          callback(res.data);
+        })
       }
      };
   });

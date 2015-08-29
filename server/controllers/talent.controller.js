@@ -21,3 +21,19 @@ exports.getNames = function(req, res) {
   });
 };
 
+exports.getTalent = function(req, res) {
+  Talent.get(req.query.id, function(result) {
+    res.json(result);
+  });
+};
+
+exports.addOrEdit = function(req, res) {
+  console.log(req.body);
+  Talent.addOrEdit(req.body, function(err, result) {
+    if (!err) {
+      res.json(result);
+    } else {
+      res.json(err);
+    }
+  });
+};

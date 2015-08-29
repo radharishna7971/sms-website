@@ -5,18 +5,24 @@
     $scope.section = 'Talent'; // Represents current section
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
-    $scope.editElement = {} // contains data for element whose data is being edited in the form
- 
+    $scope.editElement = null; // contains data for element whose data is being edited in the form
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
       $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
       $($event.target).addClass('active-data-right-column-link');
       // Remove active element
-      $scope.editElement = {};
+      $scope.editElement = null;
       $scope.activeElement = {};
       $scope.errorText = '';
       $scope.section = section;
       $scope.activeData = $scope.data[$scope.section]
+
+      // Update form centering for talent form
+      if ($scope.section === 'Talent') {
+        $('.data-form-container').css('width', '530px');
+      } else {
+        $('.data-form-container').css('width', '260px');
+      }
     }
 
     $scope.setActiveElement = function($event, element) {
@@ -25,7 +31,7 @@
       // if element clicked is currently active, make it inactive and clear out form data
       if ($($event.target).hasClass('active-element')) {
         $($event.target).removeClass('active-element');
-        $scope.editElement = {};
+        $scope.editElement = null;
         $scope.activeElement = {};
       } 
       // otherwise, remove active from other element in case another element is active and set form data
@@ -63,6 +69,11 @@
         contactFactory.getContact($scope.editElement.id, function(contactData) {
           $scope.activeElement = contactData;
         });
+      },
+      Talent: function() {
+        talentFactory.getTalent($scope.editElement.id, function(contactData) {
+          $scope.activeElement = contactData;
+        });
       }
     }
 
@@ -80,7 +91,7 @@
             } else {
               // Add new role to list and reset active role
               $scope.data[$scope.section].push(res);
-              $scope.editElement = {};
+              $scope.editElement = null;
               $scope.activeElement = {};
             }
           });
@@ -99,7 +110,7 @@
             } else {
               // Add new genre to list and reset active genre
               $scope.data[$scope.section].push(res);
-              $scope.editElement = {};
+              $scope.editElement = null;
               $scope.activeElement = {};
             }
           });
@@ -116,9 +127,9 @@
             } else if (res.status === 'edit') {
               $scope.editElement.name = $scope.activeElement.name;
             } else {
-              // Add new genre to list and reset active genre
+              // Add new credit to list and reset active genre
               $scope.data[$scope.section].push(res);
-              $scope.editElement = {};
+              $scope.editElement = null;
               $scope.activeElement = {};
             }
           });
@@ -130,15 +141,38 @@
         } else {
           $scope.errorText = '';
           contactFactory.addOrEdit($scope.activeElement, function(res) {
-            console.log(res);
             if (res.status === 'error') {
               $scope.errorText = res.text;
             } else if (res.status === 'edit') {
               $scope.editElement.name = res.name;
             } else {
-              // Add new genre to list and reset active genre
+              // Add new contact to list and reset active genre
               $scope.data[$scope.section].push(res);
-              $scope.editElement = {};
+              $scope.editElement = null;
+              $scope.activeElement = {};
+            }
+          });
+        }
+      },
+      Talent: function() {
+        if (!checkInputs()) {
+          $scope.errorText = 'Please make sure all required fields are entered';
+        } else {
+          // Set blank values to null so they can be properly saved in database
+          for (var key in $scope.activeElement) {
+            if (!$scope.activeElement[key]) {
+              $scope.activeElement[key] = null;
+            }
+          }
+          talentFactory.addOrEdit($scope.activeElement, function(res) {
+            if (res.status === 'error') {
+              $scope.errorText = res.text;
+            } else if (res.status === 'edit') {
+              $scope.editElement.name = res.name;
+            } else {
+              // Add new talent to list and reset active genre
+              $scope.data[$scope.section].push(res);
+              $scope.editElement = null;
               $scope.activeElement = {};
             }
           });
@@ -173,9 +207,9 @@
     // Ensures all required inputs have data
     var checkInputs = function() {
       var result = true;
-      $('input:visible').each(function() {
+      $('input:visible, select:visible').each(function() {
           if ($(this).attr('required')) {
-            if ($(this).val().length === 0) {
+            if ($(this).val() === null || $(this).val().length === 0) {
               result = false;
             }
           }
