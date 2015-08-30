@@ -204,6 +204,10 @@
       })
     }
 
+    setTimeout(function() {
+      console.log($scope.data);
+    }, 3000);
+
     // Ensures all required inputs have data
     var checkInputs = function() {
       var result = true;
