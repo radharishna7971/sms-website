@@ -68,11 +68,13 @@
 }
 
 .data-form-container {
-  width: 530px;
+  /*width: 530px;*/
   height: (100%-48px);
   overflow-y: scroll;
-  margin-left: auto;
-  margin-right: auto;
+  overflow-x: hidden;
+/*  margin-left: auto;
+  margin-right: auto;*/
+  margin-left: 20px;
 }
 
 .data-form-title {
