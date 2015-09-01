@@ -28,7 +28,6 @@ exports.getTalent = function(req, res) {
 };
 
 exports.addOrEdit = function(req, res) {
-  console.log(req.body);
   Talent.addOrEdit(req.body, function(err, result) {
     if (!err) {
       res.json(result);

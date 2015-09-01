@@ -1,4 +1,4 @@
-
+/* Left column */
 .data-left-column {
   width: 400px;
   height: 100%;
@@ -57,16 +57,20 @@
   background-color: #E4FDE7;
 }
 
+/* Data main section*/
+
 .data-main-section {
   width: auto;
   overflow-x:hidden;
   overflow-y: scroll;
-  height: 100%;
+  height: (100%-48px);
   padding-top: 10px;
 }
 
 .data-form-container {
   width: 530px;
+  height: (100%-48px);
+  overflow-y: scroll;
   margin-left: auto;
   margin-right: auto;
 }
@@ -102,6 +106,11 @@
   -webkit-border-radius: 0px;
 }
 
+.select-input {
+  width: 258px;
+  height: 37px;
+}
+
 .data-submit {
   background-color: #66B3F1;
   color: white;
@@ -113,10 +122,7 @@
 }
 
 .talent-form {
-  display: inline-block;
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
+  height: 580px;
 }
 .talent-column {
   width: 260px;
@@ -124,6 +130,6 @@
   float: left;
 }
 
-.left-column:first-of-type {
-  margin-right: 10px
+.talent-column:nth-of-type(1) {
+  margin-right: 10px;
 }

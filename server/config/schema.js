@@ -53,21 +53,30 @@ db.knex.schema.hasTable('contacts').then(function(exists) {
 });
 
 db.knex.schema.hasTable('talent').then(function(exists) {
+
   if (!exists) {
     db.knex.schema.createTable('talent', function(talent) {
       talent.increments('id').primary();
+      talent.string('first_name', 50);
+      talent.string('last_name', 50);
+      talent.string('email', 50);
+      talent.string('phone', 50);
       talent.string('gender', 50);
       talent.string('location', 50);
       talent.integer('primary_role_id', 50).unsigned().references('roles.id');
       talent.integer('secondary_role_id', 50).unsigned().references('roles.id');
       talent.integer('primary_genre_id', 50).unsigned().references('genres.id');
       talent.integer('secondary_genre_id', 50).unsigned().references('genres.id');
+      talent.string('photo_url', 200);
       talent.string('imdb_url', 100);
       talent.string('linkedin_url', 100);
-      talent.integer('self_id').unsigned().references('contacts.id');
+      talent.string('facebook_url', 100);
+      talent.string('youtube_url', 100);
+      talent.string('vine_url', 100);
+      talent.string('instagram_url', 100);
       talent.integer('manager_id').unsigned().references('contacts.id');
       talent.integer('agent_id').unsigned().references('contacts.id');
-      talent.integer('partner_id').unsigned().references('contacts.id');
+      talent.integer('partner_id').unsigned().references('talent.id');
       talent.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
       console.log('Created Talent Table');
@@ -163,9 +172,6 @@ var Talent = exports.Talent = db.Model.extend({
   },
   secondary_genre_id: function() {
     this.belongsTo(Genre, 'secondary_genre_id');
-  },
-  self_id: function(){
-    this.belongsTo(Contact, 'self_id');
   },
   manager_id: function(){
     this.belongsTo(Contact, 'manager_id');

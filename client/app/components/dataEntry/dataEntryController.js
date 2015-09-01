@@ -15,7 +15,7 @@
       $scope.activeElement = {};
       $scope.errorText = '';
       $scope.section = section;
-      $scope.activeData = $scope.data[$scope.section]
+      $scope.activeData = $scope.data[$scope.section];
 
       // Update form centering for talent form
       if ($scope.section === 'Talent') {
@@ -23,7 +23,7 @@
       } else {
         $('.data-form-container').css('width', '260px');
       }
-    }
+    };
 
     $scope.setActiveElement = function($event, element) {
       $scope.errorText = '';
@@ -36,13 +36,13 @@
       } 
       // otherwise, remove active from other element in case another element is active and set form data
       else {
-        $('.active-element').removeClass('active-element')
-        $($event.target).addClass('active-element')
+        $('.active-element').removeClass('active-element');
+        $($event.target).addClass('active-element');
         $scope.editElement = element;
         activeElementSetter[$scope.section]();
       }
      
-    }
+    };
 
     // This contains functions for fetching the data to the forms for editing
     var activeElementSetter = {
@@ -75,7 +75,7 @@
           $scope.activeElement = contactData;
         });
       }
-    }
+    };
 
     var dataSubmitter = {
       Role: function() {
@@ -202,11 +202,7 @@
         $scope.data.Talent = result;
         $scope.activeData = $scope.data.Talent;
       })
-    }
-
-    setTimeout(function() {
-      console.log($scope.data);
-    }, 3000);
+    };
 
     // Ensures all required inputs have data
     var checkInputs = function() {
@@ -219,11 +215,11 @@
           }
       });
       return result;
-    }
+    };
 
 
     $scope.submitData = function() {
       dataSubmitter[$scope.section]();
-    }
+    };
   });
 })();
