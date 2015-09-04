@@ -49,6 +49,17 @@
         }).then(function(res) {
           callback(res.data);
         })
+      },
+      deleteTalent: function(talentId, callback) {
+        return $http({
+          method: 'DELETE',
+          url: 'api/talent/delete',
+          params: {
+            id: talentId
+          }
+        }).then(function() {
+          callback();
+        });
       }
      };
   });

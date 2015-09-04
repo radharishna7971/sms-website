@@ -19,6 +19,17 @@
         }).then(function(res) {
           callback(res.data);
         })
+      },
+      deleteGenre: function(genreId, callback) {
+        return $http({
+          method: 'DELETE',
+          url: 'api/genre/delete',
+          params: {
+            id: genreId
+          }
+        }).then(function() {
+          callback();
+        });
       }
      };
   });

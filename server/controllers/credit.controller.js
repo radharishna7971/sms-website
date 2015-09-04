@@ -26,6 +26,16 @@ exports.addOrEdit = function(req, res) {
   });
 };
 
+exports.remove = function(req, res) {
+  Credit.remove(req.query.id, function(success) {
+    if (success) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  });
+};
+
 
 
 

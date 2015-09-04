@@ -44,6 +44,13 @@
      
     };
 
+    $scope.deleteElement = function() {
+      if (confirm("Are you sure you want to delete this " + $scope.section.toLowerCase() + "?")) {
+        deleteData[$scope.section]();
+      }
+    };
+
+
     // This contains functions for fetching the data to the forms for editing
     var activeElementSetter = {
       Role: function() {
@@ -77,6 +84,7 @@
       }
     };
 
+    // This contains functions for submitting data to the database
     var dataSubmitter = {
       Role: function() {
         if (!checkInputs()) {
@@ -177,6 +185,60 @@
             }
           });
         }
+      }
+    };
+
+    // This contains functions for removing data from the database
+    var deleteData = {
+      Role: function() {
+        roleFactory.deleteRole($scope.editElement.id, function(){
+          // Remove deleted data point from the array
+          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+
+          // Reset elements and form
+          $scope.editElement = null;
+          $scope.activeElement = {};
+        });
+      },
+      Genre: function() {
+        genreFactory.deleteGenre($scope.editElement.id, function(){
+          // Remove deleted data point from the array
+          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+
+          // Reset elements and form
+          $scope.editElement = null;
+          $scope.activeElement = {};
+        });
+      },
+      Credit: function() {
+        creditFactory.deleteCredit($scope.editElement.id, function(){
+          // Remove deleted data point from the array
+          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+
+          // Reset elements and form
+          $scope.editElement = null;
+          $scope.activeElement = {};
+        });
+      },
+      Contact: function() {
+        contactFactory.deleteContact($scope.editElement.id, function(){
+          // Remove deleted data point from the array
+          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+
+          // Reset elements and form
+          $scope.editElement = null;
+          $scope.activeElement = {};
+        });
+      },
+      Talent: function() {
+        talentFactory.deleteTalent($scope.editElement.id, function(){
+          // Remove deleted data point from the array
+          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+
+          // Reset elements and form
+          $scope.editElement = null;
+          $scope.activeElement = {};
+        });
       }
     };
 

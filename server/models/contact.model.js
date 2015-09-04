@@ -67,4 +67,17 @@ Contact.addOrEdit = function(contactData, callback) {
   });
 };
 
+Contact.remove = function(contactId, callback) {
+  new Contact({id: contactId})
+  .fetch()
+  .then(function(contact) {
+    if (contact) {
+      contact.destroy();
+      return callback(true)
+    } else {
+      return callback(false);
+    }
+  });
+};
+
 module.exports = Contact;

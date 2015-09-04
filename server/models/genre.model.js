@@ -40,6 +40,18 @@ Genre.addOrEdit = function(genreData, callback) {
   });
 };
 
+Genre.remove = function(genreId, callback) {
+  new Genre({id: genreId})
+  .fetch()
+  .then(function(genre) {
+    if (genre) {
+      genre.destroy();
+      return callback(true)
+    } else {
+      return callback(false);
+    }
+  });
+};
 
 
 module.exports = Genre;

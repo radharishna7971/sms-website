@@ -3,5 +3,6 @@
 
   app.get('/api/genre/all/names', genre.getNames);
   app.post('/api/genre/add-edit', genre.addOrEdit);
+  app.delete('/api/genre/delete', genre.remove);
   
  };

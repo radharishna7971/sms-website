@@ -40,4 +40,17 @@ Role.addOrEdit = function(roleData, callback) {
   });
 };
 
+Role.remove = function(roleId, callback) {
+  new Role({id: roleId})
+  .fetch()
+  .then(function(role) {
+    if (role) {
+      role.destroy();
+      return callback(true)
+    } else {
+      return callback(false);
+    }
+  });
+};
+
 module.exports = Role;

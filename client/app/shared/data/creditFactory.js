@@ -30,8 +30,18 @@
         }).then(function(res) {
           callback(res.data);
         })
+      },
+      deleteCredit: function(creditId, callback) {
+        return $http({
+          method: 'DELETE',
+          url: 'api/credit/delete',
+          params: {
+            id: creditId
+          }
+        }).then(function() {
+          callback();
+        });
       }
-
      };
   });
 })();

@@ -66,6 +66,19 @@ Credit.addOrEdit = function(creditData, callback) {
   });
 };
 
+Credit.remove = function(creditId, callback) {
+  new Credit({id: creditId})
+  .fetch()
+  .then(function(credit) {
+    if (credit) {
+      credit.destroy();
+      return callback(true)
+    } else {
+      return callback(false);
+    }
+  });
+};
+
 
 module.exports = Credit;
 

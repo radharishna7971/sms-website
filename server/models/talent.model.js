@@ -181,4 +181,18 @@ Talent.addOrEdit = function(talentData, callback) {
   });
 };
 
+
+Talent.remove = function(talentId, callback) {
+  new Talent({id: talentId})
+  .fetch()
+  .then(function(talent) {
+    if (talent) {
+      talent.destroy();
+      return callback(true)
+    } else {
+      return callback(false);
+    }
+  });
+};
+
 module.exports = Talent;

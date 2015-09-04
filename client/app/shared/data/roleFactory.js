@@ -18,7 +18,18 @@
           data: roleData
         }).then(function(res) {
           callback(res.data);
-        })
+        });
+      },
+      deleteRole: function(roleId, callback) {
+        return $http({
+          method: 'DELETE',
+          url: 'api/role/delete',
+          params: {
+            id: roleId
+          }
+        }).then(function() {
+          callback();
+        });
       }
     };
   });

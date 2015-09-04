@@ -30,6 +30,17 @@
         }).then(function(res) {
           callback(res.data);
         })
+      },
+      deleteContact: function(contactId, callback) {
+        return $http({
+          method: 'DELETE',
+          url: 'api/contact/delete',
+          params: {
+            id: contactId
+          }
+        }).then(function() {
+          callback();
+        });
       }
      };
   });

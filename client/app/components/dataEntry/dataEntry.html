@@ -11,6 +11,7 @@
   </div>
 </div>
 <div class="data-main-section">
+  <div class="delete-button" ng-hide="!editElement" ng-click="deleteElement()">Delete</div>
   <h1 class="data-form-title">{{section}} Form - <span ng-show="!editElement">New</span><span ng-hide="!editElement">Edit</span></h1>
   <p class="data-main-error-text">{{errorText}}</p>
 
@@ -49,7 +50,7 @@
       <p class="input-label">Last Name (Required)</p>
       <input class="data-input" ng-model="activeElement.last_name" type="text">
       <p class="input-label">Email</p>
-      <input class="data-input" ng-model="activeElement.email" type="text"required="true">
+      <input class="data-input" ng-model="activeElement.email" type="text">
       <p class="input-label">Phone</p>
       <input class="data-input" ng-model="activeElement.phone" type="text">
       <input class="data-input data-submit" ng-click="submitData()" type="submit">
