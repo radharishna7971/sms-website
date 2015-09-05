@@ -1,25 +1,66 @@
 <div class="talent-main-container">
-  <table class="talent-table">
-    <div class="filter-div"></div>
-    <tr class="talent-table-header">
-      <td class="talent-col-width">Name</td>
-      <td class="talent-col-width">Primary Role</td>
-      <td class="talent-col-width">Secondary Role</td>
-      <td class="talent-col-width">Primary Genre</td>
-      <td class="talent-col-width">Secondary Genre</td>
-      <td class="talent-col-width">Sex</td>
-      <td class="talent-col-width">Location</td>
-    </tr>
-    <tr ng-repeat="person in talent" class="talent-table-row" ng-click="updateMainTalent(person.id)">
-      <td class="row-table-colum talent-col-width center">{{person.name}}</td>
-      <td class="row-table-colum talent-col-width center">{{person.primary_role}}</td>
-      <td class="row-table-colum talent-col-width center">{{person.secondary_role}}</td>
-      <td class="row-table-colum talent-col-width center">{{person.primary_genre}}</td>
-      <td class="row-table-colum talent-col-width center">{{person.secondary_genre}}</td>
-      <td class="row-table-colum talent-col-width center">{{person.gender}}</td>
-      <td class="row-table-colum talent-col-width center">{{person.location}}</td>
-    </tr>
-  </table>
+  <div class="talent-left-col">
+    <p class="filter-header">Name</p>
+    <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="name" />
+    <p class="filter-header">Location</p>
+    <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="location" />
+    <p><span class="check-toggle" ng-click="checkAll()">Check All</span> | <span class="check-toggle" ng-click="uncheckAll()">Uncheck All</span></p>
+    <p class="filter-header">Sex</p>
+      <div class="filter-option-container">
+        <div>
+          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="sex" value="Male" unchecked>Male<br>
+          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="sex" value="Female" unchecked>Female<br>
+        </div>
+      </div>
+    <p class="filter-header">Primary Role</p>
+    <div class="filter-option-container">
+      <div ng-repeat="role in data.Role">
+        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+      </div>
+      
+    </div>
+    <p class="filter-header">Secondary Role</p>
+    <div class="filter-option-container">
+      <div ng-repeat="role in data.Role">
+        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+      </div>
+    </div>
+    <p class="filter-header">Primary Genre</p>
+    <div class="filter-option-container">
+      <div ng-repeat="genre in data.Genre">
+        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+      </div>
+    </div>
+    <p class="filter-header">Secondary Genre</p>
+    <div class="filter-option-container">
+      <div ng-repeat="genre in data.Genre">
+        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+      </div>
+    </div>
+  </div>
+  <div class="talent-center-div">
+      <table class="talent-table">
+        <tr class="talent-table-header">
+          <td class="talent-col-width">Name</td>
+          <td class="talent-col-width">Primary Role</td>
+          <td class="talent-col-width">Secondary Role</td>
+          <td class="talent-col-width">Primary Genre</td>
+          <td class="talent-col-width">Secondary Genre</td>
+          <td class="talent-col-width">Sex</td>
+          <td class="talent-col-width">Location</td>
+        </tr>
+        <tr ng-repeat="person in talent |  orderBy : 'name' | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent(person.id)">
+          <td class="row-table-colum talent-col-width center">{{person.name}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.primary_role}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.secondary_role}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.primary_genre}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.secondary_genre}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.gender}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.location}}</td>
+        </tr>
+      </table>
+  </div>
+
 </div>
 <div class="talent-right-container">
   <div class="talent-right-container-content" ng-show="!!mainTalent">
