@@ -13,7 +13,6 @@
       });
     };
     $scope.updateTalentSection = function($event, section) {
-      // console.log($event.target);
       $('.right-talent-container-menu-link').removeClass('active-talent-link');
       $($event.target).addClass('active-talent-link');
       $scope.activeSection = section;
@@ -95,10 +94,8 @@
 
       // If text is inputted for location it it isn't a match, return false
       if ($scope.filterData['location'].length > 0  && talent.location.toLowerCase().indexOf($scope.filterData['location'].toLowerCase()) === -1) {
-        console.log("B");
         return false;
       }
-      console.log("C");
 
       // Otherwise, it's a valid match
       return true;

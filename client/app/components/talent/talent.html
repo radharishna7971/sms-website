@@ -14,26 +14,26 @@
       </div>
     <p class="filter-header">Primary Role</p>
     <div class="filter-option-container">
-      <div ng-repeat="role in data.Role">
+      <div ng-repeat="role in data.Role | orderBy : 'name'">
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
       </div>
       
     </div>
     <p class="filter-header">Secondary Role</p>
     <div class="filter-option-container">
-      <div ng-repeat="role in data.Role">
+      <div ng-repeat="role in data.Role | orderBy : 'name'">
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
       </div>
     </div>
     <p class="filter-header">Primary Genre</p>
     <div class="filter-option-container">
-      <div ng-repeat="genre in data.Genre">
+      <div ng-repeat="genre in data.Genre | orderBy : 'name'">
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
       </div>
     </div>
     <p class="filter-header">Secondary Genre</p>
     <div class="filter-option-container">
-      <div ng-repeat="genre in data.Genre">
+      <div ng-repeat="genre in data.Genre | orderBy : 'name'">
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
       </div>
     </div>
