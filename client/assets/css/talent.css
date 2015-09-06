@@ -8,18 +8,21 @@
   overflow-x: hidden;
   font-size: 13px;
   min-width: 750px;
+  overflow: hidden;
 }
 
 .talent-left-col {
   height: 100%;
   width: 174px;
   float: left;
-  border: 1px solid grey;
-  position: relative;
+  border-right: 1px solid grey;
+  /*position: relative;*/
   z-index: 1;
   background-color: white;
   padding-left: 5px;
   padding-top: 5px;
+  overflow-y: scroll;
+
 }
 
 .filter-text-input {
@@ -93,19 +96,28 @@
 }
 
 .talent-center-div {
-  overflow: hidden;
-  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: -moz-calc(100% - 48px);
+  height: -webkit-calc(100% - 48px);
+  height: calc(100% - 48px);
   background-color: white;
 }
 
 .talent-table {
   width: 100%;
   float: left;
-  overflow: hidden;
 }
 
 .talent-table-header {
   background-color: #66B3F1;
+}
+
+.talent-table-content {
+  overflow-y:scroll;
+  height: -moz-calc(100% - 48px - 34px);
+  height: -webkit-calc(100% - 48px - 34px);
+  height: calc(100% - 48px - 34px);
 }
 
 .talent-table-header td {
@@ -129,7 +141,9 @@
 /* Top section */
 .talent-right-container {
   float: right;
-  height: 100%;
+  height: -moz-calc(100% - 48px);
+  height: -webkit-calc(100% - 48px);
+  height: calc(100% - 48px);
   width: 350px;
   background-color: #EDEDED;
   padding-top: 5px;

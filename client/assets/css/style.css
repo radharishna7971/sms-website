@@ -5,6 +5,10 @@
   color: #2a2d33;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   -webkit-text-size-adjust: 100%;
   /*background-color: #F7F7F7*/

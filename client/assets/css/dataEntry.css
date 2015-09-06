@@ -2,7 +2,6 @@
 .data-left-column {
   width: 400px;
   height: 100%;
-  
   border-right: 1px solid grey;
   float: left;
 }
@@ -38,8 +37,12 @@
 
 .data-left-column-data {
   width: auto;
-  overflow:hidden;
-  height: 100%;
+  overflow-x:hidden;
+  overflow-y: scroll;
+  position: relative;
+  height: -moz-calc(100% - 48px);
+  height: -webkit-calc(100% - 48px);
+  height: calc(100% - 48px);
 }
 .data-left-column-data-row {
   border-bottom: 1px solid grey;
