@@ -16,6 +16,7 @@
       </div>
       <div class="filter-option-container">
         <div>
+          <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="sex" value="*" checked>All<br>
           <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="sex" value="Male" unchecked>Male<br>
           <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="sex" value="Female" unchecked>Female<br>
         </div>
@@ -26,6 +27,7 @@
       <div class="arrow arrow-right arrow-down"></div>
     </div>
     <div class="filter-option-container">
+      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
       <div ng-repeat="role in data.Role | orderBy : 'name'">
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
       </div>
@@ -36,7 +38,9 @@
       <div class="arrow arrow-right arrow-down"></div>
     </div>
     <div class="filter-option-container">
+      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="*" checked>All<br>
       <div ng-repeat="role in data.Role | orderBy : 'name'">
+
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
       </div>
     </div>
@@ -45,6 +49,7 @@
       <div class="arrow arrow-right arrow-down"></div>
     </div>
     <div class="filter-option-container">
+      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
       <div ng-repeat="genre in data.Genre | orderBy : 'name'">
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
       </div>
@@ -54,6 +59,7 @@
       <div class="arrow arrow-right arrow-down"></div>
     </div>
     <div class="filter-option-container">
+      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="*" checked>All<br>
       <div ng-repeat="genre in data.Genre | orderBy : 'name'">
         <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
       </div>

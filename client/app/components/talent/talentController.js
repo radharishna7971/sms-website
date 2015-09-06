@@ -19,8 +19,17 @@
     };
 
     $scope.updateFiltersClick = function($event) {
+      var element = $($event.target)
       // When a filter is clicked, toggle it's status
-      $scope.filterData[$($event.target).attr('col')][$($event.target).attr('value')] = !$scope.filterData[$($event.target).attr('col')][$($event.target).attr('value')];
+      $scope.filterData[element.attr('col')][element.attr('value')] = !$scope.filterData[element.attr('col')][element.attr('value')];
+
+      if (!element.hasClass('all-option')) {
+       $scope.filterData[element.attr('col')]['*'] = false;
+       $('.all-option[col="' + element.attr('col') + '"]').prop('checked', false);
+      }
+
+       
+
     };
 
     $scope.updateFiltersKeyUp = function($event) {
@@ -30,11 +39,11 @@
     $scope.filterData = {
       name: "",
       location: "",
-      primary_role: {},
-      secondary_role: {},
-      primary_genre: {},
-      secondary_genre: {},
-      sex: {male: false, female: false}
+      primary_role: {"*": true},
+      secondary_role: {"*": true},
+      primary_genre: {"*": true},
+      secondary_genre: {"*": true},
+      sex: {"*": true, male: false, female: false}
     };
 
     // Storage for all data points for filters
@@ -103,21 +112,20 @@
 
     // Filter for talent
     $scope.talentFilter = function(talent) {
-      return textChecker(talent) &&
-        ($scope.filterData['sex'][talent.gender] ||
-        $scope.filterData['primary_role'][talent.primary_role] ||
-        $scope.filterData['secondary_role'][talent.secondary_role] ||
-        $scope.filterData['primary_genre'][talent.primary_genre] ||
-        $scope.filterData['secondary_genre'][talent.secondary_genre]);
+      return textChecker(talent)
+        && ($scope.filterData['sex']['*'] || $scope.filterData['sex'][talent.gender])
+        && ($scope.filterData['primary_role']['*'] || $scope.filterData['primary_role'][talent.primary_role])
+        && ($scope.filterData['secondary_role']['*'] || $scope.filterData['secondary_role'][talent.secondary_role])
+        && ($scope.filterData['primary_genre']['*'] || $scope.filterData['primary_genre'][talent.primary_genre])
+        && ($scope.filterData['secondary_genre']['*'] || $scope.filterData['secondary_genre'][talent.secondary_genre]);
     };
 
 
 
     // JQuery
 
-    // Expand/collapse checkboxes
+    // Expand/collapse checkbox containers
     $(document).on('click', '.filter-header-container', function() {
-
       $(this).next('.filter-option-container').slideToggle(300);
       $(this).find('.arrow').toggleClass('arrow-down');
     });
