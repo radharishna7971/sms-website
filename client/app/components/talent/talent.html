@@ -76,17 +76,15 @@
           <td class="talent-col-width">Sex</td>
           <td class="talent-col-width">Location</td>
         </tr>
-      </table>
-      <table class="talent-table talent-table-content">
-          <tr ng-repeat="person in talent |  orderBy : 'name' | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent(person.id)">
-            <td class="row-table-colum talent-col-width center">{{person.name}}</td>
-            <td class="row-table-colum talent-col-width center">{{person.primary_role}}</td>
-            <td class="row-table-colum talent-col-width center">{{person.secondary_role}}</td>
-            <td class="row-table-colum talent-col-width center">{{person.primary_genre}}</td>
-            <td class="row-table-colum talent-col-width center">{{person.secondary_genre}}</td>
-            <td class="row-table-colum talent-col-width center">{{person.gender}}</td>
-            <td class="row-table-colum talent-col-width center">{{person.location}}</td>
-          </tr>
+        <tr ng-repeat="person in talent |  orderBy : 'name' | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent(person.id)">
+          <td class="row-table-colum talent-col-width center">{{person.name}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.primary_role}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.secondary_role}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.primary_genre}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.secondary_genre}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.gender}}</td>
+          <td class="row-table-colum talent-col-width center">{{person.location}}</td>
+        </tr>
       </table>
   </div>
 
