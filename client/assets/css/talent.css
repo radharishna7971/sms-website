@@ -27,6 +27,7 @@
   width: 125px;
   height: 20px;
   font-size: 13px;
+  clear: left;
 }
 
 .check-toggle {
@@ -34,16 +35,50 @@
   font-weight: 700;
   margin-bottom: 5px;
   color: #66B3F1;
+}
+
+.clickable {
   cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.filter-header-container {
+  width: 120px;
+  height: 16px;
+}
+
+.arrow {
+  float: right;
+  width: 0; 
+  height: 0; 
+  margin-top: 3px;
+  
+}
+.arrow-right {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid #66B3F1;
+}
+.arrow-down {
+  -moz-transform:rotate(90deg);
+  -webkit-transform:rotate(90deg);
+  -o-transform:rotate(90deg);
+  -ms-transform:rotate(90deg);
+  -ms-filter:
 }
 
 .filter-header {
   font-weight: 700;
+  float: left;
 }
 
 .filter-option-container {
   margin-left: 5px;
   margin-bottom: 8px;
+
 }
 .filter-option {
   cursor: pointer;

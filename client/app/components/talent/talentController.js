@@ -110,5 +110,16 @@
         $scope.filterData['primary_genre'][talent.primary_genre] ||
         $scope.filterData['secondary_genre'][talent.secondary_genre]);
     };
+
+
+
+    // JQuery
+
+    // Expand/collapse checkboxes
+    $(document).on('click', '.filter-header-container', function() {
+
+      $(this).next('.filter-option-container').slideToggle(300);
+      $(this).find('.arrow').toggleClass('arrow-down');
+    });
   });
 })();
