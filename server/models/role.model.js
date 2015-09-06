@@ -11,7 +11,7 @@ Role.getNames = function(callback) {
   .then(function(results) {
      callback(results[0]);
   });
-}
+};
 
 // Check to see that name does not already exists.  If it doesn't either edit or add new
 Role.addOrEdit = function(roleData, callback) {
@@ -19,6 +19,7 @@ Role.addOrEdit = function(roleData, callback) {
   .fetch()
   .then(function(role) {
     if (role) {
+
       return callback({status: 'error', text: "Role already exists"});
     } else {
       if (roleData.hasOwnProperty('id')) {
@@ -28,7 +29,7 @@ Role.addOrEdit = function(roleData, callback) {
           role.set('name', roleData.name);
           role.save();
           callback(null, {status: 'edit', id: role.get('id'), name: role.get('name')});
-        })
+        });
       } else {
         new Role({name: roleData.name})
         .save()
@@ -46,7 +47,7 @@ Role.remove = function(roleId, callback) {
   .then(function(role) {
     if (role) {
       role.destroy();
-      return callback(true)
+      return callback(true);
     } else {
       return callback(false);
     }

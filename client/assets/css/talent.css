@@ -136,6 +136,10 @@
   background-color: #E4FDE7;
 }
 
+.active-talent {
+  background-color: #E4FDE7;
+}
+
 /* Right content */
 
 /* Top section */
@@ -162,7 +166,9 @@
   border-radius: 100%;
   border: 1px solid grey;
   margin-right: 10px;
-  max-width: 98px;
+  width: 98px;
+  height: 98px;
+  background-size: 98px 98px;
   float: left;
 }
 .talent-contact-info {

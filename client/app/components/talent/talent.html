@@ -76,7 +76,7 @@
           <td class="talent-col-width">Sex</td>
           <td class="talent-col-width">Location</td>
         </tr>
-        <tr ng-repeat="person in talent |  orderBy : 'name' | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent(person.id)">
+        <tr ng-repeat="person in talent |  orderBy : 'name' | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent($event, person.id)">
           <td class="row-table-colum talent-col-width center">{{person.name}}</td>
           <td class="row-table-colum talent-col-width center">{{person.primary_role}}</td>
           <td class="row-table-colum talent-col-width center">{{person.secondary_role}}</td>
@@ -92,7 +92,7 @@
 <div class="talent-right-container">
   <div class="talent-right-container-content" ng-show="!!mainTalent">
     <div class="talent-right-container-top-div">
-      <img class="talent-pic" src="assets/img/default-talent-pic.png">
+      <div class="talent-pic" style="background-image: url({{mainTalent.photo_url}})"></div>
       <div class="talent-contact-info">
         <p class="talent-name">{{mainTalent.name}}</p>
         <p class="talent-contact">{{mainTalent.email}}</p>

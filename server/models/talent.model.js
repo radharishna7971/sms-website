@@ -38,6 +38,7 @@ Talent.getProfile= function(talentId, callback) {
       genre2.name AS secondary_genre, \
       talent.gender, \
       talent.location, \
+      talent.photo_url, \
       talent.imdb_url, \
       talent.linkedin_url, \
       talent.facebook_url, \

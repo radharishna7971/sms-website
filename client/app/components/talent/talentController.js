@@ -7,10 +7,22 @@
     });
     $scope.mainTalent = false;
     $scope.activeSection = 'info';
-    $scope.updateMainTalent = function(talentId) {
+    $scope.updateMainTalent = function($event, talentId) {
       talentFactory.talentProfile(talentId, function(result) {
         $scope.mainTalent = result;
+        
+        // Set default picture if talent does not have a picture url in database
+        $scope.mainTalent.photo_url = $scope.mainTalent.photo_url || "assets/img/default-talent-pic.png";
       });
+
+
+      // Remove active-talent class from other row, if another row is active
+      $('.active-talent').each(function() {
+        $(this).removeClass('active-talent');
+      });
+
+      // Add active-talent class to the row that was clicked on
+      $($event.target).parent().addClass('active-talent');
     };
     $scope.updateTalentSection = function($event, section) {
       $('.right-talent-container-menu-link').removeClass('active-talent-link');
