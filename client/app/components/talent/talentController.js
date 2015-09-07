@@ -1,7 +1,7 @@
 (function() {
   'use strict';
-  angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory'])
-  .controller('talentController', function($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory) {
+  angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory'])
+  .controller('talentController', function($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory) {
     talentFactory.getAll(function(data) {
       $scope.talent = data;
     });
@@ -11,7 +11,6 @@
     $scope.updateMainTalent = function($event, talentId) {
       talentFactory.talentProfile(talentId, function(result) {
         $scope.mainTalent = result;
-        
         // Set default picture if talent does not have a picture url in database
         $scope.mainTalent.photo_url = $scope.mainTalent.photo_url || "assets/img/default-talent-pic.png";
       });
@@ -145,6 +144,18 @@
         && ($scope.filterData['secondary_role']['*'] || $scope.filterData['secondary_role'][talent.secondary_role])
         && ($scope.filterData['primary_genre']['*'] || $scope.filterData['primary_genre'][talent.primary_genre])
         && ($scope.filterData['secondary_genre']['*'] || $scope.filterData['secondary_genre'][talent.secondary_genre]);
+    };
+
+    $scope.submitComment = function() {
+      // If text is in the textarea, submit the new comment
+      if ($('.comment-input').val() !== "") {
+        commentFactory.addComment($('.comment-input').val(), $scope.mainTalent.id, function(result) {
+          $scope.mainTalent.comments.push(result);
+          //Once comment is added, append it to the comments-container and clear the textarea
+          $('.comment-input').val('');
+
+        });
+      }
     };
 
 

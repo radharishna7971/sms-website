@@ -27,6 +27,7 @@ module.exports = function () {
   require('../routes/contact.routes')(app);
   require('../routes/role.routes')(app);
   require('../routes/genre.routes')(app);
+  require('../routes/comment.routes')(app);
   require('../routes/redirect.routes')(app);
   
   /* Redirect all bad routes to landing page */

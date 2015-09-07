@@ -106,7 +106,7 @@
     <div class="right-talent-container-menu">
       <div class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">INFO</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'contacts')">CONTACTS</div>
-      <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'comments')">COMMENTS (X)</div>
+      <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'comments')">COMMENTS ({{mainTalent.comments.length}})</div>
     </div>
 
     <div class="talent-right-container-other-div" ng-show="activeSection==='info'">
@@ -131,8 +131,18 @@
     </div>
 
     <div class="talent-right-container-other-div contacts" ng-show="activeSection==='comments'">
-      Comments
+      <div class="comments-container">
+      <div class="comment-div" ng-repeat="comment in mainTalent.comments">
+        <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date}}</span></p>
+        <p class="comment-text">{{comment.text}}</p>
+      </div>
+      </div>
+      <div class="comment-box">
+        <textarea class="comment-input" type="textarea" placeholder="Enter comment here"></textarea>
+        <input ng-click="submitComment()" class="comment-submit" type="submit" />
+      </div>
     </div>
+
   </div>
 
 

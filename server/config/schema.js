@@ -119,6 +119,7 @@ db.knex.schema.hasTable('comments').then(function(exists) {
       comment.increments('id').primary();
       comment.integer('user_id').unsigned().references('users.id');
       comment.integer('talent_id').unsigned().references('talent.id');
+      comment.string('text', 1000);
       comment.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
       console.log('Created Comments Table');

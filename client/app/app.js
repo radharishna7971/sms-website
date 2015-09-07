@@ -19,6 +19,7 @@
     'creditFactory',
     'roleFactory',
     'genreFactory',
+    'commentFactory',
     'topnavDirective'
   ])
   .config(config)

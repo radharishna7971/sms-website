@@ -71,7 +71,21 @@ Talent.getProfile= function(talentId, callback) {
         AND talent.id = ' + data.id.toString())
      .then(function(results) {
         data.credits = results[0] || [];
-        callback(data);
+        db.knex.raw(' \
+          SELECT \
+            comments.text AS text, \
+            CONCAT(users.first_name, \' \', users.last_name) AS name, \
+            comments.created_at AS date, \
+            comments.id AS comment_id, \
+            talent.id AS talent_id \
+          FROM comments, talent, users \
+          WHERE comments.talent_id = talent.id \
+          AND comments.user_id = users.id \
+          AND talent.id = ' + data.id.toString())
+        .then(function(results) {
+          data.comments = results[0] || [];
+          callback(data);
+        });
      });
   });
 };
