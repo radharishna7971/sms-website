@@ -6,6 +6,8 @@
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
     $scope.editElement = null; // contains data for element whose data is being edited in the form
+    $scope.filterData = 'last_name';
+    console.log()
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
       $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
@@ -16,9 +18,12 @@
       $scope.errorText = '';
       $scope.section = section;
       $scope.activeData = $scope.data[$scope.section];
+      $scope.filterData = 'name';
+      console.log($scope.filterData);
 
       // Update form centering for talent form
       if ($scope.section === 'Talent') {
+        $scope.filterData = 'last_name';
         $('.data-form-container').css('width', '530px');
       } else {
         $('.data-form-container').css('width', '260px');
@@ -49,6 +54,8 @@
         deleteData[$scope.section]();
       }
     };
+
+
 
 
     // This contains functions for fetching the data to the forms for editing

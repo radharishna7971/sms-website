@@ -111,6 +111,7 @@
 
 .talent-table-header {
   background-color: #66B3F1;
+  cursor: pointer;
 }
 
 .talent-table-content {

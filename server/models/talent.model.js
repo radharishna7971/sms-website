@@ -7,17 +7,19 @@ Talent.getAll = function(callback) {
     SELECT \
       talent.id AS id, \
       CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
+      talent.last_name AS last_name, \
       role1.name AS primary_role, \
       role2.name AS secondary_role, \
       genre1.name AS primary_genre, \
       genre2.name AS secondary_genre, \
-      talent.gender, \
+      CONCAT(partner.first_name, \' \', partner.last_name) AS partner, \
       talent.location \
     FROM talent \
       LEFT JOIN roles AS role1 ON talent.primary_role_id = role1.id \
       LEFT JOIN roles AS role2 ON talent.secondary_role_id = role2.id \
       LEFT JOIN genres AS genre1 ON talent.primary_genre_id = genre1.id \
       LEFT JOIN genres AS genre2 ON talent.secondary_genre_id = genre2.id \
+      LEFT JOIN talent AS partner ON talent.partner_id = partner.id \
   ')
   .then(function(results) {
      var data = results[0];
@@ -79,7 +81,8 @@ Talent.getNames = function(callback) {
   db.knex.raw(' \
     SELECT \
       talent.id AS id, \
-      CONCAT(talent.first_name, \' \', talent.last_name) AS name \
+      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
+      talent.last_name AS last_name \
     FROM talent')
   .then(function(results) {
      callback(results[0]);

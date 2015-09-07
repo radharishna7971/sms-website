@@ -7,6 +7,7 @@
     });
     $scope.mainTalent = false;
     $scope.activeSection = 'info';
+    $scope.filterColumn = 'last_name'
     $scope.updateMainTalent = function($event, talentId) {
       talentFactory.talentProfile(talentId, function(result) {
         $scope.mainTalent = result;
@@ -31,7 +32,7 @@
     };
 
     $scope.updateFiltersClick = function($event) {
-      var element = $($event.target)
+      var element = $($event.target);
       // When a filter is clicked, toggle it's status
       $scope.filterData[element.attr('col')][element.attr('value')] = !$scope.filterData[element.attr('col')][element.attr('value')];
 
@@ -39,8 +40,6 @@
        $scope.filterData[element.attr('col')]['*'] = false;
        $('.all-option[col="' + element.attr('col') + '"]').prop('checked', false);
       }
-
-       
 
     };
 
@@ -51,11 +50,12 @@
     $scope.filterData = {
       name: "",
       location: "",
+      partner: "",
       primary_role: {"*": true},
       secondary_role: {"*": true},
       primary_genre: {"*": true},
-      secondary_genre: {"*": true},
-      sex: {"*": true, male: false, female: false}
+      secondary_genre: {"*": true}
+      // gender: {"*": true, male: false, female: false}
     };
 
     // Storage for all data points for filters
@@ -106,15 +106,30 @@
       }
     };
 
+    // Changes the ordering of visible data
+    $scope.changeOrder = function(column) {
+      if ($scope.filterColumn === column) {
+        $scope.filterColumn = "-" + column;
+      } else {
+        $scope.filterColumn = column;
+      }
+    };
+
     // Determines whether a talent matches text in Name or Location (if these fields are not blank)
     var textChecker = function(talent) {
-      // If text is inputted for name it it isn't a match, return false
+
+      // If text is inputted for name and it isn't a match, return false (we don't check if field is blank because it can't be based on form validation)
       if ($scope.filterData['name'].length > 0  && talent.name.toLowerCase().indexOf($scope.filterData['name'].toLowerCase()) === -1) {
         return false;
       }
 
-      // If text is inputted for location it it isn't a match, return false
-      if ($scope.filterData['location'].length > 0  && talent.location.toLowerCase().indexOf($scope.filterData['location'].toLowerCase()) === -1) {
+      // If text is inputted for location and it isn't a match, return false
+      if ($scope.filterData['location'].length > 0 && (talent.location === null || talent.location.toLowerCase().indexOf($scope.filterData['location'].toLowerCase()) === -1)) {
+        return false;
+      }
+
+      // If text is inputted for location and it isn't a match, return false
+      if ($scope.filterData['partner'].length > 0 && (talent.partner === null || talent.partner.toLowerCase().indexOf($scope.filterData['partner'].toLowerCase()) === -1)) {
         return false;
       }
 
@@ -125,7 +140,7 @@
     // Filter for talent
     $scope.talentFilter = function(talent) {
       return textChecker(talent)
-        && ($scope.filterData['sex']['*'] || $scope.filterData['sex'][talent.gender])
+        // && ($scope.filterData['gender']['*'] || $scope.filterData['gender'][talent.gender])
         && ($scope.filterData['primary_role']['*'] || $scope.filterData['primary_role'][talent.primary_role])
         && ($scope.filterData['secondary_role']['*'] || $scope.filterData['secondary_role'][talent.secondary_role])
         && ($scope.filterData['primary_genre']['*'] || $scope.filterData['primary_genre'][talent.primary_genre])
