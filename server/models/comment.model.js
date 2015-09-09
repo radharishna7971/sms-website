@@ -6,7 +6,6 @@ Comment.add = function(commentData, callback) {
   new Comment(commentData)
   .save()
   .then(function(comment) {
-    console.log(comment.get('id'))
     db.knex.raw(' \
       SELECT \
         comments.text AS text, \
@@ -21,6 +20,16 @@ Comment.add = function(commentData, callback) {
     .then(function(results) {
        callback(results[0][0]);
     });
+  });
+};
+
+Comment.remove = function(commentId, callback) {
+  new Comment({id: commentId})
+  .fetch()
+  .then(function(comment) {
+    comment.set('deleted', true);
+    comment.save();
+    callback();
   });
 };
 

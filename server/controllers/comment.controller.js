@@ -9,3 +9,9 @@ exports.add = function(req, res) {
     res.json(result);
   });
 };
+
+exports.remove = function(req, res) {
+  Comment.remove(req.query.comment_id, function() {
+    res.json(true);
+  });
+};

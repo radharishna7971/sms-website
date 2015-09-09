@@ -7,8 +7,11 @@
     });
     $scope.mainTalent = false;
     $scope.activeSection = 'info';
-    $scope.filterColumn = 'last_name'
+    $scope.filterColumn = 'last_name';
+    $scope.deletedComments = 0;
+
     $scope.updateMainTalent = function($event, talentId) {
+      $scope.deletedComments = 0;
       talentFactory.talentProfile(talentId, function(result) {
         $scope.mainTalent = result;
         // Set default picture if talent does not have a picture url in database
@@ -118,17 +121,17 @@
     var textChecker = function(talent) {
 
       // If text is inputted for name and it isn't a match, return false (we don't check if field is blank because it can't be based on form validation)
-      if ($scope.filterData['name'].length > 0  && talent.name.toLowerCase().indexOf($scope.filterData['name'].toLowerCase()) === -1) {
+      if ($scope.filterData.name.length > 0  && talent.name.toLowerCase().indexOf($scope.filterData.name.toLowerCase()) === -1) {
         return false;
       }
 
       // If text is inputted for location and it isn't a match, return false
-      if ($scope.filterData['location'].length > 0 && (talent.location === null || talent.location.toLowerCase().indexOf($scope.filterData['location'].toLowerCase()) === -1)) {
+      if ($scope.filterData.location.length > 0 && (talent.location === null || talent.location.toLowerCase().indexOf($scope.filterData.location.toLowerCase()) === -1)) {
         return false;
       }
 
       // If text is inputted for location and it isn't a match, return false
-      if ($scope.filterData['partner'].length > 0 && (talent.partner === null || talent.partner.toLowerCase().indexOf($scope.filterData['partner'].toLowerCase()) === -1)) {
+      if ($scope.filterData.partner.length > 0 && (talent.partner === null || talent.partner.toLowerCase().indexOf($scope.filterData.partner.toLowerCase()) === -1)) {
         return false;
       }
 
@@ -140,10 +143,10 @@
     $scope.talentFilter = function(talent) {
       return textChecker(talent)
         // && ($scope.filterData['gender']['*'] || $scope.filterData['gender'][talent.gender])
-        && ($scope.filterData['primary_role']['*'] || $scope.filterData['primary_role'][talent.primary_role])
-        && ($scope.filterData['secondary_role']['*'] || $scope.filterData['secondary_role'][talent.secondary_role])
-        && ($scope.filterData['primary_genre']['*'] || $scope.filterData['primary_genre'][talent.primary_genre])
-        && ($scope.filterData['secondary_genre']['*'] || $scope.filterData['secondary_genre'][talent.secondary_genre]);
+        && ($scope.filterData.primary_role['*'] || $scope.filterData.primary_role[talent.primary_role])
+        && ($scope.filterData.secondary_role['*'] || $scope.filterData.secondary_role[talent.secondary_role])
+        && ($scope.filterData.primary_genre['*'] || $scope.filterData.primary_genre[talent.primary_genre])
+        && ($scope.filterData.secondary_genre['*'] || $scope.filterData.secondary_genre[talent.secondary_genre]);
     };
 
     $scope.submitComment = function() {
@@ -153,9 +156,13 @@
           $scope.mainTalent.comments.push(result);
           //Once comment is added, append it to the comments-container and clear the textarea
           $('.comment-input').val('');
-
         });
       }
+    };
+    $scope.removeComment = function($event, comment_id) {
+      $($event.target).parent().slideUp();
+      commentFactory.removeComment(comment_id);
+      $scope.deletedComments++;
     };
 
 
@@ -164,7 +171,7 @@
 
     // Expand/collapse checkbox containers
     $(document).on('click', '.filter-header-container', function() {
-      $(this).next('.filter-option-container').slideToggle(300);
+      $(this).next('.filter-option-container').slideToggle();
       $(this).find('.arrow').toggleClass('arrow-down');
     });
   });

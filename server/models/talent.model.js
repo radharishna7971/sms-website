@@ -80,6 +80,7 @@ Talent.getProfile= function(talentId, callback) {
             talent.id AS talent_id \
           FROM comments, talent, users \
           WHERE comments.talent_id = talent.id \
+          AND comments.deleted = false \
           AND comments.user_id = users.id \
           AND talent.id = ' + data.id.toString())
         .then(function(results) {
@@ -132,6 +133,7 @@ Talent.get = function(id, callback) {
       linkedin_url, \
       facebook_url, \
       youtube_url, \
+      photo_url, \
       vine_url, \
       instagram_url, \
       agent_id, \
@@ -153,7 +155,8 @@ Talent.addOrEdit = function(talentData, callback) {
     // If talent exists for given email, check to see if the id matches
     if (talent) {
       // if the id matches, update talent info
-      if (talent.get('id') === talentData.id) {
+      console.log(talent.get('email'))
+      if (talent.get('id') === talentData.id || talent.get('email') === null) {
         for (var key in talentData) {
           talent.set(key, talentData[key]);
           talent.save();

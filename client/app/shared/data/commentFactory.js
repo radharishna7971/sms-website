@@ -15,6 +15,15 @@
         }).then(function(res) {
           callback(res.data);
         });
+      },
+      removeComment: function(comment_id) {
+        return $http({
+          method: 'DELETE',
+          url: 'api/comment/delete',
+          params: {
+            comment_id: comment_id
+          }
+        });
       }
      };
   });

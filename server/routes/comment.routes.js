@@ -2,6 +2,6 @@
  module.exports = function(app) {
 
   app.post('/api/comment/add', comment.add);
-  // app.delete('/api/role/delete', role.remove);
+  app.delete('/api/comment/delete', comment.remove);
   
  };
