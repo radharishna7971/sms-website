@@ -10,6 +10,8 @@ module.exports = function () {
   if (process.env.NODE_ENV === 'development') {
     /* morgan is middleware that logs server activity to the console.  We only want to use it in a development setting */
     app.use(morgan('dev'));
+  } else {
+    app.use(morgan('dev'));
   }
 
 
