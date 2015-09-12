@@ -64,10 +64,14 @@
 
 .data-main-section {
   width: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
   overflow-x:hidden;
   overflow-y: scroll;
-  height: (100%-48px);
-  padding-top: 10px;
+  position: relative;
+  height: -moz-calc(100% - 48px);
+  height: -webkit-calc(100% - 48px);
+  height: calc(100% - 48px);
 }
 
 .data-form-container {
@@ -89,7 +93,21 @@
   background-color: #E88080;
   color: white;
   border-radius: 5px;
-  width: 100px;
+  width: 80px;
+  height: 30px;
+  margin-left: 100px;
+  margin-top: 5px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.new-button {
+  position: absolute;
+  background-color: #E88080;
+  color: white;
+  border-radius: 5px;
+  width: 80px;
   height: 30px;
   margin-left: 10px;
   margin-top: 5px;
@@ -138,14 +156,14 @@
   height: 37px;
   line-height: 35px;
   display: block;
+  margin-bottom: 20px;
 }
 
 .talent-form {
-  height: 580px;
+  padding-bottom: 10px;
 }
 .talent-column {
   width: 260px;
-  height: 100%;
   float: left;
 }
 

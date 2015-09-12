@@ -1,32 +1,36 @@
 (function() {
   'use strict';
   angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory'])
-  .controller('dataEntryController', function($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory) {
+  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory) {
     $scope.section = 'Talent'; // Represents current section
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
-    console.log()
+
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
-      $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
-      $($event.target).addClass('active-data-right-column-link');
       // Remove active element
       $scope.editElement = null;
       $scope.activeElement = {};
       $scope.errorText = '';
       $scope.section = section;
       $scope.activeData = $scope.data[$scope.section];
-      $scope.filterData = 'name';
-      console.log($scope.filterData);
 
-      // Update form centering for talent form
-      if ($scope.section === 'Talent') {
-        $scope.filterData = 'last_name';
-        $('.data-form-container').css('width', '530px');
-      } else {
-        $('.data-form-container').css('width', '260px');
+      if ($event) {
+        $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
+        $($event.target).addClass('active-data-right-column-link');
+        
+        // Sort all data types by name except for talent which is sorted by last name
+        $scope.filterData = 'name';
+
+        // Update form centering for talent form
+        if ($scope.section === 'Talent') {
+          $scope.filterData = 'last_name';
+          $('.data-form-container').css('width', '530px');
+        } else {
+          $('.data-form-container').css('width', '260px');
+        }
       }
     };
 
@@ -35,18 +39,15 @@
 
       // if element clicked is currently active, make it inactive and clear out form data
       if ($($event.target).hasClass('active-element')) {
-        $($event.target).removeClass('active-element');
         $scope.editElement = null;
         $scope.activeElement = {};
       } 
       // otherwise, remove active from other element in case another element is active and set form data
       else {
         $('.active-element').removeClass('active-element');
-        $($event.target).addClass('active-element');
         $scope.editElement = element;
         activeElementSetter[$scope.section]();
       }
-     
     };
 
     $scope.deleteElement = function() {
@@ -55,19 +56,22 @@
       }
     };
 
+    $scope.clearForm = function() {
+      $scope.editElement = null;
+      $scope.activeElement = {};
+    };
+
 
 
 
     // This contains functions for fetching the data to the forms for editing
     var activeElementSetter = {
       Role: function() {
-        $scope.editElement = $scope.editElement;
         for (var key in $scope.editElement) {
           $scope.activeElement[key] = $scope.editElement[key];
         }
       },
       Genre: function() {
-        $scope.editElement = $scope.editElement;
         for (var key in $scope.editElement) {
           $scope.activeElement[key] = $scope.editElement[key];
         }
@@ -290,5 +294,21 @@
     $scope.submitData = function() {
       dataSubmitter[$scope.section]();
     };
+
+    // If parameter data is passed in, we want to show the right data when the page loads
+    if (!!$stateParams.section) {
+      // Set section and element id, push data into form
+      $scope.section = $stateParams.section;
+      $scope.editElement = {id: $stateParams.id};
+      activeElementSetter[$scope.section]();
+
+    // Otherwise show Talent by default
+    } else {
+      // Temporary work around for getting Talent data to show on load
+      setTimeout(function() {
+        $scope.updateActiveSection(null, 'Talent');
+        $scope.$apply();
+      }, 200);
+    }
   });
 })();

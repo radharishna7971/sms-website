@@ -63,10 +63,10 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.string('phone', 50);
       talent.string('gender', 50);
       talent.string('location', 50);
-      talent.integer('primary_role_id', 50).unsigned().references('roles.id');
-      talent.integer('secondary_role_id', 50).unsigned().references('roles.id');
-      talent.integer('primary_genre_id', 50).unsigned().references('genres.id');
-      talent.integer('secondary_genre_id', 50).unsigned().references('genres.id');
+      talent.integer('primary_role_id').unsigned().references('roles.id');
+      talent.integer('secondary_role_id').unsigned().references('roles.id');
+      talent.integer('primary_genre_id').unsigned().references('genres.id');
+      talent.integer('secondary_genre_id').unsigned().references('genres.id');
       talent.string('photo_url', 200);
       talent.string('imdb_url', 100);
       talent.string('linkedin_url', 100);
@@ -89,6 +89,8 @@ db.knex.schema.hasTable('credits').then(function(exists) {
     db.knex.schema.createTable('credits', function(credit) {
       credit.increments('id').primary();
       credit.string('name', 75);
+      credit.string('type', 75);
+      credit.integer('genre_id').unsigned().references('genres.id');
       credit.date('release_date');
       credit.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
@@ -134,6 +136,8 @@ db.knex.schema.hasTable('talent_credit_join').then(function(exists) {
       join.increments('id').primary();
       join.integer('talent_id').unsigned().references('talent.id');
       join.integer('credit_id').unsigned().references('credits.id');
+      join.integer('role_id').unsigned().references('roles.id');
+      join.string('type', 100);
       join.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
       console.log('Created Talent Credit Join Table');
@@ -151,6 +155,9 @@ var Role = exports.Role = db.Model.extend({
   tableName: 'roles',
   talent: function() {
     return this.hasMany(Talent);
+  },
+  talentCreditJoin: function() {
+    this.hasMany(TalentCreditJoin);
   }
 });
 
@@ -196,6 +203,9 @@ var Genre = exports.Genre = db.Model.extend({
   tableName: 'genres',
   talent: function() {
     return this.hasMany(Talent);
+  },
+  credit: function() {
+    return this.hasMany(Credit);
   }
 });
 
@@ -203,6 +213,9 @@ var Credit = exports.Credit = db.Model.extend({
   tableName: 'credits',
   talentCreditJoin: function() {
     this.hasMany(TalentCreditJoin);
+  },
+  genre: function() {
+    this.belongsTo(Genre, 'genre_id');
   }
 });
 
@@ -231,6 +244,9 @@ var TalentCreditJoin = exports.TalentCreditJoin = db.Model.extend({
   },
   credit: function() {
     this.belongsTo(Credit, 'credit_id');
+  },
+  role: function() {
+    this.belongsTo(Role, 'role_id');
   }
 });
 

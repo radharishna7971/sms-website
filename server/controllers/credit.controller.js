@@ -11,12 +11,16 @@ exports.getNames = function(req, res) {
 exports.getCredit = function(req, res) {
   Credit.get(req.query.id, function(result) {
     res.json(result);
-  })
+  });
 };
 
 exports.addOrEdit = function(req, res) {
-  // Convert date format to be SQL-friendly
-  req.body.release_date = new Date(req.body.release_date).toMysqlFormat();
+
+  // Convert date format to be SQL-friendly if date was submitted
+  if (req.body.hasOwnProperty('release_date')) {
+     req.body.release_date = new Date(req.body.release_date).toMysqlFormat();
+  }
+ 
   Credit.addOrEdit(req.body, function(err, result) {
     if (!err) {
       res.json(result);

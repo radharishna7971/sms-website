@@ -7,10 +7,11 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Genre')">GENRE</div>
   </div>
   <div class="data-left-column-data">
-    <div class="data-left-column-data-row" ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)">{{element.name}}</div>
+    <div class="data-left-column-data-row" ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}">{{element.name}}</div>
   </div>
 </div>
 <div class="data-main-section">
+  <div class="new-button" ng-hide="!editElement" ng-click="clearForm()">New</div>
   <div class="delete-button" ng-hide="!editElement" ng-click="deleteElement()">Delete</div>
   <h1 class="data-form-title">{{section}} Form - <span ng-show="!editElement">New</span><span ng-hide="!editElement">Edit</span></h1>
   <p class="data-main-error-text">{{errorText}}</p>
@@ -19,7 +20,7 @@
     <!-- ROLE FORM -->
     <form ng-show="section==='Role'">
       <input class="id-input" ng-model="activeElement.id" type="text">
-      <p class="input-label">Name (Required)</p>
+      <p class="input-label">Role Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
       <input class="data-input data-submit" ng-click="submitData()" type="submit">
     </form>
@@ -27,7 +28,7 @@
     <!-- GENRE FORM -->
     <form ng-show="section==='Genre'">
       <input class="id-input " ng-model="activeElement.id" type="text">
-      <p class="input-label">Name (Required)</p>
+      <p class="input-label">Genre Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
       <input class="data-input data-submit" ng-click="submitData()" type="submit">
     </form>
@@ -35,10 +36,17 @@
     <!-- CREDIT FORM -->
     <form ng-show="section==='Credit'">
       <input class="id-input" ng-model="activeElement.id" type="text">
-      <p class="input-label">Name (Required)</p>
+      <p class="input-label">Credit Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
-      <p class="input-label">Release Date (Required)</p>
-      <input class="data-input" ng-model="activeElement.release_date" type="date" required="true">
+      <p class="input-label">Type</p>
+      <input class="data-input" ng-model="activeElement.type" type="text">
+      <p class="input-label">Genre</p>
+      <select class="data-input select-input" ng-model="activeElement.genre_id">
+        <option></option>
+        <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
+      </select>
+      <p class="input-label">Release Date</p>
+      <input class="data-input" ng-model="activeElement.release_date" type="date">
       <input class="data-input data-submit" ng-click="submitData()" type="submit">
     </form>
 
@@ -93,7 +101,6 @@
           <option></option>
           <option ng-repeat="talent in data.Talent | orderBy : 'name'" value="{{talent.id}}" ng-hide="{{talent.id}} === editElement.id">{{talent.name}}</option>
         </select>
-        <input class="data-input data-submit" ng-click="submitData()" type="submit">
       </div>
       <div class="talent-column">
         <p class="input-label">Primary Role</p>
@@ -128,6 +135,7 @@
         <input class="data-input" ng-model="activeElement.vine_url" type="text">
         <p class="input-label">Instagram Url</p>
         <input class="data-input" ng-model="activeElement.instagram_url" type="text">
+        <input class="data-input data-submit" ng-click="submitData()" type="submit">
       </div>
     </form>
   </div>

@@ -77,6 +77,7 @@
       }).state('data', {
         url: '/private/data-entry',
         authenticate: true,
+        params : {section: null, id: null},
         views: {
           content: {
             templateUrl: 'app/components/dataEntry/dataEntry.html',
@@ -101,18 +102,20 @@
   }
 
   function run($rootScope, $state, authFactory, topnavDirective, $location) {
-    /* If user is not logged in, redirect to home page if private is not in url, otherwise redirect to login */
+    // If user is not logged in, redirect to home page if private is not in url, otherwise redirect to login 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       authFactory.loggedIn(function(status) {
+        // If state requires authentication and user is not authenticated, redirect to landing
         if (toState.authenticate && !status) {
           $location.path('landing');
+        // If state should redirect if user is logged in and user is logged in
         } else if (toState.redirect && status) {
           $location.path('private/home');
+        // Else show top nav
         } else if (toState.authenticate) {
           $('#topnav').show();
         }
       });
-
     });
     
   }

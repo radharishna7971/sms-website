@@ -99,6 +99,7 @@
       <div class="talent-pic" style="background-image: url({{mainTalent.photo_url}})"></div>
       <div class="talent-contact-info">
         <p class="talent-name">{{mainTalent.name}}</p>
+        <img ui-sref="data({section:'Talent', id: mainTalent.id})" class="edit-button" src="../../assets/img/edit-icon.png">
         <p class="talent-contact">{{mainTalent.email}}</p>
         <p class="talent-contact">{{mainTalent.phone}}</p>
       </div>
