@@ -1,17 +1,17 @@
 /* Main content */
-.talent-main-container {
+.youtube-main-container {
   position: fixed;
   top: 48px;
   left: 0px;
-  width: calc(100% - 351px);
+  width: calc(100% - 501px);
   height: 100%;
   overflow-x: hidden;
   font-size: 13px;
-  min-width: 750px;
+  min-width: 600px;
   overflow: hidden;
 }
 
-.talent-left-col {
+.youtube-left-col {
   height: 100%;
   width: 174px;
   float: left;
@@ -85,14 +85,14 @@
   margin-right: 5px;
 }
 
-.talent-table, .talent-table-row, .talent-table-column {
+.youtube-table, .youtube-table-row, .youtube-table-column {
    /*border-top: 1px solid black;*/
    border-bottom: 1px solid black;
    border-collapse:collapse;
    table-layout: fixed;
 }
 
-.talent-center-div {
+.youtube-center-div {
   overflow-x: hidden;
   overflow-y: scroll;
   height: -moz-calc(100% - 48px);
@@ -102,66 +102,53 @@
   border-left: 1px solid grey;
 }
 
-.talent-table {
+.channel-row {
   width: 100%;
+  height: 75px;
+  border-bottom: 1px solid grey;
+}
+
+.channel-thumbnail {
+  width: 55px;
+  height: 55px;
+  margin: 10px;
   float: left;
 }
 
-.talent-table-header {
-  background-color: #66B3F1;
-  cursor: pointer;
-}
+.channel-row-content {
+  float: left;
+  width: -moz-calc(100% - 95px);
+  width: -webkit-calc(100% - 95px);
+  width: calc(100% - 95px);
+  height: 55px;
+  padding: 10px;
 
-.talent-table-content {
-  overflow-y:scroll;
-  height: -moz-calc(100% - 48px - 34px);
-  height: -webkit-calc(100% - 48px - 34px);
-  height: calc(100% - 48px - 34px);
-}
 
-.talent-table-header td {
-  color: white;
-  height: 30px;
-  text-align: center;
-}
-
-.talent-table-row {
-  padding-left: 3px;
-  height: 30px;
-  cursor: pointer;
-}
-
-.talent-table-row:hover {
-  background-color: #E4FDE7;
-}
-
-.active-talent {
-  background-color: #E4FDE7;
 }
 
 /* Right content */
 
 /* Top section */
-.talent-right-container {
+.youtube-right-container {
   float: right;
   height: -moz-calc(100% - 48px);
   height: -webkit-calc(100% - 48px);
   height: calc(100% - 48px);
-  width: 350px;
+  width: 500px;
   background-color: #EDEDED;
   padding-top: 5px;
   position: relative;
   z-index: -100;
 }
 
-.talent-right-container-top-div {
+.youtube-right-container-top-div {
   width: 100%;
   height: 100px;
   padding-left: 5px;
   margin-bottom: 10px;
 }
 
-.talent-pic {
+.youtube-pic {
   border-radius: 100%;
   border: 1px solid grey;
   margin-right: 10px;
@@ -170,7 +157,7 @@
   background-size: 98px 98px;
   float: left;
 }
-.talent-contact-info {
+.youtube-contact-info {
   width: calc(100% - 120px);
   height: 90px;
   margin-top: 10px;
@@ -178,7 +165,7 @@
   clear: right;
 }
 
-.talent-name {
+.youtube-name {
   font-size: 24px;
   font-weight: 400;
   float: left;
@@ -193,11 +180,11 @@
   float: left;
 }
 
-.talent-contact {
+.youtube-contact {
   clear: both;
 }
 
-.right-talent-container-menu {
+.right-youtube-container-menu {
   width: 317px;
   height: 25px;
   margin-left: auto;
@@ -207,7 +194,7 @@
 }
 
 /* Menu */
-.right-talent-container-menu-link {
+.right-youtube-container-menu-link {
   float: left;
   width: 105px;
   height: 25px;
@@ -233,97 +220,23 @@
   border-bottom-right-radius: 8px;
 }
 
-.right-talent-container-menu-link:hover {
+.right-youtube-container-menu-link:hover {
   background-color: #66B3F1;
   color: white;
 }
 
-.active-talent-link {
+.active-youtube-link {
   background-color: #66B3F1;
   color: white;
 }
 
 
 /* Bottom content */
-.talent-right-container-other-div {
+.youtube-right-container-other-div {
   width: 100%;
   height: 100%;
   padding-left: 5px;
 }
 
-.comment-div {
-  margin-bottom: 5px;
-  clear: left;
-}
-.comment-name {
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.comment-date {
-  font-size: 12px;
-}
-
-
-.comment-text {
-  font-size: 14px;
-}
-
-.comments-container {
-  width: 100%;
-  padding-bottom: 150px;
-  overflow: scroll;
-}
-
-.delete-comment-button {
-  background-color: #E88080;
-  width: 12px;
-  height: 12px;
-  border-radius: 100%;
-  color: white;
-  position: absolute;
-  font-size: 12px;
-  text-align: center;
-  line-height: 12px;
-  left: 320px;
-  margin-top: 5px;
-  cursor: pointer;
-}
-
-.comment-box {
-  width: 100%;
-  height: 150px;
-  margin-left: -5px;
-  position: absolute;
-  bottom: 0px;
-}
-
-.comment-input {
-  outline: none;
-  border: none;
-  border: 1px solid #66B3F1;
-  height: 103px;
-  width: 338px;
-  padding: 5px;
-  margin: 0px;
-  font-size: 14px;
-  resize: none;
-}
-
-.comment-submit {
-  /*clear: both;*/
-  outline: none;
-  height: 35px;
-  background-size: red;
-  width: 100%;
-  border: none;
-  color: white;
-  background-color: #66B3F1;
-  line-height: 35px;
-  font-size: 14px;
-  padding: 0px;
-  cursor: pointer;
-  margin-top: -10px;
-}
 
 

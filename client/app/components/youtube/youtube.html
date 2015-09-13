@@ -1,0 +1,37 @@
+<div class="youtube-main-container">
+  <div class="youtube-left-col">
+    <form>
+      <div class="filter-header-container">
+        <p class="filter-header">Channel</p>
+      </div>
+      <input class="filter-text-input" ng-model="channel" type="text" col="channel" />
+      
+      <div class="filter-header-container">
+        <p class="filter-header">Gender</p>
+      </div>
+      <!-- <input type="range" name="points" id="points" value="50" min="0" max="100"> -->
+
+      <p><span class="check-toggle" ng-click="clearAll()">Clear All</span></p>
+
+      <input type="submit" ng-click="findChannel($event)">
+  
+    </form>
+  </div>
+
+
+
+  <div class="youtube-center-div">
+    <div ng-show="results" class="channel-row">
+      <img class="channel-thumbnail" src="{{results.thumbnail}}" />
+      <div class="channel-row-content">
+        <p>{{results.display}}</p>
+        <p>Views: {{results.video_views}}</p>
+        <p>Subscribers: {{results.subscribers}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="youtube-right-container">
+
+</div>

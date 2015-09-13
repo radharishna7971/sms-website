@@ -16,4 +16,7 @@
   app.get('/private/data-entry', function(req, res) {
     res.redirect('/#/private/data-entry');
   });
+  app.get('/private/youtube', function(req, res) {
+    res.redirect('/#/private/youtube');
+  });
  };

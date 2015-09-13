@@ -11,6 +11,8 @@
     'talentController',
     'usersController',
     'dataEntryController',
+    'youtubeController',
+
 
     // Shared
     'authFactory',
@@ -19,6 +21,7 @@
     'creditFactory',
     'roleFactory',
     'genreFactory',
+    'youtubeFactory',
     'commentFactory',
     'topnavDirective'
   ])
@@ -82,6 +85,15 @@
           content: {
             templateUrl: 'app/components/dataEntry/dataEntry.html',
             controller: 'dataEntryController'
+          }
+        }
+      }).state('youtube', {
+        url: '/private/youtube',
+        authenticate: true,
+        views: {
+          content: {
+            templateUrl: 'app/components/youtube/youtube.html',
+            controller: 'youtubeController'
           }
         }
       }).state('users', {
