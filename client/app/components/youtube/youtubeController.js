@@ -7,7 +7,6 @@
       // $($event).preventDefault();
 
       if ($scope.channel) {
-        console.log("A");
         youtubeFactory.findChannelByName($scope.channel, function(data) {
           console.log(data);
           $scope.results = data;
