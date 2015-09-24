@@ -2,13 +2,24 @@
   'use strict';
   angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory'])
   .controller('talentController', function($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory) {
+
+    ///////////////////////////////
+    /// Initialize View
+    ///////////////////////////////
     talentFactory.getAll(function(data) {
       $scope.talent = data;
+      $scope.talentCount = data.length;
+      $scope.visibleTalent = data.length;
     });
+
     $scope.mainTalent = false;
     $scope.activeSection = 'info';
     $scope.filterColumn = 'last_name';
     $scope.deletedComments = 0;
+
+
+
+    
 
     $scope.updateMainTalent = function($event, talentId) {
       $scope.deletedComments = 0;
@@ -27,6 +38,7 @@
       // Add active-talent class to the row that was clicked on
       $($event.target).parent().addClass('active-talent');
     };
+
     $scope.updateTalentSection = function($event, section) {
       $('.right-talent-container-menu-link').removeClass('active-talent-link');
       $($event.target).addClass('active-talent-link');
@@ -42,6 +54,12 @@
        $scope.filterData[element.attr('col')]['*'] = false;
        $('.all-option[col="' + element.attr('col') + '"]').prop('checked', false);
       }
+
+      setTimeout(function() {
+        $scope.visibleTalent = $('.talent-table-row').length;
+        $scope.$apply();
+      }, 100);
+       
 
     };
 
@@ -110,11 +128,21 @@
 
     // Changes the ordering of visible data
     $scope.changeOrder = function(column) {
+      console.log($scope.filterColumn);
       if ($scope.filterColumn === column) {
         $scope.filterColumn = "-" + column;
+      } else if($scope.filterColumn === "-" + column) {
+        $scope.filterColumn = "last_name";
+
+        $('.active-column').removeClass('active-column');
+        $('td[col="last_name"]').addClass('active-column');
       } else {
         $scope.filterColumn = column;
+        $('.active-column').removeClass('active-column');
+        $('td[col="' + column + '"]').addClass('active-column');
       }
+
+
     };
 
     // Determines whether a talent matches text in Name or Location (if these fields are not blank)
@@ -142,11 +170,11 @@
     // Filter for talent
     $scope.talentFilter = function(talent) {
       return textChecker(talent)
-        // && ($scope.filterData['gender']['*'] || $scope.filterData['gender'][talent.gender])
         && ($scope.filterData.primary_role['*'] || $scope.filterData.primary_role[talent.primary_role])
         && ($scope.filterData.secondary_role['*'] || $scope.filterData.secondary_role[talent.secondary_role])
         && ($scope.filterData.primary_genre['*'] || $scope.filterData.primary_genre[talent.primary_genre])
-        && ($scope.filterData.secondary_genre['*'] || $scope.filterData.secondary_genre[talent.secondary_genre]);
+        && ($scope.filterData.secondary_genre['*'] || $scope.filterData.secondary_genre[talent.secondary_genre])
+        ;
     };
 
     $scope.submitComment = function() {
@@ -171,8 +199,14 @@
 
     // Expand/collapse checkbox containers
     $(document).on('click', '.filter-header-container', function() {
-      $(this).next('.filter-option-container').slideToggle();
+      if ($(this).next('.filter-option-container').is(':visible')) {
+        $(this).next('.filter-option-container').hide();
+      } else {
+        $(this).next('.filter-option-container').show();
+      }
+      // $(this).next('.filter-option-container').slideToggle();
       $(this).find('.arrow').toggleClass('arrow-down');
     });
+
   });
 })();

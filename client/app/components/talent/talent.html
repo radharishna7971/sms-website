@@ -1,71 +1,76 @@
 <div class="talent-main-container">
   <div class="talent-left-col">
-    <div class="filter-header-container">
-      <p class="filter-header">Name</p>
+    <div class="match-output">
+      {{visibleTalent}}/{{talentCount}}
     </div>
-    <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="name" />
-    <div class="filter-header-container">
-      <p class="filter-header">Location</p>
-    </div>
-    <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="location" />
-    <div class="filter-header-container">
-      <p class="filter-header">Partner</p>
-    </div>
-    <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="partner" />
-    <p><span class="check-toggle" ng-click="checkAll()">Check All</span> | <span class="check-toggle" ng-click="uncheckAll()">Uncheck All</span></p>
-    <!-- <div class-"filter-div">
+    <div class="talent-left-col-container">
+      <div class="filter-header-container">
+        <p class="filter-header">Name</p>
+      </div>
+      <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="name" />
+      <div class="filter-header-container">
+        <p class="filter-header">Location</p>
+      </div>
+      <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="location" />
+      <div class="filter-header-container">
+        <p class="filter-header">Partner</p>
+      </div>
+      <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="partner" />
+      <p><span class="check-toggle" ng-click="checkAll()">Check All</span> | <span class="check-toggle" ng-click="uncheckAll()">Uncheck All</span></p>
+      <!-- <div class-"filter-div">
+        <div class="filter-header-container clickable">
+          <p class="filter-header">Gender</p>
+          <div class="arrow arrow-right arrow-down"></div>
+        </div>
+        <div class="filter-option-container">
+          <div>
+            <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="gender" value="*" checked>All<br>
+            <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="gender" value="Male" unchecked>Male<br>
+            <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="gender" value="Female" unchecked>Female<br>
+          </div>
+        </div>
+      </div> -->
       <div class="filter-header-container clickable">
-        <p class="filter-header">Gender</p>
+        <p class="filter-header">Primary Role</p>
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div class="filter-option-container">
-        <div>
-          <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="gender" value="*" checked>All<br>
-          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="gender" value="Male" unchecked>Male<br>
-          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="gender" value="Female" unchecked>Female<br>
+        <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
+        <div ng-repeat="role in data.Role | orderBy : 'name'">
+          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+        </div>
+        
+      </div>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Secondary Role</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div class="filter-option-container">
+        <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="*" checked>All<br>
+        <div ng-repeat="role in data.Role | orderBy : 'name'">
+
+          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
         </div>
       </div>
-    </div> -->
-    <div class="filter-header-container clickable">
-      <p class="filter-header">Primary Role</p>
-      <div class="arrow arrow-right arrow-down"></div>
-    </div>
-    <div class="filter-option-container">
-      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
-      <div ng-repeat="role in data.Role | orderBy : 'name'">
-        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Primary Genre</p>
+        <div class="arrow arrow-right arrow-down"></div>
       </div>
-      
-    </div>
-    <div class="filter-header-container clickable">
-      <p class="filter-header">Secondary Role</p>
-      <div class="arrow arrow-right arrow-down"></div>
-    </div>
-    <div class="filter-option-container">
-      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="*" checked>All<br>
-      <div ng-repeat="role in data.Role | orderBy : 'name'">
-
-        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+      <div class="filter-option-container">
+        <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
+        <div ng-repeat="genre in data.Genre | orderBy : 'name'">
+          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+        </div>
       </div>
-    </div>
-    <div class="filter-header-container clickable">
-      <p class="filter-header">Primary Genre</p>
-      <div class="arrow arrow-right arrow-down"></div>
-    </div>
-    <div class="filter-option-container">
-      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
-      <div ng-repeat="genre in data.Genre | orderBy : 'name'">
-        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Secondary Genre</p>
+        <div class="arrow arrow-right arrow-down"></div>
       </div>
-    </div>
-    <div class="filter-header-container clickable">
-      <p class="filter-header">Secondary Genre</p>
-      <div class="arrow arrow-right arrow-down"></div>
-    </div>
-    <div class="filter-option-container">
-      <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="*" checked>All<br>
-      <div ng-repeat="genre in data.Genre | orderBy : 'name'">
-        <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+      <div class="filter-option-container">
+        <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="*" checked>All<br>
+        <div ng-repeat="genre in data.Genre | orderBy : 'name'">
+          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="secondary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+        </div>
       </div>
     </div>
   </div>
@@ -81,13 +86,13 @@
           <td class="talent-col-width" ng-click="changeOrder('location')">Location</td>
         </tr>
         <tr ng-repeat="person in talent |  orderBy : filterColumn | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent($event, person.id)">
-          <td class="row-table-colum talent-col-width center">{{person.name}}</td>
-          <td class="row-table-colum talent-col-width center">{{person.primary_role}}</td>
-          <td class="row-table-colum talent-col-width center">{{person.secondary_role}}</td>
-          <td class="row-table-colum talent-col-width center">{{person.primary_genre}}</td>
-          <td class="row-table-colum talent-col-width center">{{person.secondary_genre}}</td>
-          <td class="row-table-colum talent-col-width center">{{person.partner}}</td>
-          <td class="row-table-colum talent-col-width center">{{person.location}}</td>
+          <td class="row-table-colum talent-col-width center active-column" col="last_name">{{person.name}}</td>
+          <td class="row-table-colum talent-col-width center" col="primary_role">{{person.primary_role}}</td>
+          <td class="row-table-colum talent-col-width center" col="secondary_role">{{person.secondary_role}}</td>
+          <td class="row-table-colum talent-col-width center" col="primary_genre">{{person.primary_genre}}</td>
+          <td class="row-table-colum talent-col-width center" col="secondary_genre">{{person.secondary_genre}}</td>
+          <td class="row-table-colum talent-col-width center" col="partner">{{person.partner}}</td>
+          <td class="row-table-colum talent-col-width center" col="location">{{person.location}}</td>
         </tr>
       </table>
   </div>
