@@ -206,7 +206,15 @@
       }
       // $(this).next('.filter-option-container').slideToggle();
       $(this).find('.arrow').toggleClass('arrow-down');
+
+      $('.talent-left-col-container').hide();
+      $('.talent-left-col-container').show();
     });
+
+    setTimeout(function() {
+      console.log($('.talent-left-col-container').css('height'));
+
+    })
 
   });
 })();
