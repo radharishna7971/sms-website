@@ -20,7 +20,7 @@
 
 
     
-
+    // Adds talent content into right div
     $scope.updateMainTalent = function($event, talentId) {
       $scope.deletedComments = 0;
       talentFactory.talentProfile(talentId, function(result) {
@@ -54,17 +54,12 @@
        $scope.filterData[element.attr('col')]['*'] = false;
        $('.all-option[col="' + element.attr('col') + '"]').prop('checked', false);
       }
-
-      setTimeout(function() {
-        $scope.visibleTalent = $('.talent-table-row').length;
-        $scope.$apply();
-      }, 100);
-       
-
+      updateVisibleCount();
     };
 
     $scope.updateFiltersKeyUp = function($event) {
       $scope.filterData[$($event.target).attr('col')] = $($event.target).val();
+      updateVisibleCount();
     };
 
     $scope.filterData = {
@@ -128,21 +123,22 @@
 
     // Changes the ordering of visible data
     $scope.changeOrder = function(column) {
-      console.log($scope.filterColumn);
+      // If you click the column that is already being used to filter
       if ($scope.filterColumn === column) {
+        // Reverse the filter
         $scope.filterColumn = "-" + column;
+      // If you are already filtering by the inverse, reset the filter to last_name (default)
       } else if($scope.filterColumn === "-" + column) {
         $scope.filterColumn = "last_name";
-
-        $('.active-column').removeClass('active-column');
-        $('td[col="last_name"]').addClass('active-column');
+        // Reset active header color to the name column
+        $('.active-header').removeClass('active-header');
+        $('.col-header[col="last_name"]').addClass('active-header');
       } else {
         $scope.filterColumn = column;
-        $('.active-column').removeClass('active-column');
-        $('td[col="' + column + '"]').addClass('active-column');
+        // Change header color to new column being used to sort
+        $('.active-header').removeClass('active-header');
+        $('.col-header[col="' + column + '"]').addClass('active-header');
       }
-
-
     };
 
     // Determines whether a talent matches text in Name or Location (if these fields are not blank)
@@ -194,6 +190,14 @@
     };
 
 
+    // Updates visible talent count on th upper left 
+    var updateVisibleCount = function() {
+      setTimeout(function() {
+        $scope.visibleTalent = $('.talent-table-row').length;
+        $scope.$apply();
+      }, 100);
+     
+    };
 
     // JQuery
 
@@ -211,10 +215,7 @@
       $('.talent-left-col-container').show();
     });
 
-    setTimeout(function() {
-      console.log($('.talent-left-col-container').css('height'));
 
-    })
 
   });
 })();

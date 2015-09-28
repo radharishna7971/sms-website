@@ -23,6 +23,7 @@
 
 .talent-left-col-container {
   padding-left: 5px;
+  margin-bottom: 100px;
 }
 
 .match-output {
@@ -33,7 +34,7 @@
   color: white;
   line-height: 34px;
   text-align: center;
-  font-size: 20px;
+  /*font-size: 20px;*/
   margin-bottom: 5px;
 }
 
@@ -344,4 +345,8 @@
 
 .active-column {
   background-color: #E4FDE7;
+}
+
+.active-header {
+  background-color: #A8CEEC;
 }

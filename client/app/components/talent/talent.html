@@ -12,11 +12,11 @@
         <p class="filter-header">Location</p>
       </div>
       <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="location" />
-      <div class="filter-header-container">
+  <!--     <div class="filter-header-container">
         <p class="filter-header">Partner</p>
       </div>
       <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="partner" />
-      <p><span class="check-toggle" ng-click="checkAll()">Check All</span> | <span class="check-toggle" ng-click="uncheckAll()">Uncheck All</span></p>
+ -->      <p><span class="check-toggle" ng-click="checkAll()">Check All</span> | <span class="check-toggle" ng-click="uncheckAll()">Uncheck All</span></p>
       <!-- <div class-"filter-div">
         <div class="filter-header-container clickable">
           <p class="filter-header">Gender</p>
@@ -77,16 +77,16 @@
   <div class="talent-center-div">
       <table class="talent-table">
         <tr class="talent-table-header">
-          <td class="talent-col-width" ng-click="changeOrder('last_name')" >Name</td>
-          <td class="talent-col-width" ng-click="changeOrder('primary_role')">Primary Role</td>
-          <td class="talent-col-width" ng-click="changeOrder('secondary_role')">Secondary Role</td>
-          <td class="talent-col-width" ng-click="changeOrder('primary_genre')">Primary Genre</td>
-          <td class="talent-col-width" ng-click="changeOrder('secondary_genre')">Secondary Genre</td>
-          <td class="talent-col-width" ng-click="changeOrder('partner')">Partner</td>
-          <td class="talent-col-width" ng-click="changeOrder('location')">Location</td>
+          <td class="talent-col-width col-header active-header" col="last_name" ng-click="changeOrder('last_name')" >Name</td>
+          <td class="talent-col-width col-header" col="primary_role" ng-click="changeOrder('primary_role')">Primary Role</td>
+          <td class="talent-col-width col-header" col="secondary_role" ng-click="changeOrder('secondary_role')">Secondary Role</td>
+          <td class="talent-col-width col-header" col="primary_genre" ng-click="changeOrder('primary_genre')">Primary Genre</td>
+          <td class="talent-col-width col-header" col="secondary_genre" ng-click="changeOrder('secondary_genre')">Secondary Genre</td>
+          <td class="talent-col-width col-header" col="partner" ng-click="changeOrder('partner')">Partner</td>
+          <td class="talent-col-width col-header" col="location" ng-click="changeOrder('location')">Location</td>
         </tr>
         <tr ng-repeat="person in talent |  orderBy : filterColumn | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent($event, person.id)">
-          <td class="row-table-colum talent-col-width center active-column" col="last_name">{{person.name}}</td>
+          <td class="row-table-colum talent-col-width center" col="last_name">{{person.name}}</td>
           <td class="row-table-colum talent-col-width center" col="primary_role">{{person.primary_role}}</td>
           <td class="row-table-colum talent-col-width center" col="secondary_role">{{person.secondary_role}}</td>
           <td class="row-table-colum talent-col-width center" col="primary_genre">{{person.primary_genre}}</td>
