@@ -25,3 +25,7 @@
   float: left;
 }
 
+.active-page {
+  background-color: #656c7e;
+}
+

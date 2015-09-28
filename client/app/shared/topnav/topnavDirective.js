@@ -9,6 +9,12 @@
         $scope.logout = function() {
           authFactory.logout();
         };
+      },
+      link: function() {
+        $('.topnav-button').on('click', function() {
+          $('.active-page').removeClass('active-page');
+          $(this).addClass('active-page');
+        });
       }
     };
   });
