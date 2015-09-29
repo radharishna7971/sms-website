@@ -29,7 +29,7 @@
           data: creditData
         }).then(function(res) {
           callback(res.data);
-        })
+        });
       },
       deleteCredit: function(creditId, callback) {
         return $http({

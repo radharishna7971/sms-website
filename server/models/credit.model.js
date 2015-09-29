@@ -40,7 +40,7 @@ Credit.addOrEdit = function(creditData, callback) {
           credit.set(key, creditData[key]);
           credit.save();
         }
-        callback(null, {status: 'edit', id: credit.get('id'), name: credit.get('name')});
+        callback(null, {status: 'edit', text: 'Successfully edited credit', id: credit.get('id'), name: credit.get('name')});
 
       } else {
         return callback({status: 'error', text: "Credit already exists"});
@@ -55,13 +55,13 @@ Credit.addOrEdit = function(creditData, callback) {
             credit.save();
           }
           credit.save();
-          callback(null, {status: 'edit', id: credit.get('id'), name: credit.get('name')});
-        })
+          callback(null, {status: 'edit', text: 'Successfully edited credit', id: credit.get('id'), name: credit.get('name')});
+        });
       } else {
         new Credit(creditData)
         .save()
         .then(function(credit) {
-          callback(null, credit);
+          callback(null, {status: 'add', text: 'Created new credit', id: credit.get('id'), name: credit.get('name')});
         });
       }
     }

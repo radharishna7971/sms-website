@@ -27,13 +27,13 @@ Genre.addOrEdit = function(genreData, callback) {
         .then(function(genre) {
           genre.set('name', genreData.name);
           genre.save();
-          callback(null, {status: 'edit', id: genre.get('id'), name: genre.get('name')});
+          callback(null, {status: 'edit', text: 'Successfully edited genre', id: genre.get('id'), name: genre.get('name')});
         })
       } else {
         new Genre({name: genreData.name})
         .save()
         .then(function(genre) {
-          callback(null, genre);
+          callback(null, {status: 'add', text: 'Created new genre', id: genre.get('id'), name: genre.get('name')});
         });
       }
     }
@@ -46,7 +46,7 @@ Genre.remove = function(genreId, callback) {
   .then(function(genre) {
     if (genre) {
       genre.destroy();
-      return callback(true)
+      return callback(true);
     } else {
       return callback(false);
     }

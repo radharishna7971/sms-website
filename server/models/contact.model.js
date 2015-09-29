@@ -39,7 +39,7 @@ Contact.addOrEdit = function(contactData, callback) {
           contact.set(key, contactData[key]);
           contact.save();
         }
-        callback(null, {status: 'edit', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
+        callback(null, {status: 'edit', text: 'Successfully edited contact', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
 
       } else { // Otherwise the contact already exists
         return callback({status: 'error', text: "Contact already exists"});
@@ -54,13 +54,13 @@ Contact.addOrEdit = function(contactData, callback) {
             contact.save();
           }
           contact.save();
-          callback(null, {status: 'edit', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
+          callback(null, {status: 'edit', text: 'Successfully edited contact', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
         })
       } else {
         new Contact(contactData)
         .save()
         .then(function(contact) {
-          callback(null, {id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
+          callback(null, {status: 'add', text: 'New contact created', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
         });
       }
     }

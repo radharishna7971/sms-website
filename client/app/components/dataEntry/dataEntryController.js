@@ -110,16 +110,16 @@
         } else {
           $scope.errorText = '';
           roleFactory.addOrEdit($scope.activeElement, function(res) {
-            if (res.status === 'error') {
-              $scope.errorText = res.text;
-            } else if (res.status === 'edit') {
-              $scope.editElement.name = $scope.activeElement.name;
-            } else {
-              // Add new role to list and reset active role
-              $scope.data[$scope.section].push(res);
-              $scope.editElement = null;
-              $scope.activeElement = {};
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } else {
+                $scope.data[$scope.section].push(res);
+                $scope.editElement = null;
+                $scope.activeElement = {};
+              }
             }
+            $scope.errorText = res.text;
           });
         }
       },
@@ -129,16 +129,16 @@
         } else {
           $scope.errorText = '';
           genreFactory.addOrEdit($scope.activeElement, function(res) {
-            if (res.status === 'error') {
-              $scope.errorText = res.text;
-            } else if (res.status === 'edit') {
-              $scope.editElement.name = $scope.activeElement.name;
-            } else {
-              // Add new genre to list and reset active genre
-              $scope.data[$scope.section].push(res);
-              $scope.editElement = null;
-              $scope.activeElement = {};
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } else {
+                $scope.data[$scope.section].push(res);
+                $scope.editElement = null;
+                $scope.activeElement = {};
+              }
             }
+            $scope.errorText = res.text;
           });
         }
       },
@@ -148,16 +148,17 @@
         } else {
           $scope.errorText = '';
           creditFactory.addOrEdit($scope.activeElement, function(res) {
-            if (res.status === 'error') {
-              $scope.errorText = res.text;
-            } else if (res.status === 'edit') {
-              $scope.editElement.name = $scope.activeElement.name;
-            } else {
-              // Add new credit to list and reset active genre
-              $scope.data[$scope.section].push(res);
-              $scope.editElement = null;
-              $scope.activeElement = {};
+            console.log(res);
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } else {
+                $scope.data[$scope.section].push(res);
+                $scope.editElement = null;
+                $scope.activeElement = {};
+              }
             }
+            $scope.errorText = res.text;
           });
         }
       },
@@ -167,16 +168,16 @@
         } else {
           $scope.errorText = '';
           contactFactory.addOrEdit($scope.activeElement, function(res) {
-            if (res.status === 'error') {
-              $scope.errorText = res.text;
-            } else if (res.status === 'edit') {
-              $scope.editElement.name = res.name;
-            } else {
-              // Add new contact to list and reset active genre
-              $scope.data[$scope.section].push(res);
-              $scope.editElement = null;
-              $scope.activeElement = {};
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } else {
+                $scope.data[$scope.section].push(res);
+                $scope.editElement = null;
+                $scope.activeElement = {};
+              }
             }
+            $scope.errorText = res.text;
           });
         }
       },
@@ -191,18 +192,6 @@
             }
           }
           talentFactory.addOrEdit($scope.activeElement, function(res) {
-            console.log(res.status);
-            // if (res.status === 'error') {
-            //   $scope.errorText = res.text;
-            // } else if (res.status === 'edit') {
-            //   $scope.editElement.name = res.name;
-            // } else {
-            //   // Add new talent to list and reset active genre
-            //   $scope.data[$scope.section].push(res);
-            //   $scope.editElement = null;
-            //   $scope.activeElement = {};
-            // }
-
             if (res.status !== 'error') {
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
@@ -211,12 +200,9 @@
                 $scope.editElement = null;
                 $scope.activeElement = {};
               }
-              
             }
             $scope.errorText = res.text;
           });
-
-
         }
       }
     };

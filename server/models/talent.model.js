@@ -163,7 +163,7 @@ Talent.addOrEdit = function(talentData, callback) {
         talent.save()
         .then(function() {
           Talent.getName(talent.get('id'), function(name) {
-            callback(null, {status: 'edit', test: 'Successfully edited talent', id: talent.get('id'), name: name});
+            callback(null, {status: 'edit', text: 'Successfully edited talent', id: talent.get('id'), name: name});
           });
         })
  
@@ -183,7 +183,7 @@ Talent.addOrEdit = function(talentData, callback) {
           talent.save()
           .then(function() {
             Talent.getName(talent.get('id'), function(name) {
-              callback(null, {status: 'edit', test: 'Successfully edited talent', id: talent.get('id'), name: name});
+              callback(null, {status: 'edit', text: 'Successfully edited talent', id: talent.get('id'), name: name});
             });
           });
 

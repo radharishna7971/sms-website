@@ -28,13 +28,13 @@ Role.addOrEdit = function(roleData, callback) {
         .then(function(role) {
           role.set('name', roleData.name);
           role.save();
-          callback(null, {status: 'edit', id: role.get('id'), name: role.get('name')});
+          callback(null, {status: 'edit', text: 'Successfully edited role', id: role.get('id'), name: role.get('name')});
         });
       } else {
         new Role({name: roleData.name})
         .save()
         .then(function(role) {
-          callback(null, role);
+          callback(null, {status: 'add', text: 'Created new role', id: role.get('id'), name: role.get('name')});
         });
       }
     }
