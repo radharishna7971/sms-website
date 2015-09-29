@@ -3,6 +3,7 @@
   angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory'])
   .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory) {
     $scope.section = 'Talent'; // Represents current section
+    $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
     $scope.editElement = null; // contains data for element whose data is being edited in the form
@@ -15,6 +16,7 @@
       $scope.activeElement = {};
       $scope.errorText = '';
       $scope.section = section;
+      $scope.talentSection = 'main';
       $scope.activeData = $scope.data[$scope.section];
 
       if ($event) {
@@ -34,8 +36,15 @@
       }
     };
 
+    $scope.updateTalentForm = function($event) {
+      $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+      $($event.target).addClass('talent-form-menu-button-active');
+      $scope.talentSection = $($event.target).attr('talent-form-section');
+    };
+
     $scope.setActiveElement = function($event, element) {
       $scope.errorText = '';
+      $scope.talentSection = 'main';
 
       // if element clicked is currently active, make it inactive and clear out form data
       if ($($event.target).hasClass('active-element')) {
@@ -59,10 +68,8 @@
     $scope.clearForm = function() {
       $scope.editElement = null;
       $scope.activeElement = {};
+      $scope.talentSection = 'main';
     };
-
-
-
 
     // This contains functions for fetching the data to the forms for editing
     var activeElementSetter = {
@@ -174,7 +181,7 @@
         }
       },
       Talent: function() {
-        if (!checkInputs()) {
+        if (!checkInputs('talent')) {
           $scope.errorText = 'Please make sure all required fields are entered';
         } else {
           // Set blank values to null so they can be properly saved in database
@@ -184,17 +191,32 @@
             }
           }
           talentFactory.addOrEdit($scope.activeElement, function(res) {
-            if (res.status === 'error') {
-              $scope.errorText = res.text;
-            } else if (res.status === 'edit') {
-              $scope.editElement.name = res.name;
-            } else {
-              // Add new talent to list and reset active genre
-              $scope.data[$scope.section].push(res);
-              $scope.editElement = null;
-              $scope.activeElement = {};
+            console.log(res.status);
+            // if (res.status === 'error') {
+            //   $scope.errorText = res.text;
+            // } else if (res.status === 'edit') {
+            //   $scope.editElement.name = res.name;
+            // } else {
+            //   // Add new talent to list and reset active genre
+            //   $scope.data[$scope.section].push(res);
+            //   $scope.editElement = null;
+            //   $scope.activeElement = {};
+            // }
+
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } else {
+                $scope.data[$scope.section].push(res);
+                $scope.editElement = null;
+                $scope.activeElement = {};
+              }
+              
             }
+            $scope.errorText = res.text;
           });
+
+
         }
       }
     };
@@ -278,15 +300,27 @@
     };
 
     // Ensures all required inputs have data
-    var checkInputs = function() {
+    // Takes in an optional section.  If section is passed in, it means it is part of the talent form.  This is done to handle that fact that some required inputs might be hidden
+    var checkInputs = function(section) {
       var result = true;
-      $('input:visible, select:visible').each(function() {
+      if (!section) {
+        $('input:visible, select:visible').each(function() {
           if ($(this).attr('required')) {
             if ($(this).val() === null || $(this).val().length === 0) {
               result = false;
             }
           }
-      });
+        });
+      } else {
+        $('.talent-form').find('input, visible').each(function() {
+          if ($(this).attr('required')) {
+            if ($(this).val() === null || $(this).val().length === 0) {
+              result = false;
+            }
+          }
+        });
+      }
+      
       return result;
     };
 

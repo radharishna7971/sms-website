@@ -72,6 +72,7 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.string('linkedin_url', 100);
       talent.string('facebook_url', 100);
       talent.string('youtube_url', 100);
+      talent.string('twitter_url', 100);
       talent.string('vine_url', 100);
       talent.string('instagram_url', 100);
       talent.integer('manager_id').unsigned().references('contacts.id');

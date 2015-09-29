@@ -155,7 +155,6 @@ Talent.addOrEdit = function(talentData, callback) {
     // If talent exists for given email, check to see if the id matches
     if (talent) {
       // if the id matches, update talent info
-      console.log(talent.get('email'))
       if (talent.get('id') === talentData.id || talent.get('email') === null) {
         for (var key in talentData) {
           talent.set(key, talentData[key]);
@@ -164,7 +163,7 @@ Talent.addOrEdit = function(talentData, callback) {
         talent.save()
         .then(function() {
           Talent.getName(talent.get('id'), function(name) {
-            callback(null, {status: 'edit', id: talent.get('id'), name: name});
+            callback(null, {status: 'edit', test: 'Successfully edited talent', id: talent.get('id'), name: name});
           });
         })
  
@@ -184,7 +183,7 @@ Talent.addOrEdit = function(talentData, callback) {
           talent.save()
           .then(function() {
             Talent.getName(talent.get('id'), function(name) {
-              callback(null, {status: 'edit', id: talent.get('id'), name: name});
+              callback(null, {status: 'edit', test: 'Successfully edited talent', id: talent.get('id'), name: name});
             });
           });
 
@@ -194,7 +193,7 @@ Talent.addOrEdit = function(talentData, callback) {
         .save()
         .then(function(talent) {
           Talent.getName(talent.get('id'), function(name) {
-           callback(null, {id: talent.get('id'), name: name});
+           callback(null, {status: 'add', text: 'Added new talent', id: talent.get('id'), name: name});
           });
         });
       }
