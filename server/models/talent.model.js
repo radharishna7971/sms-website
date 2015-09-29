@@ -201,6 +201,11 @@ Talent.addOrEdit = function(talentData, callback) {
   });
 };
 
+// If parter
+Talent.matchPartner = function(parterId1, partnerId2) {
+
+}
+
 
 Talent.remove = function(talentId, callback) {
   new Talent({id: talentId})

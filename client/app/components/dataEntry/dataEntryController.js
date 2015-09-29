@@ -115,8 +115,9 @@
                 $scope.editElement.name = res.name;
               } else {
                 $scope.data[$scope.section].push(res);
-                $scope.editElement = null;
-                $scope.activeElement = {};
+                $scope.editElement = res;
+                $scope.editElement = res;
+                activeElementSetter[$scope.section]();
               }
             }
             $scope.errorText = res.text;
@@ -134,8 +135,9 @@
                 $scope.editElement.name = res.name;
               } else {
                 $scope.data[$scope.section].push(res);
-                $scope.editElement = null;
-                $scope.activeElement = {};
+                $scope.editElement = res;
+                $scope.editElement = res;
+                activeElementSetter[$scope.section]();
               }
             }
             $scope.errorText = res.text;
@@ -148,14 +150,14 @@
         } else {
           $scope.errorText = '';
           creditFactory.addOrEdit($scope.activeElement, function(res) {
-            console.log(res);
             if (res.status !== 'error') {
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
               } else {
                 $scope.data[$scope.section].push(res);
-                $scope.editElement = null;
-                $scope.activeElement = {};
+                $scope.editElement = res;
+                $scope.editElement = res;
+                activeElementSetter[$scope.section]();
               }
             }
             $scope.errorText = res.text;
@@ -173,8 +175,9 @@
                 $scope.editElement.name = res.name;
               } else {
                 $scope.data[$scope.section].push(res);
-                $scope.editElement = null;
-                $scope.activeElement = {};
+                $scope.editElement = res;
+                $scope.editElement = res;
+                activeElementSetter[$scope.section]();
               }
             }
             $scope.errorText = res.text;
@@ -197,8 +200,9 @@
                 $scope.editElement.name = res.name;
               } else {
                 $scope.data[$scope.section].push(res);
-                $scope.editElement = null;
-                $scope.activeElement = {};
+                $scope.editElement = res;
+                $scope.editElement = res;
+                activeElementSetter[$scope.section]();
               }
             }
             $scope.errorText = res.text;

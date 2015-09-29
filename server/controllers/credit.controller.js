@@ -23,7 +23,6 @@ exports.addOrEdit = function(req, res) {
  
   Credit.addOrEdit(req.body, function(err, result) {
     if (!err) {
-      console.log(result);
       res.json(result);
     } else {
       res.json(err);
