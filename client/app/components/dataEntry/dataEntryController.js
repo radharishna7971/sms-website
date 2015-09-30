@@ -197,6 +197,9 @@
             }
           }
 
+          // Add id to keep track of who created given talent
+          $scope.activeElement.created_by = window.localStorage.smstudiosId;
+
           talentFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
               if (res.status === 'edit') {

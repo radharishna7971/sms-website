@@ -78,6 +78,7 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.integer('manager_id').unsigned().references('contacts.id');
       talent.integer('agent_id').unsigned().references('contacts.id');
       talent.integer('partner_id').unsigned().references('talent.id');
+      talent.integer('created_by').unsigned().references('users.id');
       talent.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
       console.log('Created Talent Table');
@@ -197,6 +198,9 @@ var Talent = exports.Talent = db.Model.extend({
   },
   comments: function() {
     this.hasMany(Comment);
+  },
+  users: function() {
+    this.belongsTo(User);
   }
 });
 
@@ -224,6 +228,9 @@ var User = exports.User = db.Model.extend({
   tableName: 'users',
   comments: function() {
     return this.hasMany(Comment);
+  },
+  talent: function() {
+    return this.hasMany(Talent);
   }
 });
 

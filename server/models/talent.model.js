@@ -169,6 +169,9 @@ Talent.addOrEdit = function(talentData, callback) {
   .then(function(talent) {
     // If talent exists for given email, check to see if the id matches
     if (talent) {
+      // We don't want ot overwrite created_by
+      delete talentData.created_by;
+
       // if the id matches, update talent info
       if (talent.get('id') === talentData.id || talent.get('email') === null) {
         for (var key in talentData) {
@@ -191,6 +194,9 @@ Talent.addOrEdit = function(talentData, callback) {
         new Talent({id: talentData.id})
         .fetch()
         .then(function(talent) {
+          // We don't want ot overwrite created_by
+          delete talentData.created_by;
+          
           for (var key in talentData) {
             talent.set(key, talentData[key]);
             talent.save();
