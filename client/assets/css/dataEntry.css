@@ -75,7 +75,8 @@
 }
 
 .data-form-container {
-  height: (100%-48px);
+  /*height: (100%-48px);*/
+  height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
   margin-left: 20px;
@@ -200,4 +201,82 @@
 
 .talent-column:nth-of-type(1) {
   margin-right: 10px;
+}
+
+.talent-credit-select {
+  width: 260px;
+  height: 200px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.talent-credit-select-option {
+  padding: 5px;
+}
+
+.talent-credit-select:focus {
+  outline:none;
+}
+
+.talent-data-comments-container {
+  height: 100%;
+  width: 100%;
+}
+
+.talent-data-comments {
+  height: 60%;
+  width: 260px;
+  border: 1px solid #66B3F1;
+  float: left;
+  margin-right: 10px;
+  padding: 5px;
+  overflow-y: scroll;
+}
+
+.data-entry-comment-box {
+  float: left;
+  width: 260px;
+}
+
+.data-entry-comment-input {
+  outline: none;
+  border: none;
+  border: 1px solid #66B3F1;
+  height: 103px;
+  width: 248px;
+  padding: 5px;
+  margin: 0px;
+  font-size: 14px;
+  resize: none;
+}
+
+.data-entry-comment-submit {
+  outline: none;
+  height: 35px;
+  background-size: red;
+  width: 100%;
+  border: none;
+  color: white;
+  background-color: #66B3F1;
+  line-height: 35px;
+  font-size: 14px;
+  padding: 0px;
+  cursor: pointer;
+  margin-top: -4px;
+}
+
+.data-entry-delete-comment-button {
+  background-color: #E88080;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  color: white;
+  position: absolute;
+  font-size: 12px;
+  text-align: center;
+  line-height: 12px;
+  left: 275px;
+  margin-top: 5px;
+  cursor: pointer;
 }

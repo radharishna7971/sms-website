@@ -142,8 +142,23 @@ Talent.get = function(id, callback) {
     FROM talent \
     WHERE id = ' + id)
   .then(function(results) {
-     var data = results[0];
-     callback(data[0]);
+     var data = results[0][0];
+     db.knex.raw(' \
+       SELECT \
+         comments.text AS text, \
+         CONCAT(users.first_name, \' \', users.last_name) AS name, \
+         comments.created_at AS date, \
+         comments.id AS comment_id, \
+         talent.id AS talent_id \
+       FROM comments, talent, users \
+       WHERE comments.talent_id = talent.id \
+       AND comments.deleted = false \
+       AND comments.user_id = users.id \
+       AND talent.id = ' + data.id.toString())
+     .then(function(results) {
+      data.comments = results[0];
+      callback(data);
+     });
   });
 };
 

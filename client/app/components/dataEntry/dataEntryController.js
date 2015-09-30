@@ -1,7 +1,7 @@
 (function() {
   'use strict';
-  angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory'])
-  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory) {
+  angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'commentFactory'])
+  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory) {
     $scope.section = 'Talent'; // Represents current section
     $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
@@ -37,9 +37,11 @@
     };
 
     $scope.updateTalentForm = function($event) {
-      $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-      $($event.target).addClass('talent-form-menu-button-active');
-      $scope.talentSection = $($event.target).attr('talent-form-section');
+      if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
+        $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+        $($event.target).addClass('talent-form-menu-button-active');
+        $scope.talentSection = $($event.target).attr('talent-form-section');
+      }
     };
 
     $scope.setActiveElement = function($event, element) {
@@ -334,5 +336,23 @@
         $scope.$apply();
       }, 200);
     }
+
+    // Submit comment
+    $scope.submitComment = function() {
+      // If text is in the textarea, submit the new comment
+      if ($('.data-entry-comment-input').val() !== "") {
+        commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function(result) {
+          $scope.activeElement.comments.push(result);
+          //Once comment is added, append it to the comments-container and clear the textarea
+          $('.data-entry-comment-input').val('');
+        });
+      }
+    };
+
+    // Remove comment when delete button is clicked
+    $scope.removeComment = function($event, comment_id) {
+      $($event.target).parent().slideUp();
+      commentFactory.removeComment(comment_id);
+    };
   });
 })();

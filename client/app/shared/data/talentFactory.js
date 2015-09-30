@@ -39,7 +39,7 @@
           }
         }).then(function(res) {
           callback(res.data);
-        })
+        });
       },
       addOrEdit: function(talentData, callback) {
         return $http({
@@ -48,7 +48,7 @@
           data: talentData
         }).then(function(res) {
           callback(res.data);
-        })
+        });
       },
       deleteTalent: function(talentId, callback) {
         return $http({
