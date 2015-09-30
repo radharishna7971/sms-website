@@ -51,12 +51,7 @@
         $http({
           method: 'POST',
           url: 'api/auth/create',
-          data: {
-            first_name: userData.first_name,
-            last_name: userData.last_name,
-            email: userData.email,
-            password: userData.password
-          }
+          data: userData
         }).then(function(res) {
           return "Successfully created new user";
           }, function() {

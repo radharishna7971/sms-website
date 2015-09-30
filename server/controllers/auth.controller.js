@@ -22,6 +22,7 @@ exports.login = function(req, res) {
 
 exports.create = function(req, res) {
   var userData = req.body;
+  console.log(userData);
   User.create(userData, function(error, user) {
     if (error) {
       res.status(422);

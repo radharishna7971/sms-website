@@ -18,7 +18,9 @@
         $scope.errorText = "Password must be at least seven characters long";
       } else {
 
-        authFactor.crea
+        authFactory.createUser($scope.userData, function(user) {
+
+        });
       }
     };
 
