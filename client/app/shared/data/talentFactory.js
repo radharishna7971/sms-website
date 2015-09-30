@@ -42,6 +42,11 @@
         });
       },
       addOrEdit: function(talentData, callback) {
+        // Remove comments
+        if (talentData.hasOwnProperty('comments')) {
+          delete talentData.comments;
+        }
+
         return $http({
           method: 'POST',
           url: 'api/talent/add-edit',

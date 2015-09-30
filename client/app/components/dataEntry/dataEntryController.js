@@ -196,6 +196,7 @@
               $scope.activeElement[key] = null;
             }
           }
+
           talentFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
               if (res.status === 'edit') {

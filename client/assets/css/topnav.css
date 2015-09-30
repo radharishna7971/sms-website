@@ -2,6 +2,7 @@
   width: 100%;
   height: 48px;
   background-color: #2a2d33;
+  overflow: hidden;
 }
 
 .topnav-button {

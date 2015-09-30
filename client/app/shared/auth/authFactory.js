@@ -47,13 +47,15 @@
         $state.go('login');
       },
 
-      createUser: function(email, password) {
+      createUser: function(userData) {
         $http({
           method: 'POST',
           url: 'api/auth/create',
           data: {
-            email: email,
-            password: password
+            first_name: userData.first_name,
+            last_name: userData.last_name,
+            email: userData.email,
+            password: userData.password
           }
         }).then(function(res) {
           return "Successfully created new user";
