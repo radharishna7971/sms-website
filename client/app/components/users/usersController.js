@@ -6,7 +6,7 @@
       $scope.users = users;
     });
 
-    $scope.userData = {};
+    $scope.userData = {permission: 2};
     $scope.errorText = '';
 
     $scope.createUser = function() {
@@ -18,8 +18,15 @@
         $scope.errorText = "Password must be at least seven characters long";
       } else {
 
-        authFactory.createUser($scope.userData, function(user) {
-
+        authFactory.createUser($scope.userData, function(error, user) {
+          if (!error) {
+            $scope.users.push(user);
+            $scope.userData = {permission: 2};
+            delete $scope.confirmPassword;
+            $scope.errorText = "";
+          } else {
+            $scope.errorText = error;
+          }
         });
       }
     };

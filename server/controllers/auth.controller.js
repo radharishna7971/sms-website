@@ -10,11 +10,11 @@ exports.login = function(req, res) {
       res.send("Invalid credentials");
     } else {
       var token = jwt.encode(user.get('id'), jwtSecret);
-      console.log(token);
-      console.log(jwt.decode(token, jwtSecret));
       res.json({
         token: token,
         name: user.get('first_name') + ' ' + user.get('last_name'),
+        id: user.get('id'),
+        permission: user.get('permission')
       });
     }
   });
@@ -22,17 +22,11 @@ exports.login = function(req, res) {
 
 exports.create = function(req, res) {
   var userData = req.body;
-  console.log(userData);
   User.create(userData, function(error, user) {
     if (error) {
-      res.status(422);
-      res.send("Invalid credentials");
+      res.json({error: "User already exists"});
     } else {
-      var token = jwt.encode(user.get('id'), jwtSecret);
-      res.json({
-        token: token,
-        name: user.get('first_name') + ' ' + user.get('last_name'),
-      });
+      res.json(user);
     }
   });
 };

@@ -1,5 +1,4 @@
 
-<h1 class="home-header">USERS</h1>
 <table class="user-table" cellpadding="0" cellspacing="0">
   <tr class="user-table-header">
     <td>First Name</td>
@@ -25,9 +24,14 @@
     <p class="input-label">Email (Required)</p>
     <input class="data-input" ng-model="userData.email" type="text" required="true">
     <p class="input-label">Password (Required)</p>
-    <input class="data-input" ng-model="userData.password" type="text" required="true">
+    <input class="data-input" ng-model="userData.password" type="password" required="true">
     <p class="input-label">Confirm Password (Required)</p>
-    <input class="data-input" ng-model="confirmPassword" type="text" required="true">
+    <input class="data-input" ng-model="confirmPassword" type="password" required="true">
+    <p class="input-label">Permission (Required)</p>
+    <select name="permission" class="data-input select-input" ng-model="userData.permission" required="true">
+      <option value="1">1. Admin (User Creation)</option>
+      <option value="2">2. Data Entry</option>
+    </select>
     <input class="data-input data-submit" ng-click="createUser()" type="submit">
   </form>
 </div>

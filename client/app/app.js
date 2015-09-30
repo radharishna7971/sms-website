@@ -7,11 +7,11 @@
     // Componenets
     'landingController',
     'loginController',
-    'homeController',
+    // 'homeController',
     'talentController',
     'usersController',
     'dataEntryController',
-    'youtubeController',
+    // 'youtubeController',
 
 
     // Shared
@@ -21,7 +21,7 @@
     'creditFactory',
     'roleFactory',
     'genreFactory',
-    'youtubeFactory',
+    // 'youtubeFactory',
     'commentFactory',
     'topnavDirective'
   ])
@@ -58,16 +58,15 @@
             controller: 'loginController'
           }
         }
-
-      }).state('home', {
-        url: '/private/home',
-        authenticate: true,
-        views: {
-          content: {
-            templateUrl: 'app/components/home/home.html',
-            controller: 'homeController'
-          }
-        }
+      // }).state('home', {
+      //   url: '/private/home',
+      //   authenticate: true,
+      //   views: {
+      //     content: {
+      //       templateUrl: 'app/components/home/home.html',
+      //       controller: 'homeController'
+      //     }
+      //   }
       }).state('talent', {
         url: '/private/talent',
         authenticate: true,
@@ -87,15 +86,15 @@
             controller: 'dataEntryController'
           }
         }
-      }).state('youtube', {
-        url: '/private/youtube',
-        authenticate: true,
-        views: {
-          content: {
-            templateUrl: 'app/components/youtube/youtube.html',
-            controller: 'youtubeController'
-          }
-        }
+      // }).state('youtube', {
+      //   url: '/private/youtube',
+      //   authenticate: true,
+      //   views: {
+      //     content: {
+      //       templateUrl: 'app/components/youtube/youtube.html',
+      //       controller: 'youtubeController'
+      //     }
+      //   }
       }).state('users', {
         url: '/private/users',
         authenticate: true,
@@ -107,7 +106,12 @@
         },
         resolve: {
           checkUserCreationAccess: function() {
-            console.log("NEED TO CHECK USER CREATION ACCESS");
+            if (parseInt(window.localStorage.smstudiosPermission) > 1) {
+              console.log("A");
+              $state.go('talent');
+            } else {
+              console.log("B");
+            }
           }
         }
       });
@@ -122,7 +126,7 @@
           $location.path('landing');
         // If state should redirect if user is logged in and user is logged in
         } else if (toState.redirect && status) {
-          $location.path('private/home');
+          $location.path('private/talent');
         // Else show top nav
         } else if (toState.authenticate) {
           $('#topnav').show();

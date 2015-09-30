@@ -13,13 +13,15 @@
           }
         }).then(function(res) {
             window.localStorage.smstudiosJwtToken = res.data.token;
-            $state.go('home');
+            window.localStorage.smstudiosId = res.data.id;
+            window.localStorage.smstudiosPermission = res.data.permission;
+            $state.go('talent');
         }, function() {
             return "Invalid credentials";
         });
       },
 
-      /* Returns true or false depending on whether the current user is logged in. A user is logged in */
+      /* Returns true or false depending on whether the current user is logged in. A user is logged in if there is a valid jwt token saved in local storage*/
       loggedIn: function(callback) {
         // if no token exists in local storage, user is not logged in
         if (!window.localStorage.smstudiosJwtToken) {
@@ -35,6 +37,8 @@
             // If token is invalid, delete it
             if (!res.data) {
               delete window.localStorage.smstudiosJwtToken;
+              delete window.localStorage.smstudiosId;
+              delete window.localStorage.smstudiosPermission;
             }
             callback(res.data);
           });
@@ -44,18 +48,22 @@
       /* When user logs out, remove the token from client and redirect to home page */
       logout: function() {
         delete window.localStorage.smstudiosJwtToken;
+        delete window.localStorage.smstudiosId;
+        delete window.localStorage.smstudiosPermission;
         $state.go('login');
       },
 
-      createUser: function(userData) {
+      createUser: function(userData, callback) {
         $http({
           method: 'POST',
           url: 'api/auth/create',
           data: userData
         }).then(function(res) {
-          return "Successfully created new user";
-          }, function() {
-          return "Unable to create new user";
+          if (res.data.hasOwnProperty('error')) {
+            callback("User already exists");
+          } else {
+            callback(null, res.data);
+          }
         });
       },
 
