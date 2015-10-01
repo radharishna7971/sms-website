@@ -162,18 +162,25 @@ Talent.get = function(id, callback) {
   });
 };
 
+// if first name and last name exists
+  // if email matches
+    // edit
+  // else 
+    // already exists
+// else if email matches
+  // already exists
+// else 
+  // create new user
+
 Talent.addOrEdit = function(talentData, callback) {
-  // Check to see if talent exists with same email (for same person)
-  new Talent({email: talentData.email})
+  // Check to see if talent exists with same name
+  new Talent({first_name: talentData.first_name, last_name: talentData.last_name})
   .fetch()
   .then(function(talent) {
-    // If talent exists for given email, check to see if the id matches
+    // If talent exists
     if (talent) {
-      // We don't want ot overwrite created_by
-      delete talentData.created_by;
-
-      // if the id matches, update talent info
-      if (talent.get('id') === talentData.id || talent.get('email') === null) {
+      // If the email matches, then edit the data
+      if (talent.get('email') === talentData.email || talent.get('id') === talentData.id) {
         for (var key in talentData) {
           talent.set(key, talentData[key]);
           talent.save();
@@ -181,45 +188,48 @@ Talent.addOrEdit = function(talentData, callback) {
         talent.save()
         .then(function() {
           Talent.getName(talent.get('id'), function(name) {
-            callback(null, {status: 'edit', text: 'Successfully edited talent', id: talent.get('id'), name: name});
+            callback(null, {status: 'edit', text: 'Successfully edited ' + name, id: talent.get('id'), name: name});
           });
         })
- 
-      } else { // Otherwise the contact is already assigned to a different talent 
-        return callback({status: 'error', text: "Talent with same email already exists"});
+      } else {
+        // Given name already exists with different email
+        return callback({status: 'error', text: "Talent with same name already exists"});
       }
+    // If talent with given name doesn't exist
     } else {
-      // if id already exists, update existing talent model
-      if (talentData.hasOwnProperty('id')) {
-        new Talent({id: talentData.id})
-        .fetch()
-        .then(function(talent) {
-          // We don't want ot overwrite created_by
-          delete talentData.created_by;
-          
-          for (var key in talentData) {
-            talent.set(key, talentData[key]);
-            talent.save();
+      // Check to see if talent exists with given email
+      new Talent({email: talentData.email})
+      .fetch()
+      .then(function(talent) {
+        // If talent with given email exists, return error
+        if (talent) {
+          if (talent.get('id') === talentData.id) {
+            for (var key in talentData) {
+              talent.set(key, talentData[key]);
+              talent.save();
+            }
+            talent.save()
+            .then(function() {
+              Talent.getName(talent.get('id'), function(name) {
+                callback(null, {status: 'edit', text: 'Successfully edited ' + name, id: talent.get('id'), name: name});
+              });
+            });
+          } else {
+            return callback({status: 'error', text: "Talent with same email already exists"});
           }
-          talent.save()
-          .then(function() {
+        } else {
+          // Otherwise create new talent
+          new Talent(talentData)
+          .save()
+          .then(function(talent) {
             Talent.getName(talent.get('id'), function(name) {
-              callback(null, {status: 'edit', text: 'Successfully edited talent', id: talent.get('id'), name: name});
+             callback(null, {status: 'add', text: 'Added new talent', id: talent.get('id'), name: name});
             });
           });
-
-        })
-      } else { // otherwise make a new talent
-        new Talent(talentData)
-        .save()
-        .then(function(talent) {
-          Talent.getName(talent.get('id'), function(name) {
-           callback(null, {status: 'add', text: 'Added new talent', id: talent.get('id'), name: name});
-          });
-        });
-      }
+        }
+      });
     }
-  });
+  })
 };
 
 // If parter
