@@ -25,6 +25,7 @@ module.exports = function () {
   require('../routes/credit.routes')(app);
   require('../routes/contact.routes')(app);
   require('../routes/role.routes')(app);
+  require('../routes/creditType.routes')(app);
   require('../routes/genre.routes')(app);
   require('../routes/comment.routes')(app);
   require('../routes/redirect.routes')(app);

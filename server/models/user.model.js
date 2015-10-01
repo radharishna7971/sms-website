@@ -10,17 +10,23 @@ User.authenticate = function(userData, callback) {
     // If no user with this email address exists, return an error
     if (!user) {
       callback("User not found.");
-    // If user with this email does exist, validate the entered password
+    // If user with this email does exist
     } else {
-      bcrypt.compare(userData.password, user.get('password'), function(err, res) {
-        // If the password is valid, return the user
-        if (res) {
-          callback(null, user);
-        // Otherise return error
-        } else {
-          callback("Incorrect password", null);
-        }
-      });
+      // Confirm that the account has not been disabled
+      if (parseInt(user.get('permission')) === 4) {
+        callback("Account disabled", null);
+      } else {
+        // Then validate the entered password
+        bcrypt.compare(userData.password, user.get('password'), function(err, res) {
+          // If the password is valid, return the user
+          if (res) {
+            callback(null, user);
+          // Otherise return error
+          } else {
+            callback("Incorrect password", null);
+          }
+        });
+      }
     }
   });
 };
@@ -55,8 +61,9 @@ User.validate = function(id, callback) {
   new User({'id': id})
   .fetch()
   .then(function(user) {
-    // return true or false depending on whether or not the user exists
-    return callback(!!user);
+    // Return true or false depending on whether or not the user exists and has valid permissions
+    // We check permissions here in case a user's account is disabled while logged in
+    return callback(!!user && parseInt(user.get('permission')) < 4);
   });
 };
 

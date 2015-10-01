@@ -2,12 +2,17 @@ var db = require('../config/db');
 var Credit = require('../config/schema').Credit;
 
 // Return list of all credit names
+// Also includes the genre and year
 Credit.getNames = function(callback) {
   db.knex.raw(' \
     SELECT \
-      id, \
-      name \
-    FROM credits')
+      credits.id, \
+      credits.name, \
+      credits.release_date, \
+      genres.name AS genre \
+    FROM credits \
+    LEFT JOIN genres \
+    ON credits.genre_id = genres.id')
   .then(function(results) {
      callback(results[0]);
   });
@@ -20,7 +25,7 @@ Credit.get = function(id, callback) {
       id, \
       name, \
       genre_id, \
-      type, \
+      credit_type_id, \
       DATE_FORMAT(release_date, \"%m/%d/%Y\") AS release_date \
     FROM credits \
     WHERE id = ' + id)
@@ -31,6 +36,7 @@ Credit.get = function(id, callback) {
 
 // Check to see that name does not already exists.  If it doesn't either edit or add new.  If it does exist and the id is the same, edit that credit.
 Credit.addOrEdit = function(creditData, callback) {
+  console.log(creditData);
   new Credit({name: creditData.name})
   .fetch()
   .then(function(credit) {

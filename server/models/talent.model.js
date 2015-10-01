@@ -20,6 +20,7 @@ Talent.getAll = function(callback) {
       LEFT JOIN genres AS genre1 ON talent.primary_genre_id = genre1.id \
       LEFT JOIN genres AS genre2 ON talent.secondary_genre_id = genre2.id \
       LEFT JOIN talent AS partner ON talent.partner_id = partner.id \
+    WHERE talent.deleted = false \
   ')
   .then(function(results) {
      var data = results[0];
@@ -98,7 +99,8 @@ Talent.getNames = function(callback) {
       talent.id AS id, \
       CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
       talent.last_name AS last_name \
-    FROM talent')
+    FROM talent \
+    WHERE talent.deleted = false')
   .then(function(results) {
      callback(results[0]);
   });
@@ -138,7 +140,9 @@ Talent.get = function(id, callback) {
       instagram_url, \
       agent_id, \
       manager_id, \
-      partner_id \
+      partner_id, \
+      created_by, \
+      last_edited_by \
     FROM talent \
     WHERE id = ' + id)
   .then(function(results) {
@@ -162,15 +166,6 @@ Talent.get = function(id, callback) {
   });
 };
 
-// if first name and last name exists
-  // if email matches
-    // edit
-  // else 
-    // already exists
-// else if email matches
-  // already exists
-// else 
-  // create new user
 
 Talent.addOrEdit = function(talentData, callback) {
   // Check to see if talent exists with same name
@@ -187,6 +182,7 @@ Talent.addOrEdit = function(talentData, callback) {
         }
         talent.save()
         .then(function() {
+          Talent.matchPartner(talent.get('id'), talent.get('partner_id'));
           Talent.getName(talent.get('id'), function(name) {
             callback(null, {status: 'edit', text: 'Successfully edited ' + name, id: talent.get('id'), name: name});
           });
@@ -198,53 +194,85 @@ Talent.addOrEdit = function(talentData, callback) {
     // If talent with given name doesn't exist
     } else {
       // Check to see if talent exists with given email
-      new Talent({email: talentData.email})
-      .fetch()
-      .then(function(talent) {
-        // If talent with given email exists, return error
-        if (talent) {
-          if (talent.get('id') === talentData.id) {
-            for (var key in talentData) {
-              talent.set(key, talentData[key]);
-              talent.save();
+      if (!!talentData.email) {
+        new Talent({email: talentData.email})
+        .fetch()
+        .then(function(talent) {
+          // If talent with given email exists, return error
+          if (talent) {
+            if (talent.get('id') === talentData.id) {
+              for (var key in talentData) {
+                talent.set(key, talentData[key]);
+                talent.save();
+              }
+              talent.save()
+              .then(function() {
+                Talent.matchPartner(talent.get('id'), talent.get('partner_id'));
+                Talent.getName(talent.get('id'), function(name) {
+                  callback(null, {status: 'edit', text: 'Successfully edited ' + name, id: talent.get('id'), name: name});
+                });
+              });
+            } else {
+              return callback({status: 'error', text: "Talent with same email already exists"});
             }
-            talent.save()
-            .then(function() {
+          } else {
+            // Otherwise create new talent
+            new Talent(talentData)
+            .save()
+            .then(function(talent) {
+              Talent.matchPartner(talent.get('id'), talent.get('partner_id'));
               Talent.getName(talent.get('id'), function(name) {
-                callback(null, {status: 'edit', text: 'Successfully edited ' + name, id: talent.get('id'), name: name});
+               callback(null, {status: 'add', text: 'Added new talent ' + name, id: talent.get('id'), name: name});
               });
             });
-          } else {
-            return callback({status: 'error', text: "Talent with same email already exists"});
           }
-        } else {
-          // Otherwise create new talent
-          new Talent(talentData)
-          .save()
-          .then(function(talent) {
-            Talent.getName(talent.get('id'), function(name) {
-             callback(null, {status: 'add', text: 'Added new talent', id: talent.get('id'), name: name});
-            });
+        });
+      // Otherwise, if email does not exist and it is null, create new talent
+      } else {
+        new Talent(talentData)
+        .save()
+        .then(function(talent) {
+          Talent.matchPartner(talent.get('id'), talent.get('partner_id'));
+          Talent.getName(talent.get('id'), function(name) {
+           callback(null, {status: 'add', text: 'Added new talent ' + name, id: talent.get('id'), name: name});
           });
-        }
-      });
+        });
+      }
     }
   })
 };
 
 // If parter
-Talent.matchPartner = function(parterId1, partnerId2) {
+Talent.matchPartner = function(partnerId1, partnerId2) {
+  console.log(partnerId1, partnerId2);
+if (!!partnerId2) {
+  console.log("partner id exists")
+   new Talent({id: partnerId2})
+   .fetch()
+   .then(function(talent) {
+    console.log(talent);
+    if (!talent.get('partner_id')) {
+      console.log('talent doesnt have partner id');
+      talent.set('partner_id', partnerId1)
+      talent.save();
+    }
+   })
+  }
+};
 
-}
 
-
-Talent.remove = function(talentId, callback) {
-  new Talent({id: talentId})
+Talent.remove = function(data, callback) {
+  new Talent({id: data.talentId})
   .fetch()
   .then(function(talent) {
     if (talent) {
-      talent.destroy();
-      return callback(true)
+      talent.set('deleted', true);
+      talent.set('deleted_by', data.userId);
+      talent.set('deleted_at', data.deletedAt);
+      talent.save()
+      .then(function() {
+        return callback(true)
+      });
     } else {
       return callback(false);
     }

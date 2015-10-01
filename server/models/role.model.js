@@ -19,8 +19,11 @@ Role.addOrEdit = function(roleData, callback) {
   .fetch()
   .then(function(role) {
     if (role) {
-
-      return callback({status: 'error', text: "Role already exists"});
+      if (role.get('id') === roleData.id) {
+        callback(null, {status: 'edit', text: 'Successfully edited role', id: role.get('id'), name: role.get('name')});
+      } else {
+        return callback({status: 'error', text: "Role already exists"});
+      }
     } else {
       if (roleData.hasOwnProperty('id')) {
         new Role({id: roleData.id})

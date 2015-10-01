@@ -13,15 +13,27 @@
 
       },
       link: function() {
+
+        var startPath = window.location.pathname.split('/')[2];
+
         $('.topnav-button').on('click', function() {
           $('.active-page').removeClass('active-page');
           $(this).addClass('active-page');
         });
+        
+        // Remove links that user does not have privilege to access
+        $('.topnav-button').each(function() {
+          // If user permission level is above the required permission for a given link, hide the link
+          if (parseInt(window.localStorage.smstudiosPermission) > parseInt($(this).attr('permission'))) {
+            $(this).remove();
+          }
+          
+          // Highlights initial active page
+          if ($(this).attr('path') === startPath) {
 
-        // removes links that require admin privilege
-        if (parseInt(window.localStorage.smstudiosPermission) > 1) {
-          $('.admin').remove();
-        }
+            $(this).addClass('active-page');
+          }
+        });
       }
     };
   });

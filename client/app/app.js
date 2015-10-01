@@ -21,6 +21,7 @@
     'creditFactory',
     'roleFactory',
     'genreFactory',
+    'creditTypeFactory',
     // 'youtubeFactory',
     'commentFactory',
     'topnavDirective'
@@ -85,6 +86,13 @@
             templateUrl: 'app/components/dataEntry/dataEntry.html',
             controller: 'dataEntryController'
           }
+        },
+        resolve: {
+          permissionCheck: function() {
+            if (parseInt(window.localStorage.smstudiosPermission) > 2) {
+              $state.go('talent');
+            } 
+          }
         }
       // }).state('youtube', {
       //   url: '/private/youtube',
@@ -105,13 +113,10 @@
           }
         },
         resolve: {
-          checkUserCreationAccess: function() {
+          permissionCheck: function() {
             if (parseInt(window.localStorage.smstudiosPermission) > 1) {
-              console.log("A");
               $state.go('talent');
-            } else {
-              console.log("B");
-            }
+            } 
           }
         }
       });

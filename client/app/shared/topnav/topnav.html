@@ -2,19 +2,19 @@
   <!-- <div ui-sref="home" class="topnav-button left active-page">
     Home
   </div> -->
-  <div ui-sref="talent" class="topnav-button left active-page">
+  <div ui-sref="talent" permission="3" path="talent" class="topnav-button left">
     Talent
   </div>
-  <div ui-sref="data" class="topnav-button left">
+  <div ui-sref="data" permission="2" path="data-entry" class="topnav-button left">
     Data Entry
   </div>
  <!--  <div ui-sref="youtube" class="topnav-button left">
     YouTube
   </div> -->
-  <div ui-sref="users" class="topnav-button left admin">
+  <div ui-sref="users" permission="1" path="users" class="topnav-button left">
     Users
   </div>
-  <div class="topnav-button right" ng-click="logout()">
+  <div class="topnav-button right" permission="100" ng-click="logout()">
     Log Out
   </div>
 </div>

@@ -19,7 +19,11 @@ Genre.addOrEdit = function(genreData, callback) {
   .fetch()
   .then(function(genre) {
     if (genre) {
-      return callback({status: 'error', text: "Genre already exists"});
+      if (genre.get('id') === genreData.id) {
+        callback(null, {status: 'edit', text: 'Successfully edited genre', id: genre.get('id'), name: genre.get('name')});
+      } else {
+        return callback({status: 'error', text: "Genre already exists"});
+      }
     } else {
       if (genreData.hasOwnProperty('id')) {
         new Genre({id: genreData.id})

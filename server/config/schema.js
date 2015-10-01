@@ -37,6 +37,18 @@ db.knex.schema.hasTable('genres').then(function(exists) {
   }
 });
 
+db.knex.schema.hasTable('credit_types').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('credit_types', function(genre) {
+      genre.increments('id').primary();
+      genre.string('name', 30);
+      genre.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
+    }).then(function(table) {
+      console.log('Created Credit Types Table');
+    });
+  }
+});
+
 db.knex.schema.hasTable('contacts').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('contacts', function(contact) {
@@ -79,7 +91,12 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.integer('agent_id').unsigned().references('contacts.id');
       talent.integer('partner_id').unsigned().references('talent.id');
       talent.integer('created_by').unsigned().references('users.id');
+      talent.integer('last_edited_by').unsigned().references('users.id');
       talent.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
+      talent.timestamp('last_edited').notNullable().defaultTo(db.knex.raw('now()'));
+      talent.boolean('deleted').defaultTo(false);
+      talent.integer('deleted_by').unsigned().references('users.id');
+      talent.timestamp('deleted_at');
     }).then(function(table) {
       console.log('Created Talent Table');
     });
@@ -93,6 +110,7 @@ db.knex.schema.hasTable('credits').then(function(exists) {
       credit.string('name', 75);
       credit.string('type', 75);
       credit.integer('genre_id').unsigned().references('genres.id');
+      credit.integer('credit_type_id').unsigned().references('credit_types.id');
       credit.date('release_date');
       credit.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
@@ -170,6 +188,13 @@ var Contact = exports.Contact = db.Model.extend({
   }
 });
 
+var CreditType = exports.CreditType = db.Model.extend({
+  tableName: 'credit_types',
+  credit: function() {
+    return this.hasMany(Credit);
+  }
+});
+
 var Talent = exports.Talent = db.Model.extend({
   tableName: 'talent',
   primary_role_id: function() {
@@ -221,6 +246,9 @@ var Credit = exports.Credit = db.Model.extend({
   },
   genre: function() {
     this.belongsTo(Genre, 'genre_id');
+  },
+  creditType: function() {
+    this.belongsTo(CreditType, 'credit_type_id');
   }
 });
 

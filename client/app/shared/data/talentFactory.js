@@ -60,7 +60,8 @@
           method: 'DELETE',
           url: 'api/talent/delete',
           params: {
-            id: talentId
+            id: talentId,
+            user_id: window.localStorage.smstudiosId
           }
         }).then(function() {
           callback();

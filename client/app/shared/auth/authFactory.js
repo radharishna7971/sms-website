@@ -15,6 +15,17 @@
             window.localStorage.smstudiosJwtToken = res.data.token;
             window.localStorage.smstudiosId = res.data.id;
             window.localStorage.smstudiosPermission = res.data.permission;
+
+            // Remove links that user does not have privilege to access
+            $('.topnav-button').each(function() {
+              // If user permission level is above the required permission for a given link, hide the link
+              if (parseInt(window.localStorage.smstudiosPermission) > parseInt($(this).attr('permission'))) {
+                $(this).remove();
+              }
+            });
+
+            $('.topnav-button[path="talent"]').addClass('active-page');
+
             $state.go('talent');
         }, function() {
             return "Invalid credentials";

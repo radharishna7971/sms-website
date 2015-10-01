@@ -1,7 +1,7 @@
 (function() {
   'use strict';
-  angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'commentFactory'])
-  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory) {
+  angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'creditTypeFactory', 'commentFactory'])
+  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory) {
     $scope.section = 'Talent'; // Represents current section
     $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
@@ -41,6 +41,10 @@
         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
         $($event.target).addClass('talent-form-menu-button-active');
         $scope.talentSection = $($event.target).attr('talent-form-section');
+        if ($scope.section !== 'main') {
+          console.log($scope.activeElement);
+          $scope.errorText = 'Modifying ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+        }
       }
     };
 
@@ -62,7 +66,8 @@
     };
 
     $scope.deleteElement = function() {
-      if (confirm("Are you sure you want to delete this " + $scope.section.toLowerCase() + "?")) {
+      var dataType = $scope.section.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+      if (confirm("Are you sure you want to delete this" + dataType + "?")) {
         deleteData[$scope.section]();
       }
     };
@@ -85,8 +90,17 @@
           $scope.activeElement[key] = $scope.editElement[key];
         }
       },
+      CreditType: function() {
+        for (var key in $scope.editElement) {
+          $scope.activeElement[key] = $scope.editElement[key];
+        }
+      },
       Credit: function() {
         creditFactory.getCredit($scope.editElement.id, function(creditData) {
+          // if release_date is null, remove it because null equates to a date value
+          if (!creditData.release_date) {
+            delete creditData.release_date; 
+          }
           // format the date
           creditData.release_date = new Date(creditData.release_date);
           $scope.activeElement = creditData;
@@ -118,7 +132,6 @@
               } else {
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
-                $scope.editElement = res;
                 activeElementSetter[$scope.section]();
               }
             }
@@ -138,6 +151,24 @@
               } else {
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
+                activeElementSetter[$scope.section]();
+              }
+            }
+            $scope.errorText = res.text;
+          });
+        }
+      },
+      CreditType: function() {
+        if (!checkInputs()) {
+           $scope.errorText = 'Please make sure all required fields are entered';
+        } else {
+          $scope.errorText = '';
+          creditTypeFactory.addOrEdit($scope.activeElement, function(res) {
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } else {
+                $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
               }
@@ -150,6 +181,12 @@
         if (!checkInputs()) {
            $scope.errorText = 'Please make sure all required fields are entered';
         } else {
+          // Set blank values to null so they can be properly saved in database
+          for (var key in $scope.activeElement) {
+            if (!$scope.activeElement[key]) {
+              $scope.activeElement[key] = null;
+            }
+          }
           $scope.errorText = '';
           creditFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
@@ -157,7 +194,6 @@
                 $scope.editElement.name = res.name;
               } else {
                 $scope.data[$scope.section].push(res);
-                $scope.editElement = res;
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
               }
@@ -170,6 +206,14 @@
         if (!checkInputs()) {
           $scope.errorText = 'Please make sure all required fields are entered';
         } else {
+
+          // Set blank values to null so they can be properly saved in database
+          for (var key in $scope.activeElement) {
+            if (!$scope.activeElement[key]) {
+              $scope.activeElement[key] = null;
+            }
+          }
+
           $scope.errorText = '';
           contactFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
@@ -177,7 +221,6 @@
                 $scope.editElement.name = res.name;
               } else {
                 $scope.data[$scope.section].push(res);
-                $scope.editElement = res;
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
               }
@@ -197,8 +240,12 @@
             }
           }
 
+          if (!$scope.activeElement.created_by) {
+            $scope.activeElement.created_by = window.localStorage.smstudiosId;
+          }
+
           // Add id to keep track of who created given talent
-          $scope.activeElement.created_by = window.localStorage.smstudiosId;
+          $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
 
           talentFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
@@ -231,6 +278,16 @@
       },
       Genre: function() {
         genreFactory.deleteGenre($scope.editElement.id, function(){
+          // Remove deleted data point from the array
+          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+
+          // Reset elements and form
+          $scope.editElement = null;
+          $scope.activeElement = {};
+        });
+      },
+      CreditType: function() {
+        creditTypeFactory.deleteCreditType($scope.editElement.id, function(){
           // Remove deleted data point from the array
           $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
 
@@ -275,22 +332,22 @@
     $scope.data = {
       Contact: contactFactory.getNames(function(result) {
         $scope.data.Contact = result;
-        $scope.activeData = $scope.data.Contact;
       }),
       Credit: creditFactory.getNames(function(result) {
         $scope.data.Credit = result;
-        $scope.activeData = $scope.data.Credit;
       }),
       Role: roleFactory.getNames(function(result) {
         $scope.data.Role = result;
-        $scope.activeData = $scope.data.Role;
       }),
       Genre: genreFactory.getNames(function(result) {
         $scope.data.Genre = result;
-        $scope.activeData = $scope.data.Genre;
+      }),
+      CreditType: creditTypeFactory.getNames(function(result) {
+        $scope.data.CreditType = result;
       }),
       Talent: talentFactory.getNames(function(result) {
         $scope.data.Talent = result;
+        // Set talent data to active data when page loads
         $scope.activeData = $scope.data.Talent;
       })
     };
