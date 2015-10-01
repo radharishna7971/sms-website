@@ -30,3 +30,11 @@
   background-color: #656c7e;
 }
 
+#logout-button {
+  background-color: #2a2d33;
+}
+
+#logout-button:hover {
+  background-color: #656c7e;
+}
+

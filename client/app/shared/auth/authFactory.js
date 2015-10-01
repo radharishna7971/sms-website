@@ -25,7 +25,6 @@
             });
 
             $('.topnav-button[path="talent"]').addClass('active-page');
-
             $state.go('talent');
         }, function() {
             return "Invalid credentials";

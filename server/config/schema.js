@@ -111,7 +111,7 @@ db.knex.schema.hasTable('credits').then(function(exists) {
       credit.string('type', 75);
       credit.integer('genre_id').unsigned().references('genres.id');
       credit.integer('credit_type_id').unsigned().references('credit_types.id');
-      credit.date('release_date');
+      credit.integer('release_date');
       credit.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
       console.log('Created Credits Table');

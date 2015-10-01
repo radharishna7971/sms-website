@@ -26,7 +26,7 @@ Credit.get = function(id, callback) {
       name, \
       genre_id, \
       credit_type_id, \
-      DATE_FORMAT(release_date, \"%m/%d/%Y\") AS release_date \
+      release_date \
     FROM credits \
     WHERE id = ' + id)
   .then(function(results) {

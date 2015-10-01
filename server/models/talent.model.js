@@ -244,19 +244,18 @@ Talent.addOrEdit = function(talentData, callback) {
 
 // If parter
 Talent.matchPartner = function(partnerId1, partnerId2) {
-  console.log(partnerId1, partnerId2);
-if (!!partnerId2) {
-  console.log("partner id exists")
-   new Talent({id: partnerId2})
-   .fetch()
-   .then(function(talent) {
-    console.log(talent);
-    if (!talent.get('partner_id')) {
-      console.log('talent doesnt have partner id');
-      talent.set('partner_id', partnerId1)
-      talent.save();
-    }
-   })
+  if (!!partnerId2) {
+    console.log("partner id exists")
+     new Talent({id: partnerId2})
+     .fetch()
+     .then(function(talent) {
+      console.log(talent);
+      if (!talent.get('partner_id')) {
+        console.log('talent doesnt have partner id');
+        talent.set('partner_id', partnerId1)
+        talent.save();
+      }
+    })
   }
 };
 

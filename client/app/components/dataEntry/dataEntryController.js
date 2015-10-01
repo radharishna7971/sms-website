@@ -97,12 +97,6 @@
       },
       Credit: function() {
         creditFactory.getCredit($scope.editElement.id, function(creditData) {
-          // if release_date is null, remove it because null equates to a date value
-          if (!creditData.release_date) {
-            delete creditData.release_date; 
-          }
-          // format the date
-          creditData.release_date = new Date(creditData.release_date);
           $scope.activeElement = creditData;
         });
       },

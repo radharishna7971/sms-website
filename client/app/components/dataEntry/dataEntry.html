@@ -69,7 +69,7 @@
         <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
       </select>
       <p class="input-label">Release Date</p>
-      <input class="data-input" ng-model="activeElement.release_date" type="date">
+      <input class="data-input" ng-model="activeElement.release_date" type="input">
       <input class="data-input data-submit" ng-click="submitData()" type="submit">
     </form>
 

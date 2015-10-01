@@ -1,5 +1,5 @@
 <div id="topnav">
-  <!-- <div ui-sref="home" class="topnav-button left active-page">
+  <!-- <div ui-sref="home" class="topnav-button left">
     Home
   </div> -->
   <div ui-sref="talent" permission="3" path="talent" class="topnav-button left">
@@ -14,7 +14,7 @@
   <div ui-sref="users" permission="1" path="users" class="topnav-button left">
     Users
   </div>
-  <div class="topnav-button right" permission="100" ng-click="logout()">
+  <div class="topnav-button right" id="logout-button" path="logout" permission="100" ng-click="logout()">
     Log Out
   </div>
 </div>
