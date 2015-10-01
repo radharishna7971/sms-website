@@ -33,6 +33,7 @@ module.exports = function () {
   
   /* Redirect all bad routes to landing page */
   app.use(function(req, res) {
+    console.log("Redirecting");
     res.redirect("/");
   });
 
