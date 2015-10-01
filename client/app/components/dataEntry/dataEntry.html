@@ -77,6 +77,7 @@
 
     <!-- TALENT FORM -->
 
+    <!-- Main, Management, Social -->
     <form class="talent-form" name="talent-form" ng-show="section==='Talent'" novalidate>
        <div ng-show="talentSection==='main'">
         <div class="talent-column">
@@ -165,9 +166,9 @@
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit">
       </div>
-
     </form>
 
+    <!-- Credits -->
     <form>
       <div ng-show="talentSection==='credits'">
         <div class="talent-column">
@@ -186,25 +187,28 @@
       </div>
     </form>
 
-      <div class="talent-data-comments-container"  ng-show="talentSection==='comments'">
-        <div class="talent-data-comments">
-          <div class="comment-div" ng-repeat="comment in activeElement.comments">
-            <div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
-            <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
-            <p class="comment-text">{{comment.text}}</p>
-          </div>
-        </div>
-        <div class="data-entry-comment-box">
-          <textarea class="data-entry-comment-input" type="textarea" placeholder="Enter comment here"></textarea>
-          <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" />
-        </div>
-        <!-- <div class="talent-column">
-         
-        </div>
-        <div class="talent-column">
-        
-        </div> -->
+    <!-- Comments -->
+    <div class="talent-data-comments-container"  ng-show="talentSection==='comments'">
+      <div class="data-entry-comment-box">
+        <textarea class="data-entry-comment-input" type="textarea" placeholder="Enter comment here"></textarea>
+        <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" />
       </div>
+      <div class="talent-data-comments">
+        <div class="talent-data-comment-header">Comments</div>
+        <div class="comment-div" ng-repeat="comment in activeElement.comments">
+          <div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+          <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
+          <p class="comment-text">{{comment.text}}</p>
+        </div>
+      </div>
+      
+      <!-- <div class="talent-column">
+       
+      </div>
+      <div class="talent-column">
+      
+      </div> -->
+    </div>
 
   </div>
 </div>
