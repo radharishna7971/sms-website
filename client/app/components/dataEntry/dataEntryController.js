@@ -247,7 +247,6 @@
               } else {
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
-                $scope.editElement = res;
                 activeElementSetter[$scope.section]();
               }
             }

@@ -45,6 +45,7 @@
         // Remove comments
         if (talentData.hasOwnProperty('comments')) {
           delete talentData.comments;
+          delete talentData.talentCreditJoins;
         }
 
         return $http({

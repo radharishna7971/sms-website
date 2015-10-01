@@ -93,7 +93,7 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.integer('created_by').unsigned().references('users.id');
       talent.integer('last_edited_by').unsigned().references('users.id');
       talent.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
-      talent.timestamp('last_edited').notNullable().defaultTo(db.knex.raw('now()'));
+      talent.timestamp('last_edited');
       talent.boolean('deleted').defaultTo(false);
       talent.integer('deleted_by').unsigned().references('users.id');
       talent.timestamp('deleted_at');
