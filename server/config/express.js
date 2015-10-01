@@ -11,6 +11,7 @@ module.exports = function () {
     /* morgan is middleware that logs server activity to the console.  We only want to use it in a development setting */
     app.use(morgan('dev'));
   } 
+  app.use(morgan('dev'));
   
   /* body-parser converts data receive in POST requests into JSON */
   app.use(bodyParser.json());
