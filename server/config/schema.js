@@ -157,7 +157,6 @@ db.knex.schema.hasTable('talent_credit_join').then(function(exists) {
       join.integer('talent_id').unsigned().references('talent.id');
       join.integer('credit_id').unsigned().references('credits.id');
       join.integer('role_id').unsigned().references('roles.id');
-      join.string('type', 100);
       join.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
     }).then(function(table) {
       console.log('Created Talent Credit Join Table');
@@ -274,8 +273,8 @@ var Comment = exports.Comment = db.Model.extend({
 
 
 var TalentCreditJoin = exports.TalentCreditJoin = db.Model.extend({
-  tablename: 'talent_credit_join',
-  actor: function() {
+  tableName: 'talent_credit_join',
+  talent: function() {
     this.belongsTo(Actor, 'talent_id');
   },
   credit: function() {
@@ -285,51 +284,3 @@ var TalentCreditJoin = exports.TalentCreditJoin = db.Model.extend({
     this.belongsTo(Role, 'role_id');
   }
 });
-
-
-
-// db.knex.schema.hasTable('secondary_role_join').then(function(exists) {
-//   if (!exists) {
-//     db.knex.schema.createTable('secondary_role_join', function(join) {
-//       join.increments('id').primary();
-//       join.integer('actor_id').unsigned().references('actors.id');
-//       join.integer('role_id').unsigned().references('roles.id');
-//       join.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
-//     }).then(function(table) {
-//       console.log('Created Secondary Roles Join Table');
-//     });
-//   }
-// });
-
-// db.knex.schema.hasTable('secondary_genre_join').then(function(exists) {
-//   if (!exists) {
-//     db.knex.schema.createTable('secondary_genre_join', function(join) {
-//       join.increments('id').primary();
-//       join.integer('actor_id').unsigned().references('actors.id');
-//       join.integer('genre_id').unsigned().references('genres.id');
-//       join.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
-//     }).then(function(table) {
-//       console.log('Created Secondary Genres Join Table');
-//     });
-//   }
-// });
-
-// var SecondaryRoleJoin = exports.SecondaryRoleJoin = db.Model.extend({
-//   tablename: 'secondary_role_join',
-//   actor: function() {
-//     this.belongsTo(Actor, 'actor_id');
-//   },
-//   role: function() {
-//     this.belongsTo(Role, 'role_id');
-//   }
-// });
-
-// var SecondaryGenreJoin = exports.SecondaryGenreJoin = db.Model.extend({
-//   tablename: 'secondary_genre_join',
-//   actor: function() {
-//     this.belongsTo(Actor, 'actor_id');
-//   },
-//   genre: function() {
-//     this.belongsTo(Genre, 'genre_id');
-//   }
-// });

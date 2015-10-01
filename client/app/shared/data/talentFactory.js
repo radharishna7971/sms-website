@@ -66,6 +66,30 @@
         }).then(function() {
           callback();
         });
+      },
+      addTalentCreditJoin: function(talentId, creditIdArray, roleId, callback) {
+        return $http({
+          method: 'POST',
+          url: '/api/talent/talent-credit-join/add',
+          data: {
+            credit_ids: creditIdArray,
+            talent_id: talentId, 
+            role_id: roleId
+          }
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
+      removeTalentCreditJoin: function(joinId, callback) {
+        return $http({
+          method: 'DELETE',
+          url: '/api/talent/talent-credit-join/delete',
+          params: {
+            join_id: joinId
+          }
+        }).then(function(res) {
+          callback(res.data);
+        });
       }
      };
   });

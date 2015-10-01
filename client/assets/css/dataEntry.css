@@ -211,6 +211,31 @@
   margin-bottom: 5px;
 }
 
+.talent-credit-join-container {
+  width: 530px;
+  height: 100px;
+}
+
+.talent-credit-join-text {
+  clear: left;
+  float: left;
+}
+
+.delete-talent-credit-join-button {
+  float: left;
+  background-color: #E88080;
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  line-height: 12px;
+  margin-top: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
 .talent-credit-select-option {
   padding: 5px;
 }

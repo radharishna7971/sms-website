@@ -1,4 +1,5 @@
 var Talent = require('../models/talent.model');
+var TalentCreditJoin = require('../models/talentCreditJoin.model');
 var jwt = require('jwt-simple');
 var jwtSecret = process.env.jwtSecret;
 
@@ -54,6 +55,17 @@ exports.remove = function(req, res) {
   });
 };
 
+exports.addTalentCreditJoin = function(req, res) {
+  TalentCreditJoin.add(req.body.talent_id, req.body.credit_ids, req.body.role_id, function(result) {
+    res.json(result);
+  });
+};
+
+exports.deleteTalentCreditJoin = function(req, res) {
+  TalentCreditJoin.remove(req.query.join_id, function(result) {
+    res.json(result);
+  })
+}
 
 // JS to SQL date conversion
 /**

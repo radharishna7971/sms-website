@@ -42,7 +42,6 @@
         $($event.target).addClass('talent-form-menu-button-active');
         $scope.talentSection = $($event.target).attr('talent-form-section');
         if ($scope.section !== 'main') {
-          console.log($scope.activeElement);
           $scope.errorText = 'Modifying ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
         }
       }
@@ -106,8 +105,8 @@
         });
       },
       Talent: function() {
-        talentFactory.getTalent($scope.editElement.id, function(contactData) {
-          $scope.activeElement = contactData;
+        talentFactory.getTalent($scope.editElement.id, function(talentData) {
+          $scope.activeElement = talentData;
         });
       }
     };
@@ -257,6 +256,29 @@
         }
       }
     };
+
+    $scope.submitTalentCreditData = function() {
+      var credits = $('.talent-credit-select').val();
+      var role = $('.talent-credit-role-select').val() || null;
+
+      talentFactory.addTalentCreditJoin($scope.editElement.id, credits, role, function(data) {
+        if (data.length !== $scope.activeElement.talentCreditJoins.length) {
+          $scope.errorText = 'Credit(s) added to ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+          $scope.activeElement.talentCreditJoins = data;
+        } else {
+          $scope.errorText = 'Credit(s) already exists';
+        }
+      });
+    };
+
+    $scope.removeTalentCreditJoin = function($event, join_id) {
+      talentFactory.removeTalentCreditJoin(join_id, function(data) {
+        $($event.target).parent().slideUp();
+        $($event.target).parent().remove();
+        $scope.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+        $scope.activeElement.talentCreditJoins = data;
+      });
+    }
 
     // This contains functions for removing data from the database
     var deleteData = {

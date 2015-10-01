@@ -68,7 +68,7 @@
         <option></option>
         <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
       </select>
-      <p class="input-label">Release Date</p>
+      <p class="input-label">Release Year (YYYY)</p>
       <input class="data-input" ng-model="activeElement.release_date" type="input">
       <input class="data-input data-submit" ng-click="submitData()" type="submit">
     </form>
@@ -181,30 +181,38 @@
     </form>
 
     <!-- Credits -->
-    <form>
       <div ng-show="talentSection==='credits'">
-        <div class="talent-column">
-          <p class="input-label">Credit(s)</p>
-          <select class="talent-credit-select" multiple>
-            <!-- If both genre and release_date exist -->
-            <option ng-if="credit.genre && credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}}) - {{credit.genre}}</option>
-            <!-- If genre but not release_date exists -->
-            <option ng-if="!!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} - {{credit.genre}}</option>
-            <!-- If release date but not genre exists -->
-            <option ng-if="!credit.genre && !!credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}})</option>
-            <!-- If neither genre nor release_date exist -->
-            <option ng-if="!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}}</option>
-          </select>
+        <form>
+          <div class="talent-column">
+            <p class="input-label">Credit(s)</p>
+            <select class="talent-credit-select" multiple required>
+              <!-- If both genre and release_date exist -->
+              <option ng-if="credit.genre && credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}}) - {{credit.genre}}</option>
+              <!-- If genre but not release_date exists -->
+              <option ng-if="!!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} - {{credit.genre}}</option>
+              <!-- If release date but not genre exists -->
+              <option ng-if="!credit.genre && !!credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}})</option>
+              <!-- If neither genre nor release_date exist -->
+              <option ng-if="!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}}</option>
+            </select>
+          </div>
+          <div class="talent-column">
+          <p class="input-label">Role</p>
+            <select class="talent-credit-role-select">
+              <option></option>
+              <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
+            </select>
+          </div>
+          <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit">
+        </form>
+        <div class="talent-credit-join-container">
+          <div ng-repeat="join in activeElement.talentCreditJoins">
+            <p class="talent-credit-join-text">{{join.credit}} ({{join.release_date}}) | {{join.role}}</p>
+            <div class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</div>
+          </div>
         </div>
-        <div class="talent-column">
-        <p class="input-label">Role</p>
-          <select class="talent-credit-select">
-            <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
-          </select>
-        </div>
-        <input class="data-input data-submit" ng-click="submitTalentCreditData('talent')" type="submit">
+
       </div>
-    </form>
 
     <!-- Comments -->
     <div class="talent-data-comments-container"  ng-show="talentSection==='comments'">

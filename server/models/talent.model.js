@@ -161,7 +161,21 @@ Talent.get = function(id, callback) {
        AND talent.id = ' + data.id.toString())
      .then(function(results) {
       data.comments = results[0];
-      callback(data);
+      db.knex.raw(' \
+       SELECT \
+        talent_credit_join.id AS id, \
+        credits.name AS credit, \
+        credits.release_date AS release_date, \
+        roles.name AS role \
+       FROM talent_credit_join \
+       LEFT JOIN talent ON talent_credit_join.talent_id = talent.id \
+       LEFT JOIN credits ON talent_credit_join.credit_id = credits.id \
+       LEFT JOIN roles ON talent_credit_join.role_id = roles.id \
+       WHERE talent.id = ' + data.id.toString())
+      .then(function(results) {
+       data.talentCreditJoins = results[0];
+       callback(data);
+      });
      });
   });
 };
@@ -255,7 +269,7 @@ Talent.matchPartner = function(partnerId1, partnerId2) {
         talent.set('partner_id', partnerId1)
         talent.save();
       }
-    })
+    });
   }
 };
 
