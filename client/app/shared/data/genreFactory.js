@@ -18,7 +18,7 @@
           data: genreData
         }).then(function(res) {
           callback(res.data);
-        })
+        });
       },
       deleteGenre: function(genreId, callback) {
         return $http({
