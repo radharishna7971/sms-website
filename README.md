@@ -38,23 +38,23 @@ Once code is pulled in, the code will automatically be pushed to the hosted serv
 ### Repo Structure
 
 /client - all client side files
-  /app 
-    /components - folders correspond to pages of the web app, each folder has a html file (template) and js file (controller) which passes data and adds functionality to the template
-    /shared - folders correspond to functionality shared across different controllers (e.g. authentication and the top navbar)
-  /assets - static files used by the rest of the app
-  index.html - the single page web app that is powered by the files in /app and /assets
-/node_modules - contains all the modules that are used by the server, when you type 'npm install', all of the dependencies declared in package.json will be installed here
-/server
-  /config - contains files that deal with the app's settings and db connection
-    /db - contain migrations, if any exist
-    /env - contain the environmental variables
-      development.js - this file contains sensitive information and is not saved in Github for security reasons (it is ignored because it is listed in the .gitignore file), ask Ben or Steve for the development.js file
-    config.js - tells the server to use environmental variables from development.js if not in production
-    db.js - establishes connection to database based on environmental variables
-    express.js - defines route paths and some express middleware
-    schema.js - defines database schema and create tables that do not already exist in your database
-  /conrollers - the functions that respond the requests that come in through the site, requests are routed from the routes folder to functions in this folder 
-  /models - contain the logic for all of the database schema, used by functions in the controllers folder to access database data
-  /routes - route the different site paths to the corresponding server logic, each route (except for redirect routes which are in place to avoid Angular's # in the url) pass the request on to a function in the controllers folder
-  server.js - this file must be run to activate the service
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/app 
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/components - folders correspond to pages of the web app, each folder has a html file (template) and js file (controller) which passes data and adds functionality to the template
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/shared - folders correspond to functionality shared across different controllers (e.g. authentication and the top navbar)
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/assets - static files used by the rest of the app
+  <br />index.html - the single page web app that is powered by the files in /app and /assets
+<br />/node_modules - contains all the modules that are used by the server, when you type 'npm install', all of the dependencies declared in package.json will be installed here
+<br />/server
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/config - contains files that deal with the app's settings and db connection
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/db - contain migrations, if any exist
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/env - contain the environmental variables
+      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;development.js - this file contains sensitive information and is not saved in Github for security reasons (it is ignored because it is listed in the .gitignore file), ask Ben or Steve for the development.js file
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config.js - tells the server to use environmental variables from development.js if not in production
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db.js - establishes connection to database based on environmental variables
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;express.js - defines route paths and some express middleware
+    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema.js - defines database schema and create tables that do not already exist in your database
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/controllers - the functions that respond the requests that come in through the site, requests are routed from the routes folder to functions in this folder 
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/models - contain the logic for all of the database schema, used by functions in the controllers folder to access database data
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/routes - route the different site paths to the corresponding server logic, each route (except for redirect routes which are in place to avoid Angular's # in the url) pass the request on to a function in the controllers folder
+  <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server.js - this file must be run to activate the service
 
