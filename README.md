@@ -37,14 +37,14 @@ Once code is pulled in, the code will automatically be pushed to the hosted serv
 
 ### Repo Structure
 
-/client - all client side files
+**/client** - all client side files
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/app**
     <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/components** - folders correspond to pages of the web app, each folder has a html file (template) and js file (controller) which passes data and adds functionality to the template
     <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/shared** - folders correspond to functionality shared across different controllers (e.g. authentication and the top navbar)
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/assets** - static files used by the rest of the app
   <br />**index.html** - the single page web app that is powered by the files in /app and /assets
 <br />**/node_modules** - contains all the modules that are used by the server, when you type 'npm install', all of the dependencies declared in package.json will be installed here
-<br />/server
+<br />**/server**
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/config** - contains files that deal with the app's settings and db connection
     <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/db** - contain migrations, if any exist
     <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/env** - contain the environmental variables
@@ -57,4 +57,12 @@ Once code is pulled in, the code will automatically be pushed to the hosted serv
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/models** - contain the logic for all of the database schema, used by functions in the controllers folder to access database data
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**/routes** - route the different site paths to the corresponding server logic, each route (except for redirect routes which are in place to avoid Angular's # in the url) pass the request on to a function in the controllers folder
   <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**server.js** - this file must be run to activate the service
+<br />**.bowerrc** - tells bower where to install client dependencies (this repo currently does not use bower)
+<br />**.gitignore** - tells git what files should be ignored from being commited to the repo
+<br />**bower.json** - if we end up using bower, this will contain the list of bower dependencies
+<br />**circle.yml** - used for CircleCI continuous integration
+<br />**knexfile.js** - used for handling migrations
+<br />**package.json** - contains list of npm dependencies
+
+
 

@@ -12,6 +12,5 @@
     "bower_components"
   ],
   "dependencies": {
-    "moment": "~2.10.6"
   }
 }
