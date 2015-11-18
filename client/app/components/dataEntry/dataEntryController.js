@@ -8,6 +8,8 @@
     $scope.activeElement = {}; // data that will change in form
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
+    //Change the data Entry button text 
+    $scope.btnTxt = "Add";
 
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
@@ -41,6 +43,7 @@
         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
         $($event.target).addClass('talent-form-menu-button-active');
         $scope.talentSection = $($event.target).attr('talent-form-section');
+        $scope.btnTxt = "Update";
         if ($scope.section !== 'main') {
           $scope.errorText = 'Modifying ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
         }
@@ -61,6 +64,7 @@
         $('.active-element').removeClass('active-element');
         $scope.editElement = element;
         activeElementSetter[$scope.section]();
+        $scope.btnTxt = "Update";
       }
     };
 
@@ -75,6 +79,7 @@
       $scope.editElement = null;
       $scope.activeElement = {};
       $scope.talentSection = 'main';
+      $scope.btnTxt = "Add";
     };
 
     // This contains functions for fetching the data to the forms for editing
@@ -329,6 +334,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+          $scope.btnTxt = "Add";
         });
       },
       Talent: function() {
@@ -339,6 +345,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+          $scope.btnTxt = "Add";
         });
       }
     };

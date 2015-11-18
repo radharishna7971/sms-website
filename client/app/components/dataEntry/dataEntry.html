@@ -138,7 +138,7 @@
             <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
           </select>
         </div>
-        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit">
+        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
        </div>
 
       <div ng-show="talentSection==='management'">
@@ -154,7 +154,7 @@
             <option ng-repeat="contact in data.Contact | orderBy : 'name'" value="{{contact.id}}">{{contact.name}}</option>
           </select>
         </div>
-        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit">
+        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>
 
       <div ng-show="talentSection==='social'">
@@ -176,7 +176,7 @@
           <p class="input-label">LinkedIn Url</p>
           <input class="data-input" ng-model="activeElement.linkedin_url" type="text">
         </div>
-        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit">
+        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>
     </form>
 
@@ -203,7 +203,7 @@
               <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
             </select>
           </div>
-          <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit">
+          <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="{{btnTxt}}">
         </form>
         <div class="talent-credit-join-container">
           <div ng-repeat="join in activeElement.talentCreditJoins">
@@ -218,7 +218,7 @@
     <div class="talent-data-comments-container"  ng-show="talentSection==='comments'">
       <div class="data-entry-comment-box">
         <textarea class="data-entry-comment-input" type="textarea" placeholder="Enter comment here"></textarea>
-        <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" />
+        <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" value="{{btnTxt}}" />
       </div>
       <div class="talent-data-comments">
         <div class="talent-data-comment-header">Comments</div>
