@@ -6,6 +6,7 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Role')">ROLE</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Genre')">GENRE</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'CreditType')">CREDIT TYPE</div>
+    <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Ethnicity')">ETHNICITY</div>
   </div>
   <div class="data-left-column-data">
     <div class="data-left-column-data-row" ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}">{{element.name}}</div>
@@ -26,6 +27,7 @@
     <div class="talent-form-menu-button" talent-form-section="social" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'social', 'talent-form-menu-button-inactive': !editElement}">Social Profiles</div>
     <div class="talent-form-menu-button" talent-form-section="credits" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'credits', 'talent-form-menu-button-inactive': !editElement}">Credits</div>
     <div class="talent-form-menu-button" talent-form-section="comments" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'comments', 'talent-form-menu-button-inactive': !editElement}">Comments</div>
+	<div class="talent-form-menu-button" talent-form-section="info" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'info', 'talent-form-menu-button-inactive': !editElement}">Info</div>
   </div>
 
   <div class="data-form-container">
@@ -36,7 +38,13 @@
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
       <input class="data-input data-submit" ng-click="submitData()" type="submit">
     </form>
-
+    <!-- Ethnicity FORM -->
+    <form ng-show="section==='Ethnicity'">
+      <input class="id-input" ng-model="activeElement.id" type="text">
+      <p class="input-label">Name (Required)</p>
+      <input class="data-input" ng-model="activeElement.name" type="text" required="true">
+      <input class="data-input data-submit" ng-click="submitData()" type="submit" value="{{btnTxt}}">
+    </form>
     <!-- GENRE FORM -->
     <form ng-show="section==='Genre'">
       <input class="id-input " ng-model="activeElement.id" type="text">
@@ -137,8 +145,20 @@
             <option></option>
             <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
           </select>
+          <p class="input-label">Ethnicity</p>
+          <!--<select class="data-input select-input" ng-model="activeElement.ethnicity_id">
+            <option></option>
+            <option ng-repeat="ethnicity in data.Ethnicity | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
+          </select>-->
+          <select class="data-input select-input" ng-model="activeElement.ethnicity_id">
+            <option></option>
+            <option value="1">American</option>
+            <option value="2">Hispanic</option>
+            <option value="3">Indian</option>
+            <option value="4">White</option>
+          </select>		  
         </div>
-        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit">
+        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
        </div>
 
       <div ng-show="talentSection==='management'">
@@ -154,7 +174,7 @@
             <option ng-repeat="contact in data.Contact | orderBy : 'name'" value="{{contact.id}}">{{contact.name}}</option>
           </select>
         </div>
-        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit">
+        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>
 
       <div ng-show="talentSection==='social'">
@@ -176,7 +196,7 @@
           <p class="input-label">LinkedIn Url</p>
           <input class="data-input" ng-model="activeElement.linkedin_url" type="text">
         </div>
-        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit">
+        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>
     </form>
 
@@ -203,7 +223,7 @@
               <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
             </select>
           </div>
-          <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit">
+          <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="{{btnTxt}}">
         </form>
         <div class="talent-credit-join-container">
           <div ng-repeat="join in activeElement.talentCreditJoins">
@@ -218,7 +238,7 @@
     <div class="talent-data-comments-container"  ng-show="talentSection==='comments'">
       <div class="data-entry-comment-box">
         <textarea class="data-entry-comment-input" type="textarea" placeholder="Enter comment here"></textarea>
-        <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" />
+        <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" value="{{btnTxt}}"/>
       </div>
       <div class="talent-data-comments">
         <div class="talent-data-comment-header">Comments</div>
@@ -235,6 +255,13 @@
       <div class="talent-column">
       
       </div> -->
+    </div>
+	
+	<!-- Info	-->
+	
+	<div ng-show="talentSection==='info'">
+      <p class="input-label">Creator Name: </p><p>{{}}</p>
+      <p class="input-label">Created Date: </p><p>{{activeElement.created_at | date }}</p>
     </div>
 
   </div>

@@ -20,6 +20,7 @@
     'contactFactory',
     'creditFactory',
     'roleFactory',
+    'ethnicityFactory',
     'genreFactory',
     'creditTypeFactory',
     // 'youtubeFactory',

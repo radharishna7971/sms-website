@@ -1,13 +1,15 @@
 (function() {
   'use strict';
-  angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'creditTypeFactory', 'commentFactory'])
-  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory) {
+  angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'creditTypeFactory', 'commentFactory', 'ethnicityFactory'])
+  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory, ethnicityFactory) {
     $scope.section = 'Talent'; // Represents current section
     $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
+    //Change the data Entry button text 
+    $scope.btnTxt = "Add";	
 
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
@@ -43,6 +45,7 @@
         $scope.talentSection = $($event.target).attr('talent-form-section');
         if ($scope.section !== 'main') {
           $scope.errorText = 'Modifying ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+		  $scope.btnTxt = "Update";
         }
       }
     };
@@ -55,12 +58,14 @@
       if ($($event.target).hasClass('active-element')) {
         $scope.editElement = null;
         $scope.activeElement = {};
+		$scope.btnTxt = "Add";		
       } 
       // otherwise, remove active from other element in case another element is active and set form data
       else {
         $('.active-element').removeClass('active-element');
         $scope.editElement = element;
         activeElementSetter[$scope.section]();
+		$scope.btnTxt = "Update";
       }
     };
 
@@ -75,11 +80,17 @@
       $scope.editElement = null;
       $scope.activeElement = {};
       $scope.talentSection = 'main';
+	   $scope.btnTxt = "Add";
     };
 
     // This contains functions for fetching the data to the forms for editing
     var activeElementSetter = {
       Role: function() {
+        for (var key in $scope.editElement) {
+          $scope.activeElement[key] = $scope.editElement[key];
+        }
+      },
+      Ethnicity: function() {
         for (var key in $scope.editElement) {
           $scope.activeElement[key] = $scope.editElement[key];
         }
@@ -119,6 +130,25 @@
         } else {
           $scope.errorText = '';
           roleFactory.addOrEdit($scope.activeElement, function(res) {
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } else {
+                $scope.data[$scope.section].push(res);
+                $scope.editElement = res;
+                activeElementSetter[$scope.section]();
+              }
+            }
+            $scope.errorText = res.text;
+          });
+        }
+      },
+	  Ethnicity: function() {
+        if (!checkInputs()) {
+           $scope.errorText = 'Please make sure all required fields are entered';
+        } else {
+          $scope.errorText = '';
+          ethnicityFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
@@ -291,6 +321,16 @@
           $scope.activeElement = {};
         });
       },
+      Ethnicity: function() {
+        ethnicityFactory.deleteEthnicity($scope.editElement.id, function(){
+          // Remove deleted data point from the array
+          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+
+          // Reset elements and form
+          $scope.editElement = null;
+          $scope.activeElement = {};
+        });
+      },
       Genre: function() {
         genreFactory.deleteGenre($scope.editElement.id, function(){
           // Remove deleted data point from the array
@@ -329,6 +369,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+		  $scope.btnTxt = "Add";
         });
       },
       Talent: function() {
@@ -339,6 +380,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+		  $scope.btnTxt = "Add";
         });
       }
     };
@@ -353,6 +395,9 @@
       }),
       Role: roleFactory.getNames(function(result) {
         $scope.data.Role = result;
+      }),
+      Ethnicity: ethnicityFactory.getNames(function(result) {
+        $scope.data.Ethnicity = result;
       }),
       Genre: genreFactory.getNames(function(result) {
         $scope.data.Genre = result;

@@ -39,6 +39,7 @@ Talent.getProfile= function(talentId, callback) {
       role2.name AS secondary_role, \
       genre1.name AS primary_genre, \
       genre2.name AS secondary_genre, \
+      ethnicity.name AS ethnicity_name, \
       talent.gender, \
       talent.location, \
       talent.photo_url, \
@@ -56,6 +57,7 @@ Talent.getProfile= function(talentId, callback) {
       LEFT JOIN roles AS role2 ON talent.secondary_role_id = role2.id \
       LEFT JOIN genres AS genre1 ON talent.primary_genre_id = genre1.id \
       LEFT JOIN genres AS genre2 ON talent.secondary_genre_id = genre2.id \
+      LEFT JOIN ethnicity AS ethnicity ON talent.ethnicity_id = ethnicity.id \
       LEFT JOIN contacts AS manager ON talent.manager_id = manager.id \
       LEFT JOIN contacts AS agent ON talent.agent_id = agent.id \
       LEFT JOIN contacts AS partner ON talent.partner_id = partner.id \
@@ -131,6 +133,7 @@ Talent.get = function(id, callback) {
       secondary_role_id, \
       primary_genre_id, \
       secondary_genre_id, \
+      ethnicity_id, \
       imdb_url, \
       linkedin_url, \
       facebook_url, \
@@ -142,6 +145,7 @@ Talent.get = function(id, callback) {
       manager_id, \
       partner_id, \
       created_by, \
+      created_at, \
       last_edited_by \
     FROM talent \
     WHERE id = ' + id)
@@ -174,7 +178,15 @@ Talent.get = function(id, callback) {
        WHERE talent.id = ' + data.id.toString())
       .then(function(results) {
        data.talentCreditJoins = results[0];
+	   db.knex.raw('\
+	   SELECT \
+         CONCAT(users.first_name, \' \', users.last_name) AS creator_name \
+       FROM  talent, users \
+	   WHERE talent.id = ' + data.id.toString() + ' AND users.id = talent.created_by')
+	   .then(function(results) {
+		   //data.users = results[0][0];
        callback(data);
+	   });
       });
      });
   });
