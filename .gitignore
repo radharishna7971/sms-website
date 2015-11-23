@@ -2,3 +2,5 @@
 node_modules/
 client/assets/lib
 server/config/env
+smstudios_db_back.sql
+smstudios_db_back.sql.sql
