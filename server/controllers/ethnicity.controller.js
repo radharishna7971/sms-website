@@ -1,6 +1,4 @@
 var Ethnicity = require('../models/ethnicity.model');
-var jwt = require('jwt-simple');
-var jwtSecret = process.env.jwtSecret;
 
 exports.getNames = function(req, res) {
   Ethnicity.getNames(function(result) {

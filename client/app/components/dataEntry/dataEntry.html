@@ -36,7 +36,7 @@
       <input class="id-input" ng-model="activeElement.id" type="text">
       <p class="input-label">Role Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
-      <input class="data-input data-submit" ng-click="submitData()" type="submit">
+      <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form>
     <!-- Ethnicity FORM -->
     <form ng-show="section==='Ethnicity'">
@@ -50,7 +50,7 @@
       <input class="id-input " ng-model="activeElement.id" type="text">
       <p class="input-label">Genre Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
-      <input class="data-input data-submit" ng-click="submitData()" type="submit">
+      <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form>
 
     <!-- CREDIT TYPE FORM -->
@@ -58,7 +58,7 @@
       <input class="id-input " ng-model="activeElement.id" type="text">
       <p class="input-label">Credit Type Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
-      <input class="data-input data-submit" ng-click="submitData()" type="submit">
+      <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form>
 
     <!-- CREDIT FORM -->
@@ -78,7 +78,7 @@
       </select>
       <p class="input-label">Release Year (YYYY)</p>
       <input class="data-input" ng-model="activeElement.release_date" type="input">
-      <input class="data-input data-submit" ng-click="submitData()" type="submit">
+      <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form>
 
     <!-- CONTACT FORM -->
@@ -92,7 +92,7 @@
       <input class="data-input" ng-model="activeElement.email" type="text">
       <p class="input-label">Phone</p>
       <input class="data-input" ng-model="activeElement.phone" type="text">
-      <input class="data-input data-submit" ng-click="submitData()" type="submit">
+      <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form>
 
     <!-- TALENT FORM -->
@@ -146,17 +146,17 @@
             <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
           </select>
           <p class="input-label">Ethnicity</p>
-          <!--<select class="data-input select-input" ng-model="activeElement.ethnicity_id">
+          <select class="data-input select-input" ng-model="activeElement.ethnicity_id">
             <option></option>
             <option ng-repeat="ethnicity in data.Ethnicity | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
-          </select>-->
-          <select class="data-input select-input" ng-model="activeElement.ethnicity_id">
+          </select>
+          <!--<select class="data-input select-input" ng-model="activeElement.ethnicity_id">
             <option></option>
             <option value="1">American</option>
             <option value="2">Hispanic</option>
             <option value="3">Indian</option>
             <option value="4">White</option>
-          </select>		  
+          </select>	-->	  
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
        </div>
