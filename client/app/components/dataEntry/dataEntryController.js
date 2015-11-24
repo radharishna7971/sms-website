@@ -8,8 +8,6 @@
     $scope.activeElement = {}; // data that will change in form
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
-    //Change the data Entry button text 
-    $scope.btnTxt = "Add";	
 
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
@@ -20,6 +18,7 @@
       $scope.section = section;
       $scope.talentSection = 'main';
       $scope.activeData = $scope.data[$scope.section];
+	  $scope.btnTxt = "Add";	
 
       if ($event) {
         $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
@@ -137,6 +136,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
+				$scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -156,6 +156,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
+				$scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -175,6 +176,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
+				$scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -194,6 +196,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
+				$scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -219,6 +222,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
+				$scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -246,6 +250,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
+				$scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -278,6 +283,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
+				$scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -319,6 +325,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+		  $scope.btnTxt = "Add";		  
         });
       },
       Ethnicity: function() {
@@ -329,6 +336,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+		  $scope.btnTxt = "Add";		  
         });
       },
       Genre: function() {
@@ -339,6 +347,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+		  $scope.btnTxt = "Add";		  
         });
       },
       CreditType: function() {
@@ -349,6 +358,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+		  $scope.btnTxt = "Add";		  
         });
       },
       Credit: function() {
@@ -359,6 +369,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+		  $scope.btnTxt = "Add";
         });
       },
       Contact: function() {

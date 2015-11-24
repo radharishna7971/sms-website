@@ -184,7 +184,7 @@ Talent.get = function(id, callback) {
        FROM  talent, users \
 	   WHERE talent.id = ' + data.id.toString() + ' AND users.id = talent.created_by')
 	   .then(function(results) {
-		   //data.users = results[0][0];
+		   //data.creator_name = results[0][0]; // TaskList: [27] - This is to get Creator name in dataEntry.html file
        callback(data);
 	   });
       });
