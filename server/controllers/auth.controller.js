@@ -31,6 +31,17 @@ exports.create = function(req, res) {
   });
 };
 
+exports.update = function(req, res) {
+  var userData = req.body;
+  User.update(userData, function(error, user) {
+    if (error) {
+      res.json({error: "User's update record failed."});
+    } else {
+      res.json(user);
+    }
+  });
+};
+
 exports.validate = function(req, res) {
   var token = req.body.token;
   try {
@@ -47,13 +58,27 @@ exports.validate = function(req, res) {
 exports.getUsers = function(req, res) {
   // Make sure that user accessing data has proper access
   var token = req.query.token;
-
-  console.log(token);
   var userId = jwt.decode(token, jwtSecret);
   User.validate(userId, function(valid) {
     if (valid) {
       User.getAll(function(users) {
         res.json(users);
+      });
+    } else {
+      res.send("Invalid credentials");
+    }
+  });
+
+};
+
+exports.getUserDetails = function(req, res) {
+  // Make sure that user accessing data has proper access
+  var token = req.query.token;
+  var userId = jwt.decode(token, jwtSecret);
+  User.validate(userId, function(valid) {
+    if (valid) {
+      User.getUserDetailsById(req.query.id,function(result) {
+          res.json(result);
       });
     } else {
       res.send("Invalid credentials");

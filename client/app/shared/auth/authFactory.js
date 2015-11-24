@@ -76,6 +76,35 @@
           }
         });
       },
+      updateUser: function(userData, callback) {
+        $http({
+          method: 'POST',
+          url: 'api/auth/update',
+          data: userData
+        }).then(function(res) {
+
+          if (res.data.hasOwnProperty('error')) {
+            callback("User update failed");
+          } else {
+            callback(null, res.data);
+          }
+        });
+      },
+
+      getUserDetails: function(id,callback) {
+        $http({
+          method: 'GET',
+          url: 'api/auth/userDetails',
+          params: {
+            token: window.localStorage.smstudiosJwtToken,
+            id:id
+          }
+        }).then(function(res) {
+          callback(res.data);
+          }, function() {
+          return "Unable to fatch the record.";
+        });
+      },
 
       getUsers: function(callback) {
         $http({
