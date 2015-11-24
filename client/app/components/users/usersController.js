@@ -85,6 +85,7 @@
       $scope.userData = {};
       $scope.editElement = false;
       $scope.showCnfPwd = true;
+      $scope.changePasswordPanel = false;
       //$scope.confirmPassword = "";
       $scope.btnTxt = "Add";
     };
