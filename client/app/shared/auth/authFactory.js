@@ -76,6 +76,21 @@
           }
         });
       },
+
+        addXlsRecords: function(rowsData, callback) {
+        $http({
+          method: 'POST',
+          url: 'api/auth/addRows',
+          data: rowsData
+        }).then(function(res) {
+          if (res.data.hasOwnProperty('error')) {
+            callback("error");
+          } else {
+            callback(null, res.data);
+          }
+        });
+      },
+
       updateUser: function(userData, callback) {
         $http({
           method: 'POST',
@@ -85,6 +100,20 @@
 
           if (res.data.hasOwnProperty('error')) {
             callback("User update failed");
+          } else {
+            callback(null, res.data);
+          }
+        });
+      },
+
+       uploadXlsFile: function(callback) {
+        $http({
+          method: 'POST',
+          url: '/api/auth/xlsxFileUpload',
+          data: ''
+        }).then(function(res) {
+          if (res.data.hasOwnProperty('error')) {
+            callback("File import failed.");
           } else {
             callback(null, res.data);
           }

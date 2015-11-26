@@ -8,6 +8,7 @@
     });
     };
     getUserList();
+    $scope.xlsFileUpload = {};
     $scope.userData = {permission: 2};
     $scope.errorText = '';
     $scope.btnTxt = "Add";
@@ -15,6 +16,7 @@
     $scope.newtext = {};
     $scope.changePasswordPanel = false;
     $scope.editElement = false;
+    
     $scope.createUser = function() {
        $scope.errorText = '';
       if (!checkInputs()) {
@@ -81,6 +83,7 @@
     $scope.clearForm = function() {
       resetForm();
     };
+    
     var resetForm = function(){
       $scope.userData = {};
       $scope.editElement = false;

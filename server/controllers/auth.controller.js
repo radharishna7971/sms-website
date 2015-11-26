@@ -1,7 +1,8 @@
 var User = require('../models/user.model');
 var jwt = require('jwt-simple');
 var jwtSecret = process.env.jwtSecret;
-
+var XLSX = require('xlsx');
+var fs = require('file-system');
 exports.login = function(req, res) {
   var userData = req.body;
   User.authenticate(userData, function(error, user) {
@@ -40,6 +41,35 @@ exports.update = function(req, res) {
       res.json(user);
     }
   });
+};
+
+exports.xlsxFileUpload = function(req, res) {
+  var workbook = XLSX.readFile(__dirname + '/uploads/testXlsFiles.xlsx');
+  var result = {};
+  try {
+    workbook.SheetNames.forEach(function(sheetName) {
+        var xlsRow = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+        if(xlsRow.length > 0){
+            result['callBackObject'] = xlsRow;
+        }
+    });
+     res.send(result);
+  }catch(err) {
+    res.send(false);
+  }
+ 
+};
+
+exports.addRows = function(req, res) {
+  var rowDatas = req.body;
+  User.addRows(rowData, function(error, user) {
+    if (error) {
+      res.json({error: "User already exists"});
+    } else {
+      res.json(user);
+    }
+  });
+ 
 };
 
 exports.validate = function(req, res) {

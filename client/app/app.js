@@ -3,7 +3,9 @@
   angular.module('smstudios', [
     // Angular libaries
     'ui.router',
-
+    'ui.grid',
+    'ui.grid.edit',
+    
     // Componenets
     'landingController',
     'loginController',
@@ -11,9 +13,11 @@
     'talentController',
     'usersController',
     'dataEntryController',
+    'importController',
+
     // 'youtubeController',
 
-
+    'excelReaderFileFactory',
     // Shared
     'authFactory',
     'talentFactory',
@@ -23,6 +27,7 @@
     'ethnicityFactory',
     'genreFactory',
     'creditTypeFactory',
+    'fileImportGrid',
     // 'youtubeFactory',
     'commentFactory',
     'topnavDirective'
@@ -111,6 +116,22 @@
           content: {
             templateUrl: 'app/components/users/users.html',
             controller: 'usersController'
+          }
+        },
+        resolve: {
+          permissionCheck: function() {
+            if (parseInt(window.localStorage.smstudiosPermission) > 1) {
+              $state.go('talent');
+            } 
+          }
+        }
+      }).state('import', {
+        url: '/private/import',
+        authenticate: true,
+        views: {
+          content: {
+            templateUrl: 'app/components/import/import.html',
+            controller: 'importController'
           }
         },
         resolve: {
