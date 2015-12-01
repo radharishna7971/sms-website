@@ -3,8 +3,13 @@
   angular.module('smstudios', [
     // Angular libaries
     'ui.router',
+    'ngAnimate',
+    'ngTouch',
     'ui.grid',
     'ui.grid.edit',
+    'ui.grid.selection',
+    'ui.grid.exporter',
+    'ui.grid.pagination',
     
     // Componenets
     'landingController',
@@ -28,6 +33,7 @@
     'genreFactory',
     'creditTypeFactory',
     'fileImportGrid',
+    'talentGridFactory',
     // 'youtubeFactory',
     'commentFactory',
     'topnavDirective'

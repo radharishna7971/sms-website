@@ -127,25 +127,13 @@ Talent.get = function(id, callback) {
       email, \
       phone, \
       gender, \
-      location, \
-      primary_role_id, \
-      secondary_role_id, \
-      primary_genre_id, \
-      secondary_genre_id, \
+      city, \
+      State, \
+      country, \
       ethnicity_id, \
-      imdb_url, \
-      linkedin_url, \
       facebook_url, \
-      youtube_url, \
-      photo_url, \
       vine_url, \
-      instagram_url, \
-      agent_id, \
-      manager_id, \
-      partner_id, \
-      created_by, \
-      created_at, \
-      last_edited_by \
+      instagram_url \
     FROM talent \
     WHERE id = ' + id)
   .then(function(results) {
@@ -193,6 +181,8 @@ Talent.get = function(id, callback) {
 
 
 Talent.addOrEdit = function(talentData, callback) {
+  console.log("krishna ....!!!");
+  console.log(talentData);
   // Check to see if talent exists with same name
   new Talent({first_name: talentData.first_name, last_name: talentData.last_name})
   .fetch()

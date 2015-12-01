@@ -74,12 +74,10 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.string('email', 50);
       talent.string('phone', 50);
       talent.string('gender', 50);
-      talent.string('location', 50).defaultTo('United States');
-      talent.integer('primary_role_id').unsigned().references('roles.id');
-      talent.integer('secondary_role_id').unsigned().references('roles.id');
-      talent.integer('primary_genre_id').unsigned().references('genres.id');
-      talent.integer('secondary_genre_id').unsigned().references('genres.id');
-      talent.integer('ethnicity_id').unsigned().references('ethnicity.id');
+      talent.string('city', 50);
+      talent.string('state', 50);
+      talent.string('country', 50);
+      talent.string('gender', 50);
       talent.string('photo_url', 200);
       talent.string('imdb_url', 100);
       talent.string('linkedin_url', 100);

@@ -1,15 +1,20 @@
 (function() {
   'use strict';
-  angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory'])
-  .controller('talentController', function($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory) {
+  angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory', 'talentGridFactory'])
+  .controller('talentController', function($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory) {
 
     ///////////////////////////////
     /// Initialize View
     ///////////////////////////////
+    $scope.talentGridOption = {};
+    $scope.talentGridOption = talentGridFactory.getGridOptions();
     talentFactory.getAll(function(data) {
-      $scope.talent = data;
+      $scope.talentGridOption.data = data;
       $scope.talentCount = data.length;
       $scope.visibleTalent = data.length;
+        $scope.talentGridOption.onRegisterApi = function (gridApi) {
+              $scope.gridApi = gridApi;
+          };
     });
 
     $scope.mainTalent = false;

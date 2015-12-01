@@ -57,14 +57,14 @@
       if ($($event.target).hasClass('active-element')) {
         $scope.editElement = null;
         $scope.activeElement = {};
-		$scope.btnTxt = "Add";		
+		    $scope.btnTxt = "Add";		
       } 
       // otherwise, remove active from other element in case another element is active and set form data
       else {
         $('.active-element').removeClass('active-element');
         $scope.editElement = element;
         activeElementSetter[$scope.section]();
-		$scope.btnTxt = "Update";
+		    $scope.btnTxt = "Update";
       }
     };
 
@@ -137,7 +137,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
-				$scope.btnTxt = "Update";				
+				        $scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -197,7 +197,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
-				$scope.btnTxt = "Update";				
+				        $scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -251,7 +251,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
-				$scope.btnTxt = "Update";				
+				        $scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -284,7 +284,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
-				$scope.btnTxt = "Update";				
+				        $scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;

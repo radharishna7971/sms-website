@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('importController', ['authFactory'])
-  .controller('importController', function($scope, authFactory, fileImportGrid,excelReaderFileFactory) {
+  .controller('importController', function($scope, authFactory,excelReaderFileFactory) {
          
         $scope.xlsFileUpload  = {};
         $scope.showPreview = false;
@@ -45,8 +45,8 @@
                        i++;
                        
                  });
-                $scope.xlsFileUpload = fileImportGrid.getGridOptions();
-                $scope.xlsFileUpload.data = newImportarray;
+                // $scope.xlsFileUpload = fileImportGrid.getGridOptions();
+                // $scope.xlsFileUpload.data = newImportarray;
           };
 
           $scope.saveGirdData = function(){

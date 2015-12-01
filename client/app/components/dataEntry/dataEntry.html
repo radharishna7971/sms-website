@@ -126,15 +126,14 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <p class="input-label">Location</p>
-          <input class="data-input" ng-model="activeElement.location" type="text">
         </div>
         <div class="talent-column">
-          <p class="input-label">Partner</p>
-          <select class="data-input select-input" ng-model="activeElement.partner_id">
-            <option></option>
-            <option ng-repeat="talent in data.Talent | orderBy : 'name'" value="{{talent.id}}" ng-hide="{{talent.id}} === editElement.id">{{talent.name}}</option>
-          </select>
+              <p class="input-label">City</p>
+          <input class="data-input" ng-model="activeElement.city" type="text">
+          <p class="input-label">State</p>
+          <input class="data-input" ng-model="activeElement.state" type="text">
+          <p class="input-label">Country</p>
+          <input class="data-input" ng-model="activeElement.country" type="text">
           <p class="input-label">Ethnicity</p>
           <select class="data-input select-input" ng-model="activeElement.ethnicity_id">
             <option></option>
