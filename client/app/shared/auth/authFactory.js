@@ -78,6 +78,7 @@
       },
 
         addXlsRecords: function(rowsData, callback) {
+          console.log(rowsData);
         $http({
           method: 'POST',
           url: 'api/auth/addRows',

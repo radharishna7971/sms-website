@@ -101,11 +101,11 @@ User.update = function(userData, callback) {
 
 
 User.addRows = function(rowsData, callback) {
-  
-  //Add update data base record 
-  console.log(rowsData);
-   callback(null,1);
-  //callback(1);
+    
+    //Add update data base record 
+    console.log(rowsData);
+     callback(null,1);
+    //callback(1);
 };
 
 // Validates the token saved in localStorage

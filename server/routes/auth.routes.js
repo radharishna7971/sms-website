@@ -7,5 +7,5 @@
   app.post('/api/auth/xlsxFileUpload', auth.xlsxFileUpload);
   app.get('/api/auth/userDetails', auth.getUserDetails);
   app.get('/api/auth/users', auth.getUsers);
-  app.get('/api/auth/addRows', auth.addRows);
+  app.post('/api/auth/addRows', auth.addRows);
  };

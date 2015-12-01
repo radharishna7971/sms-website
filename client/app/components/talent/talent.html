@@ -62,22 +62,32 @@
   <div class="talent-center-div">
       <table class="talent-table">
         <tr class="talent-table-header">
-          <td class="talent-col-width col-header active-header" col="last_name" ng-click="changeOrder('last_name')" >Name</td>
-          <td class="talent-col-width col-header" col="primary_role" ng-click="changeOrder('primary_role')">Primary Role</td>
-          <td class="talent-col-width col-header" col="secondary_role" ng-click="changeOrder('secondary_role')">Secondary Role</td>
-          <td class="talent-col-width col-header" col="primary_genre" ng-click="changeOrder('primary_genre')">Primary Genre</td>
+          <td class="talent-col-width col-header active-header" col="first_name" ng-click="changeOrder('first_name')" >First Name</td>
+          <td class="talent-col-width col-header active-header" col="last_name" ng-click="changeOrder('last_name')" >Last Name</td>
+          <td class="talent-col-width col-header active-header" col="age" ng-click="changeOrder('age')" >Age</td>
+          <td class="talent-col-width col-header active-header" col="gender" ng-click="changeOrder('gender')" >Gender</td>
+          <td class="talent-col-width col-header active-header" col="email" ng-click="changeOrder('email')" >Email</td>
+          <td class="talent-col-width col-header active-header" col="phone" ng-click="changeOrder('phone')" >Phone</td>
+<!--           <td class="talent-col-width col-header" col="primary_role" ng-click="changeOrder('primary_role')">Primary Role</td> -->
+          <!-- <td class="talent-col-width col-header" col="secondary_role" ng-click="changeOrder('secondary_role')">Secondary Role</td> -->
+          <!-- <td class="talent-col-width col-header" col="primary_genre" ng-click="changeOrder('primary_genre')">Primary Genre</td>
           <td class="talent-col-width col-header" col="secondary_genre" ng-click="changeOrder('secondary_genre')">Secondary Genre</td>
-          <td class="talent-col-width col-header" col="partner" ng-click="changeOrder('partner')">Partner</td>
-          <td class="talent-col-width col-header" col="location" ng-click="changeOrder('location')">Location</td>
+          <td class="talent-col-width col-header" col="partner" ng-click="changeOrder('partner')">Partner</td> -->
+         <!--  <td class="talent-col-width col-header" col="location" ng-click="changeOrder('location')">Location</td> -->
         </tr>
         <tr ng-repeat="person in talent |  orderBy : filterColumn | filter: talentFilter" class="talent-table-row" ng-click="updateMainTalent($event, person.id)">
-          <td class="row-table-colum talent-col-width center" col="last_name">{{person.name}}</td>
-          <td class="row-table-colum talent-col-width center" col="primary_role">{{person.primary_role}}</td>
-          <td class="row-table-colum talent-col-width center" col="secondary_role">{{person.secondary_role}}</td>
-          <td class="row-table-colum talent-col-width center" col="primary_genre">{{person.primary_genre}}</td>
+          <td class="row-table-colum talent-col-width center" col="first_name">{{person.first_name}}</td>
+          <td class="row-table-colum talent-col-width center" col="last_name">{{person.last_name}}</td>
+          <td class="row-table-colum talent-col-width center" col="age">{{person.age}}</td>
+          <td class="row-table-colum talent-col-width center" col="gender">{{person.gender}}</td>
+          <td class="row-table-colum talent-col-width center" col="email">{{person.email}}</td>
+          <td class="row-table-colum talent-col-width center" col="phone">{{person.phone}}</td>
+          <!-- <td class="row-table-colum talent-col-width center" col="primary_role">{{person.primary_role}}</td> -->
+          <!-- <td class="row-table-colum talent-col-width center" col="secondary_role">{{person.secondary_role}}</td> -->
+          <!-- <td class="row-table-colum talent-col-width center" col="primary_genre">{{person.primary_genre}}</td>
           <td class="row-table-colum talent-col-width center" col="secondary_genre">{{person.secondary_genre}}</td>
           <td class="row-table-colum talent-col-width center" col="partner">{{person.partner}}</td>
-          <td class="row-table-colum talent-col-width center" col="location">{{person.location}}</td>
+          <td class="row-table-colum talent-col-width center" col="location">{{person.location}}</td> -->
         </tr>
       </table>
   </div>

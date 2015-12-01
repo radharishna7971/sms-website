@@ -11,11 +11,20 @@
                   selectionColumn: true
               };
               importGridInfo.columnDefs = [
+                { name: 'RecordID', displayName: 'RecordID', enableCellEdit: false},
                 { name: 'Name', displayName: 'Name'},
-                { name: 'ExpandedProjects', displayName: 'Expanded Projects'},
-                { name: 'Representatives', displayName: 'Representatives'},
-                { name: 'Comments', displayName: 'Comments'},
-                { name: 'Notes', displayName: 'Notes'}
+                { name: 'Actor', displayName: 'Actor'},
+                { name: 'Director', displayName: 'Director'},
+                { name: 'Producer', displayName: 'Producer'},
+                { name: 'ExecutiveProducer', displayName: 'ExecutiveProducer'},
+                { name: 'Writer', displayName: 'Writer'},
+                { name: 'Genre', displayName: 'Genre'},
+                { name: 'Keywords', displayName: 'Keywords'},
+                { name: 'Screenplay', displayName: 'Screenplay'},
+                { name: 'USBoxOfficeCume', displayName: 'USBoxOfficeCume'},
+                { name: 'MostRecentAwards', displayName: 'MostRecentAwards'},
+                { name: 'USRelease', displayName: 'USRelease'},
+                { name: 'Logline', displayName: 'Logline'}
               ];
               return importGridInfo;
             };

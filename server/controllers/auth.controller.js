@@ -1,4 +1,5 @@
 var User = require('../models/user.model');
+var Credit = require('../models/credit.model');
 var jwt = require('jwt-simple');
 var jwtSecret = process.env.jwtSecret;
 var XLSX = require('xlsx');
@@ -62,14 +63,14 @@ exports.xlsxFileUpload = function(req, res) {
 
 exports.addRows = function(req, res) {
   var rowDatas = req.body;
-  User.addRows(rowData, function(error, user) {
+  //console.log(rowDatas);
+   Credit.insertExcelData(rowDatas, function(error, user) {
     if (error) {
-      res.json({error: "User already exists"});
+      res.json({error: "User's update record failed."});
     } else {
       res.json(user);
     }
   });
- 
 };
 
 exports.validate = function(req, res) {

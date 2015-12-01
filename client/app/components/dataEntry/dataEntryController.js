@@ -18,7 +18,7 @@
       $scope.section = section;
       $scope.talentSection = 'main';
       $scope.activeData = $scope.data[$scope.section];
-	  $scope.btnTxt = "Add";	
+      $scope.btnTxt = "Add";	
 
       if ($event) {
         $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
@@ -117,6 +117,7 @@
       Talent: function() {
         talentFactory.getTalent($scope.editElement.id, function(talentData) {
           $scope.activeElement = talentData;
+          //console.log();
         });
       }
     };
@@ -420,6 +421,8 @@
         $scope.data.Talent = result;
         // Set talent data to active data when page loads
         $scope.activeData = $scope.data.Talent;
+        console.log("ative data talent...!");
+        console.log($scope.data.Talent);
       })
     };
 

@@ -9,7 +9,7 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Ethnicity')">ETHNICITY</div>
   </div>
   <div class="data-left-column-data">
-    <div class="data-left-column-data-row" ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}">{{element.name}}</div>
+    <div class="data-left-column-data-row" ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}" ng-if="element.name!=''">{{element.name}}</div>
   </div>
 </div>
 <div class="data-main-section">
@@ -64,22 +64,32 @@
     <!-- CREDIT FORM -->
     <form ng-show="section==='Credit'">
       <input class="id-input" ng-model="activeElement.id" type="text">
+      <p class="input-label">Record</p>
+      <select class="data-input select-input" ng-model="activeElement.record_id">
+        <option></option>
+        <option ng-repeat="record in data.Record | orderBy : 'name'" value="{{record.id}}">{{record.name}}</option>
+      </select>
       <p class="input-label">Credit Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
-      <p class="input-label">Type</p>
-      <select class="data-input select-input" ng-model="activeElement.credit_type_id">
-        <option></option>
-        <option ng-repeat="creditType in data.CreditType | orderBy : 'name'" value="{{creditType.id}}">{{creditType.name}}</option>
-      </select>
-      <p class="input-label">Genre</p>
-      <select class="data-input select-input" ng-model="activeElement.genre_id">
-        <option></option>
-        <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
-      </select>
       <p class="input-label">Release Year (YYYY)</p>
       <input class="data-input" ng-model="activeElement.release_date" type="input">
+      <p class="input-label">LogLine</p>
+      <select class="data-input select-input" ng-model="activeElement.logline">
+        <option></option>
+        <option ng-repeat="LogLine in data.LogLine | orderBy : 'name'" value="{{LogLine}}">{{LogLine.name}}</option>
+      </select>
+      <p class="input-label">EstimatedBudget</p>
+      <select class="data-input select-input" ng-model="activeElement.estimatedBudget">
+        <option></option>
+        <option ng-repeat="estimatedBudget in data.estimatedBudget | orderBy : 'name'" value="{{estimatedBudget}}">{{estimatedBudget.name}}</option>
+      </select>
+      <p class="input-label">Box Office Income</p>
+      <select class="data-input select-input" ng-model="activeElement.box_office_income">
+        <option></option>
+        <option ng-repeat="box_office_income in data.box_office_income | orderBy : 'name'" value="{{box_office_income}}">{{box_office_income.name}}</option>
+      </select>
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
-    </form>
+      </form>
 
     <!-- CONTACT FORM -->
     <form ng-show="section==='Contact'">
@@ -125,38 +135,11 @@
             <option></option>
             <option ng-repeat="talent in data.Talent | orderBy : 'name'" value="{{talent.id}}" ng-hide="{{talent.id}} === editElement.id">{{talent.name}}</option>
           </select>
-          <p class="input-label">Primary Role</p>
-          <select class="data-input select-input" ng-model="activeElement.primary_role_id">
-            <option></option>
-            <option ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
-          </select>
-          <p class="input-label">Secondary Role</p>
-          <select class="data-input select-input" ng-model="activeElement.secondary_role_id">
-            <option></option>
-            <option ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
-          </select>
-          <p class="input-label">Primary Genre</p>
-          <select class="data-input select-input" ng-model="activeElement.primary_genre_id">
-            <option></option>
-            <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
-          </select>
-          <p class="input-label">Secondary Genre</p>
-          <select class="data-input select-input" ng-model="activeElement.secondary_genre_id">
-            <option></option>
-            <option ng-repeat="genre in data.Genre | orderBy : 'name'" value="{{genre.id}}">{{genre.name}}</option>
-          </select>
           <p class="input-label">Ethnicity</p>
           <select class="data-input select-input" ng-model="activeElement.ethnicity_id">
             <option></option>
             <option ng-repeat="ethnicity in data.Ethnicity | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
           </select>
-          <!--<select class="data-input select-input" ng-model="activeElement.ethnicity_id">
-            <option></option>
-            <option value="1">American</option>
-            <option value="2">Hispanic</option>
-            <option value="3">Indian</option>
-            <option value="4">White</option>
-          </select>	-->	  
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
        </div>
