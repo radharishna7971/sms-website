@@ -5,9 +5,24 @@
   <title>Social Media Studios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-  
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-touch.js"></script>
+ 
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="app/shared/filereader/xlsx-reader.js"></script>
+
+  <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+  <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
+  <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
+  <script src="http://ui-grid.info/release/ui-grid.js"></script>  
+
   <script src="app/app.js"></script>
   <script src="app/components/landing/landingController.js"></script>
   <script src="app/components/login/loginController.js"></script>
@@ -15,6 +30,7 @@
   <script src="app/components/talent/talentController.js"></script>
   <script src="app/components/dataEntry/dataEntryController.js"></script>
   <script src="app/components/users/usersController.js"></script>
+  <script src="app/components/import/importController.js"></script>
   <script src="app/components/youtube/youtubeController.js"></script>
 
   <script src="app/shared/auth/authFactory.js"></script>
@@ -22,11 +38,17 @@
   <script src="app/shared/data/contactFactory.js"></script>
   <script src="app/shared/data/creditFactory.js"></script>
   <script src="app/shared/data/roleFactory.js"></script>
+  <script src="app/shared/data/ethnicityFactory.js"></script>
   <script src="app/shared/data/youtubeFactory.js"></script>
   <script src="app/shared/data/genreFactory.js"></script>
+  <script src="app/shared/data/excelReaderFileFactory.js"></script>
+  <script src="app/shared/data/fileImportGridFactory.js"></script>
+  <script src="app/shared/data/talentGridFactory.js"></script>
   <script src="app/shared/data/creditTypeFactory.js"></script>
   <script src="app/shared/data/commentFactory.js"></script>
   <script src="app/shared/topnav/topnavDirective.js"></script>
+
+  <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
 
   <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
   <!-- CSS (TO BE CONSOLIDATED) -->

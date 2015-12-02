@@ -6,26 +6,25 @@ Talent.getAll = function(callback) {
   db.knex.raw(' \
     SELECT \
       talent.id AS id, \
-      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
+      talent.first_name AS first_name, \
       talent.last_name AS last_name, \
-      role1.name AS primary_role, \
-      role2.name AS secondary_role, \
-      genre1.name AS primary_genre, \
-      genre2.name AS secondary_genre, \
-      CONCAT(partner.first_name, \' \', partner.last_name) AS partner, \
-      talent.location \
-    FROM talent \
-      LEFT JOIN roles AS role1 ON talent.primary_role_id = role1.id \
-      LEFT JOIN roles AS role2 ON talent.secondary_role_id = role2.id \
-      LEFT JOIN genres AS genre1 ON talent.primary_genre_id = genre1.id \
-      LEFT JOIN genres AS genre2 ON talent.secondary_genre_id = genre2.id \
-      LEFT JOIN talent AS partner ON talent.partner_id = partner.id \
-    WHERE talent.deleted = false \
-  ')
+      talent.age AS age, \
+      talent.gender AS gender, \
+      talent.email AS email, \
+      talent.phone AS phone \
+      FROM talent \
+      WHERE talent.deleted = 0 ')
   .then(function(results) {
      var data = results[0];
      callback(data);
   });
+};
+
+Talent.insertExcelData = function(data){
+  if(data && data.length>0){
+    var firstItem = data[0];
+    console.log(firstItem);
+  }
 };
 
 Talent.getProfile= function(talentId, callback) {
@@ -39,6 +38,7 @@ Talent.getProfile= function(talentId, callback) {
       role2.name AS secondary_role, \
       genre1.name AS primary_genre, \
       genre2.name AS secondary_genre, \
+      ethnicity.name AS ethnicity_name, \
       talent.gender, \
       talent.location, \
       talent.photo_url, \
@@ -56,6 +56,7 @@ Talent.getProfile= function(talentId, callback) {
       LEFT JOIN roles AS role2 ON talent.secondary_role_id = role2.id \
       LEFT JOIN genres AS genre1 ON talent.primary_genre_id = genre1.id \
       LEFT JOIN genres AS genre2 ON talent.secondary_genre_id = genre2.id \
+      LEFT JOIN ethnicity AS ethnicity ON talent.ethnicity_id = ethnicity.id \
       LEFT JOIN contacts AS manager ON talent.manager_id = manager.id \
       LEFT JOIN contacts AS agent ON talent.agent_id = agent.id \
       LEFT JOIN contacts AS partner ON talent.partner_id = partner.id \
@@ -126,23 +127,13 @@ Talent.get = function(id, callback) {
       email, \
       phone, \
       gender, \
-      location, \
-      primary_role_id, \
-      secondary_role_id, \
-      primary_genre_id, \
-      secondary_genre_id, \
-      imdb_url, \
-      linkedin_url, \
+      city, \
+      State, \
+      country, \
+      ethnicity_id, \
       facebook_url, \
-      youtube_url, \
-      photo_url, \
       vine_url, \
-      instagram_url, \
-      agent_id, \
-      manager_id, \
-      partner_id, \
-      created_by, \
-      last_edited_by \
+      instagram_url \
     FROM talent \
     WHERE id = ' + id)
   .then(function(results) {
@@ -174,7 +165,15 @@ Talent.get = function(id, callback) {
        WHERE talent.id = ' + data.id.toString())
       .then(function(results) {
        data.talentCreditJoins = results[0];
+	   db.knex.raw('\
+	   SELECT \
+         CONCAT(users.first_name, \' \', users.last_name) AS creator_name \
+       FROM  talent, users \
+	   WHERE talent.id = ' + data.id.toString() + ' AND users.id = talent.created_by')
+	   .then(function(results) {
+		   //data.creator_name = results[0][0]; // TaskList: [27] - This is to get Creator name in dataEntry.html file
        callback(data);
+	   });
       });
      });
   });
@@ -182,6 +181,8 @@ Talent.get = function(id, callback) {
 
 
 Talent.addOrEdit = function(talentData, callback) {
+  console.log("krishna ....!!!");
+  console.log(talentData);
   // Check to see if talent exists with same name
   new Talent({first_name: talentData.first_name, last_name: talentData.last_name})
   .fetch()

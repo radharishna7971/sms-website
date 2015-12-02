@@ -15,7 +15,7 @@
       link: function() {
 
         var startPath = window.location.pathname.split('/')[2];
-
+          console.log(startPath);
         $('.topnav-button').on('click', function() {
           $('.active-page').removeClass('active-page');
           $(this).addClass('active-page');

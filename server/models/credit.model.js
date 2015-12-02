@@ -1,5 +1,7 @@
-var db = require('../config/db');
+  var db = require('../config/db');
 var Credit = require('../config/schema').Credit;
+var Genre = require('./genre.model');
+var Q = require('q');
 
 // Return list of all credit names
 // Also includes the genre and year
@@ -7,12 +9,14 @@ Credit.getNames = function(callback) {
   db.knex.raw(' \
     SELECT \
       credits.id, \
+      credits.record_id, \
       credits.name, \
       credits.release_date, \
-      genres.name AS genre \
-    FROM credits \
-    LEFT JOIN genres \
-    ON credits.genre_id = genres.id')
+      credits.logline, \
+      credits.estimatedBudget, \
+      credits.box_office_income \
+      FROM credits \
+      ')
   .then(function(results) {
      callback(results[0]);
   });
@@ -32,6 +36,60 @@ Credit.get = function(id, callback) {
   .then(function(results) {
      callback(results[0][0]);
   });
+};
+
+function insertGenreIfNotAvaialble(genre){
+  Genre.addOrEdit(req.body, function(err, result) {
+    if (!err) {
+      res.json(result);
+    } else {
+      res.json(err);
+    }
+  });
+}
+
+
+function createCreditRequest(data){
+  var promise = new Credit({
+        name: data.Name
+      })
+      .fetch()
+      // .fetch() returns a promise so we call .then()
+      .then(function(credit) {
+        console.log(credit);
+        // If the username is not already in the database...
+        if (!credit) {
+          // Create a new user with all of the info from userData
+           new Credit({
+          name: data.Name
+        }).save().then(function(response){
+          console.log(response);
+        }, function(err){
+          console.log(err);
+        });
+        } else {
+         
+        }
+      }, function(err){
+        console.log(err);
+      });
+
+      return promise;
+}
+
+
+Credit.insertExcelData = function(data,callback){
+  //console.log("krishna ....!!!!");
+  var promises = [];
+  for(var i in data){
+      var creditName = data[i].Name;
+      var promise = createCreditRequest(data[i]);
+      promises.push(promise);
+  }
+  Q.all(promises).then(function(){
+    callback("User already exists.\n"); 
+  });
+   
 };
 
 // Check to see that name does not already exists.  If it doesn't either edit or add new.  If it does exist and the id is the same, edit that credit.

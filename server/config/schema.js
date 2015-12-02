@@ -74,11 +74,10 @@ db.knex.schema.hasTable('talent').then(function(exists) {
       talent.string('email', 50);
       talent.string('phone', 50);
       talent.string('gender', 50);
-      talent.string('location', 50).defaultTo('United States');
-      talent.integer('primary_role_id').unsigned().references('roles.id');
-      talent.integer('secondary_role_id').unsigned().references('roles.id');
-      talent.integer('primary_genre_id').unsigned().references('genres.id');
-      talent.integer('secondary_genre_id').unsigned().references('genres.id');
+      talent.string('city', 50);
+      talent.string('state', 50);
+      talent.string('country', 50);
+      talent.string('gender', 50);
       talent.string('photo_url', 200);
       talent.string('imdb_url', 100);
       talent.string('linkedin_url', 100);
@@ -164,6 +163,18 @@ db.knex.schema.hasTable('talent_credit_join').then(function(exists) {
   }
 });
 
+db.knex.schema.hasTable('ethnicity').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('ethnicity', function(ethnicity) {
+      ethnicity.increments('id').primary();
+      ethnicity.string('name', 30);
+      ethnicity.timestamp('created_at').notNullable().defaultTo(db.knex.raw('now()'));
+	  ethnicity.timestamp('last_edited');
+    }).then(function(table) {
+      console.log('Created Ethnicity Table');
+    });
+  }
+});
 
 // Model declaration
 var EmailListEntry = exports.EmailListEntry = db.Model.extend({
@@ -207,6 +218,9 @@ var Talent = exports.Talent = db.Model.extend({
   },
   secondary_genre_id: function() {
     this.belongsTo(Genre, 'secondary_genre_id');
+  },
+  ethnicity_id: function() {
+    this.belongsTo(Ethnicity, 'ethnicity_id');
   },
   manager_id: function(){
     this.belongsTo(Contact, 'manager_id');
@@ -282,5 +296,15 @@ var TalentCreditJoin = exports.TalentCreditJoin = db.Model.extend({
   },
   role: function() {
     this.belongsTo(Role, 'role_id');
+  }
+});
+
+var Ethnicity = exports.Ethnicity = db.Model.extend({
+  tableName: 'ethnicity',
+  talent: function() {
+    return this.hasMany(Talent);
+  },
+  talentCreditJoin: function() {
+    this.hasMany(TalentCreditJoin);
   }
 });
