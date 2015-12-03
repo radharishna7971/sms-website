@@ -8,8 +8,7 @@ Talent.getAll = function(callback) {
     t.id as id, \
     CONCAT(t.first_name, \' \', t.last_name) AS name, \
     t.gender as gender, \
-    t.city as city, \
-    t.State as state, t.country as country , \
+    t.country as country , \
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
       inner join roles r on r.id = cjoin.role_id \
       where cjoin.talent_id = t.id) as roles, \
@@ -34,67 +33,27 @@ Talent.insertExcelData = function(data){
 
 Talent.getProfile= function(talentId, callback) {
   db.knex.raw(' \
-    SELECT \
-      talent.id AS id, \
-      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
-      talent.phone, \
-      talent.email, \
-      role1.name AS primary_role, \
-      role2.name AS secondary_role, \
-      genre1.name AS primary_genre, \
-      genre2.name AS secondary_genre, \
-      ethnicity.name AS ethnicity_name, \
-      talent.gender, \
-      talent.location, \
-      talent.photo_url, \
-      talent.imdb_url, \
-      talent.linkedin_url, \
-      talent.facebook_url, \
-      talent.youtube_url, \
-      talent.vine_url, \
-      talent.instagram_url, \
-      CONCAT(manager.first_name, \' \', manager.last_name) AS manager, \
-      CONCAT(agent.first_name, \' \', agent.last_name) AS agent, \
-      CONCAT(partner.first_name, \' \', partner.last_name) AS partner \
-    FROM talent \
-      LEFT JOIN roles AS role1 ON talent.primary_role_id = role1.id \
-      LEFT JOIN roles AS role2 ON talent.secondary_role_id = role2.id \
-      LEFT JOIN genres AS genre1 ON talent.primary_genre_id = genre1.id \
-      LEFT JOIN genres AS genre2 ON talent.secondary_genre_id = genre2.id \
-      LEFT JOIN ethnicity AS ethnicity ON talent.ethnicity_id = ethnicity.id \
-      LEFT JOIN contacts AS manager ON talent.manager_id = manager.id \
-      LEFT JOIN contacts AS agent ON talent.agent_id = agent.id \
-      LEFT JOIN contacts AS partner ON talent.partner_id = partner.id \
-    WHERE talent.id = ' + talentId)
+    SELECT t.first_name as firstName, t.last_name as lastName, \
+    t.age as age, t.gender as gender, t.twitter_url as twitterurl, \
+    t.facebook_url as facebookurl, t.instagram_url as instagramurl, \
+    t.vine_url as vineurl, t.email as email,t.phone as phone, t.city as city, \
+    t.State as state, t.country as country, \
+    (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
+      inner join roles r on r.id = cjoin.role_id \
+      where cjoin.talent_id = t.id) as roles, \
+  (select GROUP_CONCAT(distinct g.name SEPARATOR \', \') as genresdata from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as genres, \
+  (select GROUP_CONCAT(distinct c.name SEPARATOR \', \') as genresdata \
+    from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    where cjoin.talent_id ='+ talentId+') as credits \
+FROM talent t where t.id= ' + talentId)
   .then(function(results) {
-     var data = results[0][0];
-     db.knex.raw(' \
-       SELECT \
-        credits.name, \
-        credits.release_date \
-       FROM talent_credit_join, credits, talent \
-       WHERE talent.id = talent_credit_join.talent_id \
-        AND talent_credit_join.credit_id = credits.id \
-        AND talent.id = ' + data.id.toString())
-     .then(function(results) {
-        data.credits = results[0] || [];
-        db.knex.raw(' \
-          SELECT \
-            comments.text AS text, \
-            CONCAT(users.first_name, \' \', users.last_name) AS name, \
-            comments.created_at AS date, \
-            comments.id AS comment_id, \
-            talent.id AS talent_id \
-          FROM comments, talent, users \
-          WHERE comments.talent_id = talent.id \
-          AND comments.deleted = false \
-          AND comments.user_id = users.id \
-          AND talent.id = ' + data.id.toString())
-        .then(function(results) {
-          data.comments = results[0] || [];
-          callback(data);
-        });
-     });
+     var data = results[0];
+     callback(data);
   });
 };
 

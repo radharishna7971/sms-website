@@ -9,12 +9,14 @@
             $scope.term ="";
             var filereName = $scope.term;
             $scope.talentGridOption = {};
+            $scope.activeSectionInfo = false;
             $scope.talentGridOption = talentGridFactory.getGridOptions();
             talentFactory.getAll(function (data) {
                 console.log(data);
                 $scope.talentGridOption.data = data;
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
+                $('.talent-right-container-content').hide();
                 $("span.ui-grid-pager-row-count-label").text(" Records per page");
             });
 
@@ -28,8 +30,12 @@
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                         var msg = 'row selected ' + row.isSelected;
                         if(row.isSelected){
-                            console.log(row.entity.id);
                             updateMainTalent(row.entity.id);
+                            $('.talent-right-container-content').show();
+                        }
+                        if(!row.isSelected){
+                            $scope.gridApi.selection.clearSelectedRows();
+                            $('.talent-right-container-content').hide();
                         }
                         //console.log(msg);
                     });
@@ -43,9 +49,10 @@
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
-                    $scope.mainTalent = result;
+                    $scope.mainTalent = result[0];
+                    $scope.activeSectionInfo = 'info';
                     // Set default picture if talent does not have a picture url in database
-                    $scope.mainTalent.photo_url = $scope.mainTalent.photo_url || "assets/img/default-talent-pic.png";
+                    //$scope.mainTalent.photo_url = $scope.mainTalent.photo_url || "assets/img/default-talent-pic.png";
                 });
 
 
@@ -62,7 +69,7 @@
             $scope.updateTalentSection = function ($event, section) {
                 $('.right-talent-container-menu-link').removeClass('active-talent-link');
                 $($event.target).addClass('active-talent-link');
-                $scope.activeSection = section;
+                $scope.activeSectionInfo = section;
             };
 
             $scope.updateFiltersClick = function ($event) {

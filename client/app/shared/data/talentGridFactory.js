@@ -5,9 +5,11 @@
        var getGridOptions = function(){
               var talentGridInfo={
                   enableRowSelection: true,
-                  enableSelectAll: false,
-                  enableFiltering: true,
-                  enableSorting: true,
+                  enableRowHeaderSelection: false,
+                  multiSelect :false,
+                  modifierKeysToMultiSelect:false,
+                  noUnselect:false,
+                  enableFiltering:true,
                   paginationPageSizes: [100, 150, 200],
                   paginationPageSize: 100,           
                   columnDefs : [
@@ -22,8 +24,6 @@
                     },
                     { field: 'roles', displayName: 'Roles'},
                     { field: 'genres', displayName: 'Genres'},
-                    { field: 'city', displayName: 'City'},
-                    { field: 'state', displayName: 'State'},
                     { field: 'country', displayName: 'Country'}
                 ],
                 enableGridMenu: true,

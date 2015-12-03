@@ -42,47 +42,35 @@
   </div>
   <div class="talent-center-div">
     <div id="talentGrid" ui-grid="talentGridOption" ui-grid-selection ui-grid-pagination ui-grid-exporter class="grid"></div>
-</div>
-</div>
-<div class="talent-right-container">
-  <div class="talent-right-container-content" ng-show="!!mainTalent">
-    <div class="talent-right-container-top-div">
-      <div class="talent-pic" style="background-image: url({{mainTalent.photo_url}})"></div>
-      <div class="talent-contact-info">
-        <p class="talent-name">{{mainTalent.name}}</p>
-        <img ui-sref="data({section:'Talent', id: mainTalent.id})" class="edit-button" src="../../assets/img/edit-icon.png">
-        <p class="talent-contact">{{mainTalent.email}}</p>
-        <p class="talent-contact">{{mainTalent.phone}}</p>
-      </div>
-    </div>
+    <div class="clear"></div>
+    <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
       <div class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">INFO</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'contacts')">CONTACTS</div>
       <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'comments')">COMMENTS ({{mainTalent.comments.length - deletedComments}})</div>
     </div>
 
-    <div class="talent-right-container-other-div" ng-show="activeSection==='info'">
-      <p>Primary Role: {{mainTalent.primary_role}}</p>
-      <p>Secondary Role: {{mainTalent.secondary_role}}</p>
-      <p>Primary Genre: {{mainTalent.primary_genre}}</p>
-      <p>Secondary Genre: {{mainTalent.secondary_genre}}</p>
-      <p>IMDB Url: {{mainTalent.imdb_url}}</p>
-      <p>LinkedIn Url: {{mainTalent.linkedin_url}}</p>
-      <p>Facebook Url: {{mainTalent.facebook_url}}</p>
-      <p>Twitter Url: {{mainTalent.twitter_url}}</p>
-      <p>Instagram Url: {{mainTalent.instagram_url}}</p>
-      <p>Vine Url: {{mainTalent.vine_url}}</p>
-
+    <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
+      <!-- <p>Primary Role: {{mainTalent.primary_role}}</p> -->
+    </br>
+      <p>Facebook Url: {{mainTalent.facebookurl}}</p>
+      <p>Twitter Url: {{mainTalent.twitterurl}}</p>
+      <p>Instagram Url: {{mainTalent.instagramurl}}</p>
+      <p>Vine Url: {{mainTalent.vineurl}}</p>
       <p>Credits: {{mainTalent.credits}}</p>
+      <p>Role: {{mainTalent.roles}}</p>
+      <p>Genre: {{mainTalent.genres}}</p>
     </div>
 
-    <div class="talent-right-container-other-div contacts" ng-show="activeSection==='contacts'">
-      <p>Manager: {{mainTalent.manager}}</p>
-      <p>Partner: {{mainTalent.partner}}</p>
-      <p>Agent: {{mainTalent.agent}}</p>
+    <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='contacts'">
+    </br>
+      <p>First Name: {{mainTalent.firstName}}</p>
+      <p>State: {{mainTalent.state}}</p>
+      <p>Country: {{mainTalent.country}}</p>
     </div>
 
-    <div class="talent-right-container-other-div contacts" ng-show="activeSection==='comments'">
+    <div class="talent-right-container-other-div contacts" 
+    ng-show="false">
       <div class="comments-container">
         <div class="comment-div" ng-repeat="comment in mainTalent.comments">
           <div class="delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
@@ -98,8 +86,9 @@
 
   </div>
 
-
-  
-
+</div>
+</div>
+<!-- <div class="talent-right-container">
 
 </div>
+ -->
