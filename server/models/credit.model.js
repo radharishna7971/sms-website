@@ -26,13 +26,12 @@ Credit.getNames = function(callback) {
 Credit.get = function(id, callback) {
   db.knex.raw(' \
     SELECT \
-      id, \
-      name, \
-      genre_id, \
-      credit_type_id, \
-      release_date \
-    FROM credits \
-    WHERE id = ' + id)
+      credits.id as id,credits.name as name,credits.record_id as record_id, \
+      credits.release_date as release_date,credits.logline as logline, \
+      credits.estimatedBudget as estimatedBudget, \
+      credits.box_office_income as box_office_income \
+      FROM credits \
+      WHERE credits.id = ' + id)
   .then(function(results) {
      callback(results[0][0]);
   });

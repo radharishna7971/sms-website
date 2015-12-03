@@ -65,29 +65,17 @@
     <form ng-show="section==='Credit'">
       <input class="id-input" ng-model="activeElement.id" type="text">
       <p class="input-label">Record</p>
-      <select class="data-input select-input" ng-model="activeElement.record_id">
-        <option></option>
-        <option ng-repeat="record in data.Record | orderBy : 'name'" value="{{record.id}}">{{record.name}}</option>
-      </select>
+      <input class="data-input" ng-model="activeElement.record_id" type="input" />
       <p class="input-label">Credit Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" type="text" required="true">
       <p class="input-label">Release Year (YYYY)</p>
       <input class="data-input" ng-model="activeElement.release_date" type="input">
       <p class="input-label">LogLine</p>
-      <select class="data-input select-input" ng-model="activeElement.logline">
-        <option></option>
-        <option ng-repeat="LogLine in data.LogLine | orderBy : 'name'" value="{{LogLine}}">{{LogLine.name}}</option>
-      </select>
+      <input class="data-input select-input" ng-model="activeElement.logline" type="input" />
       <p class="input-label">EstimatedBudget</p>
-      <select class="data-input select-input" ng-model="activeElement.estimatedBudget">
-        <option></option>
-        <option ng-repeat="estimatedBudget in data.estimatedBudget | orderBy : 'name'" value="{{estimatedBudget}}">{{estimatedBudget.name}}</option>
-      </select>
+      <input class="data-input select-input" ng-model="activeElement.estimatedBudget" type="input"/>
       <p class="input-label">Box Office Income</p>
-      <select class="data-input select-input" ng-model="activeElement.box_office_income">
-        <option></option>
-        <option ng-repeat="box_office_income in data.box_office_income | orderBy : 'name'" value="{{box_office_income}}">{{box_office_income.name}}</option>
-      </select>
+      <input class="data-input select-input" ng-model="activeElement.box_office_income" type="input">
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
       </form>
 
@@ -131,7 +119,7 @@
               <p class="input-label">City</p>
           <input class="data-input" ng-model="activeElement.city" type="text">
           <p class="input-label">State</p>
-          <input class="data-input" ng-model="activeElement.state" type="text">
+          <input class="data-input" ng-model="activeElement.State" type="text">
           <p class="input-label">Country</p>
           <input class="data-input" ng-model="activeElement.country" type="text">
           <p class="input-label">Ethnicity</p>
@@ -161,10 +149,6 @@
 
       <div ng-show="talentSection==='social'">
         <div class="talent-column">
-          <p class="input-label">IMDB Url</p>
-          <input class="data-input" ng-model="activeElement.imdb_url" type="text">
-          <p class="input-label">YouTube Url</p>
-          <input class="data-input" ng-model="activeElement.youtube_url" type="text">
           <p class="input-label">Twitter Url</p>
           <input class="data-input" ng-model="activeElement.twitter_url" type="text">
           <p class="input-label">Facebook Url</p>
@@ -175,8 +159,6 @@
           <input class="data-input" ng-model="activeElement.vine_url" type="text">
           <p class="input-label">Instagram Url</p>
           <input class="data-input" ng-model="activeElement.instagram_url" type="text">
-          <p class="input-label">LinkedIn Url</p>
-          <input class="data-input" ng-model="activeElement.linkedin_url" type="text">
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>

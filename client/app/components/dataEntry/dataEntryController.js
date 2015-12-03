@@ -6,6 +6,7 @@
     $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
+    $scope.activeElement.talentCreditJoins = {};
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
 
@@ -117,7 +118,6 @@
       Talent: function() {
         talentFactory.getTalent($scope.editElement.id, function(talentData) {
           $scope.activeElement = talentData;
-          //console.log();
         });
       }
     };
@@ -421,8 +421,6 @@
         $scope.data.Talent = result;
         // Set talent data to active data when page loads
         $scope.activeData = $scope.data.Talent;
-        console.log("ative data talent...!");
-        console.log($scope.data.Talent);
       })
     };
 

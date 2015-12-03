@@ -14,7 +14,7 @@
       getContact: function(id, callback) {
         return $http({
           method: 'GET',
-          url: 'api/contact',
+          url: 'api/contact/contact',
           params: {
             id: id
           }
