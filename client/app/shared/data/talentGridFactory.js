@@ -20,8 +20,11 @@
                       selectOptions: [ { value: '1', label: 'male' }, { value: '2', label: 'female' } ],
                       cellFilter: 'mapGender'
                     },
-                    { field: 'email', displayName: 'Email'},
-                    { field: 'phone', displayName: 'Phone'}
+                    { field: 'roles', displayName: 'Roles'},
+                    { field: 'genres', displayName: 'Genres'},
+                    { field: 'city', displayName: 'City'},
+                    { field: 'state', displayName: 'State'},
+                    { field: 'country', displayName: 'Country'}
                 ],
                 enableGridMenu: true,
                 enableSelectAll: true,

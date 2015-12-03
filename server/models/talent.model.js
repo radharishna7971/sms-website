@@ -5,15 +5,20 @@ var Talent = require('../config/schema').Talent;
 Talent.getAll = function(callback) {
   db.knex.raw(' \
     SELECT \
-      talent.id AS id, \
-      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
-      talent.last_name AS last_name, \
-      talent.age AS age, \
-      talent.gender AS gender, \
-      talent.email AS email, \
-      talent.phone AS phone \
-      FROM talent \
-      WHERE talent.deleted = 0 ')
+    t.id as id, \
+    CONCAT(t.first_name, \' \', t.last_name) AS name, \
+    t.gender as gender, \
+    t.city as city, \
+    t.State as state, t.country as country , \
+    (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
+      inner join roles r on r.id = cjoin.role_id \
+      where cjoin.talent_id = t.id) as roles, \
+  (select GROUP_CONCAT(distinct g.name SEPARATOR \', \') as genresdata from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as genres \
+  FROM talent t')
   .then(function(results) {
      var data = results[0];
      callback(data);
