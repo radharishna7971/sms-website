@@ -14,7 +14,7 @@
       getCredit: function(id, callback) {
         return $http({
           method: 'GET',
-          url: 'api/credit',
+          url: 'api/credit/credit',
           params: {
             id: id
           }
