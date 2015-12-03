@@ -7,11 +7,12 @@
       <div class="filter-header-container">
         <p class="filter-header">Name</p>
       </div>
-      <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="name" />
-      <div class="filter-header-container">
+      <input class="filter-text-input" ng-model="filerByname" 
+      ng-keyup="updateGridData(filerByname)" type="text" col="name" />
+     <!--  <div class="filter-header-container">
         <p class="filter-header">Location</p>
       </div>
-      <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="location" />
+      <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="location" /> -->
 
       <p><span class="check-toggle" ng-click="checkAll()">Check All</span> | <span class="check-toggle" ng-click="uncheckAll()">Uncheck All</span></p>
 

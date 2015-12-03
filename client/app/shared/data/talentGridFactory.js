@@ -8,14 +8,18 @@
                   enableSelectAll: false,
                   enableFiltering: true,
                   enableSorting: true,
-                  paginationPageSizes: [25, 50, 75],
-                  paginationPageSize: 25,           
+                  paginationPageSizes: [100, 150, 200],
+                  paginationPageSize: 100,           
                   columnDefs : [
                     { field: 'id', displayName: 'id', type: 'number', visible: false},
-                    { field: 'first_name', displayName: 'First Name'},
-                    { field: 'last_name', displayName: 'Last Name'},
+                    { field: 'name', displayName: 'Name'},
                     { field: 'age', displayName: 'Age', type: 'number'},
-                    { field: 'gender', displayName: 'Gender'},
+                    { field: 'gender', displayName: 'Gender',
+                      term: '1',
+                      type: uiGridConstants.filter.SELECT,
+                      selectOptions: [ { value: '1', label: 'male' }, { value: '2', label: 'female' } ],
+                      cellFilter: 'mapGender'
+                    },
                     { field: 'email', displayName: 'Email'},
                     { field: 'phone', displayName: 'Phone'}
                 ],
@@ -45,5 +49,18 @@
         return {
             getGridOptions: getGridOptions
           };
-  });
+  }).filter('mapGender', function() {
+  var genderHash = {
+    1: 'male',
+    2: 'female'
+  };
+ 
+  return function(input) {
+    if (!input){
+      return '';
+    } else {
+      return genderHash[input];
+    }
+  };
+});
 })();

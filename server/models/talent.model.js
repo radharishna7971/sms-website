@@ -6,7 +6,7 @@ Talent.getAll = function(callback) {
   db.knex.raw(' \
     SELECT \
       talent.id AS id, \
-      talent.first_name AS first_name, \
+      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
       talent.last_name AS last_name, \
       talent.age AS age, \
       talent.gender AS gender, \
