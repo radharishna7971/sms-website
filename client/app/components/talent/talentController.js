@@ -10,6 +10,7 @@
             var filereName = $scope.term;
             $scope.talentGridOption = {};
             $scope.activeSectionInfo = false;
+            $scope.filerByname = "";
             var Rolls = [];
             var Genres = [];
             $scope.highlightFilteredHeader = function( row, rowRenderIndex, col, colRenderIndex ) {
@@ -60,30 +61,18 @@
                     $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
                 }
             };
-            //  $scope.updateRoleFiltersClick = function ($event) {
-            //     var element = $($event.target);
-            //      if(element[0].checked){
-            //         Rolls.push(element[0].value);
-            //     }
-            //     if(!element[0].checked){
-            //         var indexVal = Rolls.indexOf(element[0].value);
-            //         Rolls.splice(indexVal, 1);
-            //     }
-            //     $scope.gridApi.grid.refresh();
-            //     $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
-            // };
-            //  $scope.updateGenreFiltersClick = function ($event) {
-            //     var element = $($event.target);
-            //     if(element[0].checked){
-            //         Genres.push(element[0].value);
-            //     }
-            //     if(!element[0].checked){
-            //         var indexVal = Genres.indexOf(element[0].value);
-            //         Genres.splice(indexVal, 1);
-            //     }
-            //     $scope.gridApi.grid.refresh();
-            //    $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
-            // };
+             $scope.updateRoleFiltersClick = function ($event) {
+                $("input.filter-option:checked").each(function () {
+                    var id = $(this).attr("id");
+                    //alert("Do something for: " + id + ", " + answer);
+                });         
+                $scope.gridApi.grid.refresh();
+                $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+            };
+             $scope.updateGenreFiltersClick = function ($event) {
+                $scope.gridApi.grid.refresh();
+                $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+            };
 
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
@@ -255,28 +244,17 @@
             };
 
             $scope.singleFilter = function( renderableRows ){
+
                 var matcher = new RegExp($scope.filerByname);
                 renderableRows.forEach( function( row ) {
                     var match = false;
                     [ 'name' ].forEach(function( field ){
-
+                        if(row.entity[field] !== null){
                         if ( row.entity[field].match(matcher)){
                             match = true;
                         }
-                        // if(Rolls.length){
-                        //     for(var i=0; i<Rolls.length;i++){
-                        //         if ( row.entity['roles'].match(Rolls[i])){
-                        //                 match = true;
-                        //         }
-                        //     }                          
-                        // }
-                        // if(Genres.length){
-                        //     for(var i=0; i<Genres.length;i++){
-                        //         if ( row.entity['genres'].match(Genres[i])){
-                        //             match = true;
-                        //         }
-                        //     }                           
-                        // }                     
+                    }
+
                     });
                     if ( !match ){
                         row.visible = false;
