@@ -1,7 +1,7 @@
 <div class="talent-main-container">
   <div class="talent-left-col">
     <div class="match-output">
-      {{visibleTalent}}/{{talentCount}}
+      {{filteredRows.length}}/{{talentCount}}
     </div>
     <div class="talent-left-col-container">
       <div class="filter-header-container">
@@ -23,7 +23,7 @@
       <div class="filter-option-container">
         <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
         <div ng-repeat="role in data.Role | orderBy : 'name'">
-          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+          <input class="filter-option" ng-click="updateRoleFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
         </div>
         
       </div>
@@ -35,7 +35,7 @@
       <div class="filter-option-container">
         <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
         <div ng-repeat="genre in data.Genre | orderBy : 'name'">
-          <input class="filter-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+          <input class="filter-option" ng-click="updateGenreFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
         </div>
       </div>
     </div>
@@ -45,7 +45,9 @@
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
-      <div class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">INFO</div>
+      <div id="infoTab" class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">INFO</div>
+      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'credits')">Credits</div>
+      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'award')">Awards</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'contacts')">CONTACTS</div>
       <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'comments')">COMMENTS ({{mainTalent.comments.length - deletedComments}})</div>
     </div>
@@ -57,11 +59,17 @@
       <p>Twitter Url: {{mainTalent.twitterurl}}</p>
       <p>Instagram Url: {{mainTalent.instagramurl}}</p>
       <p>Vine Url: {{mainTalent.vineurl}}</p>
-      <p>Credits: {{mainTalent.credits}}</p>
       <p>Role: {{mainTalent.roles}}</p>
       <p>Genre: {{mainTalent.genres}}</p>
     </div>
-
+    <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
+    </br>
+      <p ng-repeat="item in creditsData">{{item}}</p>
+    </div>
+    <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
+    </br>
+      <p ng-repeat="item in awards">{{item}}</p>
+    </div>
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='contacts'">
     </br>
       <p>First Name: {{mainTalent.firstName}}</p>

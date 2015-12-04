@@ -2,7 +2,7 @@
   'use strict';
   angular.module('talentGridFactory', [])
   .factory('talentGridFactory', function(uiGridConstants) {
-       var getGridOptions = function(){
+       var getGridOptions = function(scope){
               var talentGridInfo={
                   enableRowSelection: true,
                   enableRowHeaderSelection: false,
@@ -16,11 +16,9 @@
                     { field: 'id', displayName: 'id', type: 'number', visible: false},
                     { field: 'name', displayName: 'Name'},
                     { field: 'age', displayName: 'Age', type: 'number'},
-                    { field: 'gender', displayName: 'Gender',
-                      term: '1',
-                      type: uiGridConstants.filter.SELECT,
-                      selectOptions: [ { value: '1', label: 'male' }, { value: '2', label: 'female' } ],
-                      cellFilter: 'mapGender'
+                    { field: 'gender',
+                       type: uiGridConstants.filter.SELECT, 
+                       selectOptions: [ {value: true, label: 'true'}, {value: false, label: 'false'} ]
                     },
                     { field: 'roles', displayName: 'Roles'},
                     { field: 'genres', displayName: 'Genres'},
@@ -54,8 +52,8 @@
           };
   }).filter('mapGender', function() {
   var genderHash = {
-    1: 'male',
-    2: 'female'
+    'male': 'male',
+    'female': 'female'
   };
  
   return function(input) {

@@ -45,7 +45,7 @@
         $scope.talentSection = $($event.target).attr('talent-form-section');
         if ($scope.section !== 'main') {
           $scope.errorText = 'Modifying ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
-		  $scope.btnTxt = "Update";
+		      $scope.btnTxt = "Update";
         }
       }
     };
@@ -80,7 +80,7 @@
       $scope.editElement = null;
       $scope.activeElement = {};
       $scope.talentSection = 'main';
-	   $scope.btnTxt = "Add";
+      $scope.btnTxt = "Add";
     };
 
     // This contains functions for fetching the data to the forms for editing
@@ -157,7 +157,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
-				$scope.btnTxt = "Update";				
+				        $scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -177,7 +177,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
-				$scope.btnTxt = "Update";				
+				        $scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -223,7 +223,7 @@
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
-				$scope.btnTxt = "Update";				
+				        $scope.btnTxt = "Update";				
               }
             }
             $scope.errorText = res.text;
@@ -326,7 +326,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";		  
+		      $scope.btnTxt = "Add";		  
         });
       },
       Ethnicity: function() {
@@ -337,7 +337,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";		  
+		      $scope.btnTxt = "Add";		  
         });
       },
       Genre: function() {

@@ -49,7 +49,18 @@ Talent.getProfile= function(talentId, callback) {
   (select GROUP_CONCAT(distinct c.name SEPARATOR \', \') as genresdata \
     from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
-    where cjoin.talent_id ='+ talentId+') as credits \
+    where cjoin.talent_id ='+ talentId+') as credits, \
+(select GROUP_CONCAT(distinct \' Credit: \',c.name,\', \',\' Release date: \',\'\',\',\',\' Role: \',r.name SEPARATOR \'| \') \
+  as genresdata from credit_talent_role_join cjoin \
+  inner join credits c on c.id = cjoin.credit_id \
+  inner join roles r on r.id = cjoin.role_id \
+  where cjoin.talent_id ='+ talentId+') as creditsreleaserole, \
+(select GROUP_CONCAT(distinct a.awardname,\' ( \' ,a.awardtype,\' )\' ,\' for \', c.name SEPARATOR \'| \') \
+  as awardscredittalent from talent_award_credit_join tajoin \
+  inner join awards a on a.id = tajoin.award_id \
+  inner join credits c on c.id = tajoin.credit_id \
+  inner join talent t  on t.id = tajoin.talent_id \
+  where tajoin.talent_id = '+ talentId+') AS awardtypecredit \
 FROM talent t where t.id= ' + talentId)
   .then(function(results) {
      var data = results[0];
