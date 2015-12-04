@@ -10,10 +10,20 @@
             var filereName = $scope.term;
             $scope.talentGridOption = {};
             $scope.activeSectionInfo = false;
+            var Rolls = [];
+            var Genres = [];
+            $scope.highlightFilteredHeader = function( row, rowRenderIndex, col, colRenderIndex ) {
+                    if( col.filters[0].term ){
+                        return 'header-filtered';
+                    } else {
+                        return '';
+                    }
+            };
+
             $scope.talentGridOption = talentGridFactory.getGridOptions();
             talentFactory.getAll(function (data) {
-                console.log(data);
                 $scope.talentGridOption.data = data;
+                $scope.filteredRows = data;
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
@@ -27,8 +37,8 @@
 
             $scope.talentGridOption.onRegisterApi = function (gridApi) {
                     $scope.gridApi = gridApi;
+                    $scope.gridApi.grid.registerRowsProcessor( $scope.singleFilter, 200 );
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                        var msg = 'row selected ' + row.isSelected;
                         if(row.isSelected){
                             updateMainTalent(row.entity.id);
                             $('.talent-right-container-content').show();
@@ -42,14 +52,53 @@
             };
             // Adds talent content into right div
             $scope.updateGridData = function (searchVal) {
-                $scope.term = searchVal;
-                $scope.gridApi.grid.refresh()
+                //$scope.term = searchVal;
+                $scope.gridApi.grid.refresh();
+                if(angular.isUndefined(searchVal) || searchVal ===""){
+                    $scope.filteredRows = $scope.talentGridOption.data;
+                }else{
+                    $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+                }
             };
+            //  $scope.updateRoleFiltersClick = function ($event) {
+            //     var element = $($event.target);
+            //      if(element[0].checked){
+            //         Rolls.push(element[0].value);
+            //     }
+            //     if(!element[0].checked){
+            //         var indexVal = Rolls.indexOf(element[0].value);
+            //         Rolls.splice(indexVal, 1);
+            //     }
+            //     $scope.gridApi.grid.refresh();
+            //     $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+            // };
+            //  $scope.updateGenreFiltersClick = function ($event) {
+            //     var element = $($event.target);
+            //     if(element[0].checked){
+            //         Genres.push(element[0].value);
+            //     }
+            //     if(!element[0].checked){
+            //         var indexVal = Genres.indexOf(element[0].value);
+            //         Genres.splice(indexVal, 1);
+            //     }
+            //     $scope.gridApi.grid.refresh();
+            //    $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+            // };
 
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
+                    // $scope.creditsData = "";
+                    // $scope.awards = "";
+                    if(result[0].creditsreleaserole!==null){
+                        $scope.creditsData = result[0].creditsreleaserole.split('|');
+                    }
+                    if(result[0].awardtypecredit!==null){
+                        $scope.awards = result[0].awardtypecredit.split('|');
+                    }                    
+                    $('.right-talent-container-menu-link').removeClass('active-talent-link');
+                    $("#infoTab").addClass('active-talent-link');
                     $scope.activeSectionInfo = 'info';
                     // Set default picture if talent does not have a picture url in database
                     //$scope.mainTalent.photo_url = $scope.mainTalent.photo_url || "assets/img/default-talent-pic.png";
@@ -72,18 +121,7 @@
                 $scope.activeSectionInfo = section;
             };
 
-            $scope.updateFiltersClick = function ($event) {
-                var element = $($event.target);
-                // When a filter is clicked, toggle it's status
-                $scope.filterData[element.attr('col')][element.attr('value')] = !$scope.filterData[element.attr('col')][element.attr('value')];
-
-                if (!element.hasClass('all-option')) {
-                    $scope.filterData[element.attr('col')]['*'] = false;
-                    $('.all-option[col="' + element.attr('col') + '"]').prop('checked', false);
-                }
-                updateVisibleCount();
-            };
-
+           
             $scope.updateFiltersKeyUp = function ($event) {
                 $scope.filterData[$($event.target).attr('col')] = $($event.target).val();
                 updateVisibleCount();
@@ -216,6 +254,36 @@
                 $scope.deletedComments++;
             };
 
+            $scope.singleFilter = function( renderableRows ){
+                var matcher = new RegExp($scope.filerByname);
+                renderableRows.forEach( function( row ) {
+                    var match = false;
+                    [ 'name' ].forEach(function( field ){
+
+                        if ( row.entity[field].match(matcher)){
+                            match = true;
+                        }
+                        // if(Rolls.length){
+                        //     for(var i=0; i<Rolls.length;i++){
+                        //         if ( row.entity['roles'].match(Rolls[i])){
+                        //                 match = true;
+                        //         }
+                        //     }                          
+                        // }
+                        // if(Genres.length){
+                        //     for(var i=0; i<Genres.length;i++){
+                        //         if ( row.entity['genres'].match(Genres[i])){
+                        //             match = true;
+                        //         }
+                        //     }                           
+                        // }                     
+                    });
+                    if ( !match ){
+                        row.visible = false;
+                    }
+                });
+                return renderableRows;
+            };
 
             // Updates visible talent count on th upper left
             var updateVisibleCount = function () {
