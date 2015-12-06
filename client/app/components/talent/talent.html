@@ -1,29 +1,25 @@
 <div class="talent-main-container">
   <div class="talent-left-col">
     <div class="match-output">
-      {{filteredRows.length}}/{{talentCount}}
+      {{talentGridOption.data.length}}/{{talentCount}}
     </div>
     <div class="talent-left-col-container">
       <div class="filter-header-container">
         <p class="filter-header">Name</p>
       </div>
       <input class="filter-text-input" ng-model="filerByname" 
-      ng-keyup="updateGridData(filerByname)" type="text" col="name" />
-     <!--  <div class="filter-header-container">
-        <p class="filter-header">Location</p>
-      </div>
-      <input class="filter-text-input" ng-keyup="updateFiltersKeyUp($event)" type="text" col="location" /> -->
-
-      <p><span class="check-toggle" ng-click="checkAll()">Check All</span> | <span class="check-toggle" ng-click="uncheckAll()">Uncheck All</span></p>
+      ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
+ 
+      <p><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span> | <span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></p>
 
       <div class="filter-header-container clickable">
         <p class="filter-header">Role</p>
         <div class="arrow arrow-right arrow-down"></div>
       </div>
-      <div class="filter-option-container">
-        <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
+      <div id="role_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allRole" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
         <div ng-repeat="role in data.Role | orderBy : 'name'">
-          <input class="filter-option" ng-click="updateRoleFiltersClick($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
         </div>
         
       </div>
@@ -32,10 +28,10 @@
         <p class="filter-header"> Genre</p>
         <div class="arrow arrow-right arrow-down"></div>
       </div>
-      <div class="filter-option-container">
-        <input class="filter-option all-option" ng-click="updateFiltersClick($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
+      <div id="genre_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
         <div ng-repeat="genre in data.Genre | orderBy : 'name'">
-          <input class="filter-option" ng-click="updateGenreFiltersClick($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
         </div>
       </div>
     </div>
