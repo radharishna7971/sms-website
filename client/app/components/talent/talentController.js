@@ -6,6 +6,29 @@
             ///////////////////////////////
             /// Initialize View
             ///////////////////////////////
+             $scope.incomeMultiple = [
+                 {"id": 1,"name": 1}, {"id": 2,"name": 2},
+                 {"id": 3,"name": 3}, {"id": 4,"name":4},
+                 {"id": 5,"name":5}
+             ];
+            $scope.budgets = [
+                 {"id": 1,"name": "Under 250M"}, {"id": 2,"name": "250M-1B"},
+                 {"id": 3,"name": "1B-5B"}, {"id": 4,"name":"5B-10B"},
+                 {"id": 5,"name":"10B-50B"},{"id": 6,"name":"50B-100B"}
+             ];
+            $scope.ages = [
+                 {"id": 1,"name": "Less than 20"}, {"id": 2,"name": "20-30"},
+                 {"id": 3,"name": "30-40"}, {"id": 4,"name": "40-50"},
+                 {"id": 5,"name": "over 50"}
+             ];
+             $scope.ethnicities = [
+                 {"id": 1,"name": "African American / Black"}, {"id": 2,"name": "Asian"}, 
+                 {"id": 3,"name": "Caucasian"}, {"id": 4,"name": "Hawaiian / Pacific Islander"},
+                 {"id": 5,"name": "Indian"}, {"id": 6,"name": "Latino / Hispanic"},
+                 {"id": 7,"name": "Native American"}, {"id": 8,"name": "No Race Available."},
+                 {"id": 9,"name": "Hispanic/Latino"}, {"id": 10,"name": "Southeast Asian/Indian"}
+             ];
+
             $scope.term ="";
             var filereName = $scope.term;
             $scope.talentGridOption = {};
@@ -79,10 +102,11 @@
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
                     if(validNameInput){
                         selectedNames = $scope.filerByname;
-                        if(item['name'].toLowerCase().search(selectedNames)!==-1){
-                            findNameFlag = true;
+                        if(item.name !==null){
+                            if(item['name'].toLowerCase().search(selectedNames)!==-1){
+                                findNameFlag = true;
+                            }
                         }
-
                     }
 
                     if(item.roles !==null){
