@@ -79,10 +79,11 @@
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
                     if(validNameInput){
                         selectedNames = $scope.filerByname;
-                        if(item['name'].toLowerCase().search(selectedNames)!==-1){
-                            findNameFlag = true;
+                        if(item.name !==null){
+                            if(item['name'].toLowerCase().search(selectedNames)!==-1){
+                                findNameFlag = true;
+                            }
                         }
-
                     }
 
                     if(item.roles !==null){
