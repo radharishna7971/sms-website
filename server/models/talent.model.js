@@ -6,13 +6,17 @@ Talent.getAll = function(callback) {
   db.knex.raw(' \
     SELECT \
     t.id as id, \
-    CONCAT(t.first_name, \' \', t.last_name) AS name, \
+    CONCAT(t.last_name, \', \', t.first_name) AS name, \
     t.gender as gender, \
     t.country as country , \
+    ( select e.name from ethnicity e where e.id=t.ethnicity_id ) as ethnicity, \
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
-      inner join roles r on r.id = cjoin.role_id \
-      where cjoin.talent_id = t.id) as roles, \
-  (select GROUP_CONCAT(distinct g.name SEPARATOR \', \') as genresdata from credit_talent_role_join cjoin \
+    inner join roles r on r.id = cjoin.role_id \
+    where cjoin.talent_id = t.id) as roles, \
+    (select   GROUP_CONCAT(distinct a.awardname SEPARATOR \', \') from talent_award_credit_join cjoin \
+    inner join awards a on a.id = cjoin.award_id \
+    where cjoin.talent_id = t.id) as awards, \
+    (select GROUP_CONCAT(distinct g.name SEPARATOR \', \') as genresdata from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \

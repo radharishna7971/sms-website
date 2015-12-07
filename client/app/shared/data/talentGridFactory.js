@@ -14,15 +14,17 @@
                   paginationPageSize: 100,           
                   columnDefs : [
                     { field: 'id', displayName: 'id', type: 'number', visible: false},
-                    { field: 'name', displayName: 'Name'},
-                    { field: 'age', displayName: 'Age', type: 'number'},
-                    { field: 'gender',
+                    { field: 'name', displayName: 'Name', enableColumnResizing: false},
+                    { field: 'age', displayName: 'Age', width : '7%', type: 'number', enableColumnResizing: false},
+                    { field: 'gender', width : '7%', enableColumnResizing: false,
                        type: uiGridConstants.filter.SELECT, 
                        selectOptions: [ {value: true, label: 'true'}, {value: false, label: 'false'} ]
                     },
                     { field: 'roles', displayName: 'Roles'},
+                    { field: 'ethnicity', displayName: 'Ethnicity'},
+                    { field: 'awards', displayName: 'Awards'},
                     { field: 'genres', displayName: 'Genres'},
-                    { field: 'country', displayName: 'Country'}
+                    { field: 'country', displayName: 'Country', enableColumnResizing: false}
                 ],
                 enableGridMenu: true,
                 enableSelectAll: true,
