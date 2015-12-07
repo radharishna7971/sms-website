@@ -21,6 +21,8 @@
                        selectOptions: [ {value: true, label: 'true'}, {value: false, label: 'false'} ]
                     },
                     { field: 'roles', displayName: 'Roles'},
+                    { field: 'ethnicity', displayName: 'Ethnicity'},
+                    { field: 'awards', displayName: 'Awards'},
                     { field: 'genres', displayName: 'Genres'},
                     { field: 'country', displayName: 'Country', enableColumnResizing: false}
                 ],
