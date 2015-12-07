@@ -20,10 +20,11 @@
                         return '';
                     }
             };
-
+            $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
             talentFactory.getAll(function (data) {
                 $scope.talentGridOption.data = data;
+                $scope.gridData = data;
                 $scope.filteredRows = data;
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
@@ -35,10 +36,8 @@
             $scope.activeSection = 'info';
             $scope.filterColumn = 'last_name';
             $scope.deletedComments = 0;
-
             $scope.talentGridOption.onRegisterApi = function (gridApi) {
                     $scope.gridApi = gridApi;
-                    $scope.gridApi.grid.registerRowsProcessor( $scope.singleFilter, 200 );
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                         if(row.isSelected){
                             updateMainTalent(row.entity.id);
@@ -48,32 +47,75 @@
                             $scope.gridApi.selection.clearSelectedRows();
                             $('.talent-right-container-content').hide();
                         }
-                        //console.log(msg);
                     });
             };
-            // Adds talent content into right div
-            $scope.updateGridData = function (searchVal) {
-                //$scope.term = searchVal;
-                $scope.gridApi.grid.refresh();
-                if(angular.isUndefined(searchVal) || searchVal ===""){
-                    $scope.filteredRows = $scope.talentGridOption.data;
-                }else{
-                    $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+             $scope.updateFiltersByChckBox = function ($event) {
+                if(!angular.isUndefined($event)){
+                    if($($event.target).hasClass( "role-list-class" )){
+                        $("input#allRole").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "genre-list-class" )){
+                        $("input#allGenres").prop("checked",false);
+                    }
+                    if($event.target.id==="allRole" && $event.target.checked){
+                            $('div#role_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allRole").prop("checked",true);
+                    }
+                    if($event.target.id==="allGenres" && $event.target.checked){
+                            $('div#genre_list input').not(this).each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allGenres").prop("checked",true);
+                    }
                 }
-            };
-             $scope.updateRoleFiltersClick = function ($event) {
-                $("input.filter-option:checked").each(function () {
-                    var id = $(this).attr("id");
-                    //alert("Do something for: " + id + ", " + answer);
-                });         
-                $scope.gridApi.grid.refresh();
-                $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
-            };
-             $scope.updateGenreFiltersClick = function ($event) {
-                $scope.gridApi.grid.refresh();
-                $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
-            };
+                $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
+                    var findNameFlag = false;
+                    var findRoleFlag = false;
+                    var findGenresFlag = false;
+                    var findFlag = false;
+                    var selectedNames ="";
+                    var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
+                    if(validNameInput){
+                        selectedNames = $scope.filerByname;
+                        if(item['name'].toLowerCase().search(selectedNames)!==-1){
+                            findNameFlag = true;
+                        }
 
+                    }
+
+                    if(item.roles !==null){
+                        $('div#role_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['roles'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !==-1){
+                                    findRoleFlag = true;
+                            }
+                        });                      
+                    }
+                    if(item.genres !==null){
+                        $('div#genre_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['genres'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !==-1){
+                                    findGenresFlag = true;
+                            }
+                        });                      
+                    }
+                    if(!validNameInput){
+                        findNameFlag = true;
+                    }
+                    if($("input#allRole").is(':checked')){
+                        findRoleFlag = true;
+                    }
+                    if($("input#allGenres").is(':checked')){
+                        findGenresFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag){
+                        findFlag = true;
+                    }
+                    return findFlag;
+                });
+            };
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
@@ -89,18 +131,10 @@
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
                     $("#infoTab").addClass('active-talent-link');
                     $scope.activeSectionInfo = 'info';
-                    // Set default picture if talent does not have a picture url in database
-                    //$scope.mainTalent.photo_url = $scope.mainTalent.photo_url || "assets/img/default-talent-pic.png";
                 });
-
-
-                // Remove active-talent class from other row, if another row is active
                 $('.active-talent').each(function () {
                     $(this).removeClass('active-talent');
                 });
-
-                // Add active-talent class to the row that was clicked on
-                //$($event.target).parent().addClass('active-talent');
             };
 
 
@@ -124,7 +158,6 @@
                 secondary_role: {"*": true},
                 primary_genre: {"*": true},
                 secondary_genre: {"*": true}
-                // gender: {"*": true, male: false, female: false}
             };
 
             // Storage for all data points for filters
@@ -142,8 +175,6 @@
                 Genre: genreFactory.getNames(function (result) {
                     $scope.data.Genre = result;
                     $scope.activeData = $scope.data.Genre;
-
-                    // Add data into filter object
                     for (var i = 0; i < result.length; i++) {
                         $scope.filterData['primary_genre'][result[i].name] = false;
                         $scope.filterData['secondary_genre'][result[i].name] = false;
@@ -243,25 +274,7 @@
                 $scope.deletedComments++;
             };
 
-            $scope.singleFilter = function( renderableRows ){
-
-                var matcher = new RegExp($scope.filerByname);
-                renderableRows.forEach( function( row ) {
-                    var match = false;
-                    [ 'name' ].forEach(function( field ){
-                        if(row.entity[field] !== null){
-                        if ( row.entity[field].match(matcher)){
-                            match = true;
-                        }
-                    }
-
-                    });
-                    if ( !match ){
-                        row.visible = false;
-                    }
-                });
-                return renderableRows;
-            };
+           
 
             // Updates visible talent count on th upper left
             var updateVisibleCount = function () {
