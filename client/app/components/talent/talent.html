@@ -124,7 +124,18 @@
     </div>
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
     </br>
-      <p ng-repeat="item in creditsData">{{item}}</p>
+    <div style="width:320px; height:80px; overflow:auto;">
+		<table class="table">
+			<tr>
+				<th>Title</th><th>Role</th><th>Year</th><th>Budget</th><th>Box Office</th>
+			</tr>
+			<tr ng-repeat="x in creditsData">
+				<td ng-repeat="item in x">
+					{{item}}
+				</td> 
+			</tr>
+		</table>
+	</div>
     </div>
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>

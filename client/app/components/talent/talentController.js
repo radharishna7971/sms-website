@@ -146,8 +146,14 @@
                     $scope.mainTalent = result[0];
                     // $scope.creditsData = "";
                     // $scope.awards = "";
+                    $scope.creditsData = [];
                     if(result[0].creditsreleaserole!==null){
-                        $scope.creditsData = result[0].creditsreleaserole.split('|');
+                        var dataObj = result[0].creditsreleaserole.split('|');
+                        angular.forEach(dataObj, function(value, key) {
+                        	  if(value){
+                        		  $scope.creditsData.push(value.trim().split(','));
+                        	  }
+                        	});
                     }
                     if(result[0].awardtypecredit!==null){
                         $scope.awards = result[0].awardtypecredit.split('|');
