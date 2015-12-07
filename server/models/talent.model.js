@@ -6,7 +6,7 @@ Talent.getAll = function(callback) {
   db.knex.raw(' \
     SELECT \
     t.id as id, \
-    CONCAT(t.first_name, \' \', t.last_name) AS name, \
+    CONCAT(t.last_name, \', \', t.first_name) AS name, \
     t.gender as gender, \
     t.country as country , \
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \

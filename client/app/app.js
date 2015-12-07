@@ -10,6 +10,7 @@
     'ui.grid.selection',
     'ui.grid.exporter',
     'ui.grid.pagination',
+    'ui.grid.resizeColumns',
     
     // Componenets
     'landingController',

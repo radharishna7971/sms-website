@@ -13,6 +13,20 @@
       <p><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span> | <span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></p>
 
       <div class="filter-header-container clickable">
+        <p class="filter-header">Gender</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="role_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allGender"  type="checkbox"  value="*" checked>All<br>
+        <div>
+          <input class="filter-option role-list-class"  type="checkbox" col="primary_role" value="Male" unchecked>Male<br>
+        </div>
+        <div>
+          <input class="filter-option role-list-class"  type="checkbox" col="primary_role" value="Female" unchecked>Female<br>
+        </div>
+      </div>
+
+      <div class="filter-header-container clickable">
         <p class="filter-header">Role</p>
         <div class="arrow arrow-right arrow-down"></div>
       </div>
@@ -37,7 +51,7 @@
     </div>
   </div>
   <div class="talent-center-div">
-    <div id="talentGrid" ui-grid="talentGridOption" ui-grid-selection ui-grid-pagination ui-grid-exporter class="grid"></div>
+    <div id="talentGrid" ui-grid="talentGridOption" ui-grid-selection ui-grid-pagination ui-grid-exporter ui-grid-resize-columns class="grid"></div>
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
