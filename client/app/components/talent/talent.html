@@ -13,70 +13,6 @@
       <p><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span> | <span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></p>
 
       <div class="filter-header-container clickable">
-        <p class="filter-header">Gender</p>
-        <div class="arrow arrow-right arrow-down"></div>
-      </div>
-      <div id="gender_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allGender"  type="checkbox"  value="*" checked>All<br>
-        <div>
-          <input class="filter-option"  type="checkbox" col="primary_role" value="Male" unchecked>Male<br>
-        </div>
-        <div>
-          <input class="filter-option"  type="checkbox" col="primary_role" value="Female" unchecked>Female<br>
-        </div>
-      </div>
-      <div class="filter-header-container clickable">
-        <p class="filter-header">Age</p>
-        <div class="arrow arrow-right arrow-down"></div>
-      </div>
-      <div id="age_list" class="filter-option-container">
-        <select>
-          <option></option>
-          <option ng-repeat="age in ages | orderBy : 'id'" value="{{age.name}}">{{age.name}}</option>
-        </select>
-      </div>
-      <div class="filter-header-container clickable">
-        <p class="filter-header">Budgets</p>
-        <div class="arrow arrow-right arrow-down"></div>
-      </div>
-      <div id="budget_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allEthnicity"  type="checkbox"  value="*" checked>All<br>
-        <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option budget-list-class"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}<br>
-        </div>
-      </div>
-      <div class="filter-header-container clickable">
-        <p class="filter-header">Box office Income</p>
-        <div class="arrow arrow-right arrow-down"></div>
-      </div>
-      <div id="box_office_income_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allEthnicity"  type="checkbox"  value="*" checked>All<br>
-        <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option BoxOfficeIncome-list-class"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}<br>
-        </div>
-      </div>
-      <div class="filter-header-container clickable">
-        <p class="filter-header">Box Office Income/Budget</p>
-        <div class="arrow arrow-right arrow-down"></div>
-      </div>
-      <div id="income_list" class="filter-option-container">
-        <select>
-          <option></option>
-          <option ng-repeat="income in incomeMultiple | orderBy : 'id'" value="{{income.name}}">{{income.name}}</option>
-        </select>
-      </div>
-      <div class="filter-header-container clickable">
-        <p class="filter-header">Ethnicity</p>
-        <div class="arrow arrow-right arrow-down"></div>
-      </div>
-      <div id="ethnicity_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allEthnicity"  type="checkbox"  value="*" checked>All<br>
-        <div ng-repeat="ethnicity in ethnicities | orderBy : 'name'">
-          <input class="filter-option ethnicity-list-class"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}<br>
-        </div>
-      </div>
-
-      <div class="filter-header-container clickable">
         <p class="filter-header">Role</p>
         <div class="arrow arrow-right arrow-down"></div>
       </div>
@@ -96,6 +32,71 @@
         <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
         <div ng-repeat="genre in data.Genre | orderBy : 'name'">
           <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+        </div>
+      </div>
+
+
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Gender</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="gender_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allGender"  type="checkbox"  value="*" checked>All<br>
+        <div>
+          <input class="filter-option"  type="checkbox" col="primary_role" value="Male" unchecked>Male<br>
+        </div>
+        <div>
+          <input class="filter-option"  type="checkbox" col="primary_role" value="Female" unchecked>Female<br>
+        </div>
+      </div>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Age</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="genre_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
+        <div ng-repeat="age in ages | orderBy : 'id'">
+          <input class="filter-option age-list-class" type="checkbox" col="primary_genre" value="{{age.name}}" unchecked>{{age.name}}<br>
+        </div>
+      </div>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Budget</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="budget_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allEthnicity"  type="checkbox"  value="*" checked>All<br>
+        <div ng-repeat="budget in budgets | orderBy : 'id'">
+          <input class="filter-option budget-list-class"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}<br>
+        </div>
+      </div>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Box Office Revenue</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="box_office_income_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allEthnicity"  type="checkbox"  value="*" checked>All<br>
+        <div ng-repeat="budget in budgets | orderBy : 'id'">
+          <input class="filter-option BoxOfficeIncome-list-class"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}<br>
+        </div>
+      </div>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Box Office/Budget Multiple</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="income_list" class="filter-option-container">
+        <select>
+          <option></option>
+          <option ng-repeat="income in incomeMultiple | orderBy : 'id'" value="{{income.name}}">{{income.name}}</option>
+        </select>
+      </div>
+      <div class="filter-header-container clickable">
+        <p class="filter-header">Ethnicity</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="ethnicity_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allEthnicity"  type="checkbox"  value="*" checked>All<br>
+        <div ng-repeat="ethnicity in ethnicities | orderBy : 'name'">
+          <input class="filter-option ethnicity-list-class"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}<br>
         </div>
       </div>
     </div>

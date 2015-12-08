@@ -12,9 +12,9 @@
                  {"id": 5,"name":5}
              ];
             $scope.budgets = [
-                 {"id": 1,"name": "Under 250M"}, {"id": 2,"name": "250M-1B"},
-                 {"id": 3,"name": "1B-5B"}, {"id": 4,"name":"5B-10B"},
-                 {"id": 5,"name":"10B-50B"},{"id": 6,"name":"50B-100B"}
+                 {"id": 1,"name": "Under $250K"}, {"id": 2,"name": "$250K-$1M"},
+                 {"id": 3,"name": "$1M-$5M"}, {"id": 4,"name":"$5M-$10M"},
+                 {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"}
              ];
             $scope.ages = [
                  {"id": 1,"name": "Less than 20"}, {"id": 2,"name": "20-30"},
