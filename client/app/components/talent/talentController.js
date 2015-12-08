@@ -155,9 +155,24 @@
                         	  }
                         	});
                     }
+                    $scope.awardsData = [];
                     if(result[0].awardtypecredit!==null){
-                        $scope.awards = result[0].awardtypecredit.split('|');
-                    }                    
+                        var awardsObj = result[0].awardtypecredit.split('|');
+                        angular.forEach(awardsObj, function(value, key) {
+                      	  if(value){
+                      		$scope.awardsData.push(value.trim().split(','));
+                      	  }
+                      	});
+                    }
+                    $scope.commentsData = [];
+                    if(result[0].commentsData!==null){
+                        var commentsObj = result[0].commentsData.split('|');
+                        angular.forEach(commentsObj, function(value, key) {
+                      	  if(value){
+                      		$scope.commentsData.push(value.trim().split(','));
+                      	  }
+                      	});
+                    }
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
                     $("#infoTab").addClass('active-talent-link');
                     $scope.activeSectionInfo = 'info';
