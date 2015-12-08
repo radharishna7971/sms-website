@@ -73,6 +73,7 @@
                     });
             };
              $scope.updateFiltersByChckBox = function ($event) {
+                 console.log($event.target);
                 if(!angular.isUndefined($event)){
                     if($($event.target).hasClass( "role-list-class" )){
                         $("input#allRole").prop("checked",false);
@@ -80,6 +81,25 @@
                     if($($event.target).hasClass( "genre-list-class" )){
                         $("input#allGenres").prop("checked",false);
                     }
+                    if($($event.target).hasClass( "gender-input" )){
+                        $("input#allGender").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "age-list-class" )){
+                        $("input#allAges").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "budget-list-class" )){
+                        $("input#allBudget").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
+                        $("input#allBoxRevenue").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
+                        $("input#allBoxRevenue").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "ethnicity-list-class" )){
+                        $("input#allEthnicity").prop("checked",false);
+                    }
+
                     if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
                                  $(this).prop("checked",false);
@@ -91,6 +111,38 @@
                                  $(this).prop("checked",false);
                             });
                             $("input#allGenres").prop("checked",true);
+                    }
+                     if($event.target.id==="allGender" && $event.target.checked){
+
+                            $('div#gender_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allGender").prop("checked",true);
+                    }
+                    if($event.target.id==="allAges" && $event.target.checked){
+
+                            $('div#age_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allAges").prop("checked",true);
+                    }
+                    if($event.target.id==="allBudget" && $event.target.checked){
+                            $('div#budget_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allBudget").prop("checked",true);
+                    }
+                    if($event.target.id==="allBoxRevenue" && $event.target.checked){
+                            $('div#box_office_income_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allBoxRevenue").prop("checked",true);
+                    }
+                    if($event.target.id==="allEthnicity" && $event.target.checked){
+                            $('div#ethnicity_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allEthnicity").prop("checked",true);
                     }
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
