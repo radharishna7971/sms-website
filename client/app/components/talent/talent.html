@@ -86,6 +86,12 @@
       <div id="income_list" class="filter-option-container">
         <select>
           <option></option>
+          <option  value="Lessthan">Less Than</option>
+          <option  value="equal">Equal To</option>
+          <option  value="greaterThan">Greater Than</option>
+        </select>
+        <select>
+          <option></option>
           <option ng-repeat="income in incomeMultiple | orderBy : 'id'" value="{{income.name}}">{{income.name}}</option>
         </select>
       </div>
