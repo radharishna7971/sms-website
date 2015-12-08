@@ -90,10 +90,7 @@
           <option  value="equal">Equal To</option>
           <option  value="greaterThan">Greater Than</option>
         </select>
-        <select>
-          <option></option>
-          <option ng-repeat="income in incomeMultiple | orderBy : 'id'" value="{{income.name}}">{{income.name}}</option>
-        </select>
+        <input ng-model="incomeMultipleInput" type="text" />
       </div>
       <div class="filter-header-container clickable">
         <p class="filter-header">Ethnicity</p>
