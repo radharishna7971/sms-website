@@ -12,9 +12,9 @@
                  {"id": 5,"name":5}
              ];
             $scope.budgets = [
-                 {"id": 1,"name": "Under 250M"}, {"id": 2,"name": "250M-1B"},
-                 {"id": 3,"name": "1B-5B"}, {"id": 4,"name":"5B-10B"},
-                 {"id": 5,"name":"10B-50B"},{"id": 6,"name":"50B-100B"}
+                 {"id": 1,"name": "Under $250K"}, {"id": 2,"name": "$250K-$1M"},
+                 {"id": 3,"name": "$1M-$5M"}, {"id": 4,"name":"$5M-$10M"},
+                 {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"}
              ];
             $scope.ages = [
                  {"id": 1,"name": "Less than 20"}, {"id": 2,"name": "20-30"},
@@ -73,6 +73,7 @@
                     });
             };
              $scope.updateFiltersByChckBox = function ($event) {
+                 console.log($event.target);
                 if(!angular.isUndefined($event)){
                     if($($event.target).hasClass( "role-list-class" )){
                         $("input#allRole").prop("checked",false);
@@ -80,6 +81,25 @@
                     if($($event.target).hasClass( "genre-list-class" )){
                         $("input#allGenres").prop("checked",false);
                     }
+                    if($($event.target).hasClass( "gender-input" )){
+                        $("input#allGender").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "age-list-class" )){
+                        $("input#allAges").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "budget-list-class" )){
+                        $("input#allBudget").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
+                        $("input#allBoxRevenue").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
+                        $("input#allBoxRevenue").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "ethnicity-list-class" )){
+                        $("input#allEthnicity").prop("checked",false);
+                    }
+
                     if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
                                  $(this).prop("checked",false);
@@ -91,6 +111,38 @@
                                  $(this).prop("checked",false);
                             });
                             $("input#allGenres").prop("checked",true);
+                    }
+                     if($event.target.id==="allGender" && $event.target.checked){
+
+                            $('div#gender_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allGender").prop("checked",true);
+                    }
+                    if($event.target.id==="allAges" && $event.target.checked){
+
+                            $('div#age_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allAges").prop("checked",true);
+                    }
+                    if($event.target.id==="allBudget" && $event.target.checked){
+                            $('div#budget_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allBudget").prop("checked",true);
+                    }
+                    if($event.target.id==="allBoxRevenue" && $event.target.checked){
+                            $('div#box_office_income_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allBoxRevenue").prop("checked",true);
+                    }
+                    if($event.target.id==="allEthnicity" && $event.target.checked){
+                            $('div#ethnicity_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allEthnicity").prop("checked",true);
                     }
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
@@ -155,9 +207,24 @@
                         	  }
                         	});
                     }
+                    $scope.awardsData = [];
                     if(result[0].awardtypecredit!==null){
-                        $scope.awards = result[0].awardtypecredit.split('|');
-                    }                    
+                        var awardsObj = result[0].awardtypecredit.split('|');
+                        angular.forEach(awardsObj, function(value, key) {
+                      	  if(value){
+                      		$scope.awardsData.push(value.trim().split(','));
+                      	  }
+                      	});
+                    }
+                    $scope.commentsData = [];
+                    if(result[0].commentsData!==null){
+                        var commentsObj = result[0].commentsData.split('|');
+                        angular.forEach(commentsObj, function(value, key) {
+                      	  if(value){
+                      		$scope.commentsData.push(value.trim().split(','));
+                      	  }
+                      	});
+                    }
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
                     $("#infoTab").addClass('active-talent-link');
                     $scope.activeSectionInfo = 'info';

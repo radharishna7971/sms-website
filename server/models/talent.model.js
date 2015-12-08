@@ -40,11 +40,16 @@ Talent.getProfile= function(talentId, callback) {
     SELECT t.first_name as firstName, t.last_name as lastName, \
     t.age as age, t.gender as gender, t.twitter_url as twitterurl, \
     t.facebook_url as facebookurl, t.instagram_url as instagramurl, \
+	DATE_FORMAT(t.created_at,"%d %b %Y") as createdAt, DATE_FORMAT(t.last_edited,"%d %b %Y") as lastEdited, \
+	t.modifiedby as modifiedBy, t.createdby as createdBy, \
+	t.createdbycomments as createdByComments, t.modifiedbycomments as modifiedByComments, \
     t.vine_url as vineurl, t.email as email,t.phone as phone, t.city as city, \
     t.State as state, t.country as country, \
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
       inner join roles r on r.id = cjoin.role_id \
       where cjoin.talent_id = t.id) as roles, \
+	(SELECT a.firstName FROM associate_talent_associate_type_join atj INNER JOIN associate a ON a.id=atj.associate_id) as associateName, \
+	(SELECT `at`.type FROM associate_talent_associate_type_join atj INNER JOIN associate_types at ON atj.associte_types_id=`at`.id) as associateType, \
   (select GROUP_CONCAT(distinct g.name SEPARATOR \', \') as genresdata from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
@@ -54,12 +59,16 @@ Talent.getProfile= function(talentId, callback) {
     from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     where cjoin.talent_id ='+ talentId+') as credits, \
-(select GROUP_CONCAT(distinct \' \',c.name,\', \',r.name,\',\',c.release_date,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
+	(select GROUP_CONCAT(c.text, \',\',c.created_at, \',\' ,u.first_name SEPARATOR \'| \') as commentdata \
+	from comments c \
+	inner join users u on c.user_id=u.id \
+	where c.talent_id ='+ talentId+') as commentsData, \
+(select GROUP_CONCAT(distinct \' \',c.name,\', \',c.release_date,\',\',r.name,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
   as genresdata from credit_talent_role_join cjoin \
   inner join credits c on c.id = cjoin.credit_id \
   inner join roles r on r.id = cjoin.role_id \
   where cjoin.talent_id ='+ talentId+' order by c.release_date asc) as creditsreleaserole, \
-(select GROUP_CONCAT(distinct a.awardname,\' ( \' ,a.awardtype,\' )\' ,\' for \', c.name SEPARATOR \'| \') \
+(select GROUP_CONCAT(a.awardname, \',\',a.awardtype, \',\' ,c.name SEPARATOR \'| \') \
   as awardscredittalent from talent_award_credit_join tajoin \
   inner join awards a on a.id = tajoin.award_id \
   inner join credits c on c.id = tajoin.credit_id \

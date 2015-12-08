@@ -375,3 +375,17 @@
   color: #fff;
   font-weight: bold;
 }
+.creditTableHeads{
+	font-weight:500;
+	text-align: left;
+	width:100px;
+}
+.creditTable{
+	width:540px; 
+	height:80px; 
+	overflow:auto;
+}
+.tableLable{
+	color:#66B3F1;
+	font-weight:600;"
+}
