@@ -31,9 +31,9 @@
         // Update form centering for talent form
         if ($scope.section === 'Talent') {
           $scope.filterData = 'last_name';
-          $('.data-form-container').css('width', '530px');
+          $('.data-form-container').css('width', '100%');
         } else {
-          $('.data-form-container').css('width', '260px');
+          $('.data-form-container').css('width', '100%');
         }
       }
     };
@@ -107,6 +107,7 @@
       },
       Credit: function() {
         creditFactory.getCredit($scope.editElement.id, function(creditData) {
+          console.log($scope.activeElement);
           $scope.activeElement = creditData;
         });
       },
@@ -381,7 +382,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";
+		      $scope.btnTxt = "Add";
         });
       },
       Talent: function() {
@@ -392,7 +393,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";
+		      $scope.btnTxt = "Add";
         });
       }
     };
@@ -416,18 +417,30 @@
       }),
       CreditType: creditTypeFactory.getNames(function(result) {
         $scope.data.CreditType = result;
-      }),
-      Talent: talentFactory.getNames(function(result) {
-        $scope.data.Talent = result;
-        // Set talent data to active data when page loads
-        $scope.activeData = $scope.data.Talent;
       })
+      // Talent: talentFactory.getNames(function(result) {
+      //   $scope.data.Talent = result;
+      //   // Set talent data to active data when page loads
+      //   $scope.activeData = $scope.data.Talent;
+      // })
     };
 
+    $scope.getTalentNames = function(val){
+      var talentNames = [];
+      return talentFactory.getNames(val, angular.noop).then(function(result){
+          return result.data;
+        });
+    };
     setTimeout(function() {
       console.log($scope.data);
     }, 2000);
 
+      $scope.getTalentDetails = function (itemval) {
+        $scope.editElement = itemval;
+        activeElementSetter['Talent']();
+        $scope.btnTxt = "Update";
+          //console.log(itemval);
+      };
     // Ensures all required inputs have data
     // Takes in an optional section.  If section is passed in, it means it is part of the talent form.  This is done to handle that fact that some required inputs might be hidden
     var checkInputs = function(section) {

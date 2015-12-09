@@ -11,6 +11,7 @@
     'ui.grid.exporter',
     'ui.grid.pagination',
     'ui.grid.resizeColumns',
+     'ui.bootstrap',
     
     // Componenets
     'landingController',

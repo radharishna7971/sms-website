@@ -8,8 +8,18 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'CreditType')">CREDIT TYPE</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Ethnicity')">ETHNICITY</div>
   </div>
-  <div class="data-left-column-data">
-    <div class="data-left-column-data-row" ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}" ng-if="element.name!=''">{{element.name}}</div>
+  <div class="data-left-column-data" ng-show="section!=='Talent'">
+    <div class="data-left-column-data-row"  ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}" ng-if="element.name!=''">{{element.name}}
+    </div>
+  </div>
+  <div class="data-left-column-data" ng-if="section==='Talent'">
+    <div class="data-left-column-data-row">
+   <input type="text" ng-model="talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+  </div>
+    <div ng-show="noResults">
+      <i class="glyphicon glyphicon-remove"></i> No Results Found
+    </div>
   </div>
 </div>
 <div class="data-main-section">
@@ -19,7 +29,6 @@
     <div class="form-button" ng-hide="!editElement" ng-click="deleteElement()">Delete</div>
   </div>
   <p class="data-main-error-text">{{errorText}}</p>
-
   <!-- Talent menu -->
   <div class="talent-form-menu" ng-show="section==='Talent'">
     <div class="talent-form-menu-button" talent-form-section="main" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'main'}">Main</div>
