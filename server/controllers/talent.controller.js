@@ -17,7 +17,8 @@ exports.getProfile = function(req, res) {
 };
 
 exports.getNames = function(req, res) {
-  Talent.getNames(function(result) {
+  console.log(req.query.nameChars);
+  Talent.getNames(req.query.nameChars, function(result) {
     res.json(result);
   });
 };

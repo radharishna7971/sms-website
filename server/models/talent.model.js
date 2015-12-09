@@ -48,8 +48,6 @@ Talent.getProfile= function(talentId, callback) {
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
       inner join roles r on r.id = cjoin.role_id \
       where cjoin.talent_id = t.id) as roles, \
-	(SELECT a.firstName FROM associate_talent_associate_type_join atj INNER JOIN associate a ON a.id=atj.associate_id) as associateName, \
-	(SELECT `at`.type FROM associate_talent_associate_type_join atj INNER JOIN associate_types at ON atj.associte_types_id=`at`.id) as associateType, \
   (select GROUP_CONCAT(distinct g.name SEPARATOR \', \') as genresdata from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
@@ -59,11 +57,16 @@ Talent.getProfile= function(talentId, callback) {
     from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     where cjoin.talent_id ='+ talentId+') as credits, \
-	(select GROUP_CONCAT(c.text, \',\',c.created_at, \',\' ,u.first_name SEPARATOR \'| \') as commentdata \
+    (select GROUP_CONCAT(distinct \' \',`at`.type,\', \',a.firstName,\',\',a.lastName,\',\',\',\',\' \' SEPARATOR \'| \') \
+    		  as associatedata from associate_talent_associate_type_join atj \
+    		  inner join associate_types at ON atj.associte_types_id=`at`.id \
+    		  inner join associate a ON a.id=atj.associate_id \
+    		  where atj.talent_id ='+ talentId+') as associateInfo, \
+	(select GROUP_CONCAT(c.text, \',\',DATE_FORMAT(c.created_at,"%l %p %d %b %Y"), \',\' ,u.first_name SEPARATOR \'| \') as commentdata \
 	from comments c \
 	inner join users u on c.user_id=u.id \
 	where c.talent_id ='+ talentId+') as commentsData, \
-(select GROUP_CONCAT(distinct \' \',c.name,\', \',c.release_date,\',\',r.name,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
+(select GROUP_CONCAT(distinct \' \',c.name,\', \',DATE_FORMAT(c.release_date,"%d %b %Y"),\',\',r.name,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
   as genresdata from credit_talent_role_join cjoin \
   inner join credits c on c.id = cjoin.credit_id \
   inner join roles r on r.id = cjoin.role_id \
@@ -82,14 +85,24 @@ FROM talent t where t.id= ' + talentId)
 };
 
 // Return list of all talent names
-Talent.getNames = function(callback) {
+Talent.getNames = function(nameChars,callback) {
+  console.log(nameChars);
+  var findNameWith = "'"+"%"+nameChars+"%"+"'";
+  var sql_str = ' \
+    SELECT \
+      talent.id AS id, \
+      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
+      talent.last_name AS last_name \
+    FROM talent \
+    WHERE talent.first_name like '+findNameWith+' and talent.deleted = false';
+    console.log(sql_str);
   db.knex.raw(' \
     SELECT \
       talent.id AS id, \
       CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
       talent.last_name AS last_name \
     FROM talent \
-    WHERE talent.deleted = false')
+    WHERE talent.first_name like '+findNameWith+' and talent.deleted = false LIMIT 10')
   .then(function(results) {
      callback(results[0]);
   });
