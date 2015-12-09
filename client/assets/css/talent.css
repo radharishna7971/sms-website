@@ -378,11 +378,25 @@
 .creditTableHeads{
 	font-weight:500;
 	text-align: left;
-	width:100px;
+	width:108px;
+	background-color: #66B3F1;
+}
+.creditTableBody{
+	width:21%;
+	word-break: break-word;
+}
+.awardTableBody{
+	width:35%;
+	word-break: break-word;
+}
+.commentTableBody{
+	width:45%;
+	word-break: break-word;
+	padding-right: 5px;
 }
 .creditTable{
 	width:540px; 
-	height:80px; 
+	height:60px; 
 	overflow:auto;
 }
 .tableLable{

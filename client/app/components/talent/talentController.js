@@ -224,6 +224,29 @@
                       	  }
                       	});
                     }
+                    $scope.associateData = [];
+                    var associateObj = {};
+                    if(result[0].associateInfo!==null){
+                        var associateObj = result[0].associateInfo.split('|');
+                        angular.forEach(associateObj, function(value, key) {
+                      	  if(value){
+                      		var vals = value.trim().split(',');
+                      		if(vals && vals.length>0){
+                      			var firstName = vals[1] || '';
+                      			var lastName = vals[2] || '';
+                      			var associateName = vals[0] || '';
+                      			var fullName = firstName +' '+ lastName;
+                      			associateObj = {
+                      					[associateName]:fullName
+                      			}
+                      			$scope.associateData.push(associateObj);
+                      		}
+                      		
+                      	  }
+                      	});
+                        console.log($scope.associateData);
+                    }
+                    
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
                     $("#infoTab").addClass('active-talent-link');
                     $scope.activeSectionInfo = 'info';
