@@ -73,7 +73,6 @@
                     });
             };
              $scope.updateFiltersByChckBox = function ($event) {
-                 console.log($event.target);
                 if(!angular.isUndefined($event)){
                     if($($event.target).hasClass( "role-list-class" )){
                         $("input#allRole").prop("checked",false);
