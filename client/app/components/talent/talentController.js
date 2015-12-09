@@ -283,16 +283,35 @@
             $scope.data = {
                 Role: roleFactory.getNames(function (result) {
                     $scope.data.Role = result;
+                    $scope.data.RolePriority = []; 
+                    $scope.data.RoleNonPriority = [];
                     $scope.activeData = $scope.data.Role;
-
-                    // Add data into filter object
+                    angular.forEach(result,function(items){
+                       var getPeiorityRoll =  (items.name.trim() ==="Actor" || items.name.trim() ==="Director" || items.name.trim() ==="Producer");
+                       if(getPeiorityRoll){
+                            $scope.data.RolePriority.push(items);
+                       }else{
+                             $scope.data.RoleNonPriority.push(items);
+                       }
+                    });
                     for (var i = 0; i < result.length; i++) {
                         $scope.filterData['primary_role'][result[i].name] = false;
                         $scope.filterData['secondary_role'][result[i].name] = false;
                     }
                 }),
                 Genre: genreFactory.getNames(function (result) {
+                    $scope.data.GenrePriority = []; 
+                    $scope.data.GenreNonPriority = [];
                     $scope.data.Genre = result;
+                    angular.forEach(result,function(items){
+                        var matchFound  = (items.name.trim() ==="Action" || items.name.trim() ==="Comedy" || items.name.trim() ==="Drama" || items.name.trim() ==="Horror" || items.name.trim() ==="Musical" || items.name.trim() ==="Thriller");
+                        if(matchFound){
+                            $scope.data.GenrePriority.push(items);
+                        }else{
+                            $scope.data.GenreNonPriority.push(items);
+
+                        }
+                    });
                     $scope.activeData = $scope.data.Genre;
                     for (var i = 0; i < result.length; i++) {
                         $scope.filterData['primary_genre'][result[i].name] = false;

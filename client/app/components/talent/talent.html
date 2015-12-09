@@ -18,7 +18,10 @@
       </div>
       <div id="role_list" class="filter-option-container">
         <input class="filter-option all-option" id="allRole" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
-        <div ng-repeat="role in data.Role | orderBy : 'name'">
+        <div ng-repeat="role in data.RolePriority | orderBy : 'name'">
+          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+        </div>
+         <div ng-repeat="role in data.RoleNonPriority | orderBy : 'name'">
           <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
         </div>
         
@@ -30,7 +33,11 @@
       </div>
       <div id="genre_list" class="filter-option-container">
         <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
-        <div ng-repeat="genre in data.Genre | orderBy : 'name'">
+        <div ng-repeat="genre in data.GenrePriority | orderBy : 'name'">
+          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+        </div>
+        <!-- <div>---------</div> -->
+        <div ng-repeat="genre in data.GenreNonPriority | orderBy : 'name'">
           <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
         </div>
       </div>
@@ -86,9 +93,8 @@
       <div id="income_list" class="filter-option-container">
         <select>
           <option></option>
-          <option  value="Lessthan">Less Than</option>
-          <option  value="equal">Equal To</option>
-          <option  value="greaterThan">Greater Than</option>
+          <option  value="MaxGreaterThan">Max Greater Than</option>
+          <option  value="AvgGreaterThan">Avg Greater Than</option>
         </select>
         <input ng-model="incomeMultipleInput" type="text" />
       </div>
