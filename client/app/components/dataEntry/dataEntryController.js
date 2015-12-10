@@ -111,7 +111,6 @@
       },
       Credit: function() {
         creditFactory.getCredit($scope.editElement.id, function(creditData) {
-          console.log($scope.activeElement);
           $scope.activeElement = creditData;
         });
       },
@@ -287,8 +286,8 @@
                 $scope.editElement.name = res.name;
               } else {
                 // $scope.data[$scope.section].push(res);
-                // $scope.editElement = res;
-                // activeElementSetter[$scope.section]();
+                  $scope.editElement = res;
+                  activeElementSetter[$scope.section]();
 				        $scope.btnTxt = "Update";				
               }
             }
@@ -398,6 +397,7 @@
           $scope.editElement = null;
           $scope.activeElement = {};
           $scope.model ={};
+          $scope.errorText = '';
 		      $scope.btnTxt = "Add";
         });
       }
