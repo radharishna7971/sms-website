@@ -48,6 +48,8 @@
 .filter-header-container {
   width: 120px;
   height: 16px;
+  display: block;
+  clear: both;
 }
 
 .arrow {
@@ -78,6 +80,8 @@
 .filter-option-container {
   margin-left: 5px;
   margin-bottom: 8px;
+  clear: both;
+  display: block;
 
 }
 .filter-option {
