@@ -9,7 +9,7 @@
       </div>
       <input class="filter-text-input" ng-model="filerByname" 
       ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
-      <p><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span> | <span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></p>
+      <p><a href="#"><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span></a> | <a href="#"><span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></a></p>
 
       <div class="filter-header-container clickable">
         <p class="filter-header">Role</p>
@@ -71,7 +71,7 @@
       </div>
       <div id="ethnicity_list" class="filter-option-container">
         <input class="filter-option" id="allEthnicity" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All
-        <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'">
+        <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" ng-if="ethnicity.name!==''">
           <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}
         </div>
       </div>
