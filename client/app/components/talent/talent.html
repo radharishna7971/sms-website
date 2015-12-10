@@ -9,7 +9,6 @@
       </div>
       <input class="filter-text-input" ng-model="filerByname" 
       ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
- 
       <p><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span> | <span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></p>
 
       <div class="filter-header-container clickable">
@@ -17,12 +16,12 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="role_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allRole" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allRole" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*" checked>All
         <div ng-repeat="role in data.RolePriority | orderBy : 'name'">
-          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}
         </div>
          <div ng-repeat="role in data.RoleNonPriority | orderBy : 'name'">
-          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}<br>
+          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}
         </div>
         
       </div>
@@ -32,9 +31,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="genre_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
         <div ng-repeat="genre in data.GenrePriority | orderBy : 'name'">
-          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}
         </div>
         <!-- <div>---------</div> -->
         <div ng-repeat="genre in data.GenreNonPriority | orderBy : 'name'">
@@ -67,13 +66,28 @@
         </div>
       </div>
       <div class="filter-header-container clickable">
+        <p class="filter-header">Ethnicity</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="ethnicity_list" class="filter-option-container">
+        <input class="filter-option" id="allEthnicity" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All
+        <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'">
+          <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}
+        </div>
+      </div>
+      <div class="filter-header-container">
+        <p class="filter-header">Country</p>
+      </div>
+      <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
+
+      <div class="filter-header-container clickable">
         <p class="filter-header">Budget</p>
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="budget_list" class="filter-option-container">
         <input class="filter-option all-option" id="allBudget"  type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*" checked>All<br>
         <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option budget-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}<br>
+          <input class="filter-option budget-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -83,7 +97,7 @@
       <div id="box_office_income_list" class="filter-option-container">
         <input class="filter-option all-option" id="allBoxRevenue" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All<br>
         <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option BoxOfficeIncome-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}<br>
+          <input class="filter-option BoxOfficeIncome-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -92,21 +106,11 @@
       </div>
       <div id="income_list" class="filter-option-container">
         <select>
-          <option></option>
           <option  value="MaxGreaterThan">Max Greater Than</option>
+          <option  value="MaxGreaterThan">Min Greater Than</option>
           <option  value="AvgGreaterThan">Avg Greater Than</option>
         </select>
         <input ng-model="incomeMultipleInput" type="text" />
-      </div>
-      <div class="filter-header-container clickable">
-        <p class="filter-header">Ethnicity</p>
-        <div class="arrow arrow-right arrow-down"></div>
-      </div>
-      <div id="ethnicity_list" class="filter-option-container">
-        <input class="filter-option" id="allEthnicity" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All<br>
-        <div ng-repeat="ethnicity in ethnicities | orderBy : 'name'">
-          <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}<br>
-        </div>
       </div>
     </div>
   </div>

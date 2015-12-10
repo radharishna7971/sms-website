@@ -88,14 +88,6 @@ FROM talent t where t.id= ' + talentId)
 Talent.getNames = function(nameChars,callback) {
   console.log(nameChars);
   var findNameWith = "'"+"%"+nameChars+"%"+"'";
-  var sql_str = ' \
-    SELECT \
-      talent.id AS id, \
-      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
-      talent.last_name AS last_name \
-    FROM talent \
-    WHERE talent.first_name like '+findNameWith+' and talent.deleted = false';
-    console.log(sql_str);
   db.knex.raw(' \
     SELECT \
       talent.id AS id, \
