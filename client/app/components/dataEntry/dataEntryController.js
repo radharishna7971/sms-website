@@ -9,6 +9,7 @@
     $scope.activeElement.talentCreditJoins = {};
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
+    //$scope.talentNameInput = {};
 
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
