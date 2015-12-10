@@ -140,16 +140,27 @@
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
+                    var findCountryFlag = false;
                     var findRoleFlag = false;
                     var findGenresFlag = false;
+                    var findGenderFlag =false;
                     var findFlag = false;
                     var selectedNames ="";
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
+                    var validCountryInput = ($scope.filerByCountry!==null) && !(angular.isUndefined($scope.filerByCountry)) && ($scope.filerByCountry !=="");
                     if(validNameInput){
                         selectedNames = $scope.filerByname;
                         if(item.name !==null){
                             if(item['name'].toLowerCase().search(selectedNames)!==-1){
                                 findNameFlag = true;
+                            }
+                        }
+                    }
+                    if(validCountryInput){
+                        selectedNames = $scope.filerByCountry;
+                        if(item.name !==null){
+                            if(item['country'].toLowerCase().search(selectedNames)!==-1){
+                                findCountryFlag = true;
                             }
                         }
                     }
@@ -170,8 +181,19 @@
                             }
                         });                      
                     }
+                    if(item.gender !==null){
+                        $('div#gender_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['gender'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findGenderFlag = true;
+                            }
+                        });                      
+                    }
                     if(!validNameInput){
                         findNameFlag = true;
+                    }
+                    if(!validCountryInput){
+                        findCountryFlag = true;
                     }
                     if($("input#allRole").is(':checked')){
                         findRoleFlag = true;
@@ -179,7 +201,10 @@
                     if($("input#allGenres").is(':checked')){
                         findGenresFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag){
+                    if($("input#allGender").is(':checked')){
+                        findGenderFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag){
                         findFlag = true;
                     }
                     return findFlag;

@@ -78,8 +78,8 @@
       <div class="filter-header-container">
         <p class="filter-header">Country</p>
       </div>
-      <input class="filter-text-input" ng-model="filerByCountry" type="text" col="name" />
-      
+      <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
+
       <div class="filter-header-container clickable">
         <p class="filter-header">Budget</p>
         <div class="arrow arrow-right arrow-down"></div>
