@@ -1,7 +1,7 @@
 (function () {
     'use strict';
-    angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory', 'talentGridFactory'])
-        .controller('talentController', function ($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory) {
+    angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory', 'talentGridFactory', 'ethnicityFactory'])
+        .controller('talentController', function ($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory) {
 
             ///////////////////////////////
             /// Initialize View
@@ -14,21 +14,15 @@
             $scope.budgets = [
                  {"id": 1,"name": "Under $250K"}, {"id": 2,"name": "$250K-$1M"},
                  {"id": 3,"name": "$1M-$5M"}, {"id": 4,"name":"$5M-$10M"},
-                 {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"}
+                 {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"},
+                 {"id": 7,"name":"Above $100M"}
              ];
             $scope.ages = [
                  {"id": 1,"name": "Less than 20"}, {"id": 2,"name": "20-30"},
                  {"id": 3,"name": "30-40"}, {"id": 4,"name": "40-50"},
                  {"id": 5,"name": "over 50"}
              ];
-             $scope.ethnicities = [
-                 {"id": 1,"name": "African American / Black"}, {"id": 2,"name": "Asian"}, 
-                 {"id": 3,"name": "Caucasian"}, {"id": 4,"name": "Hawaiian / Pacific Islander"},
-                 {"id": 5,"name": "Indian"}, {"id": 6,"name": "Latino / Hispanic"},
-                 {"id": 7,"name": "Native American"}, {"id": 8,"name": "No Race Available."},
-                 {"id": 9,"name": "Hispanic/Latino"}, {"id": 10,"name": "Southeast Asian/Indian"}
-             ];
-
+             
             $scope.term ="";
             var filereName = $scope.term;
             $scope.talentGridOption = {};
@@ -244,7 +238,6 @@
                       		
                       	  }
                       	});
-                        console.log($scope.associateData);
                     }
                     
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
@@ -287,7 +280,7 @@
                     $scope.data.RoleNonPriority = [];
                     $scope.activeData = $scope.data.Role;
                     angular.forEach(result,function(items){
-                       var getPeiorityRoll =  (items.name.trim() ==="Actor" || items.name.trim() ==="Director" || items.name.trim() ==="Producer");
+                       var getPeiorityRoll =  (items.name.trim() ==="Actor" || items.name.trim() ==="Director" || items.name.trim() ==="Producer" || items.name.trim() ==="Writer");
                        if(getPeiorityRoll){
                             $scope.data.RolePriority.push(items);
                        }else{
@@ -317,6 +310,9 @@
                         $scope.filterData['primary_genre'][result[i].name] = false;
                         $scope.filterData['secondary_genre'][result[i].name] = false;
                     }
+                }),
+                Ethnicity: ethnicityFactory.getNames(function (result) {
+                        $scope.data.Ethnicities = result;
                 })
             };
 
