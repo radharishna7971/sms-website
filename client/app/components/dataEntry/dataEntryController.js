@@ -10,6 +10,7 @@
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
     //$scope.talentNameInput = {};
+    $scope.model ={};
 
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
@@ -21,7 +22,7 @@
       $scope.talentSection = 'main';
       $scope.activeData = $scope.data[$scope.section];
       $scope.btnTxt = "Add";	
-
+      $scope.model ={};
       if ($event) {
         $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
         $($event.target).addClass('active-data-right-column-link');
@@ -80,6 +81,8 @@
     $scope.clearForm = function() {
       $scope.editElement = null;
       $scope.activeElement = {};
+      $scope.model ={};
+      $scope.errorText = '';
       $scope.talentSection = 'main';
       $scope.btnTxt = "Add";
     };
@@ -283,9 +286,9 @@
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
               } else {
-                $scope.data[$scope.section].push(res);
-                $scope.editElement = res;
-                activeElementSetter[$scope.section]();
+                // $scope.data[$scope.section].push(res);
+                // $scope.editElement = res;
+                // activeElementSetter[$scope.section]();
 				        $scope.btnTxt = "Update";				
               }
             }
@@ -372,7 +375,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";
+		      $scope.btnTxt = "Add";
         });
       },
       Contact: function() {
@@ -389,11 +392,12 @@
       Talent: function() {
         talentFactory.deleteTalent($scope.editElement.id, function(){
           // Remove deleted data point from the array
-          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+          //$scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
 
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+          $scope.model ={};
 		      $scope.btnTxt = "Add";
         });
       }

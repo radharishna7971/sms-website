@@ -14,7 +14,7 @@
   </div>
   <div class="data-left-column-data" ng-if="section==='Talent'">
     <div class="data-left-column-data-row">
-   <input type="text" ng-model="talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+   <input type="text" ng-model="model.talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
   </div>
     <div ng-show="noResults">

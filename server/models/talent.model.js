@@ -174,8 +174,6 @@ Talent.get = function(id, callback) {
 
 
 Talent.addOrEdit = function(talentData, callback) {
-  console.log("krishna ....!!!");
-  console.log(talentData);
   // Check to see if talent exists with same name
   new Talent({first_name: talentData.first_name, last_name: talentData.last_name})
   .fetch()
