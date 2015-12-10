@@ -214,16 +214,49 @@
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
+                    var phoneNumber = result[0].phone;
+                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
                     // $scope.creditsData = "";
                     // $scope.awards = "";
+                    $scope.mainTalent.phone = formattedNo;
+                    
+                    $scope.mainTalent.facebookurl = 'http://www.'+result[0].facebookurl;
+                    $scope.mainTalent.instagramurl = 'http://www.'+result[0].instagramurl;
+                    $scope.mainTalent.twitterurl = 'http://www.'+result[0].twitterurl;
+                    $scope.mainTalent.vineurl = 'http://www.'+result[0].vineurl;
+                    $scope.mainTalent.youtubeurl = 'http://www.'+result[0].youtubeurl;
+                    
                     $scope.creditsData = [];
+                    var creditObj = {};
+                    var creditArray = [];
                     if(result[0].creditsreleaserole!==null){
                         var dataObj = result[0].creditsreleaserole.split('|');
                         angular.forEach(dataObj, function(value, key) {
-                        	  if(value){
-                        		  $scope.creditsData.push(value.trim().split(','));
-                        	  }
-                        	});
+                    	  if(value){
+                    		  var arr = value.trim().split(',');
+                        		//console.log(arr);
+                    			angular.forEach(arr, function(value2, key2) {
+                    				if(key2 === 0){
+                    					creditObj.title = value2;
+                    				}
+                    				if(key2 === 1){
+                    					creditObj.releasedate = value2;
+                    				}
+                    				if(key2 === 2){
+                    					creditObj.roll = value2;
+                    				}
+                    				if(key2 === 3){
+                    					creditObj.budget = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    				}
+                    				if(key2 === 4){
+                    					creditObj.boxoffice = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    				}
+                    			});
+                    			creditArray.push(creditObj);
+                    			creditObj = {};
+                    	  }
+                    	});
+                        $scope.creditsData = creditArray;
                     }
                     $scope.awardsData = [];
                     if(result[0].awardtypecredit!==null){
@@ -235,14 +268,33 @@
                       	});
                     }
                     $scope.commentsData = [];
+                    var commentObj = {};
+                    var commentArray = [];
                     if(result[0].commentsData!==null){
                         var commentsObj = result[0].commentsData.split('|');
                         angular.forEach(commentsObj, function(value, key) {
                       	  if(value){
-                      		$scope.commentsData.push(value.trim().split(','));
+                      		//$scope.commentsData.push(value.trim().split(','));
+                      		var arr = value.trim().split(',');
+                      		//console.log(arr);
+                  			angular.forEach(arr, function(value2, key2) {
+                  				if(key2 === 0){
+                  					commentObj.comment = value2;
+                  				}
+                  				if(key2 === 1){
+                  					commentObj.date = value2;
+                  				}
+                  				if(key2 === 2){
+                  					commentObj.user = value2;
+                  				}
+                  			});
+                  			commentArray.push(commentObj);
+                  			commentObj = {};
                       	  }
                       	});
+                        $scope.commentsData = commentArray;
                     }
+                    
                     $scope.associateData = [];
                     var associateObj = {};
                     if(result[0].associateInfo!==null){
