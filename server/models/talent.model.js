@@ -39,7 +39,7 @@ Talent.getProfile= function(talentId, callback) {
   db.knex.raw(' \
     SELECT t.first_name as firstName, t.last_name as lastName, \
     t.age as age, t.gender as gender, t.twitter_url as twitterurl, \
-    t.facebook_url as facebookurl, t.instagram_url as instagramurl, \
+    t.facebook_url as facebookurl, t.youtube_url as youtubeurl, t.instagram_url as instagramurl, \
 	DATE_FORMAT(t.created_at,"%d %b %Y") as createdAt, DATE_FORMAT(t.last_edited,"%d %b %Y") as lastEdited, \
 	t.modifiedby as modifiedBy, t.createdby as createdBy, \
 	t.createdbycomments as createdByComments, t.modifiedbycomments as modifiedByComments, \
@@ -71,7 +71,7 @@ Talent.getProfile= function(talentId, callback) {
   inner join credits c on c.id = cjoin.credit_id \
   inner join roles r on r.id = cjoin.role_id \
   where cjoin.talent_id ='+ talentId+' order by c.release_date asc) as creditsreleaserole, \
-(select GROUP_CONCAT(a.awardname, \',\',a.awardtype, \',\' ,c.name SEPARATOR \'| \') \
+(select GROUP_CONCAT(a.awardname, \',\',DATE_FORMAT(c.release_date,"%Y"),\',\',a.awardtype, \',\' ,c.name SEPARATOR \'| \') \
   as awardscredittalent from talent_award_credit_join tajoin \
   inner join awards a on a.id = tajoin.award_id \
   inner join credits c on c.id = tajoin.credit_id \
