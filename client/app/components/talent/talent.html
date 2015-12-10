@@ -9,7 +9,7 @@
       </div>
       <input class="filter-text-input" ng-model="filerByname" 
       ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
-      <p><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span> | <span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></p>
+      <p><a href="#"><span class="check-toggle" ng-click="checkAll();updateFiltersByChckBox($event);">Check All</span></a> | <a href="#"><span class="check-toggle" ng-click="uncheckAll();updateFiltersByChckBox($event);">Uncheck All</span></a></p>
 
       <div class="filter-header-container clickable">
         <p class="filter-header">Role</p>
@@ -71,15 +71,15 @@
       </div>
       <div id="ethnicity_list" class="filter-option-container">
         <input class="filter-option" id="allEthnicity" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All
-        <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'">
+        <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" ng-if="ethnicity.name!==''">
           <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}
         </div>
       </div>
       <div class="filter-header-container">
         <p class="filter-header">Country</p>
       </div>
-      <input class="filter-text-input" ng-model="filerByCountry" type="text" col="name" />
-      
+      <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
+
       <div class="filter-header-container clickable">
         <p class="filter-header">Budget</p>
         <div class="arrow arrow-right arrow-down"></div>
@@ -120,6 +120,7 @@
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
       <div id="infoTab" class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">Contact Info</div>
+      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'credits')">Credits</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'award')">Awards</div>
       <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'comments')">Comments</div>
@@ -127,30 +128,36 @@
     </div>
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
-      <!-- <p>Primary Role: {{mainTalent.primary_role}}</p> -->
     </br>
 		<p ng-repeat="item in associateData">			
 			<span class="tableLable" ng-repeat-start="(key, value) in item">{{key}}</span>: <span ng-repeat-end>{{value}}</span>
 		</p>
-		
 		<p><span class="tableLable">Email</span>: <span>{{mainTalent.email}}</span></p>
 		<p><span class="tableLable">Phone</span>: <span>{{mainTalent.phone}}</span></p>
-		<p><span class="tableLable">Facebook Url</span>: <span>{{mainTalent.facebookurl}}</span></p>
-		<p><span class="tableLable">Twitter Url</span>: <span>{{mainTalent.twitterurl}}</span></p>
-		<p><span class="tableLable">Instagram Url</span>: <span>{{mainTalent.instagramurl}}</span></p>
-		<p><span class="tableLable">Vine Url</span>: <span>{{mainTalent.vineurl}}</span></p>
     </div>
+    
+    <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
+    </br>
+		<p><span class="tableLable">Facebook Url</span>: <span><a href="{{mainTalent.facebookurl}}">{{mainTalent.facebookurl}}</a></span></p>
+		<p><span class="tableLable">Twitter Url</span>: <span><a href="{{mainTalent.twitterurl}}">{{mainTalent.twitterurl}}</a></span></p>
+		<p><span class="tableLable">Instagram Url</span>: <span><a href="{{mainTalent.instagramurl}}">{{mainTalent.instagramurl}}</a></span></p>
+		<p><span class="tableLable">Vine Url</span>: <span><a href="{{mainTalent.vineurl}}">{{mainTalent.vineurl}}</a></span></p>
+		<p><span class="tableLable">YouTube Url</span>: <span><a href="{{mainTalent.youtubeurl}}">{{mainTalent.youtubeurl}}</a></span></p>
+    </div>
+    
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
     </br>
     <table style="width:540px;margin-bottom:5px;">
-    	<tr><td class="creditTableHeads">Title</td><td class="creditTableHeads">Year</td><td class="creditTableHeads">Role</td><td class="creditTableHeads">Budget</td><td class="creditTableHeads">Box Office</td></tr>
+    	<tr><td class="creditTableHeads">Title</td><td class="creditTableHeads">Release Date</td><td class="creditTableHeads">Role</td><td class="creditTableHeads">Budget</td><td class="creditTableHeads">Box Office</td></tr>
     </table>
     <div class="creditTable">
 		<table>
 			<tr ng-repeat="credits in creditsData">
-				<td class="creditTableBody" ng-repeat="credit in credits">
-					{{credit}}
-				</td> 
+				<td class="creditTableBody">{{credits.title}}</td>
+				<td class="creditTableBody">{{credits.releasedate}}</td>
+				<td class="creditTableBody">{{credits.roll}}</td>
+				<td class="creditTableBody">{{credits.budget}}</td>
+				<td class="creditTableBody">{{credits.boxoffice}}</td>
 			</tr>
 		</table>
 	</div>
@@ -159,7 +166,7 @@
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>
     <table style="width:540px;margin-bottom:5px;">
-    	<tr><th class="creditTableHeads" style="width:180px;">Name</th><th class="creditTableHeads" style="width:180px;">Type</th><th class="creditTableHeads" style="width:180px;">Credit</th></tr>
+    	<tr><th class="creditTableHeads" style="width:180px;">Name</th><th class="creditTableHeads" style="width:180px;">Year</th><th class="creditTableHeads" style="width:180px;">Type</th><th class="creditTableHeads" style="width:180px;">Credit</th></tr>
     </table>
       <div class="creditTable">
 		<table>
@@ -174,10 +181,10 @@
 
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
     </br>
-    <table style="width:540px;margin-bottom:5px;">
+    <!-- <table style="width:540px;margin-bottom:5px;">
     	<tr><th class="creditTableHeads" style="width:180px;">Comment</th><th class="creditTableHeads" style="width:180px;">Time</th><th class="creditTableHeads" style="width:180px;">User</th></tr>
-    </table>
-      <div class="creditTable">
+    </table> -->
+      <!--div class="creditTable">
 		<table>
 			<tr ng-repeat="comments in commentsData">
 				<td class="commentTableBody" ng-repeat="comment in comments">
@@ -185,7 +192,16 @@
 				</td> 
 			</tr>
 		</table>
-	</div>
+	</div-->
+	
+	<div class="talent-data-comments">
+        <div class="talent-data-comment-header">Comments</div>
+        <div class="comment-div" ng-repeat="comment in commentsData">
+          <p ><span class="comment-name">{{comment.user}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
+          <p class="comment-text">{{comment.comment}}</p>
+        </div>
+      </div>
+	
     </div>
     
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='contacts'">

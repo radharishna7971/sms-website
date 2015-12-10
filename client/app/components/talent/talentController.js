@@ -140,16 +140,27 @@
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
+                    var findCountryFlag = false;
                     var findRoleFlag = false;
                     var findGenresFlag = false;
+                    var findGenderFlag =false;
                     var findFlag = false;
                     var selectedNames ="";
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
+                    var validCountryInput = ($scope.filerByCountry!==null) && !(angular.isUndefined($scope.filerByCountry)) && ($scope.filerByCountry !=="");
                     if(validNameInput){
                         selectedNames = $scope.filerByname;
                         if(item.name !==null){
                             if(item['name'].toLowerCase().search(selectedNames)!==-1){
                                 findNameFlag = true;
+                            }
+                        }
+                    }
+                    if(validCountryInput){
+                        selectedNames = $scope.filerByCountry;
+                        if(item.name !==null){
+                            if(item['country'].toLowerCase().search(selectedNames)!==-1){
+                                findCountryFlag = true;
                             }
                         }
                     }
@@ -170,8 +181,19 @@
                             }
                         });                      
                     }
+                    if(item.gender !==null){
+                        $('div#gender_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['gender'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findGenderFlag = true;
+                            }
+                        });                      
+                    }
                     if(!validNameInput){
                         findNameFlag = true;
+                    }
+                    if(!validCountryInput){
+                        findCountryFlag = true;
                     }
                     if($("input#allRole").is(':checked')){
                         findRoleFlag = true;
@@ -179,7 +201,10 @@
                     if($("input#allGenres").is(':checked')){
                         findGenresFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag){
+                    if($("input#allGender").is(':checked')){
+                        findGenderFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag){
                         findFlag = true;
                     }
                     return findFlag;
@@ -189,16 +214,49 @@
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
+                    var phoneNumber = result[0].phone;
+                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
                     // $scope.creditsData = "";
                     // $scope.awards = "";
+                    $scope.mainTalent.phone = formattedNo;
+                    
+                    $scope.mainTalent.facebookurl = 'http://www.'+result[0].facebookurl;
+                    $scope.mainTalent.instagramurl = 'http://www.'+result[0].instagramurl;
+                    $scope.mainTalent.twitterurl = 'http://www.'+result[0].twitterurl;
+                    $scope.mainTalent.vineurl = 'http://www.'+result[0].vineurl;
+                    $scope.mainTalent.youtubeurl = 'http://www.'+result[0].youtubeurl;
+                    
                     $scope.creditsData = [];
+                    var creditObj = {};
+                    var creditArray = [];
                     if(result[0].creditsreleaserole!==null){
                         var dataObj = result[0].creditsreleaserole.split('|');
                         angular.forEach(dataObj, function(value, key) {
-                        	  if(value){
-                        		  $scope.creditsData.push(value.trim().split(','));
-                        	  }
-                        	});
+                    	  if(value){
+                    		  var arr = value.trim().split(',');
+                        		//console.log(arr);
+                    			angular.forEach(arr, function(value2, key2) {
+                    				if(key2 === 0){
+                    					creditObj.title = value2;
+                    				}
+                    				if(key2 === 1){
+                    					creditObj.releasedate = value2;
+                    				}
+                    				if(key2 === 2){
+                    					creditObj.roll = value2;
+                    				}
+                    				if(key2 === 3){
+                    					creditObj.budget = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    				}
+                    				if(key2 === 4){
+                    					creditObj.boxoffice = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    				}
+                    			});
+                    			creditArray.push(creditObj);
+                    			creditObj = {};
+                    	  }
+                    	});
+                        $scope.creditsData = creditArray;
                     }
                     $scope.awardsData = [];
                     if(result[0].awardtypecredit!==null){
@@ -210,14 +268,33 @@
                       	});
                     }
                     $scope.commentsData = [];
+                    var commentObj = {};
+                    var commentArray = [];
                     if(result[0].commentsData!==null){
                         var commentsObj = result[0].commentsData.split('|');
                         angular.forEach(commentsObj, function(value, key) {
                       	  if(value){
-                      		$scope.commentsData.push(value.trim().split(','));
+                      		//$scope.commentsData.push(value.trim().split(','));
+                      		var arr = value.trim().split(',');
+                      		//console.log(arr);
+                  			angular.forEach(arr, function(value2, key2) {
+                  				if(key2 === 0){
+                  					commentObj.comment = value2;
+                  				}
+                  				if(key2 === 1){
+                  					commentObj.date = value2;
+                  				}
+                  				if(key2 === 2){
+                  					commentObj.user = value2;
+                  				}
+                  			});
+                  			commentArray.push(commentObj);
+                  			commentObj = {};
                       	  }
                       	});
+                        $scope.commentsData = commentArray;
                     }
+                    
                     $scope.associateData = [];
                     var associateObj = {};
                     if(result[0].associateInfo!==null){
