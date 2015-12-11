@@ -62,7 +62,7 @@ Talent.getProfile= function(talentId, callback) {
     		  inner join associate_types at ON atj.associte_types_id=`at`.id \
     		  inner join associate a ON a.id=atj.associate_id \
     		  where atj.talent_id ='+ talentId+') as associateInfo, \
-	(select GROUP_CONCAT(c.text, \',\',DATE_FORMAT(c.created_at,"%l %p %d %b %Y"), \',\' ,u.first_name SEPARATOR \'| \') as commentdata \
+	(select GROUP_CONCAT(c.text, \',\',DATE_FORMAT(c.created_at,"%l %p %d %b %Y"), \',\' ,u.first_name, \'\,\' ,u.last_name SEPARATOR \'| \') as commentdata \
 	from comments c \
 	inner join users u on c.user_id=u.id \
 	where c.talent_id ='+ talentId+') as commentsData, \

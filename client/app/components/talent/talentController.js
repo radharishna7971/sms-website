@@ -215,7 +215,7 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
                     var phoneNumber = result[0].phone;
-                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
                     // $scope.creditsData = "";
                     // $scope.awards = "";
                     $scope.mainTalent.phone = formattedNo;
@@ -285,7 +285,10 @@
                   					commentObj.date = value2;
                   				}
                   				if(key2 === 2){
-                  					commentObj.user = value2;
+                  					commentObj.firstname = value2;
+                  				}
+                  				if(key2 === 3){
+                  					commentObj.lastname = value2;
                   				}
                   			});
                   			commentArray.push(commentObj);
