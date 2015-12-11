@@ -80,6 +80,18 @@
       </div>
       <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
 
+
+      <div class="filter-header-container clickable">
+        <p class="filter-header"> Created By</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="createdby_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allCreatedBy" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <div ng-repeat="item in data.createdByNames | orderBy : 'createdby'">
+          <input class="filter-option createdby-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.createdby}}" unchecked>{{item.createdby}}
+        </div>
+      </div>
+
       <div class="filter-header-container clickable">
         <p class="filter-header">Budget</p>
         <div class="arrow arrow-right arrow-down"></div>

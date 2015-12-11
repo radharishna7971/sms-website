@@ -92,6 +92,9 @@
                     if($($event.target).hasClass( "ethnicity-list-class" )){
                         $("input#allEthnicity").prop("checked",false);
                     }
+                    if($($event.target).hasClass( "createdby-list-class" )){
+                        $("input#allCreatedBy").prop("checked",false);
+                    }
 
                     if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
@@ -137,11 +140,18 @@
                             });
                             $("input#allEthnicity").prop("checked",true);
                     }
+                    if($event.target.id==="allCreatedBy" && $event.target.checked){
+                            $('div#createdby_list').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allCreatedBy").prop("checked",true);
+                    }
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
                     var findCountryFlag = false;
                     var findRoleFlag = false;
+                    var findCreatedByFlag = false;
                     var findGenresFlag = false;
                     var findGenderFlag =false;
                     var findFlag = false;
@@ -189,6 +199,14 @@
                             }
                         });                      
                     }
+                    if(item.createdby !==null){
+                        $('div#createdby_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['createdby'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findCreatedByFlag = true;
+                            }
+                        });                      
+                    }
                     if(!validNameInput){
                         findNameFlag = true;
                     }
@@ -204,7 +222,10 @@
                     if($("input#allGender").is(':checked')){
                         findGenderFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag){
+                    if($("input#allCreatedBy").is(':checked')){
+                        findCreatedByFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag){
                         findFlag = true;
                     }
                     return findFlag;
@@ -368,6 +389,9 @@
                         $scope.filterData['primary_role'][result[i].name] = false;
                         $scope.filterData['secondary_role'][result[i].name] = false;
                     }
+                }),
+                TalentCreatedBy: talentFactory.getAllCreatedBy(function (result) {
+                    $scope.data.createdByNames = result;
                 }),
                 Genre: genreFactory.getNames(function (result) {
                     $scope.data.GenrePriority = []; 

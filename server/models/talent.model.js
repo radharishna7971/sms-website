@@ -9,6 +9,7 @@ Talent.getAll = function(callback) {
     CONCAT(t.last_name, \', \', t.first_name) AS name, \
     t.gender as gender, \
     t.country as country , \
+    t.createdby as createdby, \
     ( select e.name from ethnicity e where e.id=t.ethnicity_id ) as ethnicity, \
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
     inner join roles r on r.id = cjoin.role_id \
@@ -100,6 +101,16 @@ Talent.getNames = function(nameChars,callback) {
   });
 };
 
+// Return list of all createdby names with talent id
+Talent.getAllCreatedByname = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(createdby) as createdby \
+      FROM talent \
+    WHERE createdby is not null order by createdby')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
 Talent.getName = function(id, callback) {
   db.knex.raw(' \
     SELECT \
