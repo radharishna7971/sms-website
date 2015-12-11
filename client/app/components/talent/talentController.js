@@ -92,6 +92,12 @@
                     if($($event.target).hasClass( "ethnicity-list-class" )){
                         $("input#allEthnicity").prop("checked",false);
                     }
+                    if($($event.target).hasClass( "createdby-list-class" )){
+                        $("input#allCreatedBy").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "country-list-class" )){
+                        $("input#allCountries").prop("checked",false);
+                    }
 
                     if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
@@ -119,6 +125,13 @@
                             });
                             $("input#allAges").prop("checked",true);
                     }
+                    if($event.target.id==="allCountries" && $event.target.checked){
+
+                            $('div#country_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allCountries").prop("checked",true);
+                    }
                     if($event.target.id==="allBudget" && $event.target.checked){
                             $('div#budget_list input').each(function () {
                                  $(this).prop("checked",false);
@@ -137,17 +150,24 @@
                             });
                             $("input#allEthnicity").prop("checked",true);
                     }
+                    if($event.target.id==="allCreatedBy" && $event.target.checked){
+                            $('div#createdby_list').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allCreatedBy").prop("checked",true);
+                    }
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
                     var findCountryFlag = false;
                     var findRoleFlag = false;
+                    var findCreatedByFlag = false;
                     var findGenresFlag = false;
                     var findGenderFlag =false;
                     var findFlag = false;
                     var selectedNames ="";
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
-                    var validCountryInput = ($scope.filerByCountry!==null) && !(angular.isUndefined($scope.filerByCountry)) && ($scope.filerByCountry !=="");
+        
                     if(validNameInput){
                         selectedNames = $scope.filerByname;
                         if(item.name !==null){
@@ -156,15 +176,6 @@
                             }
                         }
                     }
-                    if(validCountryInput){
-                        selectedNames = $scope.filerByCountry;
-                        if(item.name !==null){
-                            if(item['country'].toLowerCase().search(selectedNames)!==-1){
-                                findCountryFlag = true;
-                            }
-                        }
-                    }
-
                     if(item.roles !==null){
                         $('div#role_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
@@ -189,14 +200,30 @@
                             }
                         });                      
                     }
+                    if(item.country !==null){
+                        $('div#country_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['country'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findCountryFlag = true;
+                            }
+                        });                      
+                    }
+                    if(item.createdby !==null){
+                        $('div#createdby_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['createdby'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findCreatedByFlag = true;
+                            }
+                        });                      
+                    }
                     if(!validNameInput){
                         findNameFlag = true;
                     }
-                    if(!validCountryInput){
-                        findCountryFlag = true;
-                    }
                     if($("input#allRole").is(':checked')){
                         findRoleFlag = true;
+                    }
+                    if($("input#allCountries").is(':checked')){
+                        findCountryFlag = true;
                     }
                     if($("input#allGenres").is(':checked')){
                         findGenresFlag = true;
@@ -204,7 +231,10 @@
                     if($("input#allGender").is(':checked')){
                         findGenderFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag){
+                    if($("input#allCreatedBy").is(':checked')){
+                        findCreatedByFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag){
                         findFlag = true;
                     }
                     return findFlag;
@@ -215,7 +245,7 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
                     var phoneNumber = result[0].phone;
-                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
                     // $scope.creditsData = "";
                     // $scope.awards = "";
                     $scope.mainTalent.phone = formattedNo;
@@ -285,7 +315,10 @@
                   					commentObj.date = value2;
                   				}
                   				if(key2 === 2){
-                  					commentObj.user = value2;
+                  					commentObj.firstname = value2;
+                  				}
+                  				if(key2 === 3){
+                  					commentObj.lastname = value2;
                   				}
                   			});
                   			commentArray.push(commentObj);
@@ -368,6 +401,12 @@
                         $scope.filterData['primary_role'][result[i].name] = false;
                         $scope.filterData['secondary_role'][result[i].name] = false;
                     }
+                }),
+                TalentCreatedBy: talentFactory.getAllCreatedBy(function (result) {
+                    $scope.data.createdByNames = result;
+                }),
+                TalentCountryNames: talentFactory.getCountryNames(function (result) {
+                    $scope.data.countryNames = result;
                 }),
                 Genre: genreFactory.getNames(function (result) {
                     $scope.data.GenrePriority = []; 

@@ -153,6 +153,10 @@
   clear: both;
 }
 
+.data-submit:hover,.data-submit:focus{
+  background-color: #1E90FF;
+}
+
 .talent-form {
   padding-bottom: 10px;
 }

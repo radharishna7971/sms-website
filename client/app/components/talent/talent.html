@@ -75,10 +75,33 @@
           <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}
         </div>
       </div>
-      <div class="filter-header-container">
+      <!-- div class="filter-header-container">
         <p class="filter-header">Country</p>
       </div>
-      <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
+      <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" /> -->
+
+      <div class="filter-header-container clickable">
+        <p class="filter-header"> Country</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="country_list" class="filter-option-container">
+        <input class="filter-option" id="allCountries" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <div ng-repeat="item in data.countryNames | orderBy : 'country'">
+          <input class="filter-option country-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.country}}" unchecked>{{item.country}}
+        </div>
+      </div>
+
+
+      <div class="filter-header-container clickable">
+        <p class="filter-header"> Created By</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="createdby_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allCreatedBy" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <div ng-repeat="item in data.createdByNames | orderBy : 'createdby'">
+          <input class="filter-option createdby-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.createdby}}" unchecked>{{item.createdby}}
+        </div>
+      </div>
 
       <div class="filter-header-container clickable">
         <p class="filter-header">Budget</p>
@@ -123,95 +146,95 @@
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'credits')">Credits</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'award')">Awards</div>
-      <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'comments')">Comments</div>
-      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'contacts')">Other Info</div>
+      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'comments')">Comments</div>
+      <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'contacts')">Other Info</div>
     </div>
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
     </br>
-		<p ng-repeat="item in associateData">			
-			<span class="tableLable" ng-repeat-start="(key, value) in item">{{key}}</span>: <span ng-repeat-end>{{value}}</span>
-		</p>
-		<p><span class="tableLable">Email</span>: <span>{{mainTalent.email}}</span></p>
-		<p><span class="tableLable">Phone</span>: <span>{{mainTalent.phone}}</span></p>
+    <p ng-repeat="item in associateData">     
+      <span class="tableLable" ng-repeat-start="(key, value) in item">{{key}}</span>: <span ng-repeat-end>{{value}}</span>
+    </p>
+    <p><span class="tableLable">Email</span>: <span>{{mainTalent.email}}</span></p>
+    <p><span class="tableLable">Phone</span>: <span>{{mainTalent.phone}}</span></p>
     </div>
     
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
     </br>
-		<p><span class="tableLable">Facebook Url</span>: <span><a href="{{mainTalent.facebookurl}}">{{mainTalent.facebookurl}}</a></span></p>
-		<p><span class="tableLable">Twitter Url</span>: <span><a href="{{mainTalent.twitterurl}}">{{mainTalent.twitterurl}}</a></span></p>
-		<p><span class="tableLable">Instagram Url</span>: <span><a href="{{mainTalent.instagramurl}}">{{mainTalent.instagramurl}}</a></span></p>
-		<p><span class="tableLable">Vine Url</span>: <span><a href="{{mainTalent.vineurl}}">{{mainTalent.vineurl}}</a></span></p>
-		<p><span class="tableLable">YouTube Url</span>: <span><a href="{{mainTalent.youtubeurl}}">{{mainTalent.youtubeurl}}</a></span></p>
+    <p><span class="tableLable">Facebook Url</span>: <span><a href="{{mainTalent.facebookurl}}">{{mainTalent.facebookurl}}</a></span></p>
+    <p><span class="tableLable">Twitter Url</span>: <span><a href="{{mainTalent.twitterurl}}">{{mainTalent.twitterurl}}</a></span></p>
+    <p><span class="tableLable">Instagram Url</span>: <span><a href="{{mainTalent.instagramurl}}">{{mainTalent.instagramurl}}</a></span></p>
+    <p><span class="tableLable">Vine Url</span>: <span><a href="{{mainTalent.vineurl}}">{{mainTalent.vineurl}}</a></span></p>
+    <p><span class="tableLable">YouTube Url</span>: <span><a href="{{mainTalent.youtubeurl}}">{{mainTalent.youtubeurl}}</a></span></p>
     </div>
     
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
     </br>
-    <table style="width:540px;margin-bottom:5px;">
-    	<tr><td class="creditTableHeads">Title</td><td class="creditTableHeads">Release Date</td><td class="creditTableHeads">Role</td><td class="creditTableHeads">Budget</td><td class="creditTableHeads">Box Office</td></tr>
+    <div class="credit_scroll">
+    <table class="credit_table" style="width:1090px;margin-bottom:5px;">
+      <tr><td class="creditTableHeads">Title</td><td class="creditTableHeads">Release Date</td><td class="creditTableHeads">Role</td><td class="creditTableHeads">Budget</td><td class="creditTableHeads">Box Office</td></tr>
     </table>
-    <div class="creditTable">
-		<table>
-			<tr ng-repeat="credits in creditsData">
-				<td class="creditTableBody">{{credits.title}}</td>
-				<td class="creditTableBody">{{credits.releasedate}}</td>
-				<td class="creditTableBody">{{credits.roll}}</td>
-				<td class="creditTableBody">{{credits.budget}}</td>
-				<td class="creditTableBody">{{credits.boxoffice}}</td>
-			</tr>
-		</table>
-	</div>
-	
+    <div id="table-wrapper">
+    <div id="table-scroll">
+    <table style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
+      <tr ng-repeat="credits in creditsData">
+        <td class="creditTableBody">{{credits.title}}</td>
+        <td class="creditTableBody">{{credits.releasedate}}</td>
+        <td class="creditTableBody">{{credits.roll}}</td>
+        <td class="creditTableBody">{{credits.budget}}</td>
+        <td class="creditTableBody">{{credits.boxoffice}}</td>
+      </tr>
+    </table>
+  </div>
+
+  </div>
+
+  </div>
+  
+
     </div>
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>
-    <table style="width:540px;margin-bottom:5px;">
-    	<tr><th class="creditTableHeads" style="width:180px;">Name</th><th class="creditTableHeads" style="width:180px;">Year</th><th class="creditTableHeads" style="width:180px;">Type</th><th class="creditTableHeads" style="width:180px;">Credit</th></tr>
+    <table  style="width:1090px;margin-bottom:5px;margin-left: 30px;">
+      <tr style="text-align:center";><th class="creditTableHeads" style="width:180px;">Name</th><th class="creditTableHeads" style="width:180px;">Year</th><th class="creditTableHeads" style="width:180px;">Type</th><th class="creditTableHeads" style="width:180px;">Credit</th></tr>
     </table>
-      <div class="creditTable">
-		<table>
-			<tr ng-repeat="awards in awardsData">
-				<td class="awardTableBody" ng-repeat="award in awards">
-					{{award}}
-				</td> 
-			</tr>
-		</table>
-	</div>
+      <div id="table-wrapper">
+    <div id="table-scroll">
+    <table  style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
+      <tr ng-repeat="awards in awardsData">
+        <td class="awardTableBody" ng-repeat="award in awards">
+          {{award}}
+        </td> 
+      </tr>
+    </table>
+  </div>
+
+
+    </div>
     </div>
 
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
-    </br>
-    <!-- <table style="width:540px;margin-bottom:5px;">
-    	<tr><th class="creditTableHeads" style="width:180px;">Comment</th><th class="creditTableHeads" style="width:180px;">Time</th><th class="creditTableHeads" style="width:180px;">User</th></tr>
-    </table> -->
-      <!--div class="creditTable">
-		<table>
-			<tr ng-repeat="comments in commentsData">
-				<td class="commentTableBody" ng-repeat="comment in comments">
-					{{comment}}
-				</td> 
-			</tr>
-		</table>
-	</div-->
-	
-	<div class="talent-data-comments">
-        <div class="talent-data-comment-header">Comments</div>
+    </br>  
+
+  <div class="talent-data-comment">
+        <div class="talent-data-comment-headers">Comments</div>
         <div class="comment-div" ng-repeat="comment in commentsData">
-          <p ><span class="comment-name">{{comment.user}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
+          <p ><span class="comment-name">{{comment.firstname}} {{comment.lastname}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
           <p class="comment-text">{{comment.comment}}</p>
         </div>
       </div>
-	
+  
+
     </div>
     
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='contacts'">
     </br>
-      	<p><span class="tableLable">Created By</span>: <span>{{mainTalent.createdBy}}</span></p>
-		<p><span class="tableLable">Created Date</span>: <span>{{mainTalent.createdAt}}</span></p>
-		<p><span class="tableLable">Created Comments</span>: <span>{{mainTalent.createdByComments}}</span></p>
-		<p><span class="tableLable">Modified By</span>: <span>{{mainTalent.modifiedBy}}</span></p>
-		<p><span class="tableLable">Modified Date</span>: <span>{{mainTalent.lastEdited}}</span></p>
-		<p><span class="tableLable"> Modified Comments</span>: <span>{{mainTalent.modifiedByComments}}</span></p>
+        <p><span class="tableLable">Created By</span>: <span>{{mainTalent.createdBy}}</span></p>
+    <p><span class="tableLable">Created Date</span>: <span>{{mainTalent.createdAt}}</span></p>
+    <p><span class="tableLable">Created Comments</span>: <span>{{mainTalent.createdByComments}}</span></p>
+    <p><span class="tableLable">Modified By</span>: <span>{{mainTalent.modifiedBy}}</span></p>
+    <p><span class="tableLable">Modified Date</span>: <span>{{mainTalent.lastEdited}}</span></p>
+    <p><span class="tableLable"> Modified Comments</span>: <span>{{mainTalent.modifiedByComments}}</span></p>
     </div>
 
   </div>

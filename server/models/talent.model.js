@@ -9,6 +9,7 @@ Talent.getAll = function(callback) {
     CONCAT(t.last_name, \', \', t.first_name) AS name, \
     t.gender as gender, \
     t.country as country , \
+    t.createdby as createdby, \
     ( select e.name from ethnicity e where e.id=t.ethnicity_id ) as ethnicity, \
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
     inner join roles r on r.id = cjoin.role_id \
@@ -62,7 +63,7 @@ Talent.getProfile= function(talentId, callback) {
     		  inner join associate_types at ON atj.associte_types_id=`at`.id \
     		  inner join associate a ON a.id=atj.associate_id \
     		  where atj.talent_id ='+ talentId+') as associateInfo, \
-	(select GROUP_CONCAT(c.text, \',\',DATE_FORMAT(c.created_at,"%l %p %d %b %Y"), \',\' ,u.first_name SEPARATOR \'| \') as commentdata \
+	(select GROUP_CONCAT(c.text, \',\',DATE_FORMAT(c.created_at,"%l %p %d %b %Y"), \',\' ,u.first_name, \'\,\' ,u.last_name SEPARATOR \'| \') as commentdata \
 	from comments c \
 	inner join users u on c.user_id=u.id \
 	where c.talent_id ='+ talentId+') as commentsData, \
@@ -99,6 +100,29 @@ Talent.getNames = function(nameChars,callback) {
      callback(results[0]);
   });
 };
+
+// Return list of all createdby names
+Talent.getAllCreatedByname = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(createdby) as createdby \
+      FROM talent \
+    WHERE createdby is not null order by createdby')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
+
+// Return list of all country names
+Talent.getAllCountryNames = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(country) as country \
+      FROM talent \
+    WHERE country is not null order by country')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
+
 
 Talent.getName = function(id, callback) {
   db.knex.raw(' \
@@ -174,8 +198,6 @@ Talent.get = function(id, callback) {
 
 
 Talent.addOrEdit = function(talentData, callback) {
-  console.log("krishna ....!!!");
-  console.log(talentData);
   // Check to see if talent exists with same name
   new Talent({first_name: talentData.first_name, last_name: talentData.last_name})
   .fetch()
