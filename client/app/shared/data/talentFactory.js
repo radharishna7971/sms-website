@@ -19,6 +19,14 @@
             callback(res.data);
         });
       },
+      getCountryNames: function(callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/talent/allCountryNames'
+        }).then(function(res) {
+            callback(res.data);
+        });
+      },
       getNames: function(nameChars,callback) {
         return $http({
           method: 'GET',

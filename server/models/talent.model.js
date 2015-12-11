@@ -101,7 +101,7 @@ Talent.getNames = function(nameChars,callback) {
   });
 };
 
-// Return list of all createdby names with talent id
+// Return list of all createdby names
 Talent.getAllCreatedByname = function(callback) {
   db.knex.raw(' \
     SELECT distinct(createdby) as createdby \
@@ -111,6 +111,19 @@ Talent.getAllCreatedByname = function(callback) {
      callback(results[0]);
   });
 };
+
+// Return list of all country names
+Talent.getAllCountryNames = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(country) as country \
+      FROM talent \
+    WHERE country is not null order by country')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
+
+
 Talent.getName = function(id, callback) {
   db.knex.raw(' \
     SELECT \
