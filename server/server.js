@@ -8,6 +8,7 @@
   //host established for proxy
   var host = process.env.HOSTNAME || null;
 
-  app.listen(process.env.PORT, host);
+  //app.listen(process.env.PORT, host);
+  app.listen(8000, host);
   module.exports = app;
-  console.log('Server running at port: ' + process.env.PORT);
+  console.log('Server running at port: ' + 8000);

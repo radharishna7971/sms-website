@@ -245,7 +245,12 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
                     var phoneNumber = result[0].phone;
-                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    console.log(phoneNumber);
+                    if(phoneNumber !== null){
+                    	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    }else{
+                    	var formattedNo = '';
+                    }
                     // $scope.creditsData = "";
                     // $scope.awards = "";
                     $scope.mainTalent.phone = formattedNo;
