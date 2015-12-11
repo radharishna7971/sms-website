@@ -24,7 +24,8 @@
                     { field: 'ethnicity', displayName: 'Ethnicity'},
                     { field: 'awards', displayName: 'Awards'},
                     { field: 'genres', displayName: 'Genres'},
-                    { field: 'country', displayName: 'Country'}
+                    { field: 'country', displayName: 'Country'},
+                    { field: 'createdby', displayName: 'Created By'}
                 ],
                 enableGridMenu: true,
                 enableSelectAll: true,

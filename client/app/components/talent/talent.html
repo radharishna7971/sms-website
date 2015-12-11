@@ -75,10 +75,33 @@
           <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}
         </div>
       </div>
-      <div class="filter-header-container">
+      <!-- div class="filter-header-container">
         <p class="filter-header">Country</p>
       </div>
-      <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" />
+      <input class="filter-text-input" ng-model="filerByCountry" ng-keyup="updateFiltersByChckBox()" type="text" col="name" /> -->
+
+      <div class="filter-header-container clickable">
+        <p class="filter-header"> Country</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="country_list" class="filter-option-container">
+        <input class="filter-option" id="allCountries" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <div ng-repeat="item in data.countryNames | orderBy : 'country'">
+          <input class="filter-option country-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.country}}" unchecked>{{item.country}}
+        </div>
+      </div>
+
+
+      <div class="filter-header-container clickable">
+        <p class="filter-header"> Created By</p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="createdby_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allCreatedBy" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <div ng-repeat="item in data.createdByNames | orderBy : 'createdby'">
+          <input class="filter-option createdby-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.createdby}}" unchecked>{{item.createdby}}
+        </div>
+      </div>
 
       <div class="filter-header-container clickable">
         <p class="filter-header">Budget</p>
