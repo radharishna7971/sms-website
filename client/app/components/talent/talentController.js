@@ -162,7 +162,8 @@
                     var findCountryFlag = false;
                     var findRoleFlag = false;
                     var findCreatedByFlag = false;
-                    var findEthinicityFlag = false;
+                    var findAgeFlag = false;
+                    var findEthnicityFlag = false;
                     var findGenresFlag = false;
                     var findGenderFlag =false;
                     var findFlag = false;
@@ -218,11 +219,43 @@
                         });                      
                     }
 
+                    if(item.age !==null){
+                        $('div#age_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            if(selectedNames ==="lessthan20"){
+                                if(parseInt(item['age']) < 20){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="20-30"){
+                                if(parseInt(item['age']) >= 20 && parseInt(item['age']) < 30){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="30-40"){
+                                if(parseInt(item['age']) >= 30 && parseInt(item['age']) < 40){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="40-50"){
+                                if(parseInt(item['age']) >= 40 && parseInt(item['age']) < 50){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="over50"){
+                                if(parseInt(item['age']) >= 50){
+                                    findAgeFlag = true;
+                                }
+                            }
+
+                        });
+                    }
                     if(item.ethnicity !==null){
-                        $('div#ethnicity_list input:checked').each(function () {
+                        $('div#age_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             if((item['ethnicity'].toLowerCase())===selectedNames.toLowerCase()){
-                                findEthinicityFlag = true;
+                                findEthnicityFlag = true;
                             }
                         });
                     }
@@ -245,10 +278,13 @@
                     if($("input#allCreatedBy").is(':checked')){
                         findCreatedByFlag = true;
                     }
-                    if($("input#allEthnicity").is(':checked')){
-                        findEthinicityFlag = true;
+                    if($("input#allAges").is(':checked')){
+                        findAgeFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthinicityFlag){
+                    if($("input#allEthnicity").is(':checked')){
+                        findEthnicityFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag){
                         findFlag = true;
                     }
                     return findFlag;

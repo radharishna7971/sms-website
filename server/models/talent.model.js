@@ -7,6 +7,7 @@ Talent.getAll = function(callback) {
     SELECT \
     t.id as id, \
     CONCAT(t.last_name, \', \', t.first_name) AS name, \
+    t.age as age, \
     t.gender as gender, \
     t.country as country , \
     t.createdby as createdby, \
