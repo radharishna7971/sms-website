@@ -24,6 +24,8 @@
                     { field: 'ethnicity', displayName: 'Ethnicity'},
                     { field: 'awards', displayName: 'Awards'},
                     { field: 'genres', displayName: 'Genres'},
+                    { field: 'estimatedBudget', displayName: 'Estimated Budget'},
+                    { field: 'boxOfficeIncome', displayName: 'Box Office Income'},
                     { field: 'country', displayName: 'Country'},
                     { field: 'createdby', displayName: 'Created By'}
                 ],

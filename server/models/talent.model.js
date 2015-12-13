@@ -22,7 +22,17 @@ Talent.getAll = function(callback) {
     inner join credits c on c.id = cjoin.credit_id \
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \
-    where cjoin.talent_id = t.id) as genres \
+    where cjoin.talent_id = t.id) as genres, \
+    (select GROUP_CONCAT(distinct c.estimatedBudget SEPARATOR \', \') as estimatedBudgetData from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as estimatedBudget, \
+    (select GROUP_CONCAT(distinct c.box_office_income SEPARATOR \', \') as boxOfficeIncomeData from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as boxOfficeIncome \
   FROM talent t')
   .then(function(results) {
      var data = results[0];

@@ -39,7 +39,37 @@
             };
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
+            function numberFormatter(num) {
+                if (num >= 1000000000) {
+                    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+                }
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                }
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+                }
+                return num;
+            }
             talentFactory.getAll(function (data) {
+                angular.forEach(data,function(items){
+                    if(items.estimatedBudget !==null && items.estimatedBudget){
+                        var estimatedBudgets = items.estimatedBudget.split(',');
+                        var maxBudget = Math.max.apply(Math, estimatedBudgets);
+                        maxBudget = numberFormatter(parseInt(maxBudget));
+                        var minBudget = Math.min.apply(Math, estimatedBudgets);
+                        minBudget = numberFormatter(parseInt(minBudget));
+                        items.estimatedBudget = '$'+minBudget+'-'+'$'+maxBudget;
+                    }
+                    if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
+                        var boxOfficeIncomes = items.boxOfficeIncome.split(',');
+                        var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
+                        maxIncome = numberFormatter(parseInt(maxIncome));
+                        var minIncome = Math.min.apply(Math, boxOfficeIncomes);
+                        minIncome = numberFormatter(parseInt(minIncome));
+                        items.boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
+                    }
+                });
                 $scope.talentGridOption.data = data;
                 $scope.gridData = data;
                 $scope.filteredRows = data;
@@ -252,7 +282,7 @@
                         });
                     }
                     if(item.ethnicity !==null){
-                        $('div#age_list input:checked').each(function () {
+                        $('div#ethnicity_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             if((item['ethnicity'].toLowerCase())===selectedNames.toLowerCase()){
                                 findEthnicityFlag = true;
