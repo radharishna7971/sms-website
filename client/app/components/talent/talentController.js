@@ -162,6 +162,7 @@
                     var findCountryFlag = false;
                     var findRoleFlag = false;
                     var findCreatedByFlag = false;
+                    var findEthinicityFlag = false;
                     var findGenresFlag = false;
                     var findGenderFlag =false;
                     var findFlag = false;
@@ -216,6 +217,16 @@
                             }
                         });                      
                     }
+
+                    if(item.ethnicity !==null){
+                        $('div#ethnicity_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['ethnicity'].toLowerCase())===selectedNames.toLowerCase()){
+                                findEthinicityFlag = true;
+                            }
+                        });
+                    }
+
                     if(!validNameInput){
                         findNameFlag = true;
                     }
@@ -234,7 +245,10 @@
                     if($("input#allCreatedBy").is(':checked')){
                         findCreatedByFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag){
+                    if($("input#allEthnicity").is(':checked')){
+                        findEthinicityFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthinicityFlag){
                         findFlag = true;
                     }
                     return findFlag;
@@ -345,9 +359,7 @@
                       			var lastName = vals[2] || '';
                       			var associateName = vals[0] || '';
                       			var fullName = firstName +' '+ lastName;
-                      			associateObj = {
-                      					[associateName]:fullName
-                      			}
+                      			associateObj[associateName] = fullName;
                       			$scope.associateData.push(associateObj);
                       		}
                       		
