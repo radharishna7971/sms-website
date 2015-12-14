@@ -15,7 +15,7 @@
                   columnDefs : [
                     { field: 'id', displayName: 'id', type: 'number', visible: false},
                     { field: 'name', displayName: 'Name'},
-                    { field: 'age', displayName: 'Age', width : '7%', type: 'number'},
+                    { field: 'age', displayName: 'Age', width : '7%'},
                     { field: 'gender', width : '7%',
                        type: uiGridConstants.filter.SELECT, 
                        selectOptions: [ {value: true, label: 'true'}, {value: false, label: 'false'} ]
@@ -24,6 +24,8 @@
                     { field: 'ethnicity', displayName: 'Ethnicity'},
                     { field: 'awards', displayName: 'Awards'},
                     { field: 'genres', displayName: 'Genres'},
+                    { field: 'estimatedBudget', displayName: 'Estimated Budget'},
+                    { field: 'boxOfficeIncome', displayName: 'Box Office Income'},
                     { field: 'country', displayName: 'Country'},
                     { field: 'createdby', displayName: 'Created By'}
                 ],

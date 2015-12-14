@@ -39,7 +39,44 @@
             };
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
+
+            function numberFormatter(num) {
+                if (num >= 1000000000) {
+                    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+                }
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                }
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+                }
+                return num;
+            }
+
+            function getNumber(inputStr){
+                var numberValue = Number(inputStr .replace(/[^0-9\.]+/g,""));
+                return parseInt(numberValue);
+            }
+
             talentFactory.getAll(function (data) {
+                angular.forEach(data,function(items){
+                    if(items.estimatedBudget !==null && items.estimatedBudget){
+                        var estimatedBudgets = items.estimatedBudget.split(',');
+                        var maxBudget = Math.max.apply(Math, estimatedBudgets);
+                        maxBudget = numberFormatter(parseInt(maxBudget));
+                        var minBudget = Math.min.apply(Math, estimatedBudgets);
+                        minBudget = numberFormatter(parseInt(minBudget));
+                        items.estimatedBudget = '$'+minBudget+'-'+'$'+maxBudget;
+                    }
+                    if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
+                        var boxOfficeIncomes = items.boxOfficeIncome.split(',');
+                        var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
+                        maxIncome = numberFormatter(parseInt(maxIncome));
+                        var minIncome = Math.min.apply(Math, boxOfficeIncomes);
+                        minIncome = numberFormatter(parseInt(minIncome));
+                        items.boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
+                    }
+                });
                 $scope.talentGridOption.data = data;
                 $scope.gridData = data;
                 $scope.filteredRows = data;
@@ -162,8 +199,12 @@
                     var findCountryFlag = false;
                     var findRoleFlag = false;
                     var findCreatedByFlag = false;
+                    var findAgeFlag = false;
+                    var findEthnicityFlag = false;
                     var findGenresFlag = false;
                     var findGenderFlag =false;
+                    var findBudgetFlag = false;
+                    var findBoxOfficeIncomeFlag = false;
                     var findFlag = false;
                     var selectedNames ="";
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
@@ -216,6 +257,149 @@
                             }
                         });                      
                     }
+
+                    if(item.age !==null){
+                        $('div#age_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            if(selectedNames ==="lessthan20"){
+                                if(parseInt(item['age']) < 20){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="20-30"){
+                                if(parseInt(item['age']) >= 20 && parseInt(item['age']) < 30){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="30-40"){
+                                if(parseInt(item['age']) >= 30 && parseInt(item['age']) < 40){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="40-50"){
+                                if(parseInt(item['age']) >= 40 && parseInt(item['age']) < 50){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="over50"){
+                                if(parseInt(item['age']) >= 50){
+                                    findAgeFlag = true;
+                                }
+                            }
+
+                        });
+                    }
+
+                    if(item.estimatedBudget !==null){
+                        $('div#budget_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            var budgets = item['estimatedBudget'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
+                                if(upperLimitDigit < 250){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
+                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(upperLimitDigit>= 100){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            
+                        });
+                    }
+
+                    if(item.boxOfficeIncome !==null){
+                        $('div#box_office_income_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            var budgets = item['boxOfficeIncome'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
+                                if(upperLimitDigit < 250){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
+                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(upperLimitDigit>= 100){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            
+                        });
+                    }
+
+                    if(item.ethnicity !==null){
+                        $('div#ethnicity_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['ethnicity'].toLowerCase())===selectedNames.toLowerCase()){
+                                findEthnicityFlag = true;
+                            }
+                        });
+                    }
+
                     if(!validNameInput){
                         findNameFlag = true;
                     }
@@ -234,7 +418,19 @@
                     if($("input#allCreatedBy").is(':checked')){
                         findCreatedByFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag){
+                    if($("input#allAges").is(':checked')){
+                        findAgeFlag = true;
+                    }
+                    if($("input#allEthnicity").is(':checked')){
+                        findEthnicityFlag = true;
+                    }
+                    if($("input#allBudget").is(':checked')){
+                        findBudgetFlag = true;
+                    }
+                    if($("input#allBoxRevenue").is(':checked')){
+                        findBoxOfficeIncomeFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag){
                         findFlag = true;
                     }
                     return findFlag;
@@ -245,14 +441,11 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
                     var phoneNumber = result[0].phone;
-                    console.log(phoneNumber);
                     if(phoneNumber !== null){
                     	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
                     }else{
                     	var formattedNo = '';
                     }
-                    // $scope.creditsData = "";
-                    // $scope.awards = "";
                     $scope.mainTalent.phone = formattedNo;
                     
                     $scope.mainTalent.facebookurl = 'http://www.'+result[0].facebookurl;
@@ -269,22 +462,21 @@
                         angular.forEach(dataObj, function(value, key) {
                     	  if(value){
                     		  var arr = value.trim().split(',');
-                        		//console.log(arr);
                     			angular.forEach(arr, function(value2, key2) {
                     				if(key2 === 0){
-                    					creditObj.title = value2;
+                    					creditObj.title = value2.trim();
                     				}
                     				if(key2 === 1){
-                    					creditObj.releasedate = value2;
+                    					creditObj.releasedate = value2.trim();
                     				}
                     				if(key2 === 2){
-                    					creditObj.roll = value2;
+                    					creditObj.roll = value2.trim();
                     				}
                     				if(key2 === 3){
-                    					creditObj.budget = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    					creditObj.budget = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     				}
                     				if(key2 === 4){
-                    					creditObj.boxoffice = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    					creditObj.boxoffice = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     				}
                     			});
                     			creditArray.push(creditObj);
@@ -293,15 +485,36 @@
                     	});
                         $scope.creditsData = creditArray;
                     }
+                    
                     $scope.awardsData = [];
+                    var awardObj = {};
+                    var awardsArray = [];
                     if(result[0].awardtypecredit!==null){
                         var awardsObj = result[0].awardtypecredit.split('|');
                         angular.forEach(awardsObj, function(value, key) {
                       	  if(value){
-                      		$scope.awardsData.push(value.trim().split(','));
+                      		var arr = value.trim().split(',');
+                			angular.forEach(arr, function(value2, key2) {
+                				if(key2 === 0){
+                					awardObj.name = value2.trim();
+                				}
+                				if(key2 === 1){
+                					awardObj.year = value2.trim();
+                				}
+                				if(key2 === 2){
+                					awardObj.type = value2.trim();
+                				}
+                				if(key2 === 3){
+                					awardObj.credit = value2.trim();
+                				}
+                			});
+                			awardsArray.push(awardObj);
+                			awardObj = {};
                       	  }
                       	});
+                        $scope.awardsData = awardsArray;
                     }
+                    
                     $scope.commentsData = [];
                     var commentObj = {};
                     var commentArray = [];
@@ -309,21 +522,19 @@
                         var commentsObj = result[0].commentsData.split('|');
                         angular.forEach(commentsObj, function(value, key) {
                       	  if(value){
-                      		//$scope.commentsData.push(value.trim().split(','));
                       		var arr = value.trim().split(',');
-                      		//console.log(arr);
                   			angular.forEach(arr, function(value2, key2) {
                   				if(key2 === 0){
-                  					commentObj.comment = value2;
+                  					commentObj.comment = value2.trim();
                   				}
                   				if(key2 === 1){
-                  					commentObj.date = value2;
+                  					commentObj.date = value2.trim();
                   				}
                   				if(key2 === 2){
-                  					commentObj.firstname = value2;
+                  					commentObj.firstname = value2.trim();
                   				}
                   				if(key2 === 3){
-                  					commentObj.lastname = value2;
+                  					commentObj.lastname = value2.trim();
                   				}
                   			});
                   			commentArray.push(commentObj);
@@ -335,24 +546,28 @@
                     
                     $scope.associateData = [];
                     var associateObj = {};
+                    var associateArray = [];
                     if(result[0].associateInfo!==null){
-                        var associateObj = result[0].associateInfo.split('|');
-                        angular.forEach(associateObj, function(value, key) {
+                        var associateDataObj = result[0].associateInfo.split('|');
+                        angular.forEach(associateDataObj, function(value, key) {
                       	  if(value){
                       		var vals = value.trim().split(',');
-                      		if(vals && vals.length>0){
-                      			var firstName = vals[1] || '';
-                      			var lastName = vals[2] || '';
-                      			var associateName = vals[0] || '';
-                      			var fullName = firstName +' '+ lastName;
-                      			associateObj = {
-                      					[associateName]:fullName
-                      			}
-                      			$scope.associateData.push(associateObj);
-                      		}
-                      		
+                      		angular.forEach(vals, function(value2, key2) {
+                      			if(key2 === 0){
+                      				associateObj.associatename = value2.trim();
+                  				}
+                      			if(key2 === 1){
+                      				associateObj.firstname = value2.trim();
+                  				}
+                      			if(key2 === 2){
+                      				associateObj.lastname = value2.trim();
+                  				}
+                  			});
+                      		associateArray.push(associateObj);
+                      		associateObj = {};
                       	  }
                       	});
+                        $scope.associateData = associateArray;
                     }
                     
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
@@ -516,8 +731,14 @@
             $scope.submitComment = function () {
                 // If text is in the textarea, submit the new comment
                 if ($('.comment-input').val() !== "") {
+                	$scope.commentMsg = '';
+                	$scope.comStatus = false;
                     commentFactory.addComment($('.comment-input').val(), $scope.mainTalent.id, function (result) {
-                        $scope.mainTalent.comments.push(result);
+                        if(result !== null){
+                        	$scope.comStatus = true;
+                        	$scope.commentMsg = 'Comments added successfully';
+                        }
+                    	//$scope.mainTalent.comments.push(result);
                         //Once comment is added, append it to the comments-container and clear the textarea
                         $('.comment-input').val('');
                     });

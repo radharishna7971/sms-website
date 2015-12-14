@@ -7,6 +7,7 @@ Talent.getAll = function(callback) {
     SELECT \
     t.id as id, \
     CONCAT(t.last_name, \', \', t.first_name) AS name, \
+    t.age as age, \
     t.gender as gender, \
     t.country as country , \
     t.createdby as createdby, \
@@ -21,7 +22,17 @@ Talent.getAll = function(callback) {
     inner join credits c on c.id = cjoin.credit_id \
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \
-    where cjoin.talent_id = t.id) as genres \
+    where cjoin.talent_id = t.id) as genres, \
+    (select GROUP_CONCAT(distinct c.estimatedBudget SEPARATOR \', \') as estimatedBudgetData from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as estimatedBudget, \
+    (select GROUP_CONCAT(distinct c.box_office_income SEPARATOR \', \') as boxOfficeIncomeData from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as boxOfficeIncome \
   FROM talent t')
   .then(function(results) {
      var data = results[0];
@@ -38,7 +49,7 @@ Talent.insertExcelData = function(data){
 
 Talent.getProfile= function(talentId, callback) {
   db.knex.raw(' \
-    SELECT t.first_name as firstName, t.last_name as lastName, \
+    SELECT t.id as id, t.first_name as firstName, t.last_name as lastName, \
     t.age as age, t.gender as gender, t.twitter_url as twitterurl, \
     t.facebook_url as facebookurl, t.youtube_url as youtubeurl, t.instagram_url as instagramurl, \
 	DATE_FORMAT(t.created_at,"%d %b %Y") as createdAt, DATE_FORMAT(t.last_edited,"%d %b %Y") as lastEdited, \
