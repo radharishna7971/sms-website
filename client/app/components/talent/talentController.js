@@ -325,14 +325,11 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = result[0];
                     var phoneNumber = result[0].phone;
-                    console.log(phoneNumber);
                     if(phoneNumber !== null){
                     	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
                     }else{
                     	var formattedNo = '';
                     }
-                    // $scope.creditsData = "";
-                    // $scope.awards = "";
                     $scope.mainTalent.phone = formattedNo;
                     
                     $scope.mainTalent.facebookurl = 'http://www.'+result[0].facebookurl;
@@ -349,22 +346,21 @@
                         angular.forEach(dataObj, function(value, key) {
                     	  if(value){
                     		  var arr = value.trim().split(',');
-                        		//console.log(arr);
                     			angular.forEach(arr, function(value2, key2) {
                     				if(key2 === 0){
-                    					creditObj.title = value2;
+                    					creditObj.title = value2.trim();
                     				}
                     				if(key2 === 1){
-                    					creditObj.releasedate = value2;
+                    					creditObj.releasedate = value2.trim();
                     				}
                     				if(key2 === 2){
-                    					creditObj.roll = value2;
+                    					creditObj.roll = value2.trim();
                     				}
                     				if(key2 === 3){
-                    					creditObj.budget = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    					creditObj.budget = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     				}
                     				if(key2 === 4){
-                    					creditObj.boxoffice = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    					creditObj.boxoffice = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     				}
                     			});
                     			creditArray.push(creditObj);
@@ -373,15 +369,36 @@
                     	});
                         $scope.creditsData = creditArray;
                     }
+                    
                     $scope.awardsData = [];
+                    var awardObj = {};
+                    var awardsArray = [];
                     if(result[0].awardtypecredit!==null){
                         var awardsObj = result[0].awardtypecredit.split('|');
                         angular.forEach(awardsObj, function(value, key) {
                       	  if(value){
-                      		$scope.awardsData.push(value.trim().split(','));
+                      		var arr = value.trim().split(',');
+                			angular.forEach(arr, function(value2, key2) {
+                				if(key2 === 0){
+                					awardObj.name = value2.trim();
+                				}
+                				if(key2 === 1){
+                					awardObj.year = value2.trim();
+                				}
+                				if(key2 === 2){
+                					awardObj.type = value2.trim();
+                				}
+                				if(key2 === 3){
+                					awardObj.credit = value2.trim();
+                				}
+                			});
+                			awardsArray.push(awardObj);
+                			awardObj = {};
                       	  }
                       	});
+                        $scope.awardsData = awardsArray;
                     }
+                    
                     $scope.commentsData = [];
                     var commentObj = {};
                     var commentArray = [];
@@ -389,21 +406,19 @@
                         var commentsObj = result[0].commentsData.split('|');
                         angular.forEach(commentsObj, function(value, key) {
                       	  if(value){
-                      		//$scope.commentsData.push(value.trim().split(','));
                       		var arr = value.trim().split(',');
-                      		//console.log(arr);
                   			angular.forEach(arr, function(value2, key2) {
                   				if(key2 === 0){
-                  					commentObj.comment = value2;
+                  					commentObj.comment = value2.trim();
                   				}
                   				if(key2 === 1){
-                  					commentObj.date = value2;
+                  					commentObj.date = value2.trim();
                   				}
                   				if(key2 === 2){
-                  					commentObj.firstname = value2;
+                  					commentObj.firstname = value2.trim();
                   				}
                   				if(key2 === 3){
-                  					commentObj.lastname = value2;
+                  					commentObj.lastname = value2.trim();
                   				}
                   			});
                   			commentArray.push(commentObj);
@@ -415,22 +430,28 @@
                     
                     $scope.associateData = [];
                     var associateObj = {};
+                    var associateArray = [];
                     if(result[0].associateInfo!==null){
-                        var associateObj = result[0].associateInfo.split('|');
-                        angular.forEach(associateObj, function(value, key) {
+                        var associateDataObj = result[0].associateInfo.split('|');
+                        angular.forEach(associateDataObj, function(value, key) {
                       	  if(value){
                       		var vals = value.trim().split(',');
-                      		if(vals && vals.length>0){
-                      			var firstName = vals[1] || '';
-                      			var lastName = vals[2] || '';
-                      			var associateName = vals[0] || '';
-                      			var fullName = firstName +' '+ lastName;
-                      			associateObj[associateName] = fullName;
-                      			$scope.associateData.push(associateObj);
-                      		}
-                      		
+                      		angular.forEach(vals, function(value2, key2) {
+                      			if(key2 === 0){
+                      				associateObj.associatename = value2.trim();
+                  				}
+                      			if(key2 === 1){
+                      				associateObj.firstname = value2.trim();
+                  				}
+                      			if(key2 === 2){
+                      				associateObj.lastname = value2.trim();
+                  				}
+                  			});
+                      		associateArray.push(associateObj);
+                      		associateObj = {};
                       	  }
                       	});
+                        $scope.associateData = associateArray;
                     }
                     
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
@@ -594,8 +615,14 @@
             $scope.submitComment = function () {
                 // If text is in the textarea, submit the new comment
                 if ($('.comment-input').val() !== "") {
+                	$scope.commentMsg = '';
+                	$scope.comStatus = false;
                     commentFactory.addComment($('.comment-input').val(), $scope.mainTalent.id, function (result) {
-                        $scope.mainTalent.comments.push(result);
+                        if(result !== null){
+                        	$scope.comStatus = true;
+                        	$scope.commentMsg = 'Comments added successfully';
+                        }
+                    	//$scope.mainTalent.comments.push(result);
                         //Once comment is added, append it to the comments-container and clear the textarea
                         $('.comment-input').val('');
                     });

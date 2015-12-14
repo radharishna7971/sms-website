@@ -152,8 +152,8 @@
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
     </br>
-    <p ng-repeat="item in associateData">     
-      <span class="tableLable" ng-repeat-start="(key, value) in item">{{key}}</span>: <span ng-repeat-end>{{value}}</span>
+    <p ng-repeat="associate in associateData">     
+      <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
     </p>
     <p><span class="tableLable">Email</span>: <span>{{mainTalent.email}}</span></p>
     <p><span class="tableLable">Phone</span>: <span>{{mainTalent.phone}}</span></p>
@@ -202,9 +202,10 @@
     <div id="table-scroll">
     <table  style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
       <tr ng-repeat="awards in awardsData">
-        <td class="awardTableBody" ng-repeat="award in awards">
-          {{award}}
-        </td> 
+        <td class="awardTableBody">{{awards.name}}</td>
+        <td class="awardTableBody">{{awards.year}}</td>
+        <td class="awardTableBody">{{awards.type}}</td>
+        <td class="awardTableBody">{{awards.credit}}</td>
       </tr>
     </table>
   </div>
@@ -216,13 +217,19 @@
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
     </br>  
 
-  <div class="talent-data-comment">
+  	<div class="talent-data-comment">
         <div class="talent-data-comment-headers">Comments</div>
+        <div ng-show='comStatus'>{{commentMsg}}</div>
+        <div class="comment-box" style="margin-left:50%">
+	        <textarea class="comment-input" style="height:70px;" type="textarea" placeholder="Enter comment here"></textarea>
+	        <input ng-click="submitComment()" style="width:5%" class="comment-submit" type="submit" />
+	        <p>&nbsp;</p>
+      	</div>
         <div class="comment-div" ng-repeat="comment in commentsData">
           <p ><span class="comment-name">{{comment.firstname}} {{comment.lastname}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
           <p class="comment-text">{{comment.comment}}</p>
         </div>
-      </div>
+    </div>
   
 
     </div>
