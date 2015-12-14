@@ -83,7 +83,7 @@ Talent.getProfile= function(talentId, callback) {
   inner join credits c on c.id = cjoin.credit_id \
   inner join roles r on r.id = cjoin.role_id \
   where cjoin.talent_id ='+ talentId+' order by c.release_date asc) as creditsreleaserole, \
-(select GROUP_CONCAT(a.awardname, \',\',DATE_FORMAT(c.release_date,"%Y"),\',\',a.awardtype, \',\' ,c.name SEPARATOR \'| \') \
+(select GROUP_CONCAT(a.awardname, \',\',DATE_FORMAT(c.release_date,"%Y"),\',\',a.awardtype, \',\' ,c.name, \'\,\' ,a.awardfor SEPARATOR \'| \') \
   as awardscredittalent from talent_award_credit_join tajoin \
   inner join awards a on a.id = tajoin.award_id \
   inner join credits c on c.id = tajoin.credit_id \

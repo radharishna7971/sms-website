@@ -507,6 +507,9 @@
                 				if(key2 === 3){
                 					awardObj.credit = value2.trim();
                 				}
+                				if(key2 === 4){
+                					awardObj.awardfor = value2.trim();
+                				}
                 			});
                 			awardsArray.push(awardObj);
                 			awardObj = {};
@@ -732,11 +735,13 @@
                 // If text is in the textarea, submit the new comment
                 if ($('.comment-input').val() !== "") {
                 	$scope.commentMsg = '';
+					$scope.sweetAlert;
                 	$scope.comStatus = false;
                     commentFactory.addComment($('.comment-input').val(), $scope.mainTalent.id, function (result) {
                         if(result !== null){
                         	$scope.comStatus = true;
                         	$scope.commentMsg = 'Comments added successfully';
+							sweetAlert($scope.commentMsg);
                         }
                     	//$scope.mainTalent.comments.push(result);
                         //Once comment is added, append it to the comments-container and clear the textarea

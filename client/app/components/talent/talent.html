@@ -129,9 +129,9 @@
       </div>
       <div id="income_list" class="filter-option-container">
         <select>
-          <option  value="MaxGreaterThan">Max Greater Than</option>
-          <option  value="MaxGreaterThan">Min Greater Than</option>
-          <option  value="AvgGreaterThan">Avg Greater Than</option>
+          <option  value="MaxGreaterOrEqual">Max >=</option>
+          <option  value="MaxGreaterOrEqual">Min >=</option>
+          <option  value="AvgGreaterOrEqual">Avg >=</option>
         </select>
         <input ng-model="incomeMultipleInput" type="text" />
       </div>
@@ -172,17 +172,17 @@
     </br>
     <div class="credit_scroll">
     <table class="credit_table" style="width:1090px;margin-bottom:5px;">
-      <tr><td class="creditTableHeads">Title</td><td class="creditTableHeads">Release Date</td><td class="creditTableHeads">Role</td><td class="creditTableHeads">Budget</td><td class="creditTableHeads">Box Office</td></tr>
+      <tr><td class="creditTableHead">Title</td><td class="creditTableHead1">Release Date</td><td class="creditTableHeads">Role</td><td class="creditTableHeads">Budget</td><td class="creditTableHeads">Box Office</td></tr>
     </table>
     <div id="table-wrapper">
     <div id="table-scroll">
     <table style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
-      <tr ng-repeat="credits in creditsData">
+      <tr ng-repeat="credits in creditsData | orderBy:'-releasedate'">
         <td class="creditTableBody">{{credits.title}}</td>
-        <td class="creditTableBody">{{credits.releasedate}}</td>
-        <td class="creditTableBody">{{credits.roll}}</td>
-        <td class="creditTableBody">{{credits.budget}}</td>
-        <td class="creditTableBody">{{credits.boxoffice}}</td>
+        <td class="creditTableBody1">{{credits.releasedate}}</td>
+        <td class="creditTableBody2">{{credits.roll}}</td>
+        <td class="creditTableBody3">{{credits.budget}}</td>
+        <td class="creditTableBody4">{{credits.boxoffice}}</td>
       </tr>
     </table>
   </div>
@@ -195,17 +195,18 @@
     </div>
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>
-    <table  style="width:1090px;margin-bottom:5px;margin-left: 30px;">
-      <tr style="text-align:center";><th class="creditTableHeads" style="width:180px;">Name</th><th class="creditTableHeads" style="width:180px;">Year</th><th class="creditTableHeads" style="width:180px;">Type</th><th class="creditTableHeads" style="width:180px;">Credit</th></tr>
+    <table class="awardTableHead" style="width:1090px;margin-bottom:5px;margin-left: 30px;">
+      <tr><td class="awardTableHead">Name</td><td class="awardTableHead1">Year</td><td class="awardsTableHeads">Type</td><td class="awardsTableHeads">Credit</td><td class="awardsTableHeads">Award For</td></tr>
     </table>
       <div id="table-wrapper">
     <div id="table-scroll">
     <table  style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
-      <tr ng-repeat="awards in awardsData">
-        <td class="awardTableBody">{{awards.name}}</td>
-        <td class="awardTableBody">{{awards.year}}</td>
-        <td class="awardTableBody">{{awards.type}}</td>
-        <td class="awardTableBody">{{awards.credit}}</td>
+      <tr ng-repeat="awards in awardsData | orderBy:'-year'">
+        <td class="awardTableBody1">{{awards.name}}</td>
+        <td class="awardTableBody2">{{awards.year}}</td>
+        <td class="awardTableBody3">{{awards.type}}</td>
+        <td class="awardTableBody4">{{awards.credit}}</td>
+        <td class="awardTableBody5">{{awards.awardfor}}</td>
       </tr>
     </table>
   </div>
@@ -217,19 +218,25 @@
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
     </br>  
 
-  	<div class="talent-data-comment">
+  	  <div class="talent-data-comment">
         <div class="talent-data-comment-headers">Comments</div>
-        <div ng-show='comStatus'>{{commentMsg}}</div>
-        <div class="comment-box" style="margin-left:50%">
-	        <textarea class="comment-input" style="height:70px;" type="textarea" placeholder="Enter comment here"></textarea>
-	        <input ng-click="submitComment()" style="width:5%" class="comment-submit" type="submit" />
-	        <p>&nbsp;</p>
-      	</div>
-        <div class="comment-div" ng-repeat="comment in commentsData">
+
+
+
+
+
+
+        <div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
           <p ><span class="comment-name">{{comment.firstname}} {{comment.lastname}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
           <p class="comment-text">{{comment.comment}}</p>
         </div>
     </div>
+  
+       <!--  <div ng-show='comStatus'>{{commentMsg}}</div> -->
+        <div class="comment-box" style="margin-left: 54%;margin-bottom: 73px;">
+          <textarea class="comment-input" style="height:90px;" type="textarea" placeholder="Enter comment here"></textarea>
+          <button type="submit" class="btn comment-submit" ng-click="submitComment()">Submit</button>
+          </div>
   
 
     </div>
