@@ -39,9 +39,10 @@
             };
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
+
             function numberFormatter(num) {
                 if (num >= 1000000000) {
-                    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+                    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
                 }
                 if (num >= 1000000) {
                     return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -51,6 +52,12 @@
                 }
                 return num;
             }
+
+            function getNumber(inputStr){
+                var numberValue = Number(inputStr .replace(/[^0-9\.]+/g,""));
+                return parseInt(numberValue);
+            }
+
             talentFactory.getAll(function (data) {
                 angular.forEach(data,function(items){
                     if(items.estimatedBudget !==null && items.estimatedBudget){
@@ -196,6 +203,8 @@
                     var findEthnicityFlag = false;
                     var findGenresFlag = false;
                     var findGenderFlag =false;
+                    var findBudgetFlag = false;
+                    var findBoxOfficeIncomeFlag = false;
                     var findFlag = false;
                     var selectedNames ="";
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
@@ -281,6 +290,107 @@
 
                         });
                     }
+
+                    if(item.estimatedBudget !==null){
+                        $('div#budget_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            var budgets = item['estimatedBudget'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
+                                if(upperLimitDigit < 250){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
+                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(upperLimitDigit>= 100){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            
+                        });
+                    }
+
+                    if(item.boxOfficeIncome !==null){
+                        $('div#box_office_income_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            var budgets = item['boxOfficeIncome'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
+                                if(upperLimitDigit < 250){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
+                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(upperLimitDigit>= 100){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            
+                        });
+                    }
+
                     if(item.ethnicity !==null){
                         $('div#ethnicity_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
@@ -314,7 +424,13 @@
                     if($("input#allEthnicity").is(':checked')){
                         findEthnicityFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag){
+                    if($("input#allBudget").is(':checked')){
+                        findBudgetFlag = true;
+                    }
+                    if($("input#allBoxRevenue").is(':checked')){
+                        findBoxOfficeIncomeFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag){
                         findFlag = true;
                     }
                     return findFlag;
