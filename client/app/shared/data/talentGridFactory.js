@@ -26,6 +26,7 @@
                     { field: 'genres', displayName: 'Genres'},
                     { field: 'estimatedBudget', displayName: 'Estimated Budget'},
                     { field: 'boxOfficeIncome', displayName: 'Box Office Income'},
+                    { field: 'boxbudgetratio', displayName: 'Income Multiple'},
                     { field: 'country', displayName: 'Country'},
                     { field: 'createdby', displayName: 'Created By'}
                 ],

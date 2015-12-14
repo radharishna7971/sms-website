@@ -76,6 +76,7 @@
                         minIncome = numberFormatter(parseInt(minIncome));
                         items.boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
                     }
+
                 });
                 $scope.talentGridOption.data = data;
                 $scope.gridData = data;
