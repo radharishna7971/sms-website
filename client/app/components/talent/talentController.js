@@ -391,6 +391,9 @@
                 				if(key2 === 3){
                 					awardObj.credit = value2.trim();
                 				}
+                				if(key2 === 4){
+                					awardObj.awardfor = value2.trim();
+                				}
                 			});
                 			awardsArray.push(awardObj);
                 			awardObj = {};

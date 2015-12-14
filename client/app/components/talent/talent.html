@@ -177,7 +177,7 @@
     <div id="table-wrapper">
     <div id="table-scroll">
     <table style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
-      <tr ng-repeat="credits in creditsData">
+      <tr ng-repeat="credits in creditsData | orderBy:'-releasedate'">
         <td class="creditTableBody">{{credits.title}}</td>
         <td class="creditTableBody">{{credits.releasedate}}</td>
         <td class="creditTableBody">{{credits.roll}}</td>
@@ -196,16 +196,17 @@
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>
     <table  style="width:1090px;margin-bottom:5px;margin-left: 30px;">
-      <tr style="text-align:center";><th class="creditTableHeads" style="width:180px;">Name</th><th class="creditTableHeads" style="width:180px;">Year</th><th class="creditTableHeads" style="width:180px;">Type</th><th class="creditTableHeads" style="width:180px;">Credit</th></tr>
+      <tr style="text-align:center";><th class="creditTableHeads" style="width:180px;">Name</th><th class="creditTableHeads" style="width:180px;">Year</th><th class="creditTableHeads" style="width:180px;">Type</th><th class="creditTableHeads" style="width:180px;">Credit</th><th class="creditTableHeads" style="width:180px;">Award For</th></tr>
     </table>
       <div id="table-wrapper">
     <div id="table-scroll">
     <table  style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
-      <tr ng-repeat="awards in awardsData">
+      <tr ng-repeat="awards in awardsData | orderBy:'-year'">
         <td class="awardTableBody">{{awards.name}}</td>
         <td class="awardTableBody">{{awards.year}}</td>
         <td class="awardTableBody">{{awards.type}}</td>
         <td class="awardTableBody">{{awards.credit}}</td>
+        <td class="awardTableBody">{{awards.awardfor}}</td>
       </tr>
     </table>
   </div>
@@ -225,7 +226,7 @@
 	        <input ng-click="submitComment()" style="width:5%" class="comment-submit" type="submit" />
 	        <p>&nbsp;</p>
       	</div>
-        <div class="comment-div" ng-repeat="comment in commentsData">
+        <div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
           <p ><span class="comment-name">{{comment.firstname}} {{comment.lastname}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
           <p class="comment-text">{{comment.comment}}</p>
         </div>
