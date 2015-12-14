@@ -207,14 +207,48 @@
                     var findBudgetFlag = false;
                     var findBoxOfficeIncomeFlag = false;
                     var findFlag = false;
+                    var findRatioFlag = false;
                     var selectedNames ="";
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
-        
+                    var isValidOptionRatio = ($scope.budgetMultipleOption!==null) && !(angular.isUndefined($scope.budgetMultipleOption)) && ($scope.budgetMultipleOption !=="");
+                    var isValidRatio = ($scope.incomeMultipleInput!==null) && !(angular.isUndefined($scope.incomeMultipleInput)) && !isNaN($scope.incomeMultipleInput) && ($scope.incomeMultipleInput !=="");
                     if(validNameInput){
                         selectedNames = $scope.filerByname;
                         if(item.name !==null){
                             if(item['name'].toLowerCase().search(selectedNames)!==-1){
                                 findNameFlag = true;
+                            }
+                        }
+                    }
+                    if(isValidRatio && isValidOptionRatio){
+                        selectedNames = $scope.filerByname;
+                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(2);
+                        var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
+                        var boxbudgetratio = "";
+                        if(item.boxbudgetratio !==null){
+                            if(seletedRatio==="maxgreaterorequal"){
+                                boxbudgetratio = item['boxbudgetratio'].split(',');
+                                var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
+                                if(inputRatio >=maxRatio){
+                                    findRatioFlag = true;
+                                }
+
+                            }else if(seletedRatio==="mingreaterorequal"){
+                                boxbudgetratio = item['boxbudgetratio'].split(',');
+                                var minRatio = parseFloat(Math.min.apply(Math, boxbudgetratio)).toFixed(2);;
+                                if(inputRatio >=minRatio){
+                                    findRatioFlag = true;
+                                }
+
+                            }else{
+                                boxbudgetratio = item['boxbudgetratio'].split(',');
+                                var totalAvg=0;
+                                for(var i in boxbudgetratio) { totalAvg += boxbudgetratio[i]; }
+                                totalAvg = parseFloat(totalAvg/(boxbudgetratio.length-1)).toFixed(2);
+                                if(inputRatio >=totalAvg){
+                                    findRatioFlag = true;
+                                }
+
                             }
                         }
                     }
@@ -404,6 +438,9 @@
                     if(!validNameInput){
                         findNameFlag = true;
                     }
+                    if(!isValidRatio || !isValidOptionRatio){
+                        findRatioFlag = true;
+                    }
                     if($("input#allRole").is(':checked')){
                         findRoleFlag = true;
                     }
@@ -431,7 +468,7 @@
                     if($("input#allBoxRevenue").is(':checked')){
                         findBoxOfficeIncomeFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag){
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag && findRatioFlag){
                         findFlag = true;
                     }
                     return findFlag;
