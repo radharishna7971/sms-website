@@ -497,7 +497,7 @@
       // If text is in the textarea, submit the new comment
       if ($('.data-entry-comment-input').val() !== "") {
         commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function(result) {
-          $scope.activeElement.comments.push(result);
+          $scope.activeElement.comments.unshift(result);
           //Once comment is added, append it to the comments-container and clear the textarea
           $('.data-entry-comment-input').val('');
         });

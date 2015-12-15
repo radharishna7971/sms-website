@@ -538,6 +538,11 @@
  
 }
 
+#talentInfo{
+  font-size: 16px;
+  font-family: 'Lato';
+}
+
 
 .talent-table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
     background-color: #F3F3F3;

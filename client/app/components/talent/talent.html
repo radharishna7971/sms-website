@@ -104,6 +104,17 @@
       </div>
 
       <div class="filter-header-container clickable">
+        <p class="filter-header"> Awards </p>
+        <div class="arrow arrow-right arrow-down"></div>
+      </div>
+      <div id="awards_list" class="filter-option-container">
+        <input class="filter-option all-option" id="allAwards" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <div ng-repeat="item in data.awardsNameList | orderBy : 'awardname'">
+          <input class="filter-option awards-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.awardname}}" unchecked>{{item.awardname}}
+        </div>
+      </div>
+
+      <div class="filter-header-container clickable">
         <p class="filter-header">Budget</p>
         <div class="arrow arrow-right arrow-down"></div>
       </div>

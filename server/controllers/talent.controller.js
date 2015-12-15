@@ -28,6 +28,12 @@ exports.getAllCreatedByname = function(req, res) {
   });
 };
 
+exports.allAwards = function(req, res) {
+  Talent.allAwards(function(result) {
+    res.json(result);
+  });
+};
+
 exports.getAllCountryNames = function(req, res) {
   Talent.getAllCountryNames(function(result) {
     res.json(result);
