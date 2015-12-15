@@ -240,14 +240,14 @@
                             if(seletedRatio==="maxgreaterorequal"){
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
                                 var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
-                                if(inputRatio >=maxRatio){
+                                if(maxRatio >=inputRatio){
                                     findRatioFlag = true;
                                 }
 
                             }else if(seletedRatio==="mingreaterorequal"){
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
                                 var minRatio = parseFloat(Math.min.apply(Math, boxbudgetratio)).toFixed(2);;
-                                if(inputRatio >=minRatio){
+                                if(minRatio >=inputRatio){
                                     findRatioFlag = true;
                                 }
 
@@ -256,7 +256,7 @@
                                 var totalAvg=0;
                                 for(var i in boxbudgetratio) { totalAvg += boxbudgetratio[i]; }
                                 totalAvg = parseFloat(totalAvg/(boxbudgetratio.length-1)).toFixed(2);
-                                if(inputRatio >=totalAvg){
+                                if(totalAvg >=inputRatio){
                                     findRatioFlag = true;
                                 }
 
