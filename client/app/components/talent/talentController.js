@@ -290,7 +290,7 @@
                     if(item.awards !==null){
                         $('div#awards_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
-                            if((item['awards'].toLowerCase())===selectedNames.toLowerCase()){
+                            if((item['awards'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !==-1){
                                     findAwardsFlag = true;
                             }
                         });                      
