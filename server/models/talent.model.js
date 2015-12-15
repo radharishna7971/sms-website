@@ -174,6 +174,7 @@ Talent.get = function(id, callback) {
       city, \
       State, \
       country, \
+      createdby, \
       ethnicity_id, \
       facebook_url, \
       vine_url, \
