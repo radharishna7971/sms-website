@@ -83,12 +83,12 @@ Talent.getProfile= function(talentId, callback) {
 	from comments c \
 	inner join users u on c.user_id=u.id \
 	where c.talent_id ='+ talentId+') as commentsData, \
-(select GROUP_CONCAT(distinct \' \',c.name,\', \',DATE_FORMAT(c.release_date,"%d %b %Y"),\',\',r.name,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
+(select GROUP_CONCAT(distinct \' \',c.name,\', \', \' \' ,\',\',r.name,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
   as genresdata from credit_talent_role_join cjoin \
   inner join credits c on c.id = cjoin.credit_id \
   inner join roles r on r.id = cjoin.role_id \
-  where cjoin.talent_id ='+ talentId+' order by c.release_date asc) as creditsreleaserole, \
-(select GROUP_CONCAT(a.awardname, \',\',DATE_FORMAT(c.release_date,"%Y"),\',\',a.awardtype, \',\' ,c.name, \'\,\' ,a.awardfor SEPARATOR \'| \') \
+  where cjoin.talent_id ='+ talentId+') as creditsreleaserole, \
+(select GROUP_CONCAT(a.awardname, \',\', \' \' ,\',\',a.awardtype, \',\' ,c.name, \'\,\' , \' \' SEPARATOR \'| \') \
   as awardscredittalent from talent_award_credit_join tajoin \
   inner join awards a on a.id = tajoin.award_id \
   inner join credits c on c.id = tajoin.credit_id \
