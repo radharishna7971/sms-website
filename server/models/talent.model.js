@@ -79,7 +79,7 @@ Talent.getProfile= function(talentId, callback) {
     		  inner join associate_types at ON atj.associte_types_id=`at`.id \
     		  inner join associate a ON a.id=atj.associate_id \
     		  where atj.talent_id ='+ talentId+') as associateInfo, \
-	(select GROUP_CONCAT(c.text, \',\',DATE_FORMAT(c.created_at,"%l %p %d %b %Y"), \',\' ,u.first_name, \'\,\' ,u.last_name SEPARATOR \'| \') as commentdata \
+	(select GROUP_CONCAT(c.text, \',\',c.created_at, \',\' ,u.first_name, \'\,\' ,u.last_name SEPARATOR \'| \') as commentdata \
 	from comments c \
 	inner join users u on c.user_id=u.id \
 	where c.talent_id ='+ talentId+') as commentsData, \
@@ -96,9 +96,26 @@ Talent.getProfile= function(talentId, callback) {
   where tajoin.talent_id = '+ talentId+') AS awardtypecredit \
 FROM talent t where t.id= ' + talentId)
   .then(function(results) {
-     var data = results[0];
-     callback(data);
+	  var ob = {};
+	  ob.details = results[0];
+	  db.knex.raw(' \
+		       SELECT \
+		         comments.text AS text, \
+		         CONCAT(users.first_name, \' \', users.last_name) AS name, \
+		         comments.created_at AS date, \
+		         comments.id AS comment_id, \
+		         talent.id AS talent_id \
+		       FROM comments, talent, users \
+		       WHERE comments.talent_id = talent.id \
+		       AND comments.deleted = false \
+		       AND comments.user_id = users.id \
+		       AND talent.id = ' + talentId)
+		     .then(function(results1) {
+		    	 ob.comments = results1[0];
+		    	 callback(ob);
+		     });
   });
+  
 };
 
 // Return list of all talent names
