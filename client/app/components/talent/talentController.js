@@ -136,6 +136,9 @@
                     if($($event.target).hasClass( "country-list-class" )){
                         $("input#allCountries").prop("checked",false);
                     }
+                    if($($event.target).hasClass( "awards-list-class" )){
+                        $("input#allAwards").prop("checked",false);
+                    }
 
                     if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
@@ -162,6 +165,13 @@
                                  $(this).prop("checked",false);
                             });
                             $("input#allAges").prop("checked",true);
+                    }
+                    if($event.target.id==="allAwards" && $event.target.checked){
+
+                            $('div#awards_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allAwards").prop("checked",true);
                     }
                     if($event.target.id==="allCountries" && $event.target.checked){
 
@@ -206,6 +216,7 @@
                     var findGenderFlag =false;
                     var findBudgetFlag = false;
                     var findBoxOfficeIncomeFlag = false;
+                    var findAwardsFlag = false;
                     var findFlag = false;
                     var findRatioFlag = false;
                     var selectedNames ="";
@@ -273,6 +284,14 @@
                             selectedNames = $(this).val().trim();
                             if((item['gender'].toLowerCase())===selectedNames.toLowerCase()){
                                     findGenderFlag = true;
+                            }
+                        });                      
+                    }
+                    if(item.awards !==null){
+                        $('div#awards_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['awards'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findAwardsFlag = true;
                             }
                         });                      
                     }
@@ -447,6 +466,9 @@
                     if($("input#allCountries").is(':checked')){
                         findCountryFlag = true;
                     }
+                    if($("input#allAwards").is(':checked')){
+                        findAwardsFlag = true;
+                    }
                     if($("input#allGenres").is(':checked')){
                         findGenresFlag = true;
                     }
@@ -468,7 +490,7 @@
                     if($("input#allBoxRevenue").is(':checked')){
                         findBoxOfficeIncomeFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag && findRatioFlag){
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag && findRatioFlag && findAwardsFlag){
                         findFlag = true;
                     }
                     return findFlag;
@@ -665,6 +687,9 @@
                 }),
                 TalentCreatedBy: talentFactory.getAllCreatedBy(function (result) {
                     $scope.data.createdByNames = result;
+                }),
+                TalentAwards: talentFactory.getAwardsNames(function (result) {
+                    $scope.data.awardsNameList = result;
                 }),
                 TalentCountryNames: talentFactory.getCountryNames(function (result) {
                     $scope.data.countryNames = result;
