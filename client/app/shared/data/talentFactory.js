@@ -27,6 +27,14 @@
             callback(res.data);
         });
       },
+      getAwardsNames: function(callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/talent/allAwards'
+        }).then(function(res) {
+            callback(res.data);
+        });
+      },
       getNames: function(nameChars,callback) {
         return $http({
           method: 'GET',

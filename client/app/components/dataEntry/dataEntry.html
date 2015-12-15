@@ -233,8 +233,8 @@
 	<!-- Info	-->
 	
 	<div ng-show="talentSection==='info'">
-      <p class="input-label">Creator Name: </p><p>{{}}</p>
-      <p class="input-label">Created Date: </p><p>{{activeElement.created_at | date }}</p>
+      <p class="input-label" id="talentInfo">Creator Name: <span>{{activeElement.createdby}}</span></p>
+      <!-- <p class="input-label">Created Date: </p><p>{{activeElement.created_at | date }}</p> -->
     </div>
 
   </div>

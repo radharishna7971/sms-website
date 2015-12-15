@@ -128,6 +128,17 @@ Talent.getAllCreatedByname = function(callback) {
   });
 };
 
+// Return list of all awards names
+Talent.allAwards = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(awardname) as awardname \
+      FROM awards \
+    WHERE awardname is not null order by awardname')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
+
 // Return list of all country names
 Talent.getAllCountryNames = function(callback) {
   db.knex.raw(' \
@@ -163,6 +174,7 @@ Talent.get = function(id, callback) {
       city, \
       State, \
       country, \
+      createdby, \
       ethnicity_id, \
       facebook_url, \
       vine_url, \
