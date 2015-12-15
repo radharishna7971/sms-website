@@ -11,7 +11,7 @@
     $scope.filterData = 'last_name';
     //$scope.talentNameInput = {};
     $scope.model ={};
-
+    //alert(window.localStorage.smstudiosLoginUserName);
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
       // Remove active element
@@ -275,6 +275,9 @@
 
           if (!$scope.activeElement.created_by) {
             $scope.activeElement.created_by = window.localStorage.smstudiosId;
+          }
+          if (!$scope.activeElement.createdby) {
+            $scope.activeElement.createdby = window.localStorage.smstudiosLoginUserName;
           }
 
           // Add id to keep track of who created given talent
