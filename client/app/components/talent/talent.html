@@ -156,17 +156,17 @@
     <p ng-repeat="associate in associateData">     
       <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
     </p>
-    <p><span class="tableLable">Email</span>: <span>{{mainTalent.email}}</span></p>
-    <p><span class="tableLable">Phone</span>: <span>{{mainTalent.phone}}</span></p>
+    <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
+    <p><span class="tableLable">Phone</span>: <span>{{phone}}</span></p>
     </div>
     
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
     </br>
-    <p><span class="tableLable">Facebook Url</span>: <span><a href="{{mainTalent.facebookurl}}">{{mainTalent.facebookurl}}</a></span></p>
-    <p><span class="tableLable">Twitter Url</span>: <span><a href="{{mainTalent.twitterurl}}">{{mainTalent.twitterurl}}</a></span></p>
-    <p><span class="tableLable">Instagram Url</span>: <span><a href="{{mainTalent.instagramurl}}">{{mainTalent.instagramurl}}</a></span></p>
-    <p><span class="tableLable">Vine Url</span>: <span><a href="{{mainTalent.vineurl}}">{{mainTalent.vineurl}}</a></span></p>
-    <p><span class="tableLable">YouTube Url</span>: <span><a href="{{mainTalent.youtubeurl}}">{{mainTalent.youtubeurl}}</a></span></p>
+    <p><span class="tableLable">Facebook Url</span>: <span><a href="{{mainTalent.facebookurl}}">{{facebookurl}}</a></span></p>
+    <p><span class="tableLable">Twitter Url</span>: <span><a href="{{mainTalent.twitterurl}}">{{twitterurl}}</a></span></p>
+    <p><span class="tableLable">Instagram Url</span>: <span><a href="{{mainTalent.instagramurl}}">{{instagramurl}}</a></span></p>
+    <p><span class="tableLable">Vine Url</span>: <span><a href="{{mainTalent.vineurl}}">{{vineurl}}</a></span></p>
+    <p><span class="tableLable">YouTube Url</span>: <span><a href="{{mainTalent.youtubeurl}}">{{youtubeurl}}</a></span></p>
     </div>
     
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
@@ -197,17 +197,17 @@
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>
     <table class="awardTableHead" style="width:1090px;margin-bottom:5px;margin-left: 30px;">
-      <tr><td class="awardTableHead">Name</td><td class="awardTableHead1">Year</td><td class="awardsTableHeads">Type</td><td class="awardsTableHeads">Credit</td><td class="awardsTableHeads">Award For</td></tr>
+      <tr><td class="awardTableHead">Year</td><td class="awardTableHead1">Award</td><td class="awardTableHead2">Category</td><td class="awardTableHead3">Result</td><td class="awardTableHead4">Credit</td></tr>
     </table>
       <div id="table-wrapper">
     <div id="table-scroll">
-    <table  style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
+    <table  style="width: 1045px;margin-left: 28px;height: 60px;" class="talent-table-striped">
       <tr ng-repeat="awards in awardsData | orderBy:'-year'">
-        <td class="awardTableBody1">{{awards.name}}</td>
-        <td class="awardTableBody2">{{awards.year}}</td>
-        <td class="awardTableBody3">{{awards.type}}</td>
-        <td class="awardTableBody4">{{awards.credit}}</td>
-        <td class="awardTableBody5">{{awards.awardfor}}</td>
+        <td class="awardTableBody1">{{awards.year}}</td>
+        <td class="awardTableBody2">{{awards.name}}</td>
+        <td class="awardTableBody3">{{awards.awardfor}}</td>
+        <td class="awardTableBody4">{{awards.type}}</td>
+        <td class="awardTableBody5">{{awards.credit}}</td>
       </tr>
     </table>
   </div>
@@ -222,14 +222,9 @@
   	  <div class="talent-data-comment">
         <div class="talent-data-comment-headers">Comments</div>
 
-
-
-
-
-
-        <div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
-          <p ><span class="comment-name">{{comment.firstname}} {{comment.lastname}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
-          <p class="comment-text">{{comment.comment}}</p>
+        <div class="comment-div" ng-repeat="comment in commentsData track by $index | orderBy:'-date'">
+          <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
+          <p class="comment-text">{{comment.text}}</p>
         </div>
     </div>
   

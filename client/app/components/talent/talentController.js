@@ -477,26 +477,28 @@
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
-                    $scope.mainTalent = result[0];
-                    var phoneNumber = result[0].phone;
+                	$scope.mainTalent = result[0];
+                	$scope.id = (result.details[0].id) ? result.details[0].id:'';
+                    var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
                     if(phoneNumber !== null){
                     	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
                     }else{
                     	var formattedNo = '';
                     }
-                    $scope.mainTalent.phone = formattedNo;
+                    $scope.phone = formattedNo;
+                    $scope.email = (result.details[0].email) ? result.details[0].email :'';
                     
-                    $scope.mainTalent.facebookurl = 'http://www.'+result[0].facebookurl;
-                    $scope.mainTalent.instagramurl = 'http://www.'+result[0].instagramurl;
-                    $scope.mainTalent.twitterurl = 'http://www.'+result[0].twitterurl;
-                    $scope.mainTalent.vineurl = 'http://www.'+result[0].vineurl;
-                    $scope.mainTalent.youtubeurl = 'http://www.'+result[0].youtubeurl;
+                    $scope.facebookurl = (result.details[0].facebookurl) ? 'http://www.'+result.details[0].facebookurl:'';
+                    $scope.instagramurl = (result.details[0].instagramurl) ?'http://www.'+result.details[0].instagramurl:'';
+                    $scope.twitterurl = (result.details[0].twitterurl) ?'http://www.'+result.details[0].twitterurl:'';
+                    $scope.vineurl = (result.details[0].vineurl) ? 'http://www.'+result.details[0].vineurl:'';
+                    $scope.youtubeurl = (result.details[0].youtubeurl) ?'http://www.'+result.details[0].youtubeurl:'';
                     
                     $scope.creditsData = [];
                     var creditObj = {};
                     var creditArray = [];
-                    if(result[0].creditsreleaserole!==null){
-                        var dataObj = result[0].creditsreleaserole.split('|');
+                    if(result.details[0].creditsreleaserole!==null){
+                        var dataObj = result.details[0].creditsreleaserole.split('|');
                         angular.forEach(dataObj, function(value, key) {
                     	  if(value){
                     		  var arr = value.trim().split(',');
@@ -527,8 +529,8 @@
                     $scope.awardsData = [];
                     var awardObj = {};
                     var awardsArray = [];
-                    if(result[0].awardtypecredit!==null){
-                        var awardsObj = result[0].awardtypecredit.split('|');
+                    if(result.details[0].awardtypecredit!==null){
+                        var awardsObj = result.details[0].awardtypecredit.split('|');
                         angular.forEach(awardsObj, function(value, key) {
                       	  if(value){
                       		var arr = value.trim().split(',');
@@ -559,37 +561,23 @@
                     $scope.commentsData = [];
                     var commentObj = {};
                     var commentArray = [];
-                    if(result[0].commentsData!==null){
-                        var commentsObj = result[0].commentsData.split('|');
-                        angular.forEach(commentsObj, function(value, key) {
-                      	  if(value){
-                      		var arr = value.trim().split(',');
-                  			angular.forEach(arr, function(value2, key2) {
-                  				if(key2 === 0){
-                  					commentObj.comment = value2.trim();
-                  				}
-                  				if(key2 === 1){
-                  					commentObj.date = value2.trim();
-                  				}
-                  				if(key2 === 2){
-                  					commentObj.firstname = value2.trim();
-                  				}
-                  				if(key2 === 3){
-                  					commentObj.lastname = value2.trim();
-                  				}
-                  			});
-                  			commentArray.push(commentObj);
-                  			commentObj = {};
-                      	  }
-                      	});
-                        $scope.commentsData = commentArray;
-                    }
                     
+                    if(!!result.comments && result.comments.length>0){
+                    	angular.forEach(result.comments, function(value, key) {
+                    		commentObj.text = value.text;
+                    		commentObj.name = value.name;
+                    		commentObj.date = value.date;
+                    		commentArray.push(commentObj);
+                    		commentObj = {};
+                    	});
+                    	$scope.commentsData = commentArray;
+                    }
+                                        
                     $scope.associateData = [];
                     var associateObj = {};
                     var associateArray = [];
-                    if(result[0].associateInfo!==null){
-                        var associateDataObj = result[0].associateInfo.split('|');
+                    if(result.details[0].associateInfo!==null){
+                        var associateDataObj = result.details[0].associateInfo.split('|');
                         angular.forEach(associateDataObj, function(value, key) {
                       	  if(value){
                       		var vals = value.trim().split(',');
@@ -775,14 +763,9 @@
                 	$scope.commentMsg = '';
 					$scope.sweetAlert;
                 	$scope.comStatus = false;
-                    commentFactory.addComment($('.comment-input').val(), $scope.mainTalent.id, function (result) {
-                        if(result !== null){
-                        	$scope.comStatus = true;
-                        	$scope.commentMsg = 'Comments added successfully';
-							sweetAlert($scope.commentMsg);
-                        }
-                    	//$scope.mainTalent.comments.push(result);
-                        //Once comment is added, append it to the comments-container and clear the textarea
+                	var commentObj = {};
+                    commentFactory.addComment($('.comment-input').val(), $scope.id, function (result) {
+                    	$scope.commentsData.unshift(result);
                         $('.comment-input').val('');
                     });
                 }
