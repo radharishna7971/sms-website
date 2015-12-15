@@ -15,6 +15,7 @@
             window.localStorage.smstudiosJwtToken = res.data.token;
             window.localStorage.smstudiosId = res.data.id;
             window.localStorage.smstudiosPermission = res.data.permission;
+            window.localStorage.smstudiosLoginUserName = res.data.name;
 
             // Remove links that user does not have privilege to access
             $('.topnav-button').each(function() {
