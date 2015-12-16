@@ -447,7 +447,6 @@
         $scope.editElement = itemval;
         activeElementSetter['Talent']();
         $scope.btnTxt = "Update";
-          //console.log(itemval);
       };
     // Ensures all required inputs have data
     // Takes in an optional section.  If section is passed in, it means it is part of the talent form.  This is done to handle that fact that some required inputs might be hidden
@@ -509,8 +508,13 @@
 
     // Remove comment when delete button is clicked
     $scope.removeComment = function($event, comment_id) {
-      $($event.target).parent().slideUp();
-      commentFactory.removeComment(comment_id);
+    var r = confirm("Do you really want to delete this comment?");
+		if (r == true) {
+			$($event.target).parent().slideUp();
+		  commentFactory.removeComment(comment_id);
+		} else {
+		    //return false;
+		}
     };
   });
 })();

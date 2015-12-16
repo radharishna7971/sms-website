@@ -230,14 +230,14 @@
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
     </br>  
 
-  	  <div class="talent-data-comment">
-        <div class="talent-data-comment-headers">Comments</div>
-
-        <div class="comment-div" ng-repeat="comment in commentsData track by $index | orderBy:'-date'">
-          <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
-          <p class="comment-text">{{comment.text}}</p>
-        </div>
-    </div>
+	<div class="talent-data-comment">
+		<div class="talent-data-comment-headers">Comments</div>
+		<div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
+			<div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+			<p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
+			<p class="comment-text">{{comment.text}}</p>
+		</div>
+	</div>
   
        <!--  <div ng-show='comStatus'>{{commentMsg}}</div> -->
         <div class="comment-box" style="margin-left: 54%;margin-bottom: 73px;">
