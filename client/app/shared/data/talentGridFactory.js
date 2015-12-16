@@ -10,6 +10,7 @@
                   modifierKeysToMultiSelect:false,
                   noUnselect:false,
                   enableFiltering:true,
+                  enableHorizontalScrollbar:1,
                   paginationPageSizes: [100, 150, 200],
                   paginationPageSize: 100,           
                   columnDefs : [
@@ -24,11 +25,13 @@
                     { field: 'ethnicity', displayName: 'Ethnicity'},
                     { field: 'awards', displayName: 'Awards'},
                     { field: 'genres', displayName: 'Genres'},
-                    { field: 'estimatedBudget', displayName: 'Estimated Budget'},
-                    { field: 'boxOfficeIncome', displayName: 'Box Office Income'},
+                    { field: 'estimatedBudgetMin', displayName: 'Budget(Min)'},
+                    { field: 'estimatedBudgetMax', displayName: 'Budget(Max)'},
+                    { field: 'boxOfficeIncomeMin', displayName: 'Box Office Income(Min)'},
+                    { field: 'boxOfficeIncomeMax', displayName: 'Box Office Income(Max)'},
                     { field: 'boxbudgetratio', displayName: 'Income Multiple'},
                     { field: 'country', displayName: 'Country'},
-                    { field: 'createdby', displayName: 'Created By'}
+                    { field: 'createdby', displayName: 'Created By',  visible: false}
                 ],
                 enableGridMenu: true,
                 enableSelectAll: true,
