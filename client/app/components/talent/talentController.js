@@ -66,14 +66,7 @@
                         maxBudget = numberFormatter(parseInt(maxBudget));
                         var minBudget = Math.min.apply(Math, estimatedBudgets);
                         minBudget = numberFormatter(parseInt(minBudget));
-                        minBudget = minBudget === 0 ? "Not Available":'$'+minBudget;
-                        maxBudget = maxBudget === 0 ? "Not Available":'$'+maxBudget;
-                        items.estimatedBudgetMin = minBudget;
-                        items.estimatedBudgetMax = maxBudget;
-                        //items.estimatedBudget = '$'+minBudget+'-'+'$'+maxBudget;
-                    }else if(items.estimatedBudget ===null && !items.estimatedBudget){
-                        items.estimatedBudgetMin = null;
-                        items.estimatedBudgetMax = null;
+                        items.estimatedBudget = '$'+minBudget+'-'+'$'+maxBudget;
                     }
                     if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
                         var boxOfficeIncomes = items.boxOfficeIncome.split(',');
@@ -81,13 +74,7 @@
                         maxIncome = numberFormatter(parseInt(maxIncome));
                         var minIncome = Math.min.apply(Math, boxOfficeIncomes);
                         minIncome = numberFormatter(parseInt(minIncome));
-                        minIncome = minIncome === 0 ? "Not Available":'$'+minIncome;
-                        maxIncome = maxIncome === 0 ? "Not Available":'$'+maxIncome;
-                        items.boxOfficeIncomeMin = minIncome;
-                        items.boxOfficeIncomeMax = maxIncome;
-                    }else if(items.boxOfficeIncome ===null && !items.boxOfficeIncome){
-                        items.boxOfficeIncomeMin = null;
-                        items.boxOfficeIncomeMax = null;
+                        items.boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
                     }
 
                 });
@@ -246,24 +233,20 @@
                     }
                     if(isValidRatio && isValidOptionRatio){
                         selectedNames = $scope.filerByname;
-                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(1);
+                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(2);
                         var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
                         var boxbudgetratio = "";
                         if(item.boxbudgetratio !==null){
                             if(seletedRatio==="maxgreaterorequal"){
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
-                                var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(1);
-                                console.log(inputRatio);
-                                console.log(maxRatio);
-                                var test = maxRatio >=inputRatio;
-                                console.log(test);
-                                if(maxRatio >= inputRatio){
+                                var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
+                                if(maxRatio >=inputRatio){
                                     findRatioFlag = true;
                                 }
 
                             }else if(seletedRatio==="mingreaterorequal"){
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
-                                var minRatio = parseFloat(Math.min.apply(Math, boxbudgetratio)).toFixed(1);;
+                                var minRatio = parseFloat(Math.min.apply(Math, boxbudgetratio)).toFixed(2);;
                                 if(minRatio >=inputRatio){
                                     findRatioFlag = true;
                                 }
@@ -272,7 +255,7 @@
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
                                 var totalAvg=0;
                                 for(var i in boxbudgetratio) { totalAvg += boxbudgetratio[i]; }
-                                totalAvg = parseFloat(totalAvg/(boxbudgetratio.length-1)).toFixed(1);
+                                totalAvg = parseFloat(totalAvg/(boxbudgetratio.length-1)).toFixed(2);
                                 if(totalAvg >=inputRatio){
                                     findRatioFlag = true;
                                 }
@@ -362,17 +345,17 @@
                         });
                     }
 
-                    if((item.estimatedBudgetMin !==null && item.estimatedBudgetMax !==null) && (item.estimatedBudgetMin !=="Not Available" && item.estimatedBudgetMax !=="Not Available")){
+                    if(item.estimatedBudget !==null){
                         $('div#budget_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
-                            // var budgets = item['estimatedBudget'].split('-');
-                            // var lowerLimit = budgets[0];
-                            // var upperLimit = budgets[1];
-                            var lowerLimitDigit = getNumber(item['estimatedBudgetMin']);
-                            var upperLimitDigit = getNumber(item['estimatedBudgetMax']);
-                            var lowerLimitSuffix = item['estimatedBudgetMin'].slice(-1).toLowerCase();
-                            var upperLimitSuffix = item['estimatedBudgetMax'].slice(-1).toLowerCase();
+                            var budgets = item['estimatedBudget'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
                             if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
                                 if(upperLimitDigit < 250){
                                     findBudgetFlag = true;
@@ -411,17 +394,18 @@
                             
                         });
                     }
-                    if((item.boxOfficeIncomeMin !==null && item.boxOfficeIncomeMax !==null) && (item.boxOfficeIncomeMin !=="Not Available" && item.boxOfficeIncomeMax !=="Not Available")){
+
+                    if(item.boxOfficeIncome !==null){
                         $('div#box_office_income_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
-                            // var budgets = item['boxOfficeIncome'].split('-');
-                            // var lowerLimit = budgets[0];
-                            // var upperLimit = budgets[1];
-                            var lowerLimitDigit = getNumber(item['boxOfficeIncomeMin']);
-                            var upperLimitDigit = getNumber(item['boxOfficeIncomeMax']);
-                            var lowerLimitSuffix = item['boxOfficeIncomeMin'].slice(-1).toLowerCase();
-                            var upperLimitSuffix = item['boxOfficeIncomeMax'].slice(-1).toLowerCase();
+                            var budgets = item['boxOfficeIncome'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
                             if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
                                 if(upperLimitDigit < 250){
                                     findBoxOfficeIncomeFlag = true;
