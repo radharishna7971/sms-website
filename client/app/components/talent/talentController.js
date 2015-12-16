@@ -66,7 +66,11 @@
                         maxBudget = numberFormatter(parseInt(maxBudget));
                         var minBudget = Math.min.apply(Math, estimatedBudgets);
                         minBudget = numberFormatter(parseInt(minBudget));
-                        items.estimatedBudget = '$'+minBudget+'-'+'$'+maxBudget;
+                        var estimatedBudgetVal = '$'+minBudget+'-'+'$'+maxBudget
+                        if(!minBudget && !maxBudget){
+                            estimatedBudgetVal = "Not available";
+                        }
+                        items.estimatedBudget = estimatedBudgetVal;
                     }
                     if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
                         var boxOfficeIncomes = items.boxOfficeIncome.split(',');
@@ -74,7 +78,11 @@
                         maxIncome = numberFormatter(parseInt(maxIncome));
                         var minIncome = Math.min.apply(Math, boxOfficeIncomes);
                         minIncome = numberFormatter(parseInt(minIncome));
-                        items.boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
+                        var boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
+                        if(!minBudget && !maxBudget){
+                            boxOfficeIncome = "Not available";
+                        }
+                        items.boxOfficeIncome = boxOfficeIncome;
                     }
 
                 });
@@ -345,7 +353,7 @@
                         });
                     }
 
-                    if(item.estimatedBudget !==null){
+                    if(item.estimatedBudget !==null && item.estimatedBudget !=="Not available"){
                         $('div#budget_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
@@ -395,7 +403,7 @@
                         });
                     }
 
-                    if(item.boxOfficeIncome !==null){
+                    if(item.boxOfficeIncome !==null && item.boxOfficeIncome !=="Not available"){
                         $('div#box_office_income_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
