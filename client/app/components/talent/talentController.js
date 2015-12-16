@@ -66,14 +66,7 @@
                         maxBudget = numberFormatter(parseInt(maxBudget));
                         var minBudget = Math.min.apply(Math, estimatedBudgets);
                         minBudget = numberFormatter(parseInt(minBudget));
-                        minBudget = minBudget === 0 ? "Not Available":'$'+minBudget;
-                        maxBudget = maxBudget === 0 ? "Not Available":'$'+maxBudget;
-                        items.estimatedBudgetMin = minBudget;
-                        items.estimatedBudgetMax = maxBudget;
-                        //items.estimatedBudget = '$'+minBudget+'-'+'$'+maxBudget;
-                    }else if(items.estimatedBudget ===null && !items.estimatedBudget){
-                        items.estimatedBudgetMin = null;
-                        items.estimatedBudgetMax = null;
+                        items.estimatedBudget = '$'+minBudget+'-'+'$'+maxBudget;
                     }
                     if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
                         var boxOfficeIncomes = items.boxOfficeIncome.split(',');
@@ -81,13 +74,7 @@
                         maxIncome = numberFormatter(parseInt(maxIncome));
                         var minIncome = Math.min.apply(Math, boxOfficeIncomes);
                         minIncome = numberFormatter(parseInt(minIncome));
-                        minIncome = minIncome === 0 ? "Not Available":'$'+minIncome;
-                        maxIncome = maxIncome === 0 ? "Not Available":'$'+maxIncome;
-                        items.boxOfficeIncomeMin = minIncome;
-                        items.boxOfficeIncomeMax = maxIncome;
-                    }else if(items.boxOfficeIncome ===null && !items.boxOfficeIncome){
-                        items.boxOfficeIncomeMin = null;
-                        items.boxOfficeIncomeMax = null;
+                        items.boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
                     }
 
                 });
@@ -246,24 +233,20 @@
                     }
                     if(isValidRatio && isValidOptionRatio){
                         selectedNames = $scope.filerByname;
-                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(1);
+                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(2);
                         var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
                         var boxbudgetratio = "";
                         if(item.boxbudgetratio !==null){
                             if(seletedRatio==="maxgreaterorequal"){
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
-                                var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(1);
-                                console.log(inputRatio);
-                                console.log(maxRatio);
-                                var test = maxRatio >=inputRatio;
-                                console.log(test);
-                                if(maxRatio >= inputRatio){
+                                var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
+                                if(maxRatio >=inputRatio){
                                     findRatioFlag = true;
                                 }
 
                             }else if(seletedRatio==="mingreaterorequal"){
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
-                                var minRatio = parseFloat(Math.min.apply(Math, boxbudgetratio)).toFixed(1);;
+                                var minRatio = parseFloat(Math.min.apply(Math, boxbudgetratio)).toFixed(2);;
                                 if(minRatio >=inputRatio){
                                     findRatioFlag = true;
                                 }
@@ -272,7 +255,7 @@
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
                                 var totalAvg=0;
                                 for(var i in boxbudgetratio) { totalAvg += boxbudgetratio[i]; }
-                                totalAvg = parseFloat(totalAvg/(boxbudgetratio.length-1)).toFixed(1);
+                                totalAvg = parseFloat(totalAvg/(boxbudgetratio.length-1)).toFixed(2);
                                 if(totalAvg >=inputRatio){
                                     findRatioFlag = true;
                                 }
@@ -362,17 +345,17 @@
                         });
                     }
 
-                    if((item.estimatedBudgetMin !==null && item.estimatedBudgetMax !==null) && (item.estimatedBudgetMin !=="Not Available" && item.estimatedBudgetMax !=="Not Available")){
+                    if(item.estimatedBudget !==null){
                         $('div#budget_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
-                            // var budgets = item['estimatedBudget'].split('-');
-                            // var lowerLimit = budgets[0];
-                            // var upperLimit = budgets[1];
-                            var lowerLimitDigit = getNumber(item['estimatedBudgetMin']);
-                            var upperLimitDigit = getNumber(item['estimatedBudgetMax']);
-                            var lowerLimitSuffix = item['estimatedBudgetMin'].slice(-1).toLowerCase();
-                            var upperLimitSuffix = item['estimatedBudgetMax'].slice(-1).toLowerCase();
+                            var budgets = item['estimatedBudget'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
                             if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
                                 if(upperLimitDigit < 250){
                                     findBudgetFlag = true;
@@ -411,17 +394,18 @@
                             
                         });
                     }
-                    if((item.boxOfficeIncomeMin !==null && item.boxOfficeIncomeMax !==null) && (item.boxOfficeIncomeMin !=="Not Available" && item.boxOfficeIncomeMax !=="Not Available")){
+
+                    if(item.boxOfficeIncome !==null){
                         $('div#box_office_income_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
-                            // var budgets = item['boxOfficeIncome'].split('-');
-                            // var lowerLimit = budgets[0];
-                            // var upperLimit = budgets[1];
-                            var lowerLimitDigit = getNumber(item['boxOfficeIncomeMin']);
-                            var upperLimitDigit = getNumber(item['boxOfficeIncomeMax']);
-                            var lowerLimitSuffix = item['boxOfficeIncomeMin'].slice(-1).toLowerCase();
-                            var upperLimitSuffix = item['boxOfficeIncomeMax'].slice(-1).toLowerCase();
+                            var budgets = item['boxOfficeIncome'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
                             if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
                                 if(upperLimitDigit < 250){
                                     findBoxOfficeIncomeFlag = true;
@@ -515,7 +499,7 @@
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
-                	$scope.mainTalent = (result.details[0]) ? result.details[0]:'';
+                	$scope.mainTalent = result[0];
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
                     var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
                     if(phoneNumber !== null){
@@ -535,44 +519,76 @@
                     $scope.creditsData = [];
                     var creditObj = {};
                     var creditArray = [];
-                    if(!!result.credits && result.credits.length>0){
-                    	angular.forEach(result.credits, function(value, key) {
-                    		creditObj.title = (value.creditname === null) ? 'Not Available' : value.creditname;
-                    		creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
-                    		creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
-                    		creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+value.estimatedBudget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    		creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+value.box_office_income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    		creditArray.push(creditObj);
-                    		creditObj = {};
+                    if(result.details[0].creditsreleaserole!==null){
+                        var dataObj = result.details[0].creditsreleaserole.split('|');
+                        angular.forEach(dataObj, function(value, key) {
+                    	  if(value){
+                    		  var arr = value.trim().split(',');
+                    			angular.forEach(arr, function(value2, key2) {
+                    				if(key2 === 0){
+                    					creditObj.title = value2.trim();
+                    				}
+                    				if(key2 === 1){
+                    					creditObj.releasedate = value2.trim();
+                    				}
+                    				if(key2 === 2){
+                    					creditObj.roll = value2.trim();
+                    				}
+                    				if(key2 === 3){
+                    					creditObj.budget = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    				}
+                    				if(key2 === 4){
+                    					creditObj.boxoffice = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    				}
+                    			});
+                    			creditArray.push(creditObj);
+                    			creditObj = {};
+                    	  }
                     	});
-                    	$scope.creditsData = creditArray;
+                        $scope.creditsData = creditArray;
                     }
                     
                     $scope.awardsData = [];
                     var awardObj = {};
                     var awardsArray = [];
-                    if(!!result.awards && result.awards.length>0){
-                    	angular.forEach(result.awards, function(value, key) {
-                    		awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
-                    		awardObj.year = (value.release_date === null) ? 'Not Available' : value.release_date;
-                    		awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
-                    		awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
-                    		awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
-                    		awardsArray.push(awardObj);
-                    		awardObj = {};
-                    	});
-                    	$scope.awardsData = awardsArray;
+                    if(result.details[0].awardtypecredit!==null){
+                        var awardsObj = result.details[0].awardtypecredit.split('|');
+                        angular.forEach(awardsObj, function(value, key) {
+                      	  if(value){
+                      		var arr = value.trim().split(',');
+                			angular.forEach(arr, function(value2, key2) {
+                				if(key2 === 0){
+                					awardObj.name = value2.trim();
+                				}
+                				if(key2 === 1){
+                					awardObj.year = value2.trim();
+                				}
+                				if(key2 === 2){
+                					awardObj.type = value2.trim();
+                				}
+                				if(key2 === 3){
+                					awardObj.credit = value2.trim();
+                				}
+                				if(key2 === 4){
+                					awardObj.awardfor = value2.trim();
+                				}
+                			});
+                			awardsArray.push(awardObj);
+                			awardObj = {};
+                      	  }
+                      	});
+                        $scope.awardsData = awardsArray;
                     }
                     
                     $scope.commentsData = [];
                     var commentObj = {};
                     var commentArray = [];
+                    
                     if(!!result.comments && result.comments.length>0){
                     	angular.forEach(result.comments, function(value, key) {
                     		commentObj.text = value.text;
                     		commentObj.name = value.name;
                     		commentObj.date = value.date;
-                    		commentObj.comment_id = value.comment_id;
                     		commentArray.push(commentObj);
                     		commentObj = {};
                     	});
@@ -780,14 +796,9 @@
                 }
             };
             $scope.removeComment = function ($event, comment_id) {
-            	var r = confirm("Do you really want to delete this comment?");
-            	if (r == true) {
-            		$($event.target).parent().slideUp();
-                    commentFactory.removeComment(comment_id);
-                    $scope.deletedComments++;
-            	} else {
-            	    //return false;
-            	}
+                $($event.target).parent().slideUp();
+                commentFactory.removeComment(comment_id);
+                $scope.deletedComments++;
             };
 
            
