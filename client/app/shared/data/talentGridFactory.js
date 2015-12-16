@@ -24,11 +24,11 @@
                     { field: 'ethnicity', displayName: 'Ethnicity'},
                     { field: 'awards', displayName: 'Awards'},
                     { field: 'genres', displayName: 'Genres'},
-                    { field: 'estimatedBudget', displayName: 'Estimated Budget'},
-                    { field: 'boxOfficeIncome', displayName: 'Box Office Income'},
-                    { field: 'boxbudgetratio', displayName: 'Income Multiple'},
+                    { field: 'estimatedBudget', displayName: 'Budget'},
+                    { field: 'boxOfficeIncome', displayName: 'Box Office'},
+                    { field: 'boxbudgetratio', displayName: 'Multiple'},
                     { field: 'country', displayName: 'Country'},
-                    { field: 'createdby', displayName: 'Created By'}
+                    { field: 'createdby', displayName: 'Created By', visible: false}
                 ],
                 enableGridMenu: true,
                 enableSelectAll: true,
