@@ -531,67 +531,94 @@
                     $scope.creditsData = [];
                     var creditObj = {};
                     var creditArray = [];
-                    if(result.details[0].creditsreleaserole!==null){
-                        var dataObj = result.details[0].creditsreleaserole.split('|');
-                        angular.forEach(dataObj, function(value, key) {
-                    	  if(value){
-                    		  var arr = value.trim().split(',');
-                    			angular.forEach(arr, function(value2, key2) {
-                    				if(key2 === 0){
-                    					creditObj.title = value2.trim();
-                    				}
-                    				if(key2 === 1){
-                    					creditObj.releasedate = value2.trim();
-                    				}
-                    				if(key2 === 2){
-                    					creditObj.roll = value2.trim();
-                    				}
-                    				if(key2 === 3){
-                    					creditObj.budget = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    				}
-                    				if(key2 === 4){
-                    					creditObj.boxoffice = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    				}
-                    			});
-                    			creditArray.push(creditObj);
-                    			creditObj = {};
-                    	  }
-                    	});
-                        $scope.creditsData = creditArray;
+                    // if(result.details[0].creditsreleaserole!==null){
+                    //     var dataObj = result.details[0].creditsreleaserole.split('|');
+                    //     angular.forEach(dataObj, function(value, key) {
+                    // 	  if(value){
+                    // 		  var arr = value.trim().split(',');
+                    // 			angular.forEach(arr, function(value2, key2) {
+                    // 				if(key2 === 0){
+                    // 					creditObj.title = value2.trim();
+                    // 				}
+                    // 				if(key2 === 1){
+                    // 					creditObj.releasedate = value2.trim();
+                    // 				}
+                    // 				if(key2 === 2){
+                    // 					creditObj.roll = value2.trim();
+                    // 				}
+                    // 				if(key2 === 3){
+                    // 					creditObj.budget = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // 				}
+                    // 				if(key2 === 4){
+                    // 					creditObj.boxoffice = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // 				}
+                    // 			});
+                    // 			creditArray.push(creditObj);
+                    // 			creditObj = {};
+                    // 	  }
+                    // 	});
+                    //     $scope.creditsData = creditArray;
+                    // }
+
+                    if(!!result.credits && result.credits.length>0){
+                    angular.forEach(result.credits, function(value, key) {
+                    creditObj.title = (value.creditname === null) ? 'Not Available' : value.creditname;
+                    creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
+                    creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
+                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+value.estimatedBudget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+value.box_office_income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    creditArray.push(creditObj);
+                    creditObj = {};
+                    });
+                    $scope.creditsData = creditArray;
                     }
+
                     
                     $scope.awardsData = [];
                     var awardObj = {};
                     var awardsArray = [];
-                    if(result.details[0].awardtypecredit!==null){
-                        var awardsObj = result.details[0].awardtypecredit.split('|');
-                        angular.forEach(awardsObj, function(value, key) {
-                      	  if(value){
-                      		var arr = value.trim().split(',');
-                			angular.forEach(arr, function(value2, key2) {
-                				if(key2 === 0){
-                					awardObj.name = value2.trim();
-                				}
-                				if(key2 === 1){
-                					awardObj.year = value2.trim();
-                				}
-                				if(key2 === 2){
-                					awardObj.type = value2.trim();
-                				}
-                				if(key2 === 3){
-                					awardObj.credit = value2.trim();
-                				}
-                				if(key2 === 4){
-                					awardObj.awardfor = value2.trim();
-                				}
-                			});
-                			awardsArray.push(awardObj);
-                			awardObj = {};
-                      	  }
-                      	});
-                        $scope.awardsData = awardsArray;
-                    }
+                   //  if(result.details[0].awardtypecredit!==null){
+                   //      var awardsObj = result.details[0].awardtypecredit.split('|');
+                   //      angular.forEach(awardsObj, function(value, key) {
+                   //    	  if(value){
+                   //    		var arr = value.trim().split(',');
+                			// angular.forEach(arr, function(value2, key2) {
+                			// 	if(key2 === 0){
+                			// 		awardObj.name = value2.trim();
+                			// 	}
+                			// 	if(key2 === 1){
+                			// 		awardObj.year = value2.trim();
+                			// 	}
+                			// 	if(key2 === 2){
+                			// 		awardObj.type = value2.trim();
+                			// 	}
+                			// 	if(key2 === 3){
+                			// 		awardObj.credit = value2.trim();
+                			// 	}
+                			// 	if(key2 === 4){
+                			// 		awardObj.awardfor = value2.trim();
+                			// 	}
+                			// });
+                			// awardsArray.push(awardObj);
+                			// awardObj = {};
+                   //    	  }
+                   //    	});
+                   //      $scope.awardsData = awardsArray;
+                   //  }
                     
+                        if(!!result.awards && result.awards.length>0){
+                            angular.forEach(result.awards, function(value, key) {
+                            awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
+                            awardObj.year = (value.release_date === null) ? 'Not Available' : value.release_date;
+                            awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
+                            awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
+                            awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
+                            awardsArray.push(awardObj);
+                            awardObj = {};
+                            });
+                            $scope.awardsData = awardsArray;
+                        }
+
                     $scope.commentsData = [];
                     var commentObj = {};
                     var commentArray = [];
@@ -601,6 +628,7 @@
                     		commentObj.text = value.text;
                     		commentObj.name = value.name;
                     		commentObj.date = value.date;
+                            commentObj.comment_id = value.comment_id;
                     		commentArray.push(commentObj);
                     		commentObj = {};
                     	});
@@ -808,9 +836,18 @@
                 }
             };
             $scope.removeComment = function ($event, comment_id) {
-                $($event.target).parent().slideUp();
-                commentFactory.removeComment(comment_id);
-                $scope.deletedComments++;
+                // $($event.target).parent().slideUp();
+                // commentFactory.removeComment(comment_id);
+                // $scope.deletedComments++;
+                    var r = confirm("Do you really want to delete this comment?");
+                    if (r == true) {
+                        $($event.target).parent().slideUp();
+                        commentFactory.removeComment(comment_id);
+                        $scope.deletedComments++;
+                    } else {
+                    //return false;
+                    }
+
             };
 
            
