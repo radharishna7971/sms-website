@@ -182,62 +182,86 @@
     
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
     </br>
-    <div class="credit_scroll">
-    <table class="credit_table" style="width:1090px;margin-bottom:5px;">
-      <tr><td class="creditTableHead">Title</td><td class="creditTableHead1">Release Date</td><td class="creditTableHeads">Role</td><td class="creditTableHeads">Budget</td><td class="creditTableHeads">Box Office</td></tr>
+    <div>
+    <table class="creditSections">
+    <thead class="credit_head">
+        <tr>
+            <th><span class="text">Title</span></th>
+            <th><span class="text" style="margin-left: -2%;">Release Date</span></th>
+            <th><span class="text" style="margin-left: -3%;">Role</span></th>
+            <th><span class="text" style="margin-left: -4%;">Budget</span></th>
+            <th><span class="text" style="margin-left: -12%;">Box Office</span></th>
+        </tr>
+    </thead>
     </table>
-    <div id="table-wrapper">
-    <div id="table-scroll">
-    <table style="width: 1045px;margin-left: 28px;height: 175px;" class="talent-table-striped">
-      <tr ng-repeat="credits in creditsData | orderBy:'-releasedate'">
-        <td class="creditTableBody">{{credits.title}}</td>
-        <td class="creditTableBody1">{{credits.releasedate}}</td>
-        <td class="creditTableBody2">{{credits.roll}}</td>
-        <td class="creditTableBody3">{{credits.budget}}</td>
-        <td class="creditTableBody4">{{credits.boxoffice}}</td>
-      </tr>
-    </table>
-  </div>
+    <table class="creditSection">
+    <tbody>
+
+
+
+        <tr ng-repeat="credits in creditsData | orderBy:'-releasedate'">
+            <td>{{credits.title}}</td>
+            <td>{{credits.releasedate}}</td>
+            <td>{{credits.roll}}</td>
+            <td style="width:22%;">{{credits.budget}}</td>
+            <td>{{credits.boxoffice}}</td>
+        </tr>
+        </tbody>
+
+</table>
 
   </div>
 
   </div>
-  
 
-    </div>
+
+
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>
-    <table class="awardTableHead" style="width:1090px;margin-bottom:5px;margin-left: 30px;">
-      <tr><td class="awardTableHead">Year</td><td class="awardTableHead1">Award</td><td class="awardTableHead2">Category</td><td class="awardTableHead3">Result</td><td class="awardTableHead4">Credit</td></tr>
+    <table class="creditSections">
+    <thead class="credit_head">
+        <tr>
+            <th><span class="text">Year</span></th>
+            <th><span class="text" style="margin-left: -121px;">Award</span></th>
+            <th><span class="text" style="margin-left: -71px;">Category</span></th>
+            <th><span class="text" style="margin-left: -130px;">Result</span></th>
+            <th><span class="text" style="margin-left: -124px;">Credit</span></th>
+        </tr>
+    </thead>
+
     </table>
-      <div id="table-wrapper">
-    <div id="table-scroll">
-    <table  style="width: 1045px;margin-left: 28px;height: 60px;" class="talent-table-striped">
-      <tr ng-repeat="awards in awardsData | orderBy:'-year'">
-        <td class="awardTableBody1">{{awards.year}}</td>
-        <td class="awardTableBody2">{{awards.name}}</td>
-        <td class="awardTableBody3">{{awards.awardfor}}</td>
-        <td class="awardTableBody4">{{awards.type}}</td>
-        <td class="awardTableBody5">{{awards.credit}}</td>
-      </tr>
-    </table>
+    <table class="creditSection">
+    <tbody>
+
+
+
+        <tr ng-repeat="awards in awardsData | orderBy:'-year'">
+            <td style="width: 11%;">{{awards.year}}</td>
+            <td style="width: 27%;">{{awards.name}}</td>
+            <td style="width: 17%;">{{awards.awardfor}}</td>
+            <td>{{awards.type}}</td>
+            <td>{{awards.credit}}</td>
+        </tr>
+        </tbody>
+
+</table>
   </div>
 
 
-    </div>
-    </div>
 
-    <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
+
+
+<div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
     </br>  
 
-  	  <div class="talent-data-comment">
-        <div class="talent-data-comment-headers">Comments</div>
-
-        <div class="comment-div" ng-repeat="comment in commentsData track by $index | orderBy:'-date'">
-          <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
-          <p class="comment-text">{{comment.text}}</p>
-        </div>
-    </div>
+	<div class="talent-data-comment">
+		<div class="talent-data-comment-headers">Comments</div>
+		<div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
+			<div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+			<p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
+			<p class="comment-text">{{comment.text}}</p>
+		</div>
+	</div>
   
        <!--  <div ng-show='comStatus'>{{commentMsg}}</div> -->
         <div class="comment-box" style="margin-left: 54%;margin-bottom: 73px;">

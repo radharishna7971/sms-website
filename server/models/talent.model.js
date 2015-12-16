@@ -74,26 +74,11 @@ Talent.getProfile= function(talentId, callback) {
     from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     where cjoin.talent_id ='+ talentId+') as credits, \
-    (select GROUP_CONCAT(distinct \' \',`at`.type,\', \',a.firstName,\',\',a.lastName,\',\',\',\',\' \' SEPARATOR \'| \') \
-    		  as associatedata from associate_talent_associate_type_join atj \
-    		  inner join associate_types at ON atj.associte_types_id=`at`.id \
-    		  inner join associate a ON a.id=atj.associate_id \
-    		  where atj.talent_id ='+ talentId+') as associateInfo, \
-	(select GROUP_CONCAT(c.text, \',\',c.created_at, \',\' ,u.first_name, \'\,\' ,u.last_name SEPARATOR \'| \') as commentdata \
-	from comments c \
-	inner join users u on c.user_id=u.id \
-	where c.talent_id ='+ talentId+') as commentsData, \
-(select GROUP_CONCAT(distinct \' \',c.name,\', \', \' \' ,\',\',r.name,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
-  as genresdata from credit_talent_role_join cjoin \
-  inner join credits c on c.id = cjoin.credit_id \
-  inner join roles r on r.id = cjoin.role_id \
-  where cjoin.talent_id ='+ talentId+') as creditsreleaserole, \
-(select GROUP_CONCAT(a.awardname, \',\', \' \' ,\',\',a.awardtype, \',\' ,c.name, \'\,\' , \' \' SEPARATOR \'| \') \
-  as awardscredittalent from talent_award_credit_join tajoin \
-  inner join awards a on a.id = tajoin.award_id \
-  inner join credits c on c.id = tajoin.credit_id \
-  inner join talent t  on t.id = tajoin.talent_id \
-  where tajoin.talent_id = '+ talentId+') AS awardtypecredit \
+(select GROUP_CONCAT(distinct \' \',`at`.type,\', \',a.firstName,\',\',a.lastName,\',\',\',\',\' \' SEPARATOR \'| \') \
+  as associatedata from associate_talent_associate_type_join atj \
+  inner join associate_types at ON atj.associte_types_id=`at`.id \
+  inner join associate a ON a.id=atj.associate_id \
+  where atj.talent_id ='+ talentId+') as associateInfo \
 FROM talent t where t.id= ' + talentId)
   .then(function(results) {
 	  var ob = {};
@@ -112,7 +97,25 @@ FROM talent t where t.id= ' + talentId)
 		       AND talent.id = ' + talentId)
 		     .then(function(results1) {
 		    	 ob.comments = results1[0];
-		    	 callback(ob);
+		    	 
+		    	 db.knex.raw(' \
+		    			 select a.awardname, DATE_FORMAT(c.release_date,"%Y") as release_date, a.awardtype, \
+		    			 c.`name`, a.awardfor \
+		    			 from talent_award_credit_join tacj\
+		    			 INNER JOIN awards a ON tacj.award_id = a.id \
+		    			 INNER JOIN credits c on tacj.credit_id=c.id \
+		    			 INNER JOIN talent t on t.id=tacj.talent_id \
+		    			 where tacj.talent_id='+talentId)
+		  		       .then(function(results2) {
+		  		    	   ob.awards = results2[0];
+		  		    	 //callback(ob);
+			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%d %b %Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\,\') as rolename,c.estimatedBudget,c.box_office_income  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
+							    	.then(function(results3) {
+							    		ob.credits = results3[0];
+							    		callback(ob);
+							    	});
+		  		    	   
+		  		       });
 		     });
   });
   
