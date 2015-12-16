@@ -499,7 +499,7 @@
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
-                	$scope.mainTalent = result[0];
+                	$scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
                     var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
                     if(phoneNumber !== null){

@@ -392,93 +392,155 @@
   color: #fff;
   font-weight: bold;
 }
-.creditTableHead{
-  font-weight:500;
-  text-align: left;
-  width:165px;
-  background-color: #66B3F1;
+table.creditSection {
+    display: table;
+    border-collapse: collapse;
+    width: 1088px;
+    margin-bottom: 5px;
+    margin-left: 32px;
+
+
+
+
+
 }
-.creditTableHeads{
-  font-weight:500;
-  text-align: left;
-  width:108px;
-  background-color: #66B3F1;
+    table.creditSection thead, table.creditSection tbody {
+        float: left;
+        width: 100%;
+    }
+    table.creditSection tbody {
+        overflow: auto;
+        height: 150px;
+        margin-top: 15px;
+    }
+    table.creditSection tr {
+    width: 100%;
+    display: table;
+
+
+    text-align: left;
+    height: 55px;
+    margin-left: -4px;
+    }
+    table.creditSection th {
+        background-color: #66B3F1;
+        color: white;
+    }
+    table.creditSection th, table.creditSection td {
+        width: 22%;
+        text-align: left;
+        padding: 8px;
+    }
+.creditSection>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+
+    background-color: #F3F3F3;
 }
-.creditTableHead1{
-  font-weight:500;
-  text-align: left;
-  width:108px;
-  background-color: #66B3F1;
+
+
+.creditSection>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th {
+
+
+
+
+    background-color: #FDFDFD;
 }
-.awardTableHead{
-  font-weight:500;
-  text-align: left;
-  width:36px;
-  background-color: #66B3F1;
-}
-.awardTableHead1{
-  font-weight:500;
-  text-align: left;
-  width:26%;
-  background-color: #66B3F1;
-}
-.awardTableHead2{
-  font-weight:500;
-  text-align: left;
-  width:12%;
-  background-color: #66B3F1;
-}
-.awardTableHead3{
-  font-weight:500;
-  text-align: left;
-  width:19%;
-  background-color: #66B3F1;
-}
-.awardTableHead4{
-  font-weight:500;
-  text-align: left;
-  width:112px;
-  background-color: #66B3F1;
-}
-.creditTableBody{
-  width:29%;
-  word-break: break-word;
-}
-.creditTableBody1{
-  width:19%;
-  word-break: break-word;
-}
-.creditTableBody2{
-  width:18%;
-  word-break: break-word;
-}
-.creditTableBody3{
-  width:20%;
-  word-break: break-word;
-}
-.creditTableBody4{
-  width:21%;
-  word-break: break-word;
-}
-.awardTableBody1 {
-    width: 9%;
-    word-break: break-word;
-}
-.awardTableBody2 {
-    width: 26%;
-}
-.awardTableBody3 {
-    width: 12%;
-    word-break: break-word;
-}
-.awardTableBody4 {
-    width: 18%;
-    word-break: break-word;
-}
-.awardTableBody5 {
-    width: 27%;
-    word-break: break-word;
-}
+table.creditSections {
+        display: table;
+        border-collapse: collapse;
+        width: 1088px;
+        margin-bottom: 5px;
+        margin-left: 32px;
+    }
+    table.creditSections thead, table.creditSections tbody {
+        float: left;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        width: 100%;
+    }
+    table.creditSections tbody {
+        overflow: auto;
+        height: 150px;
+        margin-top: 15px;
+    }
+    table.creditSections tr {
+
+
+
+
+
+
+
+
+
+        width: 100%;
+        display: table;
+        text-align: left;
+         height: 14px;
+    }
+    table.creditSections th {
+        background-color: #66B3F1;
+        color: white;
+    }
+    table.creditSections th, table.creditSections td {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        width: 22%;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+
+
+
+
+
+
+
+
 .commentTableBody{
   width:45%;
   word-break: break-word;
