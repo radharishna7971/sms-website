@@ -68,7 +68,7 @@
                         minBudget = numberFormatter(parseInt(minBudget));
                         var estimatedBudgetVal = '$'+minBudget+'-'+'$'+maxBudget
                         if(!minBudget && !maxBudget){
-                            estimatedBudgetVal = "Not available";
+                            estimatedBudgetVal = "Not Available";
                         }
                         items.estimatedBudget = estimatedBudgetVal;
                     }
@@ -80,9 +80,12 @@
                         minIncome = numberFormatter(parseInt(minIncome));
                         var boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
                         if(!minBudget && !maxBudget){
-                            boxOfficeIncome = "Not available";
+                            boxOfficeIncome = "Not Available";
                         }
                         items.boxOfficeIncome = boxOfficeIncome;
+                    }
+                    if(items.boxbudgetratio===0.0){
+                        items.boxbudgetratio = "Not Available";
                     }
 
                 });
@@ -244,7 +247,7 @@
                         var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(2);
                         var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
                         var boxbudgetratio = "";
-                        if(item.boxbudgetratio !==null){
+                        if(item.boxbudgetratio !==null && item.boxbudgetratio !=="Not Available"){
                             if(seletedRatio==="maxgreaterorequal"){
                                 boxbudgetratio = item['boxbudgetratio'].split(',');
                                 var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
@@ -353,11 +356,12 @@
                         });
                     }
 
-                    if(item.estimatedBudget !==null && item.estimatedBudget !=="Not available"){
+                    if(item.estimatedBudget !==null && item.estimatedBudget !=="Not Available"){
                         $('div#budget_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
                             var budgets = item['estimatedBudget'].split('-');
+                            console.log(budgets);
                             var lowerLimit = budgets[0];
                             var upperLimit = budgets[1];
                             var lowerLimitDigit = getNumber(lowerLimit);
@@ -403,7 +407,7 @@
                         });
                     }
 
-                    if(item.boxOfficeIncome !==null && item.boxOfficeIncome !=="Not available"){
+                    if(item.boxOfficeIncome !==null && item.boxOfficeIncome !=="Not Available"){
                         $('div#box_office_income_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
