@@ -84,7 +84,7 @@
                         }
                         items.boxOfficeIncome = boxOfficeIncome;
                     }
-                    if(items.boxbudgetratio===0.0){
+                    if(items.boxbudgetratio==="0.0"){
                         items.boxbudgetratio = "Not Available";
                     }
 
