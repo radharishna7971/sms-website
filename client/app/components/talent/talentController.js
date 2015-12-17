@@ -87,6 +87,19 @@
                     if(items.boxbudgetratio==="0.0"){
                         items.boxbudgetratio = "Not Available";
                     }
+                    if(items.boxbudgetratio !==null && items.boxbudgetratio){
+                        var incomeMultiple = items.boxbudgetratio.split(',');
+                        var maxIncomeMul = Math.max.apply(Math, incomeMultiple);
+                        //maxIncomeMul = numberFormatter(parseInt(maxIncomeMul));
+                        var minIncomeMul = Math.min.apply(Math, incomeMultiple);
+                        //minIncomeMul = numberFormatter(parseInt(minIncomeMul));
+                        var incomeMulStr = '$'+minIncomeMul+'-'+'$'+maxIncomeMul
+                        if(!minIncomeMul && !maxIncomeMul){
+                            incomeMulStr = "Not Available";
+                        }
+                        items.boxbudgetratio = incomeMulStr;
+
+                    }
 
                 });
                 $scope.talentGridOption.data = data;
@@ -244,30 +257,24 @@
                     }
                     if(isValidRatio && isValidOptionRatio){
                         selectedNames = $scope.filerByname;
-                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(2);
+                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(1);
                         var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
                         var boxbudgetratio = "";
                         if(item.boxbudgetratio !==null && item.boxbudgetratio !=="Not Available"){
                             if(seletedRatio==="maxgreaterorequal"){
-                                boxbudgetratio = item['boxbudgetratio'].split(',');
-                                var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
+                                boxbudgetratio = item['boxbudgetratio'].split('-');
+                                var maxRatio = parseFloat(getNumber(boxbudgetratio[1])).toFixed(1);
+                                //maxRatio = getNumber(maxRatio);
+                                //var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
                                 if(maxRatio >=inputRatio){
                                     findRatioFlag = true;
                                 }
 
                             }else if(seletedRatio==="mingreaterorequal"){
-                                boxbudgetratio = item['boxbudgetratio'].split(',');
-                                var minRatio = parseFloat(Math.min.apply(Math, boxbudgetratio)).toFixed(2);;
+                                boxbudgetratio = item['boxbudgetratio'].split('-');
+                                //var minRatio = parseFloat(boxbudgetratio[0]);
+                                var minRatio = parseFloat(getNumber(boxbudgetratio[0])).toFixed(1);
                                 if(minRatio >=inputRatio){
-                                    findRatioFlag = true;
-                                }
-
-                            }else{
-                                boxbudgetratio = item['boxbudgetratio'].split(',');
-                                var totalAvg=0;
-                                for(var i in boxbudgetratio) { totalAvg += boxbudgetratio[i]; }
-                                totalAvg = parseFloat(totalAvg/(boxbudgetratio.length-1)).toFixed(2);
-                                if(totalAvg >=inputRatio){
                                     findRatioFlag = true;
                                 }
 
