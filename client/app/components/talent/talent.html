@@ -173,11 +173,11 @@
     
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
     </br>
-    <p><span class="tableLable">Facebook Url</span>: <span><a href="{{mainTalent.facebookurl}}">{{facebookurl}}</a></span></p>
-    <p><span class="tableLable">Twitter Url</span>: <span><a href="{{mainTalent.twitterurl}}">{{twitterurl}}</a></span></p>
-    <p><span class="tableLable">Instagram Url</span>: <span><a href="{{mainTalent.instagramurl}}">{{instagramurl}}</a></span></p>
-    <p><span class="tableLable">Vine Url</span>: <span><a href="{{mainTalent.vineurl}}">{{vineurl}}</a></span></p>
-    <p><span class="tableLable">YouTube Url</span>: <span><a href="{{mainTalent.youtubeurl}}">{{youtubeurl}}</a></span></p>
+    <p><span class="tableLable">Facebook Url</span>: <span><a target="_blank" href="{{facebookurl}}">{{facebookurl}}</a></span></p>
+    <p><span class="tableLable">Twitter Url</span>: <span><a target="_blank" href="{{twitterurl}}">{{twitterurl}}</a></span></p>
+    <p><span class="tableLable">Instagram Url</span>: <span><a target="_blank" href="{{instagramurl}}">{{instagramurl}}</a></span></p>
+    <p><span class="tableLable">Vine Url</span>: <span><a target="_blank" href="{{vineurl}}">{{vineurl}}</a></span></p>
+    <p><span class="tableLable">YouTube Url</span>: <span><a target="_blank" href="{{youtubeurl}}">{{youtubeurl}}</a></span></p>
     </div>
     
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
@@ -187,27 +187,25 @@
     <thead class="credit_head">
         <tr>
             <th><span class="text">Title</span></th>
-            <th><span class="text" style="margin-left: -2%;">Release Date</span></th>
-            <th><span class="text" style="margin-left: -3%;">Role</span></th>
-            <th><span class="text" style="margin-left: -4%;">Budget</span></th>
-            <th><span class="text" style="margin-left: -12%;">Box Office</span></th>
+            <th><span class="text" style="margin-left: -3%;">Release Date</span></th>
+            <th><span class="text" style="margin-left: -41%;">Role</span></th>
+            <th><span class="text" style="margin-left: -94%;">Budget</span></th>
+            <th><span class="text" style="margin-left: -235%;">Box Office</span></th>
+            <th><span class="text" style="margin-left: -763%;">Log Line</span></th>
         </tr>
     </thead>
     </table>
     <table class="creditSection">
     <tbody>
-
-
-
         <tr ng-repeat="credits in creditsData | orderBy:'-releasedate'">
-            <td>{{credits.title}}</td>
-            <td>{{credits.releasedate}}</td>
-            <td>{{credits.roll}}</td>
-            <td style="width:22%;">{{credits.budget}}</td>
-            <td>{{credits.boxoffice}}</td>
+            <td style="width:21%;">{{credits.title}}</td>
+            <td style="width:14%;">{{credits.releasedate}}</td>
+            <td style="width:11%;">{{credits.roll}}</td>
+            <td style="width:16%;">{{credits.budget}}</td>
+            <td style="width:19%;">{{credits.boxoffice}}</td>
+            <td>{{credits.logline}}</td>
         </tr>
         </tbody>
-
 </table>
 
   </div>
