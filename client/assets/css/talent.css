@@ -614,3 +614,8 @@ table.creditSections {
 .talent-table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th {
     background-color: #FDFDFD;
 }
+
+.input-url-pre-text{
+    color: #66b3f1;
+    font-weight: bold;
+}
