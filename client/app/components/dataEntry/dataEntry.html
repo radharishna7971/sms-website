@@ -159,15 +159,17 @@
       <div ng-show="talentSection==='social'">
         <div class="talent-column">
           <p class="input-label">Twitter Url</p>
-          <input class="data-input" ng-model="activeElement.twitter_url" type="text">
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.twitter_url" type="text">
           <p class="input-label">Facebook Url</p>
-          <input class="data-input" ng-model="activeElement.facebook_url" type="text">     
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.facebook_url" type="text">
+          <p class="input-label">Youtube Url</p>
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.youtube_url" type="text">
         </div>
         <div class="talent-column">
           <p class="input-label">Vine Url</p>
-          <input class="data-input" ng-model="activeElement.vine_url" type="text">
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.vine_url" type="text">
           <p class="input-label">Instagram Url</p>
-          <input class="data-input" ng-model="activeElement.instagram_url" type="text">
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.instagram_url" type="text">
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>

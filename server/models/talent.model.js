@@ -131,7 +131,7 @@ Talent.getNames = function(nameChars,callback) {
       CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
       talent.last_name AS last_name \
     FROM talent \
-    WHERE talent.first_name like '+findNameWith+' and talent.deleted = false LIMIT 10')
+    WHERE CONCAT(talent.first_name, \' \', talent.last_name) like '+findNameWith+' and talent.deleted = false LIMIT 10')
   .then(function(results) {
      callback(results[0]);
   });
@@ -197,6 +197,8 @@ Talent.get = function(id, callback) {
       createdby, \
       ethnicity_id, \
       facebook_url, \
+      twitter_url, \
+      youtube_url, \
       vine_url, \
       instagram_url \
     FROM talent \
