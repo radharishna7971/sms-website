@@ -527,7 +527,6 @@
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
-                	//$scope.mainTalent = result[0];
                     $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
                     var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
@@ -548,34 +547,6 @@
                     $scope.creditsData = [];
                     var creditObj = {};
                     var creditArray = [];
-                    // if(result.details[0].creditsreleaserole!==null){
-                    //     var dataObj = result.details[0].creditsreleaserole.split('|');
-                    //     angular.forEach(dataObj, function(value, key) {
-                    // 	  if(value){
-                    // 		  var arr = value.trim().split(',');
-                    // 			angular.forEach(arr, function(value2, key2) {
-                    // 				if(key2 === 0){
-                    // 					creditObj.title = value2.trim();
-                    // 				}
-                    // 				if(key2 === 1){
-                    // 					creditObj.releasedate = value2.trim();
-                    // 				}
-                    // 				if(key2 === 2){
-                    // 					creditObj.roll = value2.trim();
-                    // 				}
-                    // 				if(key2 === 3){
-                    // 					creditObj.budget = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    // 				}
-                    // 				if(key2 === 4){
-                    // 					creditObj.boxoffice = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    // 				}
-                    // 			});
-                    // 			creditArray.push(creditObj);
-                    // 			creditObj = {};
-                    // 	  }
-                    // 	});
-                    //     $scope.creditsData = creditArray;
-                    // }
 
                     if(!!result.credits && result.credits.length>0){
                     angular.forEach(result.credits, function(value, key) {
@@ -583,8 +554,8 @@
                     creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
                     creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
                     creditObj.logline = (value.logline === null) ? 'Not Available' : value.logline;
-                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+value.estimatedBudget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+value.box_office_income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+numberFormatter(value.estimatedBudget);
+                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+numberFormatter(value.box_office_income);
                     creditArray.push(creditObj);
                     creditObj = {};
                     });
@@ -595,47 +566,19 @@
                     $scope.awardsData = [];
                     var awardObj = {};
                     var awardsArray = [];
-                   //  if(result.details[0].awardtypecredit!==null){
-                   //      var awardsObj = result.details[0].awardtypecredit.split('|');
-                   //      angular.forEach(awardsObj, function(value, key) {
-                   //    	  if(value){
-                   //    		var arr = value.trim().split(',');
-                			// angular.forEach(arr, function(value2, key2) {
-                			// 	if(key2 === 0){
-                			// 		awardObj.name = value2.trim();
-                			// 	}
-                			// 	if(key2 === 1){
-                			// 		awardObj.year = value2.trim();
-                			// 	}
-                			// 	if(key2 === 2){
-                			// 		awardObj.type = value2.trim();
-                			// 	}
-                			// 	if(key2 === 3){
-                			// 		awardObj.credit = value2.trim();
-                			// 	}
-                			// 	if(key2 === 4){
-                			// 		awardObj.awardfor = value2.trim();
-                			// 	}
-                			// });
-                			// awardsArray.push(awardObj);
-                			// awardObj = {};
-                   //    	  }
-                   //    	});
-                   //      $scope.awardsData = awardsArray;
-                   //  }
                     
-                        if(!!result.awards && result.awards.length>0){
-                            angular.forEach(result.awards, function(value, key) {
-                            awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
-                            awardObj.year = (value.release_date === null) ? 'Not Available' : value.release_date;
-                            awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
-                            awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
-                            awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
-                            awardsArray.push(awardObj);
-                            awardObj = {};
-                            });
-                            $scope.awardsData = awardsArray;
-                        }
+                    if(!!result.awards && result.awards.length>0){
+                        angular.forEach(result.awards, function(value, key) {
+                        awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
+                        awardObj.year = (value.release_date === null) ? 'Not Available' : value.release_date;
+                        awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
+                        awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
+                        awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
+                        awardsArray.push(awardObj);
+                        awardObj = {};
+                        });
+                        $scope.awardsData = awardsArray;
+                    }
 
                     $scope.commentsData = [];
                     var commentObj = {};
@@ -652,32 +595,56 @@
                     	});
                     	$scope.commentsData = commentArray;
                     }
-                                        
+                     
                     $scope.associateData = [];
                     var associateObj = {};
                     var associateArray = [];
-                    if(result.details[0].associateInfo!==null){
-                        var associateDataObj = result.details[0].associateInfo.split('|');
-                        angular.forEach(associateDataObj, function(value, key) {
-                      	  if(value){
-                      		var vals = value.trim().split(',');
-                      		angular.forEach(vals, function(value2, key2) {
-                      			if(key2 === 0){
-                      				associateObj.associatename = value2.trim();
-                  				}
-                      			if(key2 === 1){
-                      				associateObj.firstname = value2.trim();
-                  				}
-                      			if(key2 === 2){
-                      				associateObj.lastname = value2.trim();
-                  				}
-                  			});
-                      		associateArray.push(associateObj);
-                      		associateObj = {};
-                      	  }
-                      	});
-                        $scope.associateData = associateArray;
+                    var typeArray = [];
+                    if(!!result.associateInfo && result.associateInfo.length>0){
+                    	angular.forEach(result.associateInfo, function(value, key) {
+	                    	associateObj.associatename = value.type;
+	                    	associateObj.firstname = value.firstName;
+	                    	associateObj.lastname = value.lastName;
+                    		associateArray.push(associateObj);
+                    		typeArray.push(value.type);
+                    		associateObj = {};
+                    	});
                     }
+
+            		if($.inArray( "Manager",typeArray) === -1){
+            			associateObj.associatename = 'Manager';
+                    	associateObj.firstname = '';
+                    	associateObj.lastname = '';
+                		associateArray.push(associateObj);
+                		associateObj = {};
+            		}
+            		
+            		if($.inArray( "Agent",typeArray) === -1){
+            			associateObj.associatename = 'Agent';
+                    	associateObj.firstname = '';
+                    	associateObj.lastname = '';
+                		associateArray.push(associateObj);
+                		associateObj = {};
+            		}
+            		
+            		if($.inArray( "Attorney",typeArray) === -1){
+            			associateObj.associatename = 'Attorney';
+                    	associateObj.firstname = '';
+                    	associateObj.lastname = '';
+                		associateArray.push(associateObj);
+                		associateObj = {};
+            		}
+            		
+            		if($.inArray( "Publicist",typeArray) === -1){
+            			associateObj.associatename = 'Publicist';
+                    	associateObj.firstname = '';
+                    	associateObj.lastname = '';
+                		associateArray.push(associateObj);
+                		associateObj = {};
+            		}
+                		
+                	$scope.associateData = associateArray;
+                    
                     
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
                     $("#infoTab").addClass('active-talent-link');

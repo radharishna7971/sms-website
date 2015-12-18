@@ -163,7 +163,7 @@
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
     </br>
-    <p ng-repeat="associate in associateData">     
+    <p ng-repeat="associate in associateData | orderBy:'associatename'">     
       <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
     </p>
     <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
@@ -182,27 +182,27 @@
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='credits'">
     </br>
     <div>
-    <table class="creditSections">
-    <thead class="credit_head">
+    <table class="creditSection">
+    <thead>
         <tr>
-            <th><span class="text">Title</span></th>
-            <th><span class="text" style="margin-left: -3%;">Release Date</span></th>
-            <th><span class="text" style="margin-left: -41%;">Role</span></th>
-            <th><span class="text" style="margin-left: -94%;">Budget</span></th>
-            <th><span class="text" style="margin-left: -235%;">Box Office</span></th>
-            <th><span class="text" style="margin-left: -763%;">Log Line</span></th>
+            <th class="col-md-2">Title</th>
+            <th class="col-md-1">Release Date</th>
+            <th class="col-md-3">Role</th>
+            <th class="col-md-2">Budget</th>
+            <th class="col-md-2">Box Office</th>
+            <th class="col-md-2">Log Line</th>
         </tr>
     </thead>
-    </table>
-    <table class="creditSection">
+
+
     <tbody>
         <tr ng-repeat="credits in creditsData | orderBy:'-releasedate'">
-            <td style="width:21%;">{{credits.title}}</td>
-            <td style="width:14%;">{{credits.releasedate}}</td>
-            <td style="width:11%;">{{credits.roll}}</td>
-            <td style="width:16%;">{{credits.budget}}</td>
-            <td style="width:19%;">{{credits.boxoffice}}</td>
-            <td>{{credits.logline}}</td>
+            <td class="col-md-2">{{credits.title}}</td>
+            <td class="col-md-1">{{credits.releasedate}}</td>
+            <td class="col-md-3">{{credits.roll}}</td>
+            <td class="col-md-2">{{credits.budget}}</td>
+            <td class="col-md-2">{{credits.boxoffice}}</td>
+            <td class="col-md-2">{{credits.logline}}</td>
         </tr>
         </tbody>
 </table>
@@ -215,29 +215,29 @@
 
     <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='award'">
     </br>
-    <table class="creditSections">
-    <thead class="credit_head">
+    <table class="creditSection">
+    <thead>
         <tr>
-            <th><span class="text">Year</span></th>
-            <th><span class="text" style="margin-left: -121px;">Award</span></th>
-            <th><span class="text" style="margin-left: -71px;">Category</span></th>
-            <th><span class="text" style="margin-left: -130px;">Result</span></th>
-            <th><span class="text" style="margin-left: -124px;">Credit</span></th>
+            <th class="col-md-2">Year</th>
+            <th class="col-md-2">Award</th>
+            <th class="col-md-2">Category</th>
+            <th class="col-md-2">Result</th>
+            <th class="col-md-2">Credit</th>
         </tr>
     </thead>
 
-    </table>
-    <table class="creditSection">
+
+
     <tbody>
 
 
 
         <tr ng-repeat="awards in awardsData | orderBy:'-year'">
-            <td style="width: 11%;">{{awards.year}}</td>
-            <td style="width: 27%;">{{awards.name}}</td>
-            <td style="width: 17%;">{{awards.awardfor}}</td>
-            <td>{{awards.type}}</td>
-            <td>{{awards.credit}}</td>
+            <td class="col-md-2">{{awards.year}}</td>
+            <td class="col-md-2">{{awards.name}}</td>
+            <td class="col-md-2">{{awards.awardfor}}</td>
+            <td class="col-md-2">{{awards.type}}</td>
+            <td class="col-md-2">{{awards.credit}}</td>
         </tr>
         </tbody>
 

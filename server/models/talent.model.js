@@ -73,12 +73,7 @@ Talent.getProfile= function(talentId, callback) {
   (select GROUP_CONCAT(distinct c.name SEPARATOR \', \') as genresdata \
     from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
-    where cjoin.talent_id ='+ talentId+') as credits, \
-(select GROUP_CONCAT(distinct \' \',`at`.type,\', \',a.firstName,\',\',a.lastName,\',\',\',\',\' \' SEPARATOR \'| \') \
-  as associatedata from associate_talent_associate_type_join atj \
-  inner join associate_types at ON atj.associte_types_id=`at`.id \
-  inner join associate a ON a.id=atj.associate_id \
-  where atj.talent_id ='+ talentId+') as associateInfo \
+    where cjoin.talent_id ='+ talentId+') as credits \
 FROM talent t where t.id= ' + talentId)
   .then(function(results) {
 	  var ob = {};
@@ -112,7 +107,13 @@ FROM talent t where t.id= ' + talentId)
 			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%d %b %Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\,\') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
 							    	.then(function(results3) {
 							    		ob.credits = results3[0];
-							    		callback(ob);
+							    		
+							    		db.knex.raw('select `at`.type,a.firstName,a.lastName from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id  where atj.talent_id = '+talentId)
+							    		.then(function(results4) {
+							    			ob.associateInfo = results4[0];
+							    			callback(ob);
+							    		});
+							    		
 							    	});
 		  		    	   
 		  		       });
