@@ -6,6 +6,8 @@
             ///////////////////////////////
             /// Initialize View
             ///////////////////////////////
+            $('.filter-header-container').find('.arrow').removeClass( "arrow-down" );
+            $('.filter-header-container').find('.arrow').addClass( "arrow-right" );
              $scope.incomeMultiple = [
                  {"id": 1,"name": 1}, {"id": 2,"name": 2},
                  {"id": 3,"name": 3}, {"id": 4,"name":4},
@@ -59,6 +61,7 @@
             }
 
             talentFactory.getAll(function (data) {
+
                 angular.forEach(data,function(items){
                     if(items.estimatedBudget !==null && items.estimatedBudget){
                         var estimatedBudgets = items.estimatedBudget.split(',');
@@ -69,6 +72,8 @@
                         var estimatedBudgetVal = '$'+minBudget+'-'+'$'+maxBudget
                         if(!minBudget && !maxBudget){
                             estimatedBudgetVal = "Not Available";
+                        }else if(minBudget===maxBudget){
+                            estimatedBudgetVal = '$'+minBudget;
                         }
                         items.estimatedBudget = estimatedBudgetVal;
                     }
@@ -81,6 +86,8 @@
                         var boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
                         if(!minBudget && !maxBudget){
                             boxOfficeIncome = "Not Available";
+                        }else if(minBudget === maxBudget){
+                            boxOfficeIncome = '$'+minBudget;
                         }
                         items.boxOfficeIncome = boxOfficeIncome;
                     }
@@ -93,9 +100,11 @@
                         //maxIncomeMul = numberFormatter(parseInt(maxIncomeMul));
                         var minIncomeMul = Math.min.apply(Math, incomeMultiple);
                         //minIncomeMul = numberFormatter(parseInt(minIncomeMul));
-                        var incomeMulStr = '$'+minIncomeMul+'-'+'$'+maxIncomeMul
+                        var incomeMulStr = minIncomeMul+'-'+maxIncomeMul
                         if(!minIncomeMul && !maxIncomeMul){
                             incomeMulStr = "Not Available";
+                        }else if(minIncomeMul === maxIncomeMul){
+                            incomeMulStr = minIncomeMul;
                         }
                         items.boxbudgetratio = incomeMulStr;
 
@@ -262,8 +271,8 @@
                         var boxbudgetratio = "";
                         if(item.boxbudgetratio !==null && item.boxbudgetratio !=="Not Available"){
                             if(seletedRatio==="maxgreaterorequal"){
-                                boxbudgetratio = item['boxbudgetratio'].split('-');
-                                var maxRatio = parseFloat(getNumber(boxbudgetratio[1])).toFixed(1);
+                                boxbudgetratio = item['boxbudgetratio'].toString().split('-');
+                                var maxRatio = parseFloat(getNumber(boxbudgetratio[boxbudgetratio.length-1])).toFixed(1);
                                 //maxRatio = getNumber(maxRatio);
                                 //var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
                                 if(maxRatio >=inputRatio){
@@ -271,7 +280,7 @@
                                 }
 
                             }else if(seletedRatio==="mingreaterorequal"){
-                                boxbudgetratio = item['boxbudgetratio'].split('-');
+                                boxbudgetratio = item['boxbudgetratio'].toString().split('-');
                                 //var minRatio = parseFloat(boxbudgetratio[0]);
                                 var minRatio = parseFloat(getNumber(boxbudgetratio[0])).toFixed(1);
                                 if(minRatio >=inputRatio){
@@ -370,7 +379,7 @@
                             var budgets = item['estimatedBudget'].split('-');
                             console.log(budgets);
                             var lowerLimit = budgets[0];
-                            var upperLimit = budgets[1];
+                            var upperLimit = budgets[budgets.length-1];
                             var lowerLimitDigit = getNumber(lowerLimit);
                             var upperLimitDigit = getNumber(upperLimit);
                             var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
@@ -420,7 +429,7 @@
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
                             var budgets = item['boxOfficeIncome'].split('-');
                             var lowerLimit = budgets[0];
-                            var upperLimit = budgets[1];
+                            var upperLimit = budgets[budgets.length-1];
                             var lowerLimitDigit = getNumber(lowerLimit);
                             var upperLimitDigit = getNumber(upperLimit);
                             var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
@@ -843,11 +852,16 @@
             $(document).on('click', '.filter-header-container', function () {
                 if ($(this).next('.filter-option-container').is(':visible')) {
                     $(this).next('.filter-option-container').hide();
+                    $(this).find('.arrow').removeClass( "arrow-down" );
+                    $(this).find('.arrow').addClass( "arrow-right" );
+
                 } else {
                     $(this).next('.filter-option-container').show();
+                    //$(this).find('.arrow').removeClass( "arrow-right" );
+                    $(this).find('.arrow').addClass( "arrow-down" );
                 }
                 // $(this).next('.filter-option-container').slideToggle();
-                $(this).find('.arrow').toggleClass('arrow-down');
+                
 
                 $('.talent-left-col-container').hide();
                 $('.talent-left-col-container').show();
