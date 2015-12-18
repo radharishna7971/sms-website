@@ -7,8 +7,10 @@ Talent.getAll = function(callback) {
     SELECT \
     t.id as id, \
     CONCAT(t.last_name, \', \', t.first_name) AS name, \
+    t.age as age, \
     t.gender as gender, \
     t.country as country , \
+    t.createdby as createdby, \
     ( select e.name from ethnicity e where e.id=t.ethnicity_id ) as ethnicity, \
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
     inner join roles r on r.id = cjoin.role_id \
@@ -20,7 +22,22 @@ Talent.getAll = function(callback) {
     inner join credits c on c.id = cjoin.credit_id \
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \
-    where cjoin.talent_id = t.id) as genres \
+    where cjoin.talent_id = t.id) as genres, \
+    (select GROUP_CONCAT(distinct c.estimatedBudget SEPARATOR \', \') as estimatedBudgetData from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as estimatedBudget, \
+    (select GROUP_CONCAT(distinct c.box_office_income SEPARATOR \', \') as boxOfficeIncomeData from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as boxOfficeIncome, \
+    (select GROUP_CONCAT(distinct c.boxbudgetratio SEPARATOR \', \') as boxbudgetratioData from credit_talent_role_join cjoin \
+    inner join credits c on c.id = cjoin.credit_id \
+    inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
+    inner join genres g on g.id = cgj.genre_id \
+    where cjoin.talent_id = t.id) as boxbudgetratio \
   FROM talent t')
   .then(function(results) {
      var data = results[0];
@@ -37,7 +54,7 @@ Talent.insertExcelData = function(data){
 
 Talent.getProfile= function(talentId, callback) {
   db.knex.raw(' \
-    SELECT t.first_name as firstName, t.last_name as lastName, \
+    SELECT t.id as id, t.first_name as firstName, t.last_name as lastName, \
     t.age as age, t.gender as gender, t.twitter_url as twitterurl, \
     t.facebook_url as facebookurl, t.youtube_url as youtubeurl, t.instagram_url as instagramurl, \
 	DATE_FORMAT(t.created_at,"%d %b %Y") as createdAt, DATE_FORMAT(t.last_edited,"%d %b %Y") as lastEdited, \
@@ -57,31 +74,51 @@ Talent.getProfile= function(talentId, callback) {
     from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     where cjoin.talent_id ='+ talentId+') as credits, \
-    (select GROUP_CONCAT(distinct \' \',`at`.type,\', \',a.firstName,\',\',a.lastName,\',\',\',\',\' \' SEPARATOR \'| \') \
-    		  as associatedata from associate_talent_associate_type_join atj \
-    		  inner join associate_types at ON atj.associte_types_id=`at`.id \
-    		  inner join associate a ON a.id=atj.associate_id \
-    		  where atj.talent_id ='+ talentId+') as associateInfo, \
-	(select GROUP_CONCAT(c.text, \',\',DATE_FORMAT(c.created_at,"%l %p %d %b %Y"), \',\' ,u.first_name SEPARATOR \'| \') as commentdata \
-	from comments c \
-	inner join users u on c.user_id=u.id \
-	where c.talent_id ='+ talentId+') as commentsData, \
-(select GROUP_CONCAT(distinct \' \',c.name,\', \',DATE_FORMAT(c.release_date,"%d %b %Y"),\',\',r.name,\',\',c.estimatedBudget,\', \',c.box_office_income,\', \',\',\',\' \' SEPARATOR \'| \') \
-  as genresdata from credit_talent_role_join cjoin \
-  inner join credits c on c.id = cjoin.credit_id \
-  inner join roles r on r.id = cjoin.role_id \
-  where cjoin.talent_id ='+ talentId+' order by c.release_date asc) as creditsreleaserole, \
-(select GROUP_CONCAT(a.awardname, \',\',DATE_FORMAT(c.release_date,"%Y"),\',\',a.awardtype, \',\' ,c.name SEPARATOR \'| \') \
-  as awardscredittalent from talent_award_credit_join tajoin \
-  inner join awards a on a.id = tajoin.award_id \
-  inner join credits c on c.id = tajoin.credit_id \
-  inner join talent t  on t.id = tajoin.talent_id \
-  where tajoin.talent_id = '+ talentId+') AS awardtypecredit \
+(select GROUP_CONCAT(distinct \' \',`at`.type,\', \',a.firstName,\',\',a.lastName,\',\',\',\',\' \' SEPARATOR \'| \') \
+  as associatedata from associate_talent_associate_type_join atj \
+  inner join associate_types at ON atj.associte_types_id=`at`.id \
+  inner join associate a ON a.id=atj.associate_id \
+  where atj.talent_id ='+ talentId+') as associateInfo \
 FROM talent t where t.id= ' + talentId)
   .then(function(results) {
-     var data = results[0];
-     callback(data);
+	  var ob = {};
+	  ob.details = results[0];
+	  db.knex.raw(' \
+		       SELECT \
+		         comments.text AS text, \
+		         CONCAT(users.first_name, \' \', users.last_name) AS name, \
+		         comments.created_at AS date, \
+		         comments.id AS comment_id, \
+		         talent.id AS talent_id \
+		       FROM comments, talent, users \
+		       WHERE comments.talent_id = talent.id \
+		       AND comments.deleted = false \
+		       AND comments.user_id = users.id \
+		       AND talent.id = ' + talentId)
+		     .then(function(results1) {
+		    	 ob.comments = results1[0];
+		    	 
+		    	 db.knex.raw(' \
+		    			 select a.awardname, DATE_FORMAT(c.release_date,"%Y") as release_date, a.awardtype, \
+		    			 c.`name`, a.awardfor \
+		    			 from talent_award_credit_join tacj\
+		    			 INNER JOIN awards a ON tacj.award_id = a.id \
+		    			 INNER JOIN credits c on tacj.credit_id=c.id \
+		    			 INNER JOIN talent t on t.id=tacj.talent_id \
+		    			 where tacj.talent_id='+talentId)
+		  		       .then(function(results2) {
+		  		    	   ob.awards = results2[0];
+		  		    	 //callback(ob);
+			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%d %b %Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\,\') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
+							    	.then(function(results3) {
+							    		ob.credits = results3[0];
+							    		callback(ob);
+							    	});
+		  		    	   
+		  		       });
+		     });
   });
+  
 };
 
 // Return list of all talent names
@@ -94,11 +131,45 @@ Talent.getNames = function(nameChars,callback) {
       CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
       talent.last_name AS last_name \
     FROM talent \
-    WHERE talent.first_name like '+findNameWith+' and talent.deleted = false LIMIT 10')
+    WHERE CONCAT(talent.first_name, \' \', talent.last_name) like '+findNameWith+' and talent.deleted = false LIMIT 10')
   .then(function(results) {
      callback(results[0]);
   });
 };
+
+// Return list of all createdby names
+Talent.getAllCreatedByname = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(createdby) as createdby \
+      FROM talent \
+    WHERE createdby is not null order by createdby')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
+
+// Return list of all awards names
+Talent.allAwards = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(awardname) as awardname \
+      FROM awards \
+    WHERE awardname is not null order by awardname')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
+
+// Return list of all country names
+Talent.getAllCountryNames = function(callback) {
+  db.knex.raw(' \
+    SELECT distinct(country) as country \
+      FROM talent \
+    WHERE country is not null order by country')
+  .then(function(results) {
+     callback(results[0]);
+  });
+};
+
 
 Talent.getName = function(id, callback) {
   db.knex.raw(' \
@@ -123,8 +194,11 @@ Talent.get = function(id, callback) {
       city, \
       State, \
       country, \
+      createdby, \
       ethnicity_id, \
       facebook_url, \
+      twitter_url, \
+      youtube_url, \
       vine_url, \
       instagram_url \
     FROM talent \
@@ -174,8 +248,6 @@ Talent.get = function(id, callback) {
 
 
 Talent.addOrEdit = function(talentData, callback) {
-  console.log("krishna ....!!!");
-  console.log(talentData);
   // Check to see if talent exists with same name
   new Talent({first_name: talentData.first_name, last_name: talentData.last_name})
   .fetch()

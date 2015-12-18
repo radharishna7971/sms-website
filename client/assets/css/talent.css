@@ -214,13 +214,13 @@
 }
 
 .right-talent-container-menu {
-  width: 634px;
-  height: 25px;
-  margin-right: auto;
-  border: 1px solid #66B3F1;
-  border-radius: 10px;
+    width: 1094px;
+    height: 27px;
+    margin-right: auto;
+    margin-left: 35px;
+    border: 1px solid #66B3F1;
+    border-radius: 11px;
 }
-
 /* Menu */
 .right-talent-container-menu-link {
   float: left;
@@ -234,36 +234,50 @@
   cursor: pointer;
 }
 .center-link {
-  border-left: 1px solid #66B3F1;
-  border-right: 1px solid #66B3F1;
+    border-left: 1px solid #66B3F1;
+    border-right: 1px solid #66B3F1;
+    width: 182px;
 }
 
 .left-link {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 182px;
+} 
 
 .right-link {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+  width: 182px;
 }
 
 .right-talent-container-menu-link:hover {
-  background-color: #66B3F1;
-  color: white;
+    background-color: #66B3F1;
+    color: white;
+    width: 182px;
 }
 
 .active-talent-link {
-  background-color: #66B3F1;
-  color: white;
+    background-color: #66B3F1;
+    color: white;
+    width: 182px;
 }
 
-
+.talent-data-comment {
+    height: 176px;
+    width: 727px;
+    border: 1px solid #66B3F1;
+    float: left;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-left: 29px;
+}
 /* Bottom content */
 .talent-right-container-other-div {
-  width: 100%;
-  height: 100%;
-  padding-left: 5px;
+    width: 100%;
+    height: 100%;
+    padding-left: 5px;
+    margin-left: 2px;
 }
 
 .comment-div {
@@ -309,7 +323,6 @@
   width: 100%;
   height: 150px;
   margin-left: -5px;
-  position: absolute;
   bottom: 0px;
 }
 
@@ -318,27 +331,29 @@
   border: none;
   border: 1px solid #66B3F1;
   height: 103px;
-  width: 338px;
+  width: 362px;
   padding: 5px;
   margin: 0px;
   font-size: 14px;
   resize: none;
+  margin-left: 5px;
 }
 
 .comment-submit {
   /*clear: both;*/
-  outline: none;
-  height: 35px;
-  background-size: red;
-  width: 100%;
-  border: none;
-  color: white;
+    margin-left: -365px;
+    margin-top: 56px;
+    width: 100px;
+    color: white;
   background-color: #66B3F1;
-  line-height: 35px;
-  font-size: 14px;
-  padding: 0px;
-  cursor: pointer;
-  margin-top: -10px;
+}
+.comment-submit:hover, .comment-submit:focus {
+    color: white;
+    text-decoration: none;
+}
+.comment-submit:focus, .comment-submit:focus:active, .active.comment-submit:focus {
+    outline: 3px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
 }
 
 
@@ -350,10 +365,12 @@
   background-color: #A8CEEC;
 }
 
-.talent-right-container-other-div p{
+.talent-right-container-other-div p {
     font-size: 14px;
     font-family: vardana;
     color: #555;
+    margin-left: 31px;
+    width: 265%;
 }
 
 /*Grid Style Change*/
@@ -375,31 +392,230 @@
   color: #fff;
   font-weight: bold;
 }
-.creditTableHeads{
-	font-weight:500;
-	text-align: left;
-	width:108px;
-	background-color: #66B3F1;
+table.creditSection {
+    display: table;
+    border-collapse: collapse;
+    width: 1088px;
+    margin-bottom: 5px;
+    margin-left: 32px;
+
+
+
+
+
 }
-.creditTableBody{
-	width:21%;
-	word-break: break-word;
+    table.creditSection thead, table.creditSection tbody {
+        float: left;
+        width: 100%;
+    }
+    table.creditSection tbody {
+        overflow: auto;
+        height: 150px;
+        margin-top: 15px;
+    }
+    table.creditSection tr {
+    width: 100%;
+    display: table;
+
+
+    text-align: left;
+    height: 55px;
+    margin-left: -4px;
+    }
+    table.creditSection th {
+        background-color: #66B3F1;
+        color: white;
+    }
+    table.creditSection th, table.creditSection td {
+        width: 22%;
+        text-align: left;
+        padding: 8px;
+    }
+.creditSection>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+
+    background-color: #F3F3F3;
 }
-.awardTableBody{
-	width:25%;
-	word-break: break-word;
+
+
+.creditSection>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th {
+
+
+
+
+    background-color: #FDFDFD;
 }
+table.creditSections {
+        display: table;
+        border-collapse: collapse;
+        width: 1088px;
+        margin-bottom: 5px;
+        margin-left: 32px;
+    }
+    table.creditSections thead, table.creditSections tbody {
+        float: left;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        width: 100%;
+    }
+    table.creditSections tbody {
+        overflow: auto;
+        height: 150px;
+        margin-top: 15px;
+    }
+    table.creditSections tr {
+
+
+
+
+
+
+
+
+
+        width: 100%;
+        display: table;
+        text-align: left;
+         height: 14px;
+    }
+    table.creditSections th {
+        background-color: #66B3F1;
+        color: white;
+    }
+    table.creditSections th, table.creditSections td {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        width: 22%;
+        text-align: left;
+        padding: 8px;
+    }
+
+
+
+
+
+
+
+
+
+
 .commentTableBody{
-	width:45%;
-	word-break: break-word;
-	padding-right: 5px;
+  width:45%;
+  word-break: break-word;
+  padding-right: 5px;
 }
-.creditTable{
-	width:540px; 
-	height:60px; 
-	overflow:auto;
+.credit_table{
+    width: 540px;
+    margin-bottom: 5px;
+    margin-left: 32px;
 }
 .tableLable{
-	color:#66B3F1;
-	font-weight:600;"
+  color:#66B3F1;
+  font-weight:600;"
+}
+
+.talent-data-comment-headers {
+    width: 100%;
+    height: 17px;
+    color: white;
+    background-color: #66B3F1;
+    line-height: 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/*credit_table tbody{
+    width: 1045px;
+    margin-left: 28px;
+    height: 175px;
+    overflow-y: auto;
+}*/
+
+#table-wrapper {
+  position:relative;
+}
+#table-scroll {
+  height:150px;
+  overflow:auto;  
+  margin-top:20px;
+  margin-right: 47px;
+}
+#table-wrapper table {
+  width:100%;
+    
+}
+#table-wrapper table * {
+  
+  color:black;
+}
+#table-wrapper table thead th .text {
+  position:absolute;  
+  top:-20px;
+  z-index:2;
+  height:20px;
+  width:35%;
+ 
+}
+
+#talentInfo{
+  font-size: 16px;
+  font-family: 'Lato';
+}
+
+
+.talent-table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
+    background-color: #F3F3F3;
+}
+
+
+.talent-table-striped>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th {
+    background-color: #FDFDFD;
+}
+
+.input-url-pre-text{
+    color: #66b3f1;
+    font-weight: bold;
 }

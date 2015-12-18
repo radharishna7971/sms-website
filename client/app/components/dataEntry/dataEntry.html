@@ -14,7 +14,7 @@
   </div>
   <div class="data-left-column-data" ng-if="section==='Talent'">
     <div class="data-left-column-data-row">
-   <input type="text" ng-model="talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+   <input type="text" ng-model="model.talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
   </div>
     <div ng-show="noResults">
@@ -159,15 +159,17 @@
       <div ng-show="talentSection==='social'">
         <div class="talent-column">
           <p class="input-label">Twitter Url</p>
-          <input class="data-input" ng-model="activeElement.twitter_url" type="text">
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.twitter_url" type="text">
           <p class="input-label">Facebook Url</p>
-          <input class="data-input" ng-model="activeElement.facebook_url" type="text">     
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.facebook_url" type="text">
+          <p class="input-label">Youtube Url</p>
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.youtube_url" type="text">
         </div>
         <div class="talent-column">
           <p class="input-label">Vine Url</p>
-          <input class="data-input" ng-model="activeElement.vine_url" type="text">
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.vine_url" type="text">
           <p class="input-label">Instagram Url</p>
-          <input class="data-input" ng-model="activeElement.instagram_url" type="text">
+          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.instagram_url" type="text">
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>
@@ -215,7 +217,7 @@
       </div>
       <div class="talent-data-comments">
         <div class="talent-data-comment-header">Comments</div>
-        <div class="comment-div" ng-repeat="comment in activeElement.comments">
+        <div class="comment-div" ng-repeat="comment in activeElement.comments | orderBy:'-date'">
           <div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
           <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
           <p class="comment-text">{{comment.text}}</p>
@@ -233,8 +235,8 @@
 	<!-- Info	-->
 	
 	<div ng-show="talentSection==='info'">
-      <p class="input-label">Creator Name: </p><p>{{}}</p>
-      <p class="input-label">Created Date: </p><p>{{activeElement.created_at | date }}</p>
+      <p class="input-label" id="talentInfo">Creator Name: <span>{{activeElement.createdby}}</span></p>
+      <!-- <p class="input-label">Created Date: </p><p>{{activeElement.created_at | date }}</p> -->
     </div>
 
   </div>

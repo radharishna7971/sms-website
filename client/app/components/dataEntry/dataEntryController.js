@@ -10,7 +10,8 @@
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
     //$scope.talentNameInput = {};
-
+    $scope.model ={};
+    //alert(window.localStorage.smstudiosLoginUserName);
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
       // Remove active element
@@ -21,7 +22,7 @@
       $scope.talentSection = 'main';
       $scope.activeData = $scope.data[$scope.section];
       $scope.btnTxt = "Add";	
-
+      $scope.model ={};
       if ($event) {
         $('.data-left-column-categories-div').removeClass('active-data-right-column-link');
         $($event.target).addClass('active-data-right-column-link');
@@ -80,6 +81,8 @@
     $scope.clearForm = function() {
       $scope.editElement = null;
       $scope.activeElement = {};
+      $scope.model ={};
+      $scope.errorText = '';
       $scope.talentSection = 'main';
       $scope.btnTxt = "Add";
     };
@@ -108,7 +111,6 @@
       },
       Credit: function() {
         creditFactory.getCredit($scope.editElement.id, function(creditData) {
-          console.log($scope.activeElement);
           $scope.activeElement = creditData;
         });
       },
@@ -274,6 +276,9 @@
           if (!$scope.activeElement.created_by) {
             $scope.activeElement.created_by = window.localStorage.smstudiosId;
           }
+          if (!$scope.activeElement.createdby) {
+            $scope.activeElement.createdby = window.localStorage.smstudiosLoginUserName;
+          }
 
           // Add id to keep track of who created given talent
           $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
@@ -283,9 +288,9 @@
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
               } else {
-                $scope.data[$scope.section].push(res);
-                $scope.editElement = res;
-                activeElementSetter[$scope.section]();
+                // $scope.data[$scope.section].push(res);
+                  $scope.editElement = res;
+                  activeElementSetter[$scope.section]();
 				        $scope.btnTxt = "Update";				
               }
             }
@@ -372,7 +377,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";
+		      $scope.btnTxt = "Add";
         });
       },
       Contact: function() {
@@ -389,11 +394,13 @@
       Talent: function() {
         talentFactory.deleteTalent($scope.editElement.id, function(){
           // Remove deleted data point from the array
-          $scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
+          //$scope.data[$scope.section].splice($scope.data[$scope.section].indexOf($scope.editElement), 1);
 
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
+          $scope.model ={};
+          $scope.errorText = '';
 		      $scope.btnTxt = "Add";
         });
       }
@@ -440,7 +447,6 @@
         $scope.editElement = itemval;
         activeElementSetter['Talent']();
         $scope.btnTxt = "Update";
-          //console.log(itemval);
       };
     // Ensures all required inputs have data
     // Takes in an optional section.  If section is passed in, it means it is part of the talent form.  This is done to handle that fact that some required inputs might be hidden
@@ -493,7 +499,7 @@
       // If text is in the textarea, submit the new comment
       if ($('.data-entry-comment-input').val() !== "") {
         commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function(result) {
-          $scope.activeElement.comments.push(result);
+          $scope.activeElement.comments.unshift(result);
           //Once comment is added, append it to the comments-container and clear the textarea
           $('.data-entry-comment-input').val('');
         });
@@ -502,8 +508,13 @@
 
     // Remove comment when delete button is clicked
     $scope.removeComment = function($event, comment_id) {
-      $($event.target).parent().slideUp();
-      commentFactory.removeComment(comment_id);
+    var r = confirm("Do you really want to delete this comment?");
+		if (r == true) {
+			$($event.target).parent().slideUp();
+		  commentFactory.removeComment(comment_id);
+		} else {
+		    //return false;
+		}
     };
   });
 })();

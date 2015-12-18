@@ -39,7 +39,69 @@
             };
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
+
+            function numberFormatter(num) {
+                if (num >= 1000000000) {
+                    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+                }
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+                }
+                if (num >= 1000) {
+                    return (num / 1000).toFixed(0).replace(/\.0$/, '') + 'K';
+                }
+                return num;
+            }
+
+            function getNumber(inputStr){
+                var numberValue = Number(inputStr .replace(/[^0-9\.]+/g,""));
+                return parseInt(numberValue);
+            }
+
             talentFactory.getAll(function (data) {
+                angular.forEach(data,function(items){
+                    if(items.estimatedBudget !==null && items.estimatedBudget){
+                        var estimatedBudgets = items.estimatedBudget.split(',');
+                        var maxBudget = Math.max.apply(Math, estimatedBudgets);
+                        maxBudget = numberFormatter(parseInt(maxBudget));
+                        var minBudget = Math.min.apply(Math, estimatedBudgets);
+                        minBudget = numberFormatter(parseInt(minBudget));
+                        var estimatedBudgetVal = '$'+minBudget+'-'+'$'+maxBudget
+                        if(!minBudget && !maxBudget){
+                            estimatedBudgetVal = "Not Available";
+                        }
+                        items.estimatedBudget = estimatedBudgetVal;
+                    }
+                    if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
+                        var boxOfficeIncomes = items.boxOfficeIncome.split(',');
+                        var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
+                        maxIncome = numberFormatter(parseInt(maxIncome));
+                        var minIncome = Math.min.apply(Math, boxOfficeIncomes);
+                        minIncome = numberFormatter(parseInt(minIncome));
+                        var boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
+                        if(!minBudget && !maxBudget){
+                            boxOfficeIncome = "Not Available";
+                        }
+                        items.boxOfficeIncome = boxOfficeIncome;
+                    }
+                    if(items.boxbudgetratio==="0.0"){
+                        items.boxbudgetratio = "Not Available";
+                    }
+                    if(items.boxbudgetratio !==null && items.boxbudgetratio){
+                        var incomeMultiple = items.boxbudgetratio.split(',');
+                        var maxIncomeMul = Math.max.apply(Math, incomeMultiple);
+                        //maxIncomeMul = numberFormatter(parseInt(maxIncomeMul));
+                        var minIncomeMul = Math.min.apply(Math, incomeMultiple);
+                        //minIncomeMul = numberFormatter(parseInt(minIncomeMul));
+                        var incomeMulStr = '$'+minIncomeMul+'-'+'$'+maxIncomeMul
+                        if(!minIncomeMul && !maxIncomeMul){
+                            incomeMulStr = "Not Available";
+                        }
+                        items.boxbudgetratio = incomeMulStr;
+
+                    }
+
+                });
                 $scope.talentGridOption.data = data;
                 $scope.gridData = data;
                 $scope.filteredRows = data;
@@ -92,6 +154,15 @@
                     if($($event.target).hasClass( "ethnicity-list-class" )){
                         $("input#allEthnicity").prop("checked",false);
                     }
+                    if($($event.target).hasClass( "createdby-list-class" )){
+                        $("input#allCreatedBy").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "country-list-class" )){
+                        $("input#allCountries").prop("checked",false);
+                    }
+                    if($($event.target).hasClass( "awards-list-class" )){
+                        $("input#allAwards").prop("checked",false);
+                    }
 
                     if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
@@ -119,6 +190,20 @@
                             });
                             $("input#allAges").prop("checked",true);
                     }
+                    if($event.target.id==="allAwards" && $event.target.checked){
+
+                            $('div#awards_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allAwards").prop("checked",true);
+                    }
+                    if($event.target.id==="allCountries" && $event.target.checked){
+
+                            $('div#country_list input').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allCountries").prop("checked",true);
+                    }
                     if($event.target.id==="allBudget" && $event.target.checked){
                             $('div#budget_list input').each(function () {
                                  $(this).prop("checked",false);
@@ -137,17 +222,31 @@
                             });
                             $("input#allEthnicity").prop("checked",true);
                     }
+                    if($event.target.id==="allCreatedBy" && $event.target.checked){
+                            $('div#createdby_list').each(function () {
+                                 $(this).prop("checked",false);
+                            });
+                            $("input#allCreatedBy").prop("checked",true);
+                    }
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
                     var findCountryFlag = false;
                     var findRoleFlag = false;
+                    var findCreatedByFlag = false;
+                    var findAgeFlag = false;
+                    var findEthnicityFlag = false;
                     var findGenresFlag = false;
                     var findGenderFlag =false;
+                    var findBudgetFlag = false;
+                    var findBoxOfficeIncomeFlag = false;
+                    var findAwardsFlag = false;
                     var findFlag = false;
+                    var findRatioFlag = false;
                     var selectedNames ="";
                     var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
-                    var validCountryInput = ($scope.filerByCountry!==null) && !(angular.isUndefined($scope.filerByCountry)) && ($scope.filerByCountry !=="");
+                    var isValidOptionRatio = ($scope.budgetMultipleOption!==null) && !(angular.isUndefined($scope.budgetMultipleOption)) && ($scope.budgetMultipleOption !=="");
+                    var isValidRatio = ($scope.incomeMultipleInput!==null) && !(angular.isUndefined($scope.incomeMultipleInput)) && !isNaN($scope.incomeMultipleInput) && ($scope.incomeMultipleInput !=="");
                     if(validNameInput){
                         selectedNames = $scope.filerByname;
                         if(item.name !==null){
@@ -156,15 +255,32 @@
                             }
                         }
                     }
-                    if(validCountryInput){
-                        selectedNames = $scope.filerByCountry;
-                        if(item.name !==null){
-                            if(item['country'].toLowerCase().search(selectedNames)!==-1){
-                                findCountryFlag = true;
+                    if(isValidRatio && isValidOptionRatio){
+                        selectedNames = $scope.filerByname;
+                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(1);
+                        var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
+                        var boxbudgetratio = "";
+                        if(item.boxbudgetratio !==null && item.boxbudgetratio !=="Not Available"){
+                            if(seletedRatio==="maxgreaterorequal"){
+                                boxbudgetratio = item['boxbudgetratio'].split('-');
+                                var maxRatio = parseFloat(getNumber(boxbudgetratio[1])).toFixed(1);
+                                //maxRatio = getNumber(maxRatio);
+                                //var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
+                                if(maxRatio >=inputRatio){
+                                    findRatioFlag = true;
+                                }
+
+                            }else if(seletedRatio==="mingreaterorequal"){
+                                boxbudgetratio = item['boxbudgetratio'].split('-');
+                                //var minRatio = parseFloat(boxbudgetratio[0]);
+                                var minRatio = parseFloat(getNumber(boxbudgetratio[0])).toFixed(1);
+                                if(minRatio >=inputRatio){
+                                    findRatioFlag = true;
+                                }
+
                             }
                         }
                     }
-
                     if(item.roles !==null){
                         $('div#role_list input:checked').each(function () {
                             selectedNames = $(this).val().trim();
@@ -189,14 +305,188 @@
                             }
                         });                      
                     }
+                    if(item.awards !==null){
+                        $('div#awards_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['awards'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !==-1){
+                                    findAwardsFlag = true;
+                            }
+                        });                      
+                    }
+                    if(item.country !==null){
+                        $('div#country_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['country'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findCountryFlag = true;
+                            }
+                        });                      
+                    }
+                    if(item.createdby !==null){
+                        $('div#createdby_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['createdby'].toLowerCase())===selectedNames.toLowerCase()){
+                                    findCreatedByFlag = true;
+                            }
+                        });                      
+                    }
+
+                    if(item.age !==null){
+                        $('div#age_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            if(selectedNames ==="lessthan20"){
+                                if(parseInt(item['age']) < 20){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="20-30"){
+                                if(parseInt(item['age']) >= 20 && parseInt(item['age']) < 30){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="30-40"){
+                                if(parseInt(item['age']) >= 30 && parseInt(item['age']) < 40){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="40-50"){
+                                if(parseInt(item['age']) >= 40 && parseInt(item['age']) < 50){
+                                    findAgeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="over50"){
+                                if(parseInt(item['age']) >= 50){
+                                    findAgeFlag = true;
+                                }
+                            }
+
+                        });
+                    }
+
+                    if(item.estimatedBudget !==null && item.estimatedBudget !=="Not Available"){
+                        $('div#budget_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            var budgets = item['estimatedBudget'].split('-');
+                            console.log(budgets);
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
+                                if(upperLimitDigit < 250){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
+                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(upperLimitDigit>= 100){
+                                    findBudgetFlag = true;
+                                }
+                            }
+                            
+                        });
+                    }
+
+                    if(item.boxOfficeIncome !==null && item.boxOfficeIncome !=="Not Available"){
+                        $('div#box_office_income_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
+                            var budgets = item['boxOfficeIncome'].split('-');
+                            var lowerLimit = budgets[0];
+                            var upperLimit = budgets[1];
+                            var lowerLimitDigit = getNumber(lowerLimit);
+                            var upperLimitDigit = getNumber(upperLimit);
+                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
+                                if(upperLimitDigit < 250){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
+                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
+                                if(upperLimitDigit>= 100){
+                                    findBoxOfficeIncomeFlag = true;
+                                }
+                            }
+                            
+                        });
+                    }
+
+                    if(item.ethnicity !==null){
+                        $('div#ethnicity_list input:checked').each(function () {
+                            selectedNames = $(this).val().trim();
+                            if((item['ethnicity'].toLowerCase())===selectedNames.toLowerCase()){
+                                findEthnicityFlag = true;
+                            }
+                        });
+                    }
+
                     if(!validNameInput){
                         findNameFlag = true;
                     }
-                    if(!validCountryInput){
-                        findCountryFlag = true;
+                    if(!isValidRatio || !isValidOptionRatio){
+                        findRatioFlag = true;
                     }
                     if($("input#allRole").is(':checked')){
                         findRoleFlag = true;
+                    }
+                    if($("input#allCountries").is(':checked')){
+                        findCountryFlag = true;
+                    }
+                    if($("input#allAwards").is(':checked')){
+                        findAwardsFlag = true;
                     }
                     if($("input#allGenres").is(':checked')){
                         findGenresFlag = true;
@@ -204,7 +494,22 @@
                     if($("input#allGender").is(':checked')){
                         findGenderFlag = true;
                     }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag){
+                    if($("input#allCreatedBy").is(':checked')){
+                        findCreatedByFlag = true;
+                    }
+                    if($("input#allAges").is(':checked')){
+                        findAgeFlag = true;
+                    }
+                    if($("input#allEthnicity").is(':checked')){
+                        findEthnicityFlag = true;
+                    }
+                    if($("input#allBudget").is(':checked')){
+                        findBudgetFlag = true;
+                    }
+                    if($("input#allBoxRevenue").is(':checked')){
+                        findBoxOfficeIncomeFlag = true;
+                    }
+                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag && findRatioFlag && findAwardsFlag){
                         findFlag = true;
                     }
                     return findFlag;
@@ -213,108 +518,156 @@
             var updateMainTalent = function (talentId) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
-                    $scope.mainTalent = result[0];
-                    var phoneNumber = result[0].phone;
-                    var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-                    // $scope.creditsData = "";
-                    // $scope.awards = "";
-                    $scope.mainTalent.phone = formattedNo;
+                	//$scope.mainTalent = result[0];
+                    $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
+                	$scope.id = (result.details[0].id) ? result.details[0].id:'';
+                    var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
+                    if(phoneNumber !== null){
+                    	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    }else{
+                    	var formattedNo = '';
+                    }
+                    $scope.phone = formattedNo;
+                    $scope.email = (result.details[0].email) ? result.details[0].email :'';
                     
-                    $scope.mainTalent.facebookurl = 'http://www.'+result[0].facebookurl;
-                    $scope.mainTalent.instagramurl = 'http://www.'+result[0].instagramurl;
-                    $scope.mainTalent.twitterurl = 'http://www.'+result[0].twitterurl;
-                    $scope.mainTalent.vineurl = 'http://www.'+result[0].vineurl;
-                    $scope.mainTalent.youtubeurl = 'http://www.'+result[0].youtubeurl;
+                    $scope.facebookurl = (result.details[0].facebookurl) ? 'http://www.'+result.details[0].facebookurl:'';
+                    $scope.instagramurl = (result.details[0].instagramurl) ?'http://www.'+result.details[0].instagramurl:'';
+                    $scope.twitterurl = (result.details[0].twitterurl) ?'http://www.'+result.details[0].twitterurl:'';
+                    $scope.vineurl = (result.details[0].vineurl) ? 'http://www.'+result.details[0].vineurl:'';
+                    $scope.youtubeurl = (result.details[0].youtubeurl) ?'http://www.'+result.details[0].youtubeurl:'';
                     
                     $scope.creditsData = [];
                     var creditObj = {};
                     var creditArray = [];
-                    if(result[0].creditsreleaserole!==null){
-                        var dataObj = result[0].creditsreleaserole.split('|');
-                        angular.forEach(dataObj, function(value, key) {
-                    	  if(value){
-                    		  var arr = value.trim().split(',');
-                        		//console.log(arr);
-                    			angular.forEach(arr, function(value2, key2) {
-                    				if(key2 === 0){
-                    					creditObj.title = value2;
-                    				}
-                    				if(key2 === 1){
-                    					creditObj.releasedate = value2;
-                    				}
-                    				if(key2 === 2){
-                    					creditObj.roll = value2;
-                    				}
-                    				if(key2 === 3){
-                    					creditObj.budget = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    				}
-                    				if(key2 === 4){
-                    					creditObj.boxoffice = value2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    				}
-                    			});
-                    			creditArray.push(creditObj);
-                    			creditObj = {};
-                    	  }
-                    	});
-                        $scope.creditsData = creditArray;
+                    // if(result.details[0].creditsreleaserole!==null){
+                    //     var dataObj = result.details[0].creditsreleaserole.split('|');
+                    //     angular.forEach(dataObj, function(value, key) {
+                    // 	  if(value){
+                    // 		  var arr = value.trim().split(',');
+                    // 			angular.forEach(arr, function(value2, key2) {
+                    // 				if(key2 === 0){
+                    // 					creditObj.title = value2.trim();
+                    // 				}
+                    // 				if(key2 === 1){
+                    // 					creditObj.releasedate = value2.trim();
+                    // 				}
+                    // 				if(key2 === 2){
+                    // 					creditObj.roll = value2.trim();
+                    // 				}
+                    // 				if(key2 === 3){
+                    // 					creditObj.budget = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // 				}
+                    // 				if(key2 === 4){
+                    // 					creditObj.boxoffice = '$'+value2.trim().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    // 				}
+                    // 			});
+                    // 			creditArray.push(creditObj);
+                    // 			creditObj = {};
+                    // 	  }
+                    // 	});
+                    //     $scope.creditsData = creditArray;
+                    // }
+
+                    if(!!result.credits && result.credits.length>0){
+                    angular.forEach(result.credits, function(value, key) {
+                    creditObj.title = (value.creditname === null) ? 'Not Available' : value.creditname;
+                    creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
+                    creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
+                    creditObj.logline = (value.logline === null) ? 'Not Available' : value.logline;
+                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+value.estimatedBudget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+value.box_office_income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    creditArray.push(creditObj);
+                    creditObj = {};
+                    });
+                    $scope.creditsData = creditArray;
                     }
+
+                    
                     $scope.awardsData = [];
-                    if(result[0].awardtypecredit!==null){
-                        var awardsObj = result[0].awardtypecredit.split('|');
-                        angular.forEach(awardsObj, function(value, key) {
-                      	  if(value){
-                      		$scope.awardsData.push(value.trim().split(','));
-                      	  }
-                      	});
-                    }
+                    var awardObj = {};
+                    var awardsArray = [];
+                   //  if(result.details[0].awardtypecredit!==null){
+                   //      var awardsObj = result.details[0].awardtypecredit.split('|');
+                   //      angular.forEach(awardsObj, function(value, key) {
+                   //    	  if(value){
+                   //    		var arr = value.trim().split(',');
+                			// angular.forEach(arr, function(value2, key2) {
+                			// 	if(key2 === 0){
+                			// 		awardObj.name = value2.trim();
+                			// 	}
+                			// 	if(key2 === 1){
+                			// 		awardObj.year = value2.trim();
+                			// 	}
+                			// 	if(key2 === 2){
+                			// 		awardObj.type = value2.trim();
+                			// 	}
+                			// 	if(key2 === 3){
+                			// 		awardObj.credit = value2.trim();
+                			// 	}
+                			// 	if(key2 === 4){
+                			// 		awardObj.awardfor = value2.trim();
+                			// 	}
+                			// });
+                			// awardsArray.push(awardObj);
+                			// awardObj = {};
+                   //    	  }
+                   //    	});
+                   //      $scope.awardsData = awardsArray;
+                   //  }
+                    
+                        if(!!result.awards && result.awards.length>0){
+                            angular.forEach(result.awards, function(value, key) {
+                            awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
+                            awardObj.year = (value.release_date === null) ? 'Not Available' : value.release_date;
+                            awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
+                            awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
+                            awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
+                            awardsArray.push(awardObj);
+                            awardObj = {};
+                            });
+                            $scope.awardsData = awardsArray;
+                        }
+
                     $scope.commentsData = [];
                     var commentObj = {};
                     var commentArray = [];
-                    if(result[0].commentsData!==null){
-                        var commentsObj = result[0].commentsData.split('|');
-                        angular.forEach(commentsObj, function(value, key) {
-                      	  if(value){
-                      		//$scope.commentsData.push(value.trim().split(','));
-                      		var arr = value.trim().split(',');
-                      		//console.log(arr);
-                  			angular.forEach(arr, function(value2, key2) {
-                  				if(key2 === 0){
-                  					commentObj.comment = value2;
-                  				}
-                  				if(key2 === 1){
-                  					commentObj.date = value2;
-                  				}
-                  				if(key2 === 2){
-                  					commentObj.user = value2;
-                  				}
-                  			});
-                  			commentArray.push(commentObj);
-                  			commentObj = {};
-                      	  }
-                      	});
-                        $scope.commentsData = commentArray;
-                    }
                     
+                    if(!!result.comments && result.comments.length>0){
+                    	angular.forEach(result.comments, function(value, key) {
+                    		commentObj.text = value.text;
+                    		commentObj.name = value.name;
+                    		commentObj.date = value.date;
+                            commentObj.comment_id = value.comment_id;
+                    		commentArray.push(commentObj);
+                    		commentObj = {};
+                    	});
+                    	$scope.commentsData = commentArray;
+                    }
+                                        
                     $scope.associateData = [];
                     var associateObj = {};
-                    if(result[0].associateInfo!==null){
-                        var associateObj = result[0].associateInfo.split('|');
-                        angular.forEach(associateObj, function(value, key) {
+                    var associateArray = [];
+                    if(result.details[0].associateInfo!==null){
+                        var associateDataObj = result.details[0].associateInfo.split('|');
+                        angular.forEach(associateDataObj, function(value, key) {
                       	  if(value){
                       		var vals = value.trim().split(',');
-                      		if(vals && vals.length>0){
-                      			var firstName = vals[1] || '';
-                      			var lastName = vals[2] || '';
-                      			var associateName = vals[0] || '';
-                      			var fullName = firstName +' '+ lastName;
-                      			associateObj = {
-                      					[associateName]:fullName
-                      			}
-                      			$scope.associateData.push(associateObj);
-                      		}
-                      		
+                      		angular.forEach(vals, function(value2, key2) {
+                      			if(key2 === 0){
+                      				associateObj.associatename = value2.trim();
+                  				}
+                      			if(key2 === 1){
+                      				associateObj.firstname = value2.trim();
+                  				}
+                      			if(key2 === 2){
+                      				associateObj.lastname = value2.trim();
+                  				}
+                  			});
+                      		associateArray.push(associateObj);
+                      		associateObj = {};
                       	  }
                       	});
+                        $scope.associateData = associateArray;
                     }
                     
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
@@ -368,6 +721,15 @@
                         $scope.filterData['primary_role'][result[i].name] = false;
                         $scope.filterData['secondary_role'][result[i].name] = false;
                     }
+                }),
+                TalentCreatedBy: talentFactory.getAllCreatedBy(function (result) {
+                    $scope.data.createdByNames = result;
+                }),
+                TalentAwards: talentFactory.getAwardsNames(function (result) {
+                    $scope.data.awardsNameList = result;
+                }),
+                TalentCountryNames: talentFactory.getCountryNames(function (result) {
+                    $scope.data.countryNames = result;
                 }),
                 Genre: genreFactory.getNames(function (result) {
                     $scope.data.GenrePriority = []; 
@@ -472,17 +834,29 @@
             $scope.submitComment = function () {
                 // If text is in the textarea, submit the new comment
                 if ($('.comment-input').val() !== "") {
-                    commentFactory.addComment($('.comment-input').val(), $scope.mainTalent.id, function (result) {
-                        $scope.mainTalent.comments.push(result);
-                        //Once comment is added, append it to the comments-container and clear the textarea
+                	$scope.commentMsg = '';
+					$scope.sweetAlert;
+                	$scope.comStatus = false;
+                	var commentObj = {};
+                    commentFactory.addComment($('.comment-input').val(), $scope.id, function (result) {
+                    	$scope.commentsData.unshift(result);
                         $('.comment-input').val('');
                     });
                 }
             };
             $scope.removeComment = function ($event, comment_id) {
-                $($event.target).parent().slideUp();
-                commentFactory.removeComment(comment_id);
-                $scope.deletedComments++;
+                // $($event.target).parent().slideUp();
+                // commentFactory.removeComment(comment_id);
+                // $scope.deletedComments++;
+                    var r = confirm("Do you really want to delete this comment?");
+                    if (r == true) {
+                        $($event.target).parent().slideUp();
+                        commentFactory.removeComment(comment_id);
+                        $scope.deletedComments++;
+                    } else {
+                    //return false;
+                    }
+
             };
 
            

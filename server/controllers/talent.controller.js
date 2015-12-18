@@ -17,8 +17,25 @@ exports.getProfile = function(req, res) {
 };
 
 exports.getNames = function(req, res) {
-  console.log(req.query.nameChars);
   Talent.getNames(req.query.nameChars, function(result) {
+    res.json(result);
+  });
+};
+
+exports.getAllCreatedByname = function(req, res) {
+  Talent.getAllCreatedByname(function(result) {
+    res.json(result);
+  });
+};
+
+exports.allAwards = function(req, res) {
+  Talent.allAwards(function(result) {
+    res.json(result);
+  });
+};
+
+exports.getAllCountryNames = function(req, res) {
+  Talent.getAllCountryNames(function(result) {
     res.json(result);
   });
 };
