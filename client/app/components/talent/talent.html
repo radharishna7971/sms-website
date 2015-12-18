@@ -163,7 +163,7 @@
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
     </br>
-    <p ng-repeat="associate in associateData">     
+    <p ng-repeat="associate in associateData | orderBy:'associatename'">     
       <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
     </p>
     <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
