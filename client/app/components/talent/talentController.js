@@ -554,8 +554,8 @@
                     creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
                     creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
                     creditObj.logline = (value.logline === null) ? 'Not Available' : value.logline;
-                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+value.estimatedBudget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+value.box_office_income.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+numberFormatter(value.estimatedBudget);
+                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+numberFormatter(value.box_office_income);
                     creditArray.push(creditObj);
                     creditObj = {};
                     });
