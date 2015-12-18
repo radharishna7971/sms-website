@@ -48,7 +48,6 @@ Talent.getAll = function(callback) {
 Talent.insertExcelData = function(data){
   if(data && data.length>0){
     var firstItem = data[0];
-    console.log(firstItem);
   }
 };
 
@@ -124,7 +123,6 @@ FROM talent t where t.id= ' + talentId)
 
 // Return list of all talent names
 Talent.getNames = function(nameChars,callback) {
-  console.log(nameChars);
   var findNameWith = "'"+"%"+nameChars+"%"+"'";
   db.knex.raw(' \
     SELECT \
@@ -196,6 +194,11 @@ Talent.get = function(id, callback) {
       State, \
       country, \
       createdby, \
+      created_at, \
+      modifiedby, \
+      last_edited, \
+      createdbycomments, \
+      modifiedbycomments, \
       ethnicity_id, \
       facebook_url, \
       twitter_url, \
@@ -239,7 +242,6 @@ Talent.get = function(id, callback) {
        FROM  talent, users \
 	   WHERE talent.id = ' + data.id.toString() + ' AND users.id = talent.created_by')
 	   .then(function(results) {
-		   //data.creator_name = results[0][0]; // TaskList: [27] - This is to get Creator name in dataEntry.html file
        callback(data);
 	   });
       });
@@ -258,8 +260,11 @@ Talent.addOrEdit = function(talentData, callback) {
       // If the email matches, then edit the data
       if (talent.get('email') === talentData.email || talent.get('id') === talentData.id) {
         for (var key in talentData) {
-          talent.set(key, talentData[key]);
-          talent.save();
+          if(key !=="created_at" && key !=="createdby" && key !=="createdbycomments"){
+             talent.set(key, talentData[key]);
+              talent.save();
+          }
+         
         }
         talent.save()
         .then(function() {

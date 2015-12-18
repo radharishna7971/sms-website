@@ -7,6 +7,18 @@ exports.getNames = function(req, res) {
     res.json(result);
   });
 };
+exports.getAssociateNames = function(req, res) {
+  Contact.getAssociateNames(function(result) {
+    res.json(result);
+  });
+};
+
+exports.addGetAssociateNamesById = function(req, res) {
+  //console.log(req.body);
+  Contact.addGetAssociateNamesById(req.body, function(result) {
+    res.json(result);
+  });
+};
 
 exports.getContact = function(req, res) {
   Contact.get(req.query.id, function(result) {
