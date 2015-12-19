@@ -9,6 +9,6 @@
   var host = process.env.HOSTNAME || null;
 
   //app.listen(process.env.PORT, host);
-  app.listen(80, host);
+  app.listen(8000, host);
   module.exports = app;
-  console.log('Server running at port: ' + 80);
+  console.log('Server running at port: ' + 8000);

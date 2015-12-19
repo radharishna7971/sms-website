@@ -141,19 +141,18 @@
        </div>
 
       <div ng-show="talentSection==='management'">
+          <p class="input-label">Attorney:{{AttorneyName}}</p>
+          <p class="input-label">Agent:{{AgentName}}</p>
+          <p class="input-label">Manager:{{ManagerName}}</p>
+          <p class="input-label">Publicist:{{PublicistName}}</span>
         <div class="talent-column">
-          <p class="input-label">Agent</p>
-          <select class="data-input select-input" ng-model="activeElement.agent_id">
+          <p class="input-label">Associate Name</p>
+          <select class="data-input select-input" ng-model="activeElement.associate_obj">
             <option></option>
-            <option ng-repeat="contact in data.Contact | orderBy : 'name'" value="{{contact.id}}">{{contact.name}}</option>
-          </select>
-          <p class="input-label">Manager</p>
-          <select class="data-input select-input" ng-model="activeElement.manager_id">
-            <option></option>
-            <option ng-repeat="contact in data.Contact | orderBy : 'name'" value="{{contact.id}}">{{contact.name}}</option>
+            <option ng-repeat="contact in data.Contact | orderBy : 'name'" value="{{contact}}">{{contact.name}}</option>
           </select>
         </div>
-        <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
+        <input class="data-input data-submit" ng-click="submitAssociate()" type="submit" value="{{btnTxt}}">
       </div>
 
       <div ng-show="talentSection==='social'">
@@ -235,8 +234,10 @@
 	<!-- Info	-->
 	
 	<div ng-show="talentSection==='info'">
-      <p class="input-label" id="talentInfo">Creator Name: <span>{{activeElement.createdby}}</span></p>
-      <!-- <p class="input-label">Created Date: </p><p>{{activeElement.created_at | date }}</p> -->
+      <p class="input-label">Created By: {{activeElement.createdby}}</p>
+      <p class="input-label">Created Date:{{activeElement.created_at | date }}</p>
+      <p class="input-label">Modified By:{{activeElement.modifiedby}}</p>
+      <p class="input-label">Modified At:{{activeElement.last_edited | date }}</p>
     </div>
 
   </div>

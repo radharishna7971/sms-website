@@ -13,6 +13,39 @@ Contact.getNames = function(callback) {
   });
 }
 
+Contact.getAssociateNames = function(callback) {
+  db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id GROUP BY name')
+  .then(function(results) {
+     callback(results[0]);
+  });
+}
+
+Contact.addGetAssociateNamesById = function(AssociateData, callback) {
+  if(AssociateData.associate_id!==-1 &&AssociateData.associte_types_id!==-1){
+       db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.talent_id = '+AssociateData.talent_id+' AND atj.associate_id = '+AssociateData.associate_id+' AND atj.associte_types_id = '+AssociateData.associte_types_id)
+        .then(function(results) {
+          if(!results[0].length){
+            db.knex('associate_talent_associate_type_join').insert([{talent_id: AssociateData.talent_id, associte_types_id: AssociateData.associte_types_id, associate_id: AssociateData.associate_id}])
+            .then(function(results) {
+              db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.talent_id = '+AssociateData.talent_id+' GROUP BY name')
+              .then(function(results) {
+                  callback(results[0]);
+              });
+            });
+        }else{
+          callback("Error");
+        }
+      });
+      
+  }else{
+     db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.talent_id = '+AssociateData.talent_id+' GROUP BY name')
+      .then(function(results) {
+         callback(results[0]);
+      });
+  }
+  
+}
+
 Contact.get = function(id, callback) {
   db.knex.raw(' \
     SELECT \

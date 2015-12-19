@@ -11,6 +11,7 @@
     $scope.filterData = 'last_name';
     //$scope.talentNameInput = {};
     $scope.model ={};
+
     //alert(window.localStorage.smstudiosLoginUserName);
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
@@ -51,6 +52,7 @@
         }
       }
     };
+
 
     $scope.setActiveElement = function($event, element) {
       $scope.errorText = '';
@@ -118,10 +120,16 @@
         contactFactory.getContact($scope.editElement.id, function(contactData) {
           $scope.activeElement = contactData;
         });
+
       },
       Talent: function() {
         talentFactory.getTalent($scope.editElement.id, function(talentData) {
+          var last_edited_date = talentData['last_edited'].replace ( /[^\d.]/g, '' );
+           if(!parseInt(last_edited_date)){
+              talentData.last_edited = "";
+           }
           $scope.activeElement = talentData;
+          addFetchAssociateName(-1,-1);
         });
       }
     };
@@ -279,9 +287,15 @@
           if (!$scope.activeElement.createdby) {
             $scope.activeElement.createdby = window.localStorage.smstudiosLoginUserName;
           }
+          if (!$scope.activeElement.createdbycomments) {
+            $scope.activeElement.createdbycomments = window.localStorage.smstudiosLoginUserName;
+          }
+          $scope.activeElement.modifiedby = window.localStorage.smstudiosLoginUserName;
+ 
 
           // Add id to keep track of who created given talent
           $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
+          $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
 
           talentFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
@@ -406,9 +420,44 @@
       }
     };
 
+    var addFetchAssociateName = function(typeid,associate_id){
+      var dataList = [];
+      dataList['talent_id'] = $scope.activeElement.id;
+      dataList['associte_types_id'] = typeid;
+      dataList['associate_id'] = associate_id;
+      contactFactory.addGetAssociateNamesById(dataList,function(result) {
+        if(result==="Error"){
+          alert("Error:Duplicate associate not allowed");
+          return false;
+        }
+        for(var i in result){
+            if(result[i].type==="Agent"){
+            $scope.AgentName=result[i].name;
+          }
+           if(result[i].type==="Manager"){
+            $scope.ManagerName=result[i].name;
+          }
+           if(result[i].type==="Attorney"){
+            $scope.AttorneyName=result[i].name;
+          }
+          if(result[i].type==="Publicist"){
+              $scope.PublicistName=result[i].name;
+          }
+        }
+        
+        //$scope.data.ContactInfo = result;
+      });
+
+    };
+
+    $scope.submitAssociate = function(){
+     var getAssociateInfo = JSON.parse($scope.activeElement.associate_obj);
+      addFetchAssociateName(getAssociateInfo.typeid,getAssociateInfo.id);
+    };
+    
     // storage for all data points that are added or pulled from database
     $scope.data = {
-      Contact: contactFactory.getNames(function(result) {
+      Contact: contactFactory.getAssociateNames(function(result) {
         $scope.data.Contact = result;
       }),
       Credit: creditFactory.getNames(function(result) {
