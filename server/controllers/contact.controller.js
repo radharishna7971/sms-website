@@ -20,6 +20,14 @@ exports.addGetAssociateNamesById = function(req, res) {
   });
 };
 
+exports.getAssociateType = function(req, res) {
+  //console.log(req.body);
+  Contact.getAssociateType(function(result) {
+    res.json(result);
+  });
+};
+
+
 exports.getContact = function(req, res) {
   Contact.get(req.query.id, function(result) {
     res.json(result);

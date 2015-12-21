@@ -14,7 +14,13 @@ Contact.getNames = function(callback) {
 }
 
 Contact.getAssociateNames = function(callback) {
-  db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id GROUP BY name')
+  db.knex.raw('select distinct a.id as id,CONCAT(a.firstName, \' \', a.lastName) AS name,at.id as typeid,at.type from associate a INNER JOIN associate_types at on `at`.id=a.types where deleted='+0+' group by name')
+  .then(function(results) {
+     callback(results[0]);
+  });
+}
+Contact.getAssociateType = function(callback){
+  db.knex.raw('SELECT id, type FROM associate_types')
   .then(function(results) {
      callback(results[0]);
   });
@@ -81,67 +87,76 @@ Contact.get = function(id, callback) {
   db.knex.raw(' \
     SELECT \
       id, \
-      first_name, \
-      last_name, \
+      firstName, \
+      lastName, \
       email, \
-      phone \
-    FROM contacts \
-    WHERE id = ' + id)
+      phone, \
+      types \
+    FROM associate \
+    WHERE deleted = 0 AND id = ' + id)
   .then(function(results) {
      callback(results[0][0]);
   });
 };
 
 Contact.addOrEdit = function(contactData, callback) {
-  new Contact({email: contactData.email})
-  .fetch()
-  .then(function(contact) {
-    // If contact with email already exists, check to see if it has the same id, if so, update data
-    if (contact) {
-      if (contact.get('id') === contactData.id) {
-        for (var key in contactData) {
-          contact.set(key, contactData[key]);
-          contact.save();
-        }
-        callback(null, {status: 'edit', text: 'Successfully edited contact', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
-
-      } else { // Otherwise the contact already exists
-        return callback({status: 'error', text: "Contact already exists"});
-      }
-    } else {
-      if (contactData.hasOwnProperty('id')) {
-        new Contact({id: contactData.id})
-        .fetch()
-        .then(function(contact) {
-          for (var key in contactData) {
-            contact.set(key, contactData[key]);
-            contact.save();
+  var agent_id = typeof contactData['id'] === 'undefined'?-1:parseInt(contactData.id);
+  var agent_type = parseInt(contactData.types);
+  var fName = '"'+contactData.firstName+'"';
+  var lName = '"'+contactData.lastName+'"';
+  var emailId = '"'+contactData.email+'"';
+  var phoneNum = '"'+contactData.phone+'"';
+  db.knex.raw(' SELECT id, firstName, lastName, email, phone, types FROM associate WHERE id = '+ agent_id)
+  .then(function(results) {
+    if(results[0].length){
+      db.knex.raw('UPDATE associate SET firstName='+fName+', lastName='+lName+', email='+emailId+', phone='+phoneNum+', types='+agent_type+' WHERE id = '+ agent_id)
+        .then(function(results) {
+            callback(null, {status: 'edit', id:agent_id, text: 'Successfully edited cls ,'+ contactData['firstName'] + ' ' + contactData['lastName'],name:contactData['firstName'] + ' ' + contactData['lastName']});
+          });
+     }else{
+       db.knex.raw('SELECT id, firstName, lastName, email, phone, types FROM associate WHERE email = '+ emailId)
+      .then(function(results) {
+          var agent_email = " ";
+          if(typeof results[0]!== "undefined"){
+            if(parseInt(results[0].length)){
+              agent_email = results[0].email;
+            }           
           }
-          contact.save();
-          callback(null, {status: 'edit', text: 'Successfully edited contact', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
-        })
-      } else {
-        new Contact(contactData)
-        .save()
-        .then(function(contact) {
-          callback(null, {status: 'add', text: 'New contact created', id: contact.get('id'), name: contact.get('first_name') + ' ' + contact.get('last_name')});
-        });
+          if(typeof results[0][0]!== "undefined"){
+              if(results[0][0].length){
+                agent_email = results[0][0].email;
+              }
+          }
+  
+            if(contactData['email'] === agent_email){
+              return callback({status: 'error', text: "Contact already exists"});
+            }else{
+              db.knex.raw('INSERT INTO associate (firstName, lastName, email, types, phone, deleted) VALUES('+fName+','+lName+','+emailId+','+agent_type+','+phoneNum+','+0+')')
+                .then(function(results) {
+                  db.knex.raw('SELECT max(id) as id FROM associate WHERE email = '+ emailId+'AND firstName='+fName+'AND lastName='+lName+'')
+                  .then(function(results) {
+                    console.log(results[0][0].id);
+                      callback(null, {status: 'add', text: 'New contact created ',id:results[0][0].id, name:contactData['firstName'] + ' ' + contactData['lastName']});
+                    });
+                });
+              //return callback({status: 'error', text: "Contact already exists"});
+            }
+
+         });
       }
-    }
-  });
-};
+    });
+  };
 
 Contact.remove = function(contactId, callback) {
-  new Contact({id: contactId})
-  .fetch()
-  .then(function(contact) {
-    if (contact) {
-      contact.destroy();
-      return callback(true)
-    } else {
-      return callback(false);
-    }
-  });
+  db.knex.raw(' SELECT id, firstName, lastName, email, phone, types FROM associate WHERE id = '+ contactId)
+  .then(function(results) {
+    if(results[0].length){
+      db.knex.raw('UPDATE associate SET deleted='+1+' WHERE id = '+ contactId)
+        .then(function(results) {
+            callback(true);
+          });
+        }
+     });
 };
 
 module.exports = Contact;

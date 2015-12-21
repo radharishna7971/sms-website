@@ -30,7 +30,9 @@
         
         // Sort all data types by name except for talent which is sorted by last name
         $scope.filterData = 'name';
-
+         contactFactory.getAssociateType(function(associateTypesData) {
+          $scope.typesDetails = associateTypesData;
+        });
         // Update form centering for talent form
         if ($scope.section === 'Talent') {
           $scope.filterData = 'last_name';
@@ -121,7 +123,8 @@
         contactFactory.getContact($scope.editElement.id, function(contactData) {
           $scope.activeElement = contactData;
         });
-
+        
+       
       },
       Talent: function() {
         talentFactory.getTalent($scope.editElement.id, function(talentData) {
@@ -623,6 +626,7 @@
         });
       }
     };
+   
 
     // Remove comment when delete button is clicked
     $scope.removeComment = function($event, comment_id) {
