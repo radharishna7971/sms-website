@@ -22,20 +22,23 @@ Contact.getAssociateNames = function(callback) {
 
 Contact.addGetAssociateNamesById = function(AssociateData, callback) {
   if(AssociateData.associate_id!==-1 &&AssociateData.associte_types_id!==-1){
-       db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.talent_id = '+AssociateData.talent_id+' AND atj.associate_id = '+AssociateData.associate_id+' AND atj.associte_types_id = '+AssociateData.associte_types_id)
-        .then(function(results) {
-          if(!results[0].length){
-            db.knex('associate_talent_associate_type_join').insert([{talent_id: AssociateData.talent_id, associte_types_id: AssociateData.associte_types_id, associate_id: AssociateData.associate_id}])
-            .then(function(results) {
-              db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.talent_id = '+AssociateData.talent_id+' GROUP BY name')
-              .then(function(results) {
-                  callback(results[0]);
-              });
-            });
-        }else{
-          callback("Error");
-        }
-      });
+	  console.log(AssociateData);
+	  db.knex.raw('select  associate_id from associate_talent_associate_type_join where talent_id = '+AssociateData.talent_id+' AND associte_types_id = '+AssociateData.associte_types_id)
+		.then(function(getAssociate) {
+			if(getAssociate[0].length > 0){
+				db.knex.raw('update associate_talent_associate_type_join set associate_id = '+AssociateData.associate_id+' where talent_id = '+AssociateData.talent_id+' AND associte_types_id = '+AssociateData.associte_types_id)
+		        .then(function(associateUpdated) {
+		        	console.log('updated');
+		        	callback(true);
+		        });
+			}else{
+				db.knex.raw('insert into associate_talent_associate_type_join (associate_id,talent_id,associte_types_id) VALUES ('+AssociateData.associate_id+','+AssociateData.talent_id+','+AssociateData.associte_types_id+')')
+		        .then(function(associateInserted) {
+		        	console.log('inserted');
+		        	callback(true);
+		        });
+			}
+		});
       
   }else{
      db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.talent_id = '+AssociateData.talent_id+' GROUP BY name')
@@ -44,19 +47,19 @@ Contact.addGetAssociateNamesById = function(AssociateData, callback) {
     	  data.details = results[0];
          //callback(results[0]);
     	  
-    	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=1 GROUP BY name')
+    	  db.knex.raw('select atj.associate_id, `at`.id,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=1 GROUP BY name')
           .then(function(results1) {
         	  data.agents = results1[0];
         	  
-        	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=2 GROUP BY name')
+        	  db.knex.raw('select atj.associate_id, `at`.id,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=2 GROUP BY name')
               .then(function(results2) {
             	  data.managers = results2[0];
             	  
-            	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=3 GROUP BY name')
+            	  db.knex.raw('select atj.associate_id, `at`.id,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=3 GROUP BY name')
                   .then(function(results3) {
                 	  data.attornies = results3[0];
                 	  
-                	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=4 GROUP BY name')
+                	  db.knex.raw('select atj.associate_id, `at`.id,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=4 GROUP BY name')
                       .then(function(results4) {
                     	  data.publicists = results4[0];
                     	  callback(data);
