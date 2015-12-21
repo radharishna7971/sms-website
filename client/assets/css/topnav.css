@@ -38,3 +38,15 @@
   background-color: #656c7e;
 }
 
+.welcome-user{
+	width: 160px;
+}
+
+.user-lastloggedin{
+	width: 270px;
+}
+
+.user-lastloggedin:hover{
+	background-color: #2a2d33;
+	cursor: auto;
+}

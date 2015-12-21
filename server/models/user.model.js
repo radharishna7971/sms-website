@@ -135,4 +135,16 @@ User.getAll = function(callback) {
   });
 };
 
+//Validates the token saved in localStorage
+User.logout = function(id, callback) {
+  db.knex.raw('update users set last_logged_in=now() where id='+id)
+	.then(function(userUpdated) {
+		new User({'id': id})
+		  .fetch()
+		  .then(function(user) {
+			  callback(user);
+		  });
+	});
+};
+
 module.exports = User;
