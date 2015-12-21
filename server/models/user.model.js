@@ -20,10 +20,6 @@ User.authenticate = function(userData, callback) {
         bcrypt.compare(userData.password, user.get('password'), function(err, res) {
           // If the password is valid, return the user
           if (res) {
-        	db.knex.raw('update users set last_logged_in=now() where id='+user.get('id'))
-			.then(function(userUpdated) {
-				console.log(userUpdated);
-			});
             callback(null, user);
           // Otherise return error
           } else {
@@ -137,6 +133,18 @@ User.getAll = function(callback) {
   .then(function(users) {
     callback(users);
   });
+};
+
+//Validates the token saved in localStorage
+User.logout = function(id, callback) {
+  db.knex.raw('update users set last_logged_in=now() where id='+id)
+	.then(function(userUpdated) {
+		new User({'id': id})
+		  .fetch()
+		  .then(function(user) {
+			  callback(user);
+		  });
+	});
 };
 
 module.exports = User;

@@ -118,3 +118,20 @@ exports.getUserDetails = function(req, res) {
   });
 
 };
+
+exports.logout = function(req, res) {
+	var id = req.body.id;
+	  try {
+	    User.logout(id, function(user) {
+	    	res.json({
+	            name: user.get('first_name') + ' ' + user.get('last_name'),
+	            id: user.get('id'),
+	            permission: user.get('permission'),
+	            last_logged_in: user.get('last_logged_in')
+	          });
+	    });
+	  }
+	  catch(err) {
+	    res.send(false);
+	  }
+};
