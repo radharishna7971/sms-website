@@ -40,8 +40,36 @@ Contact.addGetAssociateNamesById = function(AssociateData, callback) {
   }else{
      db.knex.raw('select atj.associate_id AS typeid,at.type as type, a.id AS id, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.talent_id = '+AssociateData.talent_id+' GROUP BY name')
       .then(function(results) {
-         callback(results[0]);
+    	  var data = {};
+    	  data.details = results[0];
+         //callback(results[0]);
+    	  
+    	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=1 GROUP BY name')
+          .then(function(results1) {
+        	  data.agents = results1[0];
+        	  
+        	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=2 GROUP BY name')
+              .then(function(results2) {
+            	  data.managers = results2[0];
+            	  
+            	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=3 GROUP BY name')
+                  .then(function(results3) {
+                	  data.attornies = results3[0];
+                	  
+                	  db.knex.raw('select atj.associate_id AS typeid,at.type as type, CONCAT(a.firstName, \' \', a.lastName) AS name from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id where atj.associte_types_id=4 GROUP BY name')
+                      .then(function(results4) {
+                    	  data.publicists = results4[0];
+                    	  callback(data);
+                      });
+                	  
+                  });
+            	  
+              });
+        	  
+          });
+    	  
       });
+     
   }
   
 }

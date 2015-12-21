@@ -16,6 +16,7 @@
             window.localStorage.smstudiosId = res.data.id;
             window.localStorage.smstudiosPermission = res.data.permission;
             window.localStorage.smstudiosLoginUserName = res.data.name;
+            window.localStorage.smstudiosLastLoggedIn = res.data.last_logged_in;
 
             // Remove links that user does not have privilege to access
             $('.topnav-button').each(function() {
@@ -50,6 +51,7 @@
               delete window.localStorage.smstudiosJwtToken;
               delete window.localStorage.smstudiosId;
               delete window.localStorage.smstudiosPermission;
+              delete window.localStorage.smstudiosLastLoggedIn;
             }
             callback(res.data);
           });
@@ -61,6 +63,7 @@
         delete window.localStorage.smstudiosJwtToken;
         delete window.localStorage.smstudiosId;
         delete window.localStorage.smstudiosPermission;
+        delete window.localStorage.smstudiosLastLoggedIn;
         $state.go('login');
       },
 

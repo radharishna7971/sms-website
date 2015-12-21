@@ -16,7 +16,8 @@ exports.login = function(req, res) {
         token: token,
         name: user.get('first_name') + ' ' + user.get('last_name'),
         id: user.get('id'),
-        permission: user.get('permission')
+        permission: user.get('permission'),
+        last_logged_in: user.get('last_logged_in')
       });
     }
   });
