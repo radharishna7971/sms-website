@@ -287,7 +287,7 @@ var Comment = exports.Comment = db.Model.extend({
 
 
 var TalentCreditJoin = exports.TalentCreditJoin = db.Model.extend({
-  tableName: 'talent_credit_join',
+  tableName: 'credit_talent_role_join',
   talent: function() {
     this.belongsTo(Actor, 'talent_id');
   },

@@ -129,7 +129,7 @@ User.getUserDetailsById = function(id,callback) {
 
 // Returns array of all users
 User.getAll = function(callback) { 
-  db.knex.select('id','first_name', 'last_name', 'email', 'permission').from('users')
+  db.knex.select('id','first_name', 'last_name', 'email', 'permission', 'last_logged_in').from('users')
   .then(function(users) {
     callback(users);
   });

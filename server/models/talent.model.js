@@ -225,14 +225,14 @@ Talent.get = function(id, callback) {
       data.comments = results[0];
       db.knex.raw(' \
        SELECT \
-        talent_credit_join.id AS id, \
+    	credit_talent_role_join.id AS id, \
         credits.name AS credit, \
         credits.release_date AS release_date, \
         roles.name AS role \
-       FROM talent_credit_join \
-       LEFT JOIN talent ON talent_credit_join.talent_id = talent.id \
-       LEFT JOIN credits ON talent_credit_join.credit_id = credits.id \
-       LEFT JOIN roles ON talent_credit_join.role_id = roles.id \
+       FROM credit_talent_role_join \
+       LEFT JOIN talent ON credit_talent_role_join.talent_id = talent.id \
+       LEFT JOIN credits ON credit_talent_role_join.credit_id = credits.id \
+       LEFT JOIN roles ON credit_talent_role_join.role_id = roles.id \
        WHERE talent.id = ' + data.id.toString())
       .then(function(results) {
        data.talentCreditJoins = results[0];
