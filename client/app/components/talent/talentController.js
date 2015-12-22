@@ -34,6 +34,7 @@
             var Genres = [];
             $scope.showmsg= {};
             $scope.showPopUp = false;
+            $scope.getTalentData = {};
              // This contains functions for submitting data to the database
     var dataSubmitter = {
           Talent: function() {
@@ -90,6 +91,7 @@
             $scope.talentGridOption = talentGridFactory.getGridOptions();
             $scope.section = 'Talent';
             $scope.talentSection = 'main';
+            $scope.showPopUp = '';
             $scope.showsection = function($event,sectioname) {
                 if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
@@ -189,26 +191,24 @@
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                         if(row.isSelected){
                             updateMainTalent(row.entity.id);
-                            getTalentAllDetailsById(row.entity.id);
-                            addFetchAssociateName(row.entity.id,-1,-1);
-                            $scope.showmsg= {};
-                            $scope.agentModel = {};
-                            //$('.data-main-error-text').hide();
-                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                            $("#mainTab").addClass('talent-form-menu-button-active');
-                            $scope.section = 'Talent';
-                            $scope.talentSection = 'main';
+                            $scope.getTalentData = {};
+                            $scope.getTalentData.id = row.entity.id;
                             $('.talent-right-container-content').show();
                             //$scope.showLink = 'show';
                             $("#editLink").show();
                         }
                         if(!row.isSelected){
+                            $scope.getTalentData = {};
                             $scope.gridApi.selection.clearSelectedRows();
                             $('.talent-right-container-content').hide();
                             $("#editLink").hide();
                             //$scope.showLink = 'hide';
                         }
                     });
+            };
+
+            $scope.setLoading = function(loading) {
+                $scope.isLoading = loading;
             };
              $scope.updateFiltersByChckBox = function ($event) {
                 if(!angular.isUndefined($event)){
@@ -729,13 +729,22 @@
             };
 
             var getTalentAllDetailsById = function(talentId){
-                creditFactory.getNames(function(result) {
+                creditFactory.getAllNames()
+                .then(function(result) {
                     $scope.data.Credit= {};
                     $scope.data.Credit = result;
+                     talentFactory.getTalentAllInfoById(talentId)
+                     .then(function (result){
+                        $scope.activeElement = result;
+                    });
                 });
-                talentFactory.getTalent(talentId, function (result) {
-                    $scope.activeElement = result;
-                });
+                 talentFactory.getTalentAllInfoById(talentId)
+                     .then(function (result){
+                        $scope.activeElement = result;
+                    });
+                // talentFactory.getTalent(talentId, function (result) {
+                //     $scope.activeElement = result;
+                // });
             };
             $scope.updateTalentSection = function ($event, section) {
                 $('.right-talent-container-menu-link').removeClass('active-talent-link');
@@ -1067,9 +1076,29 @@
             });
 
             $(document).on('click', '#editLink', function () {
-               $(".hiddenPopUp").show();
-               $("#cover").show();
-            });
+                //getTalentAllDetailsById($scope.getTalentData.id);
+                //addFetchAssociateName($scope.getTalentData.id,-1,-1);
+                $scope.setLoading(true);
+                 talentFactory.getTalentAllInfoById($scope.getTalentData.id)
+                     .then(function (result){
+                        $scope.activeElement = result.data;
+                        $scope.showmsg= {};
+                        $scope.agentModel = {};
+                        $scope.section = 'Talent';
+                        $scope.talentSection = 'main';
+                         creditFactory.getAllNames()
+                        .then(function(result) {
+                            $scope.data.Credit= {};
+                            $scope.data.Credit = result.data;
+                            $scope.setLoading(false);
+                            $("#cover").show();
+                            $(".hiddenPopUp").show();                        
+                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                            $("#mainTab").addClass('talent-form-menu-button-active');                         
+                        });
+                    });
+               
+                });
 
 
 

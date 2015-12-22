@@ -66,6 +66,17 @@
           callback(res.data);
         });
       },
+
+      getTalentAllInfoById: function(id, callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/talent',
+          params: {
+            'id': id
+          }
+        });
+      },
+
       addOrEdit: function(talentData, callback) {
         // Remove comments
         if (talentData.hasOwnProperty('comments')) {

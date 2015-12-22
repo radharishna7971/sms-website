@@ -286,27 +286,26 @@
 
 
 <div class="container hiddenPopUp">
-    <div class="data-main-section">
-        <div class="form-title-div">
-          <i class="icon-remove-sign"></i>
-            <h1 class="data-form-title">Talent Form </h1>
-            <span id="close-icon" class="glyphicon glyphicon-remove"  
-            ng-click="closepopup();" style="display:inline;float:right;"></span>
-        </div>
-
-        <!-- Talent menu -->
-        <div class="talent-form-menu" ng-show="section==='Talent'">
-            <span id="mainTab" class="talent-form-menu-button" ng-click="showsection($event, 'main')">Main</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'management')">Management</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'social')">Social Profiles</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'credits')">Credits</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'comments')">Comments</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'info')">Info</span>
-        </div>
-    </div>
-
     <div class="data-form-container">
         <!-- TALENT FORM -->
+        <div class="data-main-section">
+          <div class="form-title-div">
+            <i class="icon-remove-sign"></i>
+              <h1 class="data-form-title">Talent Form </h1>
+              <span id="close-icon" class="glyphicon glyphicon-remove"  
+              ng-click="closepopup();" style="display:inline;float:right;"></span>
+          </div>
+
+          <!-- Talent menu -->
+          <div class="talent-form-menu" ng-show="section==='Talent'">
+              <span id="mainTab" class="talent-form-menu-button" ng-click="showsection($event, 'main')">Main</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'management')">Management</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'social')">Social Profiles</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'credits')">Credits</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'comments')">Comments</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'info')">Info</span>
+          </div>
+      </div>
         <p class="data-main-error-text">{{showmsg.errorText}}</p>
         <!-- Main, Management, Social -->
         <form class="talent-form" name="talent-form" ng-show="section==='Talent'" novalidate>
@@ -450,3 +449,6 @@
 
   </div>
   <div id="cover" ></div>
+
+  <div id="veil" ng-show="isLoading"></div>
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
