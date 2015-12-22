@@ -19,6 +19,14 @@
           callback(res.data);
         });
       },
+      getAssociateType: function(callback) {
+        return $http({
+          method: 'GET',
+          url: '/api/contact/all/getAssociateType'
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
       getContact: function(id, callback) {
         return $http({
           method: 'GET',

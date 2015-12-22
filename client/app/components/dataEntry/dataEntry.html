@@ -92,13 +92,19 @@
     <form ng-show="section==='Contact'">
       <input class="id-input" ng-model="activeElement.id" type="text">
       <p class="input-label">First Name (Required)</p>
-      <input class="data-input" ng-model="activeElement.first_name" type="text" required="true">
+      <input class="data-input" ng-model="activeElement.firstName" type="text" required="true">
       <p class="input-label">Last Name (Required)</p>
-      <input class="data-input" ng-model="activeElement.last_name" type="text">
+      <input class="data-input" ng-model="activeElement.lastName" type="text">
       <p class="input-label">Email</p>
       <input class="data-input" ng-model="activeElement.email" type="text">
       <p class="input-label">Phone</p>
       <input class="data-input" ng-model="activeElement.phone" type="text">
+      <p class="input-label">Type</p>
+      <select  ng-model="activeElement.types">
+        <option></option>
+        <option ng-repeat="item in typesDetails" value="{{item.id}}">{{item.type}}</option>
+      </select>
+      <!-- <input class="data-input" ng-model="activeElement.types" type="text"> -->
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form>
 
@@ -139,20 +145,38 @@
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
        </div>
-
       <div ng-show="talentSection==='management'">
-          <p class="input-label">Attorney:{{AttorneyName}}</p>
-          <p class="input-label">Agent:{{AgentName}}</p>
-          <p class="input-label">Manager:{{ManagerName}}</p>
-          <p class="input-label">Publicist:{{PublicistName}}</span>
-        <div class="talent-column">
-          <p class="input-label">Associate Name</p>
-          <select class="data-input select-input" ng-model="activeElement.associate_obj">
-            <option></option>
-            <option ng-repeat="contact in data.Contact | orderBy : 'name'" value="{{contact}}">{{contact.name}}</option>
-          </select>
-        </div>
-        <input class="data-input data-submit" ng-click="submitAssociate()" type="submit" value="{{btnTxt}}">
+      		<div id="mgntmsg" ng-show="successmsg" style="color:red;">Management info updated successfully</div>
+          <p class="input-label">
+          Attorney:
+			<select name="attorney" id="attorney" ng-model="attorney">
+				<option value=''>Select</option>
+				<option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
+				</option>
+			</select>
+          </p>
+          <p class="input-label">Agent:
+          	<select name="agent" id="agent" ng-model="agent">
+				<option value=''>Select</option>
+				<option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
+				</option>
+			</select>
+          </p>
+          <p class="input-label">Manager:
+          	<select name="manager" id="manager" ng-model="manager">
+				<option value=''>Select</option>
+				<option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
+				</option>
+			</select>
+          </p>
+          <p class="input-label">Publicist:
+          	<select name="publicist" id="publicist" ng-model="publicist">
+				<option value=''>Select</option>
+				<option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
+				</option>
+			</select>
+          </span>
+        <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="{{btnTxt}}">
       </div>
 
       <div ng-show="talentSection==='social'">

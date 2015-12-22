@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory', 'talentGridFactory', 'ethnicityFactory'])
-        .controller('talentController', function ($scope, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory) {
+        .controller('talentController', function ($scope, $q, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory) {
 
             ///////////////////////////////
             /// Initialize View
@@ -32,6 +32,53 @@
             $scope.filerByname = "";
             var Rolls = [];
             var Genres = [];
+            $scope.showmsg= {};
+            $scope.showPopUp = false;
+             // This contains functions for submitting data to the database
+    var dataSubmitter = {
+          Talent: function() {
+            if (!checkInputs('talent')) {
+              $scope.showmsg.errorText = 'Please make sure all required fields are entered';
+            } else {
+              // Set blank values to null so they can be properly saved in database
+              for (var key in $scope.activeElement) {
+                if (!$scope.activeElement[key]) {
+                  $scope.activeElement[key] = null;
+                }
+              }
+
+              if (!$scope.activeElement.created_by) {
+                $scope.activeElement.created_by = window.localStorage.smstudiosId;
+              }
+              if (!$scope.activeElement.createdby) {
+                $scope.activeElement.createdby = window.localStorage.smstudiosLoginUserName;
+              }
+              if (!$scope.activeElement.createdbycomments) {
+                $scope.activeElement.createdbycomments = window.localStorage.smstudiosLoginUserName;
+              }
+              $scope.activeElement.modifiedby = window.localStorage.smstudiosLoginUserName;
+     
+
+              // Add id to keep track of who created given talent
+              $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
+              $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
+
+              talentFactory.addOrEdit($scope.activeElement, function(res) {
+                if (res.status !== 'error') {
+                  if (res.status === 'edit') {
+                    //$scope.editElement.name = res.name;
+                  } else {
+                    // $scope.data[$scope.section].push(res);
+                     //  $scope.editElement = res;
+                     //  activeElementSetter[$scope.section]();
+                     // $scope.btnTxt = "Update";               
+                  }
+                }
+                $scope.showmsg.errorText = res.text;
+              });
+            }
+          }
+        };
             $scope.highlightFilteredHeader = function( row, rowRenderIndex, col, colRenderIndex ) {
                     if( col.filters[0].term ){
                         return 'header-filtered';
@@ -41,7 +88,16 @@
             };
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
+            $scope.section = 'Talent';
+            $scope.talentSection = 'main';
+            $scope.showsection = function($event,sectioname) {
+                if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
+                    $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                    $($event.target).addClass('talent-form-menu-button-active');
+                }
+                $scope.talentSection = sectioname;
 
+            };
             function numberFormatter(num) {
                 if (num >= 1000000000) {
                     return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
@@ -59,6 +115,10 @@
                 var numberValue = Number(inputStr .replace(/[^0-9\.]+/g,""));
                 return parseInt(numberValue);
             }
+
+            contactFactory.getAssociateNames(function(result) {
+                $scope.data.Contact = result;
+            });
 
             talentFactory.getAll(function (data) {
 
@@ -117,7 +177,7 @@
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
-                $("span.ui-grid-pager-row-count-label").text(" Records per page");
+                $("span.ui-grid-pager-row-count-label").html(" Records per page   <a href=\"#\" title=\"Click here to edit selected row.\"><span id=\"editLink\" ng-click=\"showPopSection();\" style=\"display:none;\">Edit</span></a>");
             });
 
             $scope.mainTalent = false;
@@ -129,11 +189,24 @@
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                         if(row.isSelected){
                             updateMainTalent(row.entity.id);
+                            getTalentAllDetailsById(row.entity.id);
+                            addFetchAssociateName(row.entity.id,-1,-1);
+                            $scope.showmsg= {};
+                            $scope.agentModel = {};
+                            //$('.data-main-error-text').hide();
+                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                            $("#mainTab").addClass('talent-form-menu-button-active');
+                            $scope.section = 'Talent';
+                            $scope.talentSection = 'main';
                             $('.talent-right-container-content').show();
+                            //$scope.showLink = 'show';
+                            $("#editLink").show();
                         }
                         if(!row.isSelected){
                             $scope.gridApi.selection.clearSelectedRows();
                             $('.talent-right-container-content').hide();
+                            $("#editLink").hide();
+                            //$scope.showLink = 'hide';
                         }
                     });
             };
@@ -655,14 +728,20 @@
                 });
             };
 
-
+            var getTalentAllDetailsById = function(talentId){
+                creditFactory.getNames(function(result) {
+                    $scope.data.Credit= {};
+                    $scope.data.Credit = result;
+                });
+                talentFactory.getTalent(talentId, function (result) {
+                    $scope.activeElement = result;
+                });
+            };
             $scope.updateTalentSection = function ($event, section) {
                 $('.right-talent-container-menu-link').removeClass('active-talent-link');
                 $($event.target).addClass('active-talent-link');
                 $scope.activeSectionInfo = section;
             };
-
-           
             $scope.updateFiltersKeyUp = function ($event) {
                 $scope.filterData[$($event.target).attr('col')] = $($event.target).val();
                 updateVisibleCount();
@@ -834,8 +913,120 @@
                     }
 
             };
-
+        
            
+        var addFetchAssociateName = function(talentid,typeid,associate_id){
+            var dataList = [];
+            dataList['talent_id'] = talentid;
+            dataList['associte_types_id'] = typeid;
+            dataList['associate_id'] = associate_id;
+            contactFactory.addGetAssociateNamesById(dataList,function(result) {         
+                if(result==="Error"){
+                    alert("Error:Duplicate associate not allowed");
+                    return false;
+                }
+                for(var i in result){
+                    if(result[i].type==="Agent"){
+                    $scope.agentModel.AgentName=result[i].name;
+                    }
+                    if(result[i].type==="Manager"){
+                    $scope.agentModel.ManagerName=result[i].name;
+                    }
+                    if(result[i].type==="Attorney"){
+                    $scope.agentModel.AttorneyName=result[i].name;
+                    }
+                    if(result[i].type==="Publicist"){
+                      $scope.agentModel.PublicistName=result[i].name;
+                    }
+                }
+            //$scope.data.ContactInfo = result;
+            });
+            
+        };
+
+        $scope.submitAssociate = function(){
+            var getAssociateInfo = JSON.parse($scope.activeElement.associate_obj);
+            addFetchAssociateName($scope.activeElement.id,getAssociateInfo.typeid,getAssociateInfo.id);
+        };
+
+        $scope.submitTalentCreditData = function() {
+          var credits = $('.talent-credit-select').val();
+          var role = $('.talent-credit-role-select').val() || null;
+
+          talentFactory.addTalentCreditJoin($scope.activeElement.id, credits, role, function(data) {
+            if (data.length !== $scope.activeElement.talentCreditJoins.length) {
+              $scope.showmsg.errorText = 'Credit(s) added to ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+              $scope.activeElement.talentCreditJoins = data;
+            } else {
+              $scope.showmsg.errorText = 'Credit(s) already exists';
+            }
+          });
+        };
+
+         $scope.removeTalentCreditJoin = function($event, join_id) {
+          talentFactory.removeTalentCreditJoin(join_id, function(data) {
+            $($event.target).parent().slideUp();
+            $($event.target).parent().remove();
+            $scope.showmsg.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+            $scope.activeElement.talentCreditJoins = data;
+          });
+        };
+
+
+        // Submit comment
+        $scope.submitComment = function() {
+          // If text is in the textarea, submit the new comment
+          if ($('.data-entry-comment-input').val() !== "") {
+            commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function(result) {
+              $scope.activeElement.comments.unshift(result);
+              //Once comment is added, append it to the comments-container and clear the textarea
+              $('.data-entry-comment-input').val('');
+            });
+          }
+        };
+
+
+             // Remove comment when delete button is clicked
+            $scope.removeComment = function($event, comment_id) {
+            var r = confirm("Do you really want to delete this comment?");
+                if (r == true) {
+                    $($event.target).parent().slideUp();
+                  commentFactory.removeComment(comment_id);
+                } else {
+                    //return false;
+                }
+            };
+
+            $scope.submitData = function() {
+              dataSubmitter[$scope.section]();
+            };
+            $scope.closepopup = function(){
+                $scope.activeElement = {};
+                $(".hiddenPopUp").hide();
+                 $("#cover").hide();
+            };
+            var checkInputs = function(section) {
+                  var result = true;
+                  if (!section) {
+                    $('input:visible, select:visible').each(function() {
+                      if ($(this).attr('required')) {
+                        if ($(this).val() === null || $(this).val().length === 0) {
+                          result = false;
+                        }
+                      }
+                    });
+                  } else {
+                    $('.talent-form').find('input, visible').each(function() {
+                      if ($(this).attr('required')) {
+                        if ($(this).val() === null || $(this).val().length === 0) {
+                          result = false;
+                        }
+                      }
+                    });
+                  }
+                  
+                  return result;
+            };
 
             // Updates visible talent count on th upper left
             var updateVisibleCount = function () {
@@ -846,6 +1037,14 @@
 
             };
 
+            // $scope.closepopup = function(){
+            //     $s
+            // };
+
+            // $scope.showPopSection = function(){
+            //     alert('hiiiiiiiii');
+            //     $scope.showPopUp = 'Show';
+            // };
             // JQuery
 
             // Expand/collapse checkbox containers
@@ -865,6 +1064,11 @@
 
                 $('.talent-left-col-container').hide();
                 $('.talent-left-col-container').show();
+            });
+
+            $(document).on('click', '#editLink', function () {
+               $(".hiddenPopUp").show();
+               $("#cover").show();
             });
 
 

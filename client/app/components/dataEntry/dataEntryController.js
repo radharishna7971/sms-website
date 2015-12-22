@@ -11,7 +11,7 @@
     $scope.filterData = 'last_name';
     //$scope.talentNameInput = {};
     $scope.model ={};
-
+    $scope.successmsg = false;
     //alert(window.localStorage.smstudiosLoginUserName);
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {
@@ -30,7 +30,9 @@
         
         // Sort all data types by name except for talent which is sorted by last name
         $scope.filterData = 'name';
-
+         contactFactory.getAssociateType(function(associateTypesData) {
+          $scope.typesDetails = associateTypesData;
+        });
         // Update form centering for talent form
         if ($scope.section === 'Talent') {
           $scope.filterData = 'last_name';
@@ -42,6 +44,7 @@
     };
 
     $scope.updateTalentForm = function($event) {
+    	$scope.successmsg = false; 
       if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
         $($event.target).addClass('talent-form-menu-button-active');
@@ -120,7 +123,8 @@
         contactFactory.getContact($scope.editElement.id, function(contactData) {
           $scope.activeElement = contactData;
         });
-
+        
+       
       },
       Talent: function() {
         talentFactory.getTalent($scope.editElement.id, function(talentData) {
@@ -422,10 +426,39 @@
 
     var addFetchAssociateName = function(typeid,associate_id){
       var dataList = [];
+      $scope.agents = {};
+      $scope.managers = {};
+      $scope.attornies = {};
+      $scope.publicists = {};
+      $scope.agentname = {};
+      $scope.managername = {};
+      $scope.attornyname = {};
+      $scope.publicistname = {};
+      var details = [];
       dataList['talent_id'] = $scope.activeElement.id;
       dataList['associte_types_id'] = typeid;
       dataList['associate_id'] = associate_id;
       contactFactory.addGetAssociateNamesById(dataList,function(result) {
+    	 if(result.details.length > 0){
+    		 angular.forEach(result.details, function(value, key) {
+    			 if(value.type === 'Agent'){
+    				 $scope.agentname = value.name;  
+    			 }
+    			 if(value.type === 'Manager'){
+    				 $scope.managername = value.name;  
+    			 }
+    			 if(value.type === 'Attorney'){
+    				 $scope.attornyname = value.name;  
+    			 }
+    			 if(value.type === 'Publicist'){
+    				 $scope.publicistname = value.name;  
+    			 }
+    		 })
+    	 }
+    	 $scope.agents = result.agents;
+    	 $scope.managers = result.managers;
+    	 $scope.attornies = result.attornies;
+    	 $scope.publicists = result.publicists;
         if(result==="Error"){
           alert("Error:Duplicate associate not allowed");
           return false;
@@ -449,6 +482,45 @@
       });
 
     };
+    $scope.submitManagement = function(){
+    	var dataList = [];
+    	if($('#agent').val() && $('#agent').val() !==""){
+    		dataList['talent_id'] = $scope.activeElement.id;
+    		dataList['associte_types_id'] = 1;
+            dataList['associate_id'] = $('#agent').val();
+            contactFactory.addGetAssociateNamesById(dataList,function(result) {
+            	$scope.successmsg = true;
+            });
+    	}
+    	
+    	if($('#manager').val() && $('#manager').val() !==""){
+    		dataList['talent_id'] = $scope.activeElement.id;
+    		dataList['associte_types_id'] = 2;
+            dataList['associate_id'] = $('#manager').val();
+            contactFactory.addGetAssociateNamesById(dataList,function(result) {
+            	$scope.successmsg = true;
+            });
+    	}
+    	
+    	if($('#attorney').val() && $('#attorney').val() !==""){
+    		dataList['talent_id'] = $scope.activeElement.id;
+    		dataList['associte_types_id'] = 3	;
+            dataList['associate_id'] = $('#attorney').val();
+            contactFactory.addGetAssociateNamesById(dataList,function(result) {
+            	$scope.successmsg = true;
+            });
+    	}
+    	
+    	if($('#publicist').val() && $('#publicist').val() !==""){
+    		dataList['talent_id'] = $scope.activeElement.id;
+    		dataList['associte_types_id'] = 4;
+            dataList['associate_id'] = $('#publicist').val();
+            contactFactory.addGetAssociateNamesById(dataList,function(result) {
+            	$scope.successmsg = true;
+            });
+    	}
+        
+    }
 
     $scope.submitAssociate = function(){
      var getAssociateInfo = JSON.parse($scope.activeElement.associate_obj);
@@ -554,6 +626,7 @@
         });
       }
     };
+   
 
     // Remove comment when delete button is clicked
     $scope.removeComment = function($event, comment_id) {
