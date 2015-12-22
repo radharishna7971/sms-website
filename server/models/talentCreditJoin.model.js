@@ -28,14 +28,14 @@ TalentCreditJoin.add = function(talent_id, credit_ids, role_id, callback) {
     } else {
       db.knex.raw(' \
        SELECT \
-        talent_credit_join.id AS id, \
+    	credit_talent_role_join.id AS id, \
         credits.name AS credit, \
         credits.release_date AS release_date, \
         roles.name AS role \
-       FROM talent_credit_join \
-       LEFT JOIN talent ON talent_credit_join.talent_id = talent.id \
-       LEFT JOIN credits ON talent_credit_join.credit_id = credits.id \
-       LEFT JOIN roles ON talent_credit_join.role_id = roles.id \
+       FROM credit_talent_role_join \
+       LEFT JOIN talent ON credit_talent_role_join.talent_id = talent.id \
+       LEFT JOIN credits ON credit_talent_role_join.credit_id = credits.id \
+       LEFT JOIN roles ON credit_talent_role_join.role_id = roles.id \
        WHERE talent.id = ' + talent_id.toString())
       .then(function(results) {
        callback(results[0]);
@@ -54,14 +54,14 @@ TalentCreditJoin.remove = function(joinId, callback) {
     .then(function() {
       db.knex.raw(' \
         SELECT \
-         talent_credit_join.id AS id, \
+    	credit_talent_role_join.id AS id, \
          credits.name AS credit, \
          credits.release_date AS release_date, \
          roles.name AS role \
-        FROM talent_credit_join \
-        LEFT JOIN talent ON talent_credit_join.talent_id = talent.id \
-        LEFT JOIN credits ON talent_credit_join.credit_id = credits.id \
-        LEFT JOIN roles ON talent_credit_join.role_id = roles.id \
+        FROM credit_talent_role_join \
+        LEFT JOIN talent ON credit_talent_role_join.talent_id = talent.id \
+        LEFT JOIN credits ON credit_talent_role_join.credit_id = credits.id \
+        LEFT JOIN roles ON credit_talent_role_join.role_id = roles.id \
         WHERE talent.id = ' + talent_id.toString())
       .then(function(results) {
        callback(results[0]);
