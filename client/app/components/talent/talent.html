@@ -286,27 +286,26 @@
 
 
 <div class="container hiddenPopUp">
-    <div class="data-main-section">
-        <div class="form-title-div">
-          <i class="icon-remove-sign"></i>
-            <h1 class="data-form-title">Talent Form </h1>
-            <span id="close-icon" class="glyphicon glyphicon-remove"  
-            ng-click="closepopup();" style="display:inline;float:right;"></span>
-        </div>
-
-        <!-- Talent menu -->
-        <div class="talent-form-menu" ng-show="section==='Talent'">
-            <span id="mainTab" class="talent-form-menu-button" ng-click="showsection($event, 'main')">Main</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'management')">Management</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'social')">Social Profiles</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'credits')">Credits</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'comments')">Comments</span>
-            <span class="talent-form-menu-button" ng-click="showsection($event,'info')">Info</span>
-        </div>
-    </div>
-
     <div class="data-form-container">
         <!-- TALENT FORM -->
+        <div class="data-main-section">
+          <div class="form-title-div">
+            <i class="icon-remove-sign"></i>
+              <h1 class="data-form-title">Talent Form </h1>
+              <span id="close-icon" class="glyphicon glyphicon-remove"  
+              ng-click="closepopup();" style="display:inline;float:right;"></span>
+          </div>
+
+          <!-- Talent menu -->
+          <div class="talent-form-menu" ng-show="section==='Talent'">
+              <span id="mainTab" class="talent-form-menu-button" ng-click="showsection($event, 'main')">Main</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'management')">Management</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'social')">Social Profiles</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'credits')">Credits</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'comments')">Comments</span>
+              <span class="talent-form-menu-button" ng-click="showsection($event,'info')">Info</span>
+          </div>
+      </div>
         <p class="data-main-error-text">{{showmsg.errorText}}</p>
         <!-- Main, Management, Social -->
         <form class="talent-form" name="talent-form" ng-show="section==='Talent'" novalidate>
@@ -348,18 +347,32 @@
             <!-- management -->
 
             <div ng-show="talentSection==='management'">
-              <p class="input-label">Attorney:{{agentModel.AttorneyName}}</p>
-              <p class="input-label">Agent:{{agentModel.AgentName}}</p>
-              <p class="input-label">Manager:{{agentModel.ManagerName}}</p>
-              <p class="input-label">Publicist:{{agentModel.PublicistName}}</span>
-              <div class="talent-column">
-              <p class="input-label">Associate Name</p>
-              <select class="data-input select-input" ng-model="activeElement.associate_obj">
-              <option></option>
-              <option ng-repeat="contact in data.Contact | orderBy : 'name'" value="{{contact}}">{{contact.name}}</option>
-              </select>
-              </div>
-              <input class="data-input data-submit" ng-click="submitAssociate()" type="submit" value="Updated">
+              <div ng-show="successmsgtalent" style="color:red;">Management info updated successfully</div>
+          <p class="input-label">Attorney</p>
+			<select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
+				<option value=''>Select</option>
+				<option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
+				</option>
+			</select>
+          <p class="input-label">Agent</p>
+          	<select name="agent" id="agent" ng-model="agent" class="data-input select-input">
+				<option value=''>Select</option>
+				<option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
+				</option>
+			</select>
+          <p class="input-label">Manager</p>
+          	<select name="manager" id="manager" ng-model="manager" class="data-input select-input">
+				<option value=''>Select</option>
+				<option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
+				</option>
+			</select>
+          <p class="input-label">Publicist</p>
+          	<select name="publicist" id="publicist" ng-model="publicist" class="data-input select-input">
+				<option value=''>Select</option>
+				<option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
+				</option>
+			</select>
+              <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="Update">
             </div>
 
             <!-- social profiles -->
@@ -450,3 +463,6 @@
 
   </div>
   <div id="cover" ></div>
+
+  <div id="veil" ng-show="isLoading"></div>
+<div id="feedLoading" ng-show="isLoading">Loading...</div>

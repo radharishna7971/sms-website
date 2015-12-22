@@ -26,6 +26,7 @@
              ];
              
             $scope.term ="";
+            $scope.successmsgtalent = false;
             var filereName = $scope.term;
             $scope.talentGridOption = {};
             $scope.activeSectionInfo = false;
@@ -34,6 +35,7 @@
             var Genres = [];
             $scope.showmsg= {};
             $scope.showPopUp = false;
+            $scope.getTalentData = {};
              // This contains functions for submitting data to the database
     var dataSubmitter = {
           Talent: function() {
@@ -90,7 +92,9 @@
             $scope.talentGridOption = talentGridFactory.getGridOptions();
             $scope.section = 'Talent';
             $scope.talentSection = 'main';
+            $scope.showPopUp = '';
             $scope.showsection = function($event,sectioname) {
+            	$scope.successmsgtalent = false;
                 if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                     $($event.target).addClass('talent-form-menu-button-active');
@@ -189,26 +193,24 @@
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                         if(row.isSelected){
                             updateMainTalent(row.entity.id);
-                            getTalentAllDetailsById(row.entity.id);
-                            addFetchAssociateName(row.entity.id,-1,-1);
-                            $scope.showmsg= {};
-                            $scope.agentModel = {};
-                            //$('.data-main-error-text').hide();
-                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                            $("#mainTab").addClass('talent-form-menu-button-active');
-                            $scope.section = 'Talent';
-                            $scope.talentSection = 'main';
+                            $scope.getTalentData = {};
+                            $scope.getTalentData.id = row.entity.id;
                             $('.talent-right-container-content').show();
                             //$scope.showLink = 'show';
                             $("#editLink").show();
                         }
                         if(!row.isSelected){
+                            $scope.getTalentData = {};
                             $scope.gridApi.selection.clearSelectedRows();
                             $('.talent-right-container-content').hide();
                             $("#editLink").hide();
                             //$scope.showLink = 'hide';
                         }
                     });
+            };
+
+            $scope.setLoading = function(loading) {
+                $scope.isLoading = loading;
             };
              $scope.updateFiltersByChckBox = function ($event) {
                 if(!angular.isUndefined($event)){
@@ -729,13 +731,22 @@
             };
 
             var getTalentAllDetailsById = function(talentId){
-                creditFactory.getNames(function(result) {
+                creditFactory.getAllNames()
+                .then(function(result) {
                     $scope.data.Credit= {};
                     $scope.data.Credit = result;
+                     talentFactory.getTalentAllInfoById(talentId)
+                     .then(function (result){
+                        $scope.activeElement = result;
+                    });
                 });
-                talentFactory.getTalent(talentId, function (result) {
-                    $scope.activeElement = result;
-                });
+                 talentFactory.getTalentAllInfoById(talentId)
+                     .then(function (result){
+                        $scope.activeElement = result;
+                    });
+                // talentFactory.getTalent(talentId, function (result) {
+                //     $scope.activeElement = result;
+                // });
             };
             $scope.updateTalentSection = function ($event, section) {
                 $('.right-talent-container-menu-link').removeClass('active-talent-link');
@@ -917,15 +928,45 @@
            
         var addFetchAssociateName = function(talentid,typeid,associate_id){
             var dataList = [];
+            $scope.agents = {};
+            $scope.managers = {};
+            $scope.attornies = {};
+            $scope.publicists = {};
+            $scope.agentname = {};
+            $scope.managername = {};
+            $scope.attornyname = {};
+            $scope.publicistname = {};
             dataList['talent_id'] = talentid;
             dataList['associte_types_id'] = typeid;
             dataList['associate_id'] = associate_id;
-            contactFactory.addGetAssociateNamesById(dataList,function(result) {         
+            contactFactory.addGetAssociateNamesById(dataList,function(result) {
+            	console.log('AssoResult');
+            	console.log(result);
+            	if(result.details.length > 0){
+           		 angular.forEach(result.details, function(value, key) {
+           			 if(value.type === 'Agent'){
+           				 $scope.agentname = value.name;  
+           			 }
+           			 if(value.type === 'Manager'){
+           				 $scope.managername = value.name;  
+           			 }
+           			 if(value.type === 'Attorney'){
+           				 $scope.attornyname = value.name;  
+           			 }
+           			 if(value.type === 'Publicist'){
+           				 $scope.publicistname = value.name;  
+           			 }
+           		 })
+           	 }
+           	 $scope.agents = result.agents;
+           	 $scope.managers = result.managers;
+           	 $scope.attornies = result.attornies;
+           	 $scope.publicists = result.publicists;
                 if(result==="Error"){
                     alert("Error:Duplicate associate not allowed");
                     return false;
                 }
-                for(var i in result){
+                /*for(var i in result){
                     if(result[i].type==="Agent"){
                     $scope.agentModel.AgentName=result[i].name;
                     }
@@ -938,11 +979,51 @@
                     if(result[i].type==="Publicist"){
                       $scope.agentModel.PublicistName=result[i].name;
                     }
-                }
+                }*/
             //$scope.data.ContactInfo = result;
             });
             
         };
+        
+        $scope.submitManagement = function(){
+        	var dataList = [];
+        	if($('#agent').val() && $('#agent').val() !==""){
+        		dataList['talent_id'] = $scope.activeElement.id;
+        		dataList['associte_types_id'] = 1;
+                dataList['associate_id'] = $('#agent').val();
+                contactFactory.addGetAssociateNamesById(dataList,function(result) {
+                	$scope.successmsgtalent = true;
+                });
+        	}
+        	
+        	if($('#manager').val() && $('#manager').val() !==""){
+        		dataList['talent_id'] = $scope.activeElement.id;
+        		dataList['associte_types_id'] = 2;
+                dataList['associate_id'] = $('#manager').val();
+                contactFactory.addGetAssociateNamesById(dataList,function(result) {
+                	$scope.successmsgtalent = true;
+                });
+        	}
+        	
+        	if($('#attorney').val() && $('#attorney').val() !==""){
+        		dataList['talent_id'] = $scope.activeElement.id;
+        		dataList['associte_types_id'] = 3	;
+                dataList['associate_id'] = $('#attorney').val();
+                contactFactory.addGetAssociateNamesById(dataList,function(result) {
+                	$scope.successmsgtalent = true;
+                });
+        	}
+        	
+        	if($('#publicist').val() && $('#publicist').val() !==""){
+        		dataList['talent_id'] = $scope.activeElement.id;
+        		dataList['associte_types_id'] = 4;
+                dataList['associate_id'] = $('#publicist').val();
+                contactFactory.addGetAssociateNamesById(dataList,function(result) {
+                	$scope.successmsgtalent = true;
+                });
+        	}
+            
+        }
 
         $scope.submitAssociate = function(){
             var getAssociateInfo = JSON.parse($scope.activeElement.associate_obj);
@@ -1067,9 +1148,29 @@
             });
 
             $(document).on('click', '#editLink', function () {
-               $(".hiddenPopUp").show();
-               $("#cover").show();
-            });
+                //getTalentAllDetailsById($scope.getTalentData.id);
+                addFetchAssociateName($scope.getTalentData.id,-1,-1);
+                $scope.setLoading(true);
+                 talentFactory.getTalentAllInfoById($scope.getTalentData.id)
+                     .then(function (result){
+                        $scope.activeElement = result.data;
+                        $scope.showmsg= {};
+                        $scope.agentModel = {};
+                        $scope.section = 'Talent';
+                        $scope.talentSection = 'main';
+                         creditFactory.getAllNames()
+                        .then(function(result) {
+                            $scope.data.Credit= {};
+                            $scope.data.Credit = result.data;
+                            $scope.setLoading(false);
+                            $("#cover").show();
+                            $(".hiddenPopUp").show();                        
+                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                            $("#mainTab").addClass('talent-form-menu-button-active');                         
+                        });
+                    });
+               
+                });
 
 
 
