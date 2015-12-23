@@ -97,12 +97,16 @@
             	$scope.successmsgtalent = false;
                 if(sectioname == 'credits')
                 {
+                    $scope.data.Credit= {};
+                 $("#feedLoading").html("Loading Credits...");
+
                     $scope.setLoading(true);
                     creditFactory.getAllNames()
                         .then(function(result) {
                             $scope.data.Credit= {};
                             $scope.data.Credit = result.data;
                             $scope.setLoading(false);
+                            $("#feedLoading").html("Loading...");
                             if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
                         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                         $($event.target).addClass('talent-form-menu-button-active');
