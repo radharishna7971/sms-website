@@ -16,10 +16,7 @@
                     { field: 'id', displayName: 'id', type: 'number', visible: false},
                     { field: 'name', displayName: 'Name'},
                     { field: 'age', displayName: 'Age', width : '7%'},
-                    { field: 'gender', width : '7%',
-                       type: uiGridConstants.filter.SELECT, 
-                       selectOptions: [ {value: true, label: 'true'}, {value: false, label: 'false'} ]
-                    },
+                    { field: 'gender', width : '7%'},
                     { field: 'roles', displayName: 'Roles'},
                     { field: 'ethnicity', displayName: 'Ethnicity'},
                     { field: 'awards', displayName: 'Awards'},
