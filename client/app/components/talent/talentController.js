@@ -138,6 +138,8 @@
                             estimatedBudgetVal = "Not Available";
                         }else if(minBudget===maxBudget){
                             estimatedBudgetVal = '$'+minBudget;
+                        }else if(!minBudget && maxBudget){
+                            estimatedBudgetVal = '$'+maxBudget;
                         }
                         items.estimatedBudget = estimatedBudgetVal;
                     }
@@ -152,6 +154,8 @@
                             boxOfficeIncome = "Not Available";
                         }else if(minBudget === maxBudget){
                             boxOfficeIncome = '$'+minBudget;
+                        }else if(!minBudget && maxBudget){
+                            boxOfficeIncome = '$'+maxBudget;
                         }
                         items.boxOfficeIncome = boxOfficeIncome;
                     }
@@ -169,6 +173,9 @@
                             incomeMulStr = "Not Available";
                         }else if(minIncomeMul === maxIncomeMul){
                             incomeMulStr = minIncomeMul;
+                        }
+                        else if(!minIncomeMul && maxIncomeMul){
+                            incomeMulStr = maxIncomeMul;
                         }
                         items.boxbudgetratio = incomeMulStr;
 
