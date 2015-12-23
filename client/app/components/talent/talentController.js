@@ -123,11 +123,22 @@
             contactFactory.getAssociateNames(function(result) {
                 $scope.data.Contact = result;
             });
+            
+            function removeElement(arrayName,arrayElement)
+            {
+               for(var i=0; i<arrayName.length;i++ )
+                { 
+                   if(arrayName[i]==arrayElement)
+                       arrayName.splice(i,1); 
+                 } 
+             }
 
             talentFactory.getAll(function (data) {
                 angular.forEach(data,function(items){
                     if(items.estimatedBudget !==null && items.estimatedBudget){
                         var estimatedBudgets = items.estimatedBudget.split(',');
+                        removeElement(estimatedBudgets,0);
+                        removeElement(estimatedBudgets,0.0);
                         var maxBudget = Math.max.apply(Math, estimatedBudgets);
                         var maxBudgetInformatted = numberFormatter(parseInt(maxBudget));
                         var minBudget = Math.min.apply(Math, estimatedBudgets);
@@ -144,6 +155,8 @@
                     }
                     if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
                         var boxOfficeIncomes = items.boxOfficeIncome.split(',');
+                        removeElement(boxOfficeIncomes,0);
+                        removeElement(boxOfficeIncomes,0.0);
                         var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
                         var maxIncomeInformatted = numberFormatter(parseInt(maxIncome));
                         var minIncome = Math.min.apply(Math, boxOfficeIncomes);
@@ -163,6 +176,8 @@
                     }
                     if(items.boxbudgetratio !==null && items.boxbudgetratio){
                         var incomeMultiple = items.boxbudgetratio.split(',');
+                        removeElement(incomeMultiple,0);
+                        removeElement(incomeMultiple,0.0);
                         var maxIncomeMul = Math.max.apply(Math, incomeMultiple);
                         //maxIncomeMul = numberFormatter(parseInt(maxIncomeMul));
                         var minIncomeMul = Math.min.apply(Math, incomeMultiple);
