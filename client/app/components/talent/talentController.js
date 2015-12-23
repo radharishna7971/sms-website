@@ -125,37 +125,36 @@
             });
 
             talentFactory.getAll(function (data) {
-
                 angular.forEach(data,function(items){
                     if(items.estimatedBudget !==null && items.estimatedBudget){
                         var estimatedBudgets = items.estimatedBudget.split(',');
                         var maxBudget = Math.max.apply(Math, estimatedBudgets);
-                        maxBudget = numberFormatter(parseInt(maxBudget));
+                        var maxBudgetInformatted = numberFormatter(parseInt(maxBudget));
                         var minBudget = Math.min.apply(Math, estimatedBudgets);
-                        minBudget = numberFormatter(parseInt(minBudget));
-                        var estimatedBudgetVal = '$'+minBudget+'-'+'$'+maxBudget
-                        if(!minBudget && !maxBudget){
+                        var minBudgetInformatted = numberFormatter(parseInt(minBudget));
+                        var estimatedBudgetVal = '$'+minBudgetInformatted+'-'+'$'+maxBudgetInformatted
+                        if(!parseInt(minBudget) && !parseInt(maxBudget)){
                             estimatedBudgetVal = "Not Available";
-                        }else if(minBudget===maxBudget){
-                            estimatedBudgetVal = '$'+minBudget;
-                        }else if(!minBudget && maxBudget){
-                            estimatedBudgetVal = '$'+maxBudget;
+                        }else if(parseInt(minBudget)===parseInt(maxBudget)){
+                            estimatedBudgetVal = '$'+minBudgetInformatted;
+                        }else if(!parseInt(minBudget) && parseInt(maxBudget)){
+                            estimatedBudgetVal = '$'+maxBudgetInformatted;
                         }
                         items.estimatedBudget = estimatedBudgetVal;
                     }
                     if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
                         var boxOfficeIncomes = items.boxOfficeIncome.split(',');
                         var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
-                        maxIncome = numberFormatter(parseInt(maxIncome));
+                        var maxIncomeInformatted = numberFormatter(parseInt(maxIncome));
                         var minIncome = Math.min.apply(Math, boxOfficeIncomes);
-                        minIncome = numberFormatter(parseInt(minIncome));
-                        var boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
-                        if(!minBudget && !maxBudget){
+                        var minIncomeInformatted = numberFormatter(parseInt(minIncome));
+                        var boxOfficeIncome = '$'+minIncomeInformatted+'-'+'$'+maxIncomeInformatted;
+                        if(!parseInt(minIncome) && !parseInt(maxIncome)){
                             boxOfficeIncome = "Not Available";
-                        }else if(minBudget === maxBudget){
-                            boxOfficeIncome = '$'+minBudget;
-                        }else if(!minBudget && maxBudget){
-                            boxOfficeIncome = '$'+maxBudget;
+                        }else if(parseInt(minIncome) === parseInt(maxIncome)){
+                            boxOfficeIncome = '$'+minIncomeInformatted;
+                        }else if(!parseInt(minIncome) && parseInt(maxIncome)){
+                            boxOfficeIncome = '$'+maxIncomeInformatted;
                         }
                         items.boxOfficeIncome = boxOfficeIncome;
                     }
