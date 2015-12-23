@@ -48,7 +48,6 @@ Talent.getAll = function(callback) {
 Talent.insertExcelData = function(data){
   if(data && data.length>0){
     var firstItem = data[0];
-    console.log(firstItem);
   }
 };
 
@@ -73,12 +72,7 @@ Talent.getProfile= function(talentId, callback) {
   (select GROUP_CONCAT(distinct c.name SEPARATOR \', \') as genresdata \
     from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
-    where cjoin.talent_id ='+ talentId+') as credits, \
-(select GROUP_CONCAT(distinct \' \',`at`.type,\', \',a.firstName,\',\',a.lastName,\',\',\',\',\' \' SEPARATOR \'| \') \
-  as associatedata from associate_talent_associate_type_join atj \
-  inner join associate_types at ON atj.associte_types_id=`at`.id \
-  inner join associate a ON a.id=atj.associate_id \
-  where atj.talent_id ='+ talentId+') as associateInfo \
+    where cjoin.talent_id ='+ talentId+') as credits \
 FROM talent t where t.id= ' + talentId)
   .then(function(results) {
 	  var ob = {};
@@ -112,7 +106,13 @@ FROM talent t where t.id= ' + talentId)
 			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%d %b %Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\,\') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
 							    	.then(function(results3) {
 							    		ob.credits = results3[0];
-							    		callback(ob);
+							    		
+							    		db.knex.raw('select `at`.type,a.firstName,a.lastName from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id  where atj.talent_id = '+talentId)
+							    		.then(function(results4) {
+							    			ob.associateInfo = results4[0];
+							    			callback(ob);
+							    		});
+							    		
 							    	});
 		  		    	   
 		  		       });
@@ -123,7 +123,6 @@ FROM talent t where t.id= ' + talentId)
 
 // Return list of all talent names
 Talent.getNames = function(nameChars,callback) {
-  console.log(nameChars);
   var findNameWith = "'"+"%"+nameChars+"%"+"'";
   db.knex.raw(' \
     SELECT \
@@ -195,6 +194,11 @@ Talent.get = function(id, callback) {
       State, \
       country, \
       createdby, \
+      created_at, \
+      modifiedby, \
+      last_edited, \
+      createdbycomments, \
+      modifiedbycomments, \
       ethnicity_id, \
       facebook_url, \
       twitter_url, \
@@ -221,14 +225,14 @@ Talent.get = function(id, callback) {
       data.comments = results[0];
       db.knex.raw(' \
        SELECT \
-        talent_credit_join.id AS id, \
+    	credit_talent_role_join.id AS id, \
         credits.name AS credit, \
         credits.release_date AS release_date, \
         roles.name AS role \
-       FROM talent_credit_join \
-       LEFT JOIN talent ON talent_credit_join.talent_id = talent.id \
-       LEFT JOIN credits ON talent_credit_join.credit_id = credits.id \
-       LEFT JOIN roles ON talent_credit_join.role_id = roles.id \
+       FROM credit_talent_role_join \
+       LEFT JOIN talent ON credit_talent_role_join.talent_id = talent.id \
+       LEFT JOIN credits ON credit_talent_role_join.credit_id = credits.id \
+       LEFT JOIN roles ON credit_talent_role_join.role_id = roles.id \
        WHERE talent.id = ' + data.id.toString())
       .then(function(results) {
        data.talentCreditJoins = results[0];
@@ -238,7 +242,6 @@ Talent.get = function(id, callback) {
        FROM  talent, users \
 	   WHERE talent.id = ' + data.id.toString() + ' AND users.id = talent.created_by')
 	   .then(function(results) {
-		   //data.creator_name = results[0][0]; // TaskList: [27] - This is to get Creator name in dataEntry.html file
        callback(data);
 	   });
       });
@@ -257,8 +260,11 @@ Talent.addOrEdit = function(talentData, callback) {
       // If the email matches, then edit the data
       if (talent.get('email') === talentData.email || talent.get('id') === talentData.id) {
         for (var key in talentData) {
-          talent.set(key, talentData[key]);
-          talent.save();
+          if(key !=="created_at" && key !=="createdby" && key !=="createdbycomments"){
+             talent.set(key, talentData[key]);
+              talent.save();
+          }
+         
         }
         talent.save()
         .then(function() {

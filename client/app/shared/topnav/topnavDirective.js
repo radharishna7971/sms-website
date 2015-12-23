@@ -6,9 +6,13 @@
       restrict: "E",
       templateUrl: 'app/shared/topnav/topnav.html',
       controller: function($scope, $rootScope, authFactory) {
-        $scope.logout = function() {
-          authFactory.logout();
-        };
+		  if(!!window.localStorage.smstudiosLoginUserName){
+			  $scope.display_username = window.localStorage.smstudiosLoginUserName;
+			  $scope.last_logged_in = window.localStorage.smstudiosLastLoggedIn;
+		  }
+    	  $scope.logout = function() {
+    		  authFactory.logout();
+    	  };
 
 
       },

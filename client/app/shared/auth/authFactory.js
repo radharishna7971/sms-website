@@ -16,7 +16,8 @@
             window.localStorage.smstudiosId = res.data.id;
             window.localStorage.smstudiosPermission = res.data.permission;
             window.localStorage.smstudiosLoginUserName = res.data.name;
-
+            window.localStorage.smstudiosLastLoggedIn = res.data.last_logged_in;
+            
             // Remove links that user does not have privilege to access
             $('.topnav-button').each(function() {
               // If user permission level is above the required permission for a given link, hide the link
@@ -50,6 +51,7 @@
               delete window.localStorage.smstudiosJwtToken;
               delete window.localStorage.smstudiosId;
               delete window.localStorage.smstudiosPermission;
+              delete window.localStorage.smstudiosLastLoggedIn;
             }
             callback(res.data);
           });
@@ -58,9 +60,19 @@
 
       /* When user logs out, remove the token from client and redirect to home page */
       logout: function() {
+		$http({
+			method: 'POST',
+			url: 'api/auth/logout',
+			data: {
+			id: window.localStorage.smstudiosId
+		}
+		}).then(function(res) {
+			console.log(res);
+		});
         delete window.localStorage.smstudiosJwtToken;
         delete window.localStorage.smstudiosId;
         delete window.localStorage.smstudiosPermission;
+        delete window.localStorage.smstudiosLastLoggedIn;
         $state.go('login');
       },
 

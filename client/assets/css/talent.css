@@ -248,13 +248,13 @@
 .right-link {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  width: 182px;
+  width: 175px;
 }
 
 .right-talent-container-menu-link:hover {
     background-color: #66B3F1;
     color: white;
-    width: 182px;
+    width: 175px;
 }
 
 .active-talent-link {
@@ -427,7 +427,8 @@ table.creditSection {
         color: white;
     }
     table.creditSection th, table.creditSection td {
-        width: 22%;
+        
+
         text-align: left;
         padding: 8px;
     }
@@ -442,65 +443,8 @@ table.creditSection {
 
 
 
-    background-color: #FDFDFD;
+background-color: #FDFDFD;
 }
-table.creditSections {
-        display: table;
-        border-collapse: collapse;
-        width: 1088px;
-        margin-bottom: 5px;
-        margin-left: 32px;
-    }
-    table.creditSections thead, table.creditSections tbody {
-        float: left;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        width: 100%;
-    }
-    table.creditSections tbody {
-        overflow: auto;
-        height: 150px;
-        margin-top: 15px;
-    }
-    table.creditSections tr {
-
-
-
-
-
-
-
-
-
-        width: 100%;
-        display: table;
-        text-align: left;
-         height: 14px;
-    }
-    table.creditSections th {
-        background-color: #66B3F1;
-        color: white;
-    }
-    table.creditSections th, table.creditSections td {
 
 
 
@@ -527,10 +471,67 @@ table.creditSections {
 
 
 
-        width: 22%;
-        text-align: left;
-        padding: 8px;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

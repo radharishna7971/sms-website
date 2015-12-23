@@ -129,10 +129,22 @@ User.getUserDetailsById = function(id,callback) {
 
 // Returns array of all users
 User.getAll = function(callback) { 
-  db.knex.select('id','first_name', 'last_name', 'email', 'permission').from('users')
+  db.knex.select('id','first_name', 'last_name', 'email', 'permission', 'last_logged_in').from('users')
   .then(function(users) {
     callback(users);
   });
+};
+
+//Validates the token saved in localStorage
+User.logout = function(id, callback) {
+  db.knex.raw('update users set last_logged_in=now() where id='+id)
+	.then(function(userUpdated) {
+		new User({'id': id})
+		  .fetch()
+		  .then(function(user) {
+			  callback(user);
+		  });
+	});
 };
 
 module.exports = User;

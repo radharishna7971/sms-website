@@ -59,11 +59,6 @@
   margin-top: 3px;
   
 }
-.arrow-right {
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 7px solid #66B3F1;
-}
 .arrow-down {
   -moz-transform:rotate(90deg);
   -webkit-transform:rotate(90deg);
@@ -71,6 +66,12 @@
   -ms-transform:rotate(90deg);
   -ms-filter:
 }
+.arrow-right {
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid #66B3F1 !important;
+}
+
 
 .filter-header {
   font-weight: 700;
@@ -81,7 +82,7 @@
   margin-left: 5px;
   margin-bottom: 8px;
   clear: both;
-  display: block;
+  display: none;
 
 }
 .filter-option {

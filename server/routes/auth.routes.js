@@ -1,6 +1,7 @@
  var auth = require('../controllers/auth.controller.js');
  module.exports = function(app) {
   app.post('/api/auth/login', auth.login);
+  app.post('/api/auth/logout', auth.logout);
   app.post('/api/auth/create', auth.create);
   app.post('/api/auth/update', auth.update);
   app.post('/api/auth/validate', auth.validate);

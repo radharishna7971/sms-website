@@ -5,12 +5,14 @@
     <td>Last Name</td>
     <td>Email</td>
     <td>Permission</td>
+    <td>Last Visited</td>
   </tr>
   <tr class="user-table-row data-left-column-data-row" ng-repeat="user in users" ng-click="updateUserDetails($event, element, user.id)">
     <td class="user-table-column">{{user.first_name}}</td>
     <td class="user-table-column">{{user.last_name}}</td>
     <td class="user-table-column">{{user.email}}</td>
     <td class="user-table-column center">{{user.permission}}</td>
+    <td class="user-table-column center">{{user.last_logged_in | date:'dd-MMM-yy hh:m a'}}</td>
   </tr>
 </table>
 

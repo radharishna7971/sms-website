@@ -11,12 +11,42 @@
           callback(res.data);
         });
       },
+      getAssociateNames: function(callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/contact/all/getAssociateNames'
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
+      getAssociateType: function(callback) {
+        return $http({
+          method: 'GET',
+          url: '/api/contact/all/getAssociateType'
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
       getContact: function(id, callback) {
         return $http({
           method: 'GET',
           url: 'api/contact/contact',
           params: {
             id: id
+          }
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
+
+      addGetAssociateNamesById: function(dataList, callback) {
+        return $http({
+          method: 'POST',
+          url: 'api/contact/all/addGetAssociateNamesById',
+          data: {
+            talent_id: dataList['talent_id'],
+            associte_types_id: dataList['associte_types_id'],
+            associate_id: dataList['associate_id']
           }
         }).then(function(res) {
           callback(res.data);

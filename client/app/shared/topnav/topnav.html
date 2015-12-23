@@ -20,6 +20,9 @@
   <div class="topnav-button right" id="logout-button" path="logout" permission="100" ng-click="logout()">
     Log Out
   </div>
+  <div class="topnav-button welcome-user right" ng-if="display_username">
+    Welcome {{display_username}}
+  </div>
 </div>
 
 
