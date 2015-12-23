@@ -95,10 +95,29 @@
             $scope.showPopUp = '';
             $scope.showsection = function($event,sectioname) {
             	$scope.successmsgtalent = false;
+                if(sectioname == 'credits')
+                {
+                    $scope.setLoading(true);
+                    creditFactory.getAllNames()
+                        .then(function(result) {
+                            $scope.data.Credit= {};
+                            $scope.data.Credit = result.data;
+                            $scope.setLoading(false);
+                            if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
+                        $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                        $($event.target).addClass('talent-form-menu-button-active');
+                    }
+                $scope.talentSection = sectioname;
+                                                   
+                        });
+                }
+                else
+                {
                 if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                     $($event.target).addClass('talent-form-menu-button-active');
                 }
+            }
                 $scope.talentSection = sectioname;
 
             };
@@ -126,6 +145,10 @@
 
             talentFactory.getAll(function (data) {
                 angular.forEach(data,function(items){
+                    if(items.age == 0)
+                    {
+                        items.age="";
+                    }
                     if(items.estimatedBudget !==null && items.estimatedBudget){
                         var estimatedBudgets = items.estimatedBudget.split(',');
                         var maxBudget = Math.max.apply(Math, estimatedBudgets);
@@ -1164,7 +1187,7 @@
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
                         $scope.talentSection = 'main';
-                         creditFactory.getAllNames()
+                         /*creditFactory.getAllNames()
                         .then(function(result) {
                             $scope.data.Credit= {};
                             $scope.data.Credit = result.data;
@@ -1173,12 +1196,15 @@
                             $(".hiddenPopUp").show();                        
                             $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                             $("#mainTab").addClass('talent-form-menu-button-active');                         
-                        });
+                        });*/
+                            $scope.setLoading(false);
+                            $("#cover").show();
+                            $(".hiddenPopUp").show();                        
+                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                            $("#mainTab").addClass('talent-form-menu-button-active');   
+
                     });
                
                 });
-
-
-
         });
 })();
