@@ -340,7 +340,7 @@
                         <option ng-repeat="ethnicity in data.Ethnicity | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
                     </select>
                 </div>
-                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Updated">
+                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Update">
             </div>
 
 
@@ -396,8 +396,9 @@
                     <span class="input-url-pre-text">http://www.</span>
                     <input class="data-input" ng-model="activeElement.instagram_url" type="text">
                 </div>
-                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Updated">
+                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Update">
             </div>
+
 
             <!-- Credits -->
 
@@ -423,7 +424,7 @@
                             <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
                         </select>
                     </div>
-                    <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="Updated">
+                    <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="Update">
                 </form>
                 <div class="talent-credit-join-container">
                     <div ng-repeat="join in activeElement.talentCreditJoins">
@@ -438,7 +439,7 @@
             <div class="talent-data-comments-container" ng-show="talentSection==='comments'">
                 <div class="data-entry-comment-box">
                     <textarea class="data-entry-comment-input" type="textarea" placeholder="Enter comment here"></textarea>
-                    <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" value="Updated" />
+                    <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" value="Update" />
                 </div>
                 <div class="talent-data-comments">
                     <div class="talent-data-comment-header">Comments</div>
