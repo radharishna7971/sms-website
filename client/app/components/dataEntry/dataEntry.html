@@ -235,8 +235,8 @@
       </div>
       <div class="talent-data-comments">
         <div class="talent-data-comment-header">Comments</div>
-        <div class="comment-div" ng-repeat="comment in activeElement.comments | orderBy:'-date'">
-          <div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+        <div class="comment-div"  ng-repeat="comment in activeElement.comments | orderBy:'-date'">
+          <div class="data-entry-delete-comment-button" ng-if="comment.name===data_entry_display_username" ng-click="removeComment($event, comment.comment_id)">x</div>
           <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
           <p class="comment-text">{{comment.text}}</p>
         </div>

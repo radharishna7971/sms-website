@@ -166,7 +166,8 @@
     <p ng-repeat="associate in associateData | orderBy:'associatename'">     
       <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
     </p>
-    <p><span class="tableLable">Partner</span>: <span><a href="#">{{partner_name}}</a></span></p>
+    <p><span class="tableLable">Partner</span>: <span><a href="#" 
+      ng-click="getPartnerDetailsInfo()">{{partner_name}}</a></span></p>
     <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
     <p><span class="tableLable">Phone</span>: <span>{{phone}}</span></p>
     </div>
@@ -255,7 +256,8 @@
 	<div class="talent-data-comment">
 		<div class="talent-data-comment-headers">Comments</div>
 		<div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
-			<div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+			<div class="data-entry-delete-comment-button" 
+      ng-if="comment.name===talent_display_username" ng-click="removeComment($event, comment.comment_id)">x</div>
 			<p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
 			<p class="comment-text">{{comment.text}}</p>
 		</div>
@@ -445,7 +447,8 @@
                 <div class="talent-data-comments">
                     <div class="talent-data-comment-header">Comments</div>
                     <div class="comment-div" ng-repeat="comment in activeElement.comments | orderBy:'-date'">
-                        <div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+                        <div class="data-entry-delete-comment-button"
+                         ng-if="comment.name===talent_display_username" ng-click="removeComment($event, comment.comment_id)">x</div>
                         <p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
                         <p class="comment-text">{{comment.text}}</p>
                     </div>
