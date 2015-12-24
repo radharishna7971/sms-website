@@ -12,6 +12,9 @@
     //$scope.talentNameInput = {};
     $scope.model ={};
     $scope.successmsg = false;
+    if(!!window.localStorage.smstudiosLoginUserName){
+      $scope.data_entry_display_username = window.localStorage.smstudiosLoginUserName;
+    }
     //alert(window.localStorage.smstudiosLoginUserName);
     // Whenever a new section (category) is clicked, this updated the highlighte div, the form and the data shown
     $scope.updateActiveSection = function($event, section) {

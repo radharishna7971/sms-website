@@ -6,6 +6,9 @@
             ///////////////////////////////
             /// Initialize View
             ///////////////////////////////
+            if(!!window.localStorage.smstudiosLoginUserName){
+              $scope.talent_display_username = window.localStorage.smstudiosLoginUserName;
+            }
             $('.filter-header-container').find('.arrow').removeClass( "arrow-down" );
             $('.filter-header-container').find('.arrow').addClass( "arrow-right" );
              $scope.incomeMultiple = [
