@@ -652,7 +652,11 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
-                    var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
+                	
+                	$scope.partner_id = (result.details[0].partner) ? result.details[0].partner:'';
+                	$scope.partner_name = (result.details[0].partnername) ? result.details[0].partnername:'';
+                    
+                	var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
                     if(phoneNumber !== null){
                     	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
                     }else{
@@ -693,7 +697,7 @@
                     if(!!result.awards && result.awards.length>0){
                         angular.forEach(result.awards, function(value, key) {
                         awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
-                        awardObj.year = (value.release_date === null) ? 'Not Available' : value.release_date;
+                        awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
                         awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
                         awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
                         awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
