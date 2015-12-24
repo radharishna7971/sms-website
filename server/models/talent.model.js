@@ -50,7 +50,7 @@ Talent.insertExcelData = function(data){
 Talent.getProfile= function(talentId, callback) {
   db.knex.raw(' \
     SELECT t.id as id, t.first_name as firstName, t.last_name as lastName, \
-    t.age as age, t.gender as gender, t.twitter_url as twitterurl, \
+    t.age as age,t.partner, t.gender as gender, t.twitter_url as twitterurl, \
     t.facebook_url as facebookurl, t.youtube_url as youtubeurl, t.instagram_url as instagramurl, \
 	DATE_FORMAT(t.created_at,"%d %b %Y") as createdAt, DATE_FORMAT(t.last_edited,"%d %b %Y") as lastEdited, \
 	t.modifiedby as modifiedBy, t.createdby as createdBy, \
@@ -60,6 +60,7 @@ Talent.getProfile= function(talentId, callback) {
     (select   GROUP_CONCAT(distinct r.name SEPARATOR \', \') from credit_talent_role_join cjoin \
       inner join roles r on r.id = cjoin.role_id \
       where cjoin.talent_id = t.id) as roles, \
+	(select GROUP_CONCAT(tp.first_name, \' \', tp.last_name) from talent tp where t.partner=tp.id) as partnername, \
   (select GROUP_CONCAT(distinct g.name SEPARATOR \', \') as genresdata from credit_talent_role_join cjoin \
     inner join credits c on c.id = cjoin.credit_id \
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
@@ -99,7 +100,7 @@ FROM talent t where t.id= ' + talentId)
 		  		       .then(function(results2) {
 		  		    	   ob.awards = results2[0];
 		  		    	 //callback(ob);
-			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%d %b %Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\,\') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
+			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%d %b %Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\, \') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
 							    	.then(function(results3) {
 							    		ob.credits = results3[0];
 							    		
