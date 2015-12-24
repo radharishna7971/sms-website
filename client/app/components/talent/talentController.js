@@ -1199,6 +1199,26 @@
                 $('.talent-left-col-container').show();
             });
 
+
+            $scope.getPartnerDetailsInfo = function(){
+                    //alert($scope.partner_id);
+                addFetchAssociateName($scope.partner_id,-1,-1);
+                $scope.setLoading(true);
+                 talentFactory.getTalentAllInfoById($scope.partner_id)
+                     .then(function (result){
+                        $scope.activeElement = result.data;
+                        $scope.showmsg= {};
+                        $scope.agentModel = {};
+                        $scope.section = 'Talent';
+                        $scope.talentSection = 'main';
+                            $scope.setLoading(false);
+                            $("#cover").show();
+                            $(".hiddenPopUp").show();                        
+                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                            $("#mainTab").addClass('talent-form-menu-button-active');   
+
+                    });
+            };
             $(document).on('click', '#editLink', function () {
                 //getTalentAllDetailsById($scope.getTalentData.id);
                 addFetchAssociateName($scope.getTalentData.id,-1,-1);
