@@ -22,6 +22,23 @@ Credit.getNames = function(callback) {
   });
 };
 
+//Get credits by user input credits entry
+Credit.namesByChars = function(Chars, callback) {
+  var findNameWith = "'"+"%"+Chars+"%"+"'"; 
+  db.knex.raw(' \
+    SELECT \
+      credits.id, \
+      credits.record_id, \
+      credits.name, \
+      credits.release_date, \
+      credits.logline, \
+      credits.estimatedBudget, \
+      credits.box_office_income \
+      FROM credits WHERE name like '+findNameWith+' LIMIT 10')
+    .then(function(results) {
+     callback(results[0]);
+  });
+};
   // Convert date format to be SQL-friendly
 Credit.get = function(id, callback) {
   db.knex.raw(' \

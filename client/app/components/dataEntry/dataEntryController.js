@@ -83,6 +83,7 @@
       var dataType = $scope.section.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
       if (confirm("Are you sure you want to delete this" + dataType + "?")) {
         deleteData[$scope.section]();
+        $scope.model = {};
       }
     };
 
@@ -563,6 +564,19 @@
           return result.data;
         });
     };
+
+    $scope.getCreditsNames = function(val){
+      var talentNames = [];
+      return creditFactory.getCreditsNames(val, angular.noop).then(function(result){
+          return result.data;
+        });
+    };
+    $scope.getCreditDetails = function (itemval) {
+        $scope.editElement = itemval;
+        activeElementSetter['Credit']();
+        $scope.btnTxt = "Update";
+      };
+
     setTimeout(function() {
       console.log($scope.data);
     }, 2000);
