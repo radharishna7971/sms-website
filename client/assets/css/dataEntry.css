@@ -112,6 +112,7 @@
   min-height: 17px;
   margin-left: 20px;
   margin-bottom: 5px;
+  clear: both;
 }
 
 .id-input {

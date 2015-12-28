@@ -11,12 +11,17 @@
           callback(res.data);
         });
       },
-       getAllNames: function(callback) {
+      
+      getCreditsNames: function(Chars,callback) {
         return $http({
           method: 'GET',
-          url: 'api/credit/all/names'
+          url: 'api/credit/all/namesByChars',
+          params: {
+            'Chars': Chars
+          }
         });
       },
+
       getCredit: function(id, callback) {
         return $http({
           method: 'GET',
