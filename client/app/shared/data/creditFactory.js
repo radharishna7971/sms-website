@@ -21,6 +21,13 @@
           }
         });
       },
+      
+      getAllNames: function(callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/credit/all/names'
+        });
+      },
 
       getCredit: function(id, callback) {
         return $http({
