@@ -201,7 +201,8 @@ Talent.get = function(id, callback) {
       twitter_url, \
       youtube_url, \
       vine_url, \
-      instagram_url \
+      instagram_url, \
+      partner \
     FROM talent \
     WHERE id = ' + id)
   .then(function(results) {
