@@ -67,7 +67,12 @@
               // Add id to keep track of who created given talent
               $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
               $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
-
+              
+              if(angular.isUndefined($scope.activeElement.partner)){
+                $scope.activeElement.partner = $scope.inputPartner;
+              }else if($scope.activeElement.partner !== null){
+                $scope.activeElement.partner = $scope.activeElement.partner.name;
+              }
               talentFactory.addOrEdit($scope.activeElement, function(res) {
                 if (res.status !== 'error') {
                   if (res.status === 'edit') {
@@ -260,6 +265,17 @@
                     });
             };
 
+            $scope.getTalentNames = function(val){
+                var talentNames = [];
+                return talentFactory.getNames(val, angular.noop).then(function(result){
+                    return result.data;
+                });
+            };
+
+            $scope.getTalentDetails = function (itemval) {
+                console.log("selected items.......!!");
+                console.log(itemval);
+            };
             $scope.setLoading = function(loading) {
                 $scope.isLoading = loading;
             };
@@ -1110,7 +1126,7 @@
 
 
         // Submit comment
-        $scope.submitComment = function() {
+        $scope.submitCommentPopUp = function() {
           // If text is in the textarea, submit the new comment
           if ($('.data-entry-comment-input').val() !== "") {
             commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function(result) {
@@ -1229,6 +1245,7 @@
                  talentFactory.getTalentAllInfoById($scope.getTalentData.id)
                      .then(function (result){
                         $scope.activeElement = result.data;
+                        $scope.inputPartner = result.data.partner;
                         $scope.showmsg= {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
