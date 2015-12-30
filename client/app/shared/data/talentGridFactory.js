@@ -30,7 +30,7 @@
                     { field: 'createdby', displayName: 'Created By', visible: false}
                 ],
                 rowTemplate: "<div ng-click=\"grid.appScope.showInfo(row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell></div>",
-                enableGridMenu: false,
+                enableGridMenu: true,
                 exporterCsvFilename: 'talentData.csv',
                 exporterPdfDefaultStyle: {fontSize: 9},
                 exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
