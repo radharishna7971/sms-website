@@ -153,7 +153,7 @@
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
-      <div id="infoTab" class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">Contact Info</div>
+      <div id="infoTab" class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">Profile & Contact Info</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'credits')">Credits</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'award')">Awards</div>
@@ -163,13 +163,26 @@
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
     </br>
-    <p ng-repeat="associate in associateData | orderBy:'associatename'">     
-      <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
-    </p>
-    <!-- <p><span class="tableLable">Partner</span>: <span><a href="#" 
-      ng-click="getPartnerDetailsInfo()">{{partner_name}}</a></span></p> -->
-    <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
-    <p><span class="tableLable">Phone</span>: <span>{{phone}}</span></p>
+    <div class="talentProfileRightPanel">
+      <div class="talentImgSection">
+        <img class="talentProfileImg" src="assets/img/default-talent-pic.png" alt="Smiley face" width="107" height="107">
+      </div>
+      <p><span class="tableLable">Name</span>: <span>{{TalentNameData}}</span></p>
+      <p><span class="tableLable">Age</span>: <span>{{talentDetailsInfoData.age}}</span></p>
+      <p><span class="tableLable">Gender</span>: <span>{{talentDetailsInfoData.gender}}</span></p>
+      <p><span class="tableLable">Ethnicity</span>: <span>{{talentDetailsInfoData.ethnicity}}</span></p>
+      <p class="talentList"><span class="tableLable">Role(s)</span>: <span>{{talentDetailsInfoData.roles}}</span></p>
+      <p class="talentList"><span class="tableLable">Genre(s)</span>: <span>{{talentDetailsInfoData.genres}}</span></p>
+    </div>
+    <div class="talentProfileLeftPanel">
+      <p ng-repeat="associate in associateData | orderBy:'associatename'">     
+        <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
+      </p>
+      <!-- <p><span class="tableLable">Partner</span>: <span><a href="#" 
+        ng-click="getPartnerDetailsInfo()">{{partner_name}}</a></span></p> -->
+      <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
+      <p><span class="tableLable">Phone</span>: <span>{{phone}}</span></p>
+  </div>
     </div>
     
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">

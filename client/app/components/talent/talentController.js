@@ -248,7 +248,7 @@
                     $scope.gridApi = gridApi;
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                         if(row.isSelected){
-                            updateMainTalent(row.entity.id);
+                            updateMainTalent(row.entity.id,row.entity);
                             $scope.getTalentData = {};
                             $scope.getTalentData.id = row.entity.id;
                             $('.talent-right-container-content').show();
@@ -666,9 +666,12 @@
                     return findFlag;
                 });
             };
-            var updateMainTalent = function (talentId) {
+            var updateMainTalent = function (talentId, talentDetailsInfo) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
+                    $scope.TalentNameData = ((talentDetailsInfo.name.split(",")).reverse()).join("  ");
+                    $scope.talentDetailsInfoData = talentDetailsInfo;
+                    
                     $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
                 	
