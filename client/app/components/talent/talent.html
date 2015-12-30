@@ -148,7 +148,10 @@
       </div>
     </div>
   </div>
+   
   <div class="talent-center-div">
+    <input id="exportData" class="btn btn-primary" type="button" ng-click="getSelectRow()" alt="XLSX" title="Export To XLSX" value="Export" />
+
     <div id="talentGrid" ui-grid="talentGridOption" ui-grid-selection ui-grid-pagination ui-grid-exporter ui-grid-resize-columns class="grid"></div>
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">

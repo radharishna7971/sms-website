@@ -6,9 +6,12 @@
             ///////////////////////////////
             /// Initialize View
             ///////////////////////////////
+            
+
             if(!!window.localStorage.smstudiosLoginUserName){
               $scope.talent_display_username = window.localStorage.smstudiosLoginUserName;
             }
+
             $('.filter-header-container').find('.arrow').removeClass( "arrow-down" );
             $('.filter-header-container').find('.arrow').addClass( "arrow-right" );
              $scope.incomeMultiple = [
@@ -96,8 +99,41 @@
                         return '';
                     }
             };
+            var checkRowId = "";
+            $scope.showInfo = function(row){
+                var clickedRowId = parseInt(row.entity.id);
+                if(parseInt(checkRowId)===clickedRowId && $("#editLink").is(':visible')){
+                    $('.talent-right-container-content').hide();
+                    $("#editLink").hide();
+                    return false;
+                }
+                else{
+                    updateMainTalent(row.entity.id,row.entity);
+                    $scope.getTalentData = {};
+                    $scope.getTalentData.id = row.entity.id;
+                    $('.talent-right-container-content').show();
+                    $("#editLink").show();
+                    checkRowId = row.entity.id;
+                    return false;
+                }
+                     
+            };
+            $scope.getSelectRow = function(){
+                var selectedTalentRowId = {};
+                selectedTalentRowId.pay=[];
+                angular.forEach($scope.gridApi.selection.getSelectedRows(), function(items){
+                    selectedTalentRowId.pay.push(items.id);
+                });
+                
+                talentFactory.exportTalentDetailXls(selectedTalentRowId, function(result) {
+                    $scope.data.Contact = result;
+                });
+                //console.log(selectedTalentRowId);
+            };
+
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
+            $scope.talentGridOption.appScopeProvider = $scope.myAppScopeProvider;
             $scope.section = 'Talent';
             $scope.talentSection = 'main';
             $scope.showPopUp = '';
@@ -247,21 +283,8 @@
             $scope.talentGridOption.onRegisterApi = function (gridApi) {
                     $scope.gridApi = gridApi;
                     gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                        if(row.isSelected){
-                            updateMainTalent(row.entity.id,row.entity);
-                            $scope.getTalentData = {};
-                            $scope.getTalentData.id = row.entity.id;
-                            $('.talent-right-container-content').show();
-                            //$scope.showLink = 'show';
-                            $("#editLink").show();
-                        }
-                        if(!row.isSelected){
-                            $scope.getTalentData = {};
-                            $scope.gridApi.selection.clearSelectedRows();
-                            $('.talent-right-container-content').hide();
-                            $("#editLink").hide();
-                            //$scope.showLink = 'hide';
-                        }
+
+                        console.log(row);
                     });
             };
 
@@ -671,7 +694,7 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.TalentNameData = ((talentDetailsInfo.name.split(",")).reverse()).join("  ");
                     $scope.talentDetailsInfoData = talentDetailsInfo;
-                    
+
                     $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
                 	
