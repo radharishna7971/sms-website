@@ -117,6 +117,18 @@
           callback(res.data);
         });
       },
+
+      exportTalentDetailXls: function(talentIdArray, callback) {
+        return $http({
+          method: 'POST',
+          url: 'http://www.socialmediastudios.co:8080/upload/talent/xlsx',
+          data: {
+            talentIdArray: talentIdArray
+          }
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
       removeTalentCreditJoin: function(joinId, callback) {
         return $http({
           method: 'DELETE',

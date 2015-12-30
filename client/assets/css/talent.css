@@ -543,3 +543,14 @@ table.creditSection th, table.creditSection td {
   border: 0px solid blue;
   border-radius: 50%;
 }
+.exportXlsxTalent{
+  display: block;
+  float: right;
+  padding: 2px;
+  margin: 2px;
+  position: relative;
+  clear: both;
+}
+#exportData{
+  z-index: 10px;
+}
