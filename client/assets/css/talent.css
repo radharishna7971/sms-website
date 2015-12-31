@@ -554,3 +554,6 @@ table.creditSection th, table.creditSection td {
 #exportData{
   z-index: 10px;
 }
+.rowClicked{
+  background-color: rgba(0, 8, 255, 0.42) !important;
+}
