@@ -5,10 +5,12 @@
        var getGridOptions = function(scope){
               var talentGridInfo={
                   enableRowSelection: true,
-                  enableRowHeaderSelection: false,
-                  multiSelect :false,
-                  modifierKeysToMultiSelect:false,
-                  noUnselect:false,
+                  enableRowHeaderSelection: true,
+                  multiSelect :true,
+                  //displaySelectionCheckbox: true,
+                  //enableSelectAll: true,
+                  //modifierKeysToMultiSelect:false,
+                  noUnselect: false,
                   enableFiltering:true,
                   paginationPageSizes: [100, 150, 200],
                   paginationPageSize: 100,           
@@ -27,6 +29,7 @@
                     { field: 'country', displayName: 'Country'},
                     { field: 'createdby', displayName: 'Created By', visible: false}
                 ],
+                rowTemplate: "<div ng-click=\"grid.appScope.showInfo($event,row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell></div>",
                 enableGridMenu: true,
                 enableSelectAll: true,
                 enableRowHeaderSelection: false,

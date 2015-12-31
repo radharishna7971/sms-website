@@ -398,150 +398,41 @@ table.creditSection {
     width: 1088px;
     margin-bottom: 5px;
     margin-left: 32px;
-
-
-
-
-
 }
-    table.creditSection thead, table.creditSection tbody {
-        float: left;
-        width: 100%;
-    }
-    table.creditSection tbody {
-        overflow: auto;
-        height: 150px;
-        margin-top: 15px;
-    }
-    table.creditSection tr {
-    width: 100%;
-    display: table;
 
+table.creditSection thead, table.creditSection tbody {
+    float: left;
+    width: 100%;
+}
+table.creditSection tbody {
+    overflow: auto;
+    height: 150px;
+    margin-top: 15px;
+}
+table.creditSection tr {
+  width: 100%;
+  display: table;
+  text-align: left;
+  height: 55px;
+  margin-left: -4px;
+}
+table.creditSection th {
+    background-color: #66B3F1;
+    color: white;
+}
+table.creditSection th, table.creditSection td {
+    
 
     text-align: left;
-    height: 55px;
-    margin-left: -4px;
-    }
-    table.creditSection th {
-        background-color: #66B3F1;
-        color: white;
-    }
-    table.creditSection th, table.creditSection td {
-        
-
-        text-align: left;
-        padding: 8px;
-    }
+    padding: 8px;
+}
 .creditSection>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th {
 
     background-color: #F3F3F3;
 }
-
-
 .creditSection>tbody>tr:nth-child(even)>td, .table-striped>tbody>tr:nth-child(even)>th {
-
-
-
-
-background-color: #FDFDFD;
+  background-color: #FDFDFD;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .commentTableBody{
   width:45%;
   word-break: break-word;
@@ -619,4 +510,47 @@ background-color: #FDFDFD;
 .input-url-pre-text{
     color: #66b3f1;
     font-weight: bold;
+}
+
+.talentProfileRightPanel{
+  display: inline;
+  position: relative;
+  padding: 2px;
+  width: 50%;
+  border: 0px;
+  float: left;
+}
+.talentProfileLeftPanel{
+  display: inline;
+  position: relative;
+  padding: 2px;
+  border: 0px;
+  float: left;
+}
+.talentList{
+  width: 97% !important;
+  word-wrap:break-word;
+}
+.talentImgSection{
+  float: right;
+  position: absolute;
+  right: 2px;
+  top:2px;
+  display: block;
+  z-index: 2px;
+}
+.talentProfileImg{
+  border: 0px solid blue;
+  border-radius: 50%;
+}
+.exportXlsxTalent{
+  display: block;
+  float: right;
+  padding: 2px;
+  margin: 2px;
+  position: relative;
+  clear: both;
+}
+#exportData{
+  z-index: 10px;
 }
