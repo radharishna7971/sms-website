@@ -148,33 +148,10 @@
             $scope.showPopUp = '';
             $scope.showsection = function($event,sectioname) {
             	$scope.successmsgtalent = false;
-                if(sectioname == 'credits')
-                {
-                    $scope.data.Credit= {};
-                 $("#feedLoading").html("Loading Credits...");
-
-                    $scope.setLoading(true);
-                    creditFactory.getAllNames()
-                        .then(function(result) {
-                            $scope.data.Credit= {};
-                            $scope.data.Credit = result.data;
-                            $scope.setLoading(false);
-                            $("#feedLoading").html("Loading...");
-                            if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
-                        $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                        $($event.target).addClass('talent-form-menu-button-active');
-                    }
-                $scope.talentSection = sectioname;
-                                                   
-                        });
-                }
-                else
-                {
                 if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                     $($event.target).addClass('talent-form-menu-button-active');
                 }
-            }
                 $scope.talentSection = sectioname;
 
             };
@@ -1159,13 +1136,32 @@
         };
 
         $scope.submitTalentCreditData = function() {
-          var credits = $('.talent-credit-select').val();
+          //var credits = $('.talent-credit-select').val();
           var role = $('.talent-credit-role-select').val() || null;
+          //$scope.model.CreditInput.id
+          var credits = [];
+          if(angular.isUndefined($scope.model)){
+            alert("Credit(s) is required filed.");
+            $("#creditEntry").focus();
+            return false;
 
+          }else if(angular.isUndefined($scope.model.CreditInput)){
+            alert("Credit(s) is required filed.");
+            $("#creditEntry").focus();
+            return false;
+          }
+          else if(role ===null){
+            alert("role is required filed.");
+            $("#rolesId").focus();
+            return false;
+          }
+          var creditsId = $scope.model.CreditInput.id;
+          credits.push(creditsId);
           talentFactory.addTalentCreditJoin($scope.activeElement.id, credits, role, function(data) {
             if (data.length !== $scope.activeElement.talentCreditJoins.length) {
               $scope.showmsg.errorText = 'Credit(s) added to ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
               $scope.activeElement.talentCreditJoins = data;
+              $scope.model = {};
             } else {
               $scope.showmsg.errorText = 'Credit(s) already exists';
             }
@@ -1181,7 +1177,12 @@
           });
         };
 
-
+        $scope.getCreditsNames = function(val){
+      var talentNames = [];
+      return creditFactory.getCreditsNames(val, angular.noop).then(function(result){
+          return result.data;
+        });
+        };
         // Submit comment
         $scope.submitCommentPopUp = function() {
           // If text is in the textarea, submit the new comment
@@ -1319,6 +1320,7 @@
                         $scope.activeElement = result.data;
                         $scope.inputPartner = result.data.partner;
                         $scope.showmsg= {};
+                        $scope.model= {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
                         $scope.talentSection = 'main';

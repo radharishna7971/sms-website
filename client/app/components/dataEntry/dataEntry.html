@@ -207,20 +207,19 @@
         <form>
           <div class="talent-column">
             <p class="input-label">Credit(s)</p>
-            <select class="talent-credit-select" multiple required>
-              <!-- If both genre and release_date exist -->
-              <option ng-if="credit.genre && credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}}) - {{credit.genre}}</option>
-              <!-- If genre but not release_date exists -->
-              <option ng-if="!!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} - {{credit.genre}}</option>
-              <!-- If release date but not genre exists -->
-              <option ng-if="!credit.genre && !!credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}})</option>
-              <!-- If neither genre nor release_date exist -->
-              <option ng-if="!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}}</option>
-            </select>
+            <!-- <select class="talent-credit-select" multiple required> -->
+            <div class="data-left-column-data-row">
+            <input type="text" ng-model="model.creditsObj.CreditInputData" id="creditsIds"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+            </div>
+            <div ng-show="noResults">
+            <i class="glyphicon glyphicon-remove"></i> No Results Found
+            </div>
+            <!-- </select> -->
           </div>
           <div class="talent-column">
           <p class="input-label">Role</p>
-            <select class="talent-credit-role-select">
+            <select class="talent-credit-role-select" id="roleId">
               <option></option>
               <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
             </select>
