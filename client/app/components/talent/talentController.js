@@ -101,22 +101,26 @@
             };
             var checkRowId = "";
             $scope.showInfo = function(event,row){
+                row.isrowSelectionChangedOnclcik = false;
+                $('div.ui-grid-cell').removeClass('rowClicked');
                 //console.log(event);
-                $(event.target).closest('div.ui-grid-row').addClass('row-selected');
+                //$(event.target).closest('div.ui-grid-row').addClass('row-selected');
                 var clickedRowId = parseInt(row.entity.id);
                 if(parseInt(checkRowId)===clickedRowId && $("#editLink").is(':visible')){
                     $('.talent-right-container-content').hide();
                     $("#editLink").hide();
-                    $("#exportLink").hide();
+                    //$("#exportLink").hide();
+                    row.isrowSelectionChangedOnclcik = false;
                     return false;
                 }
-                else{
+                else{ 
+                    row.isrowSelectionChangedOnclcik = true;          
                     updateMainTalent(row.entity.id,row.entity);
                     $scope.getTalentData = {};
                     $scope.getTalentData.id = row.entity.id;
                     $('.talent-right-container-content').show();
                     $("#editLink").show();
-                    $("#exportLink").show();
+                    //$("#exportLink").show();            
                     checkRowId = row.entity.id;
                     return false;
                 }
@@ -278,7 +282,7 @@
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
-                $("span.ui-grid-pager-row-count-label").html(" Records per page   <a href='#' title='Click here to edit selected row.'><span id='editLink' style='display:none'>Edit</span></a><a href='#'' title='Click here to export selected row(s).'><span id='exportLink' ng-click='getSelectRow()' style='display:none'>Export</span></a>");
+                $("span.ui-grid-pager-row-count-label").html(" Records per page <a href='#'' title='Click here to export selected row(s).'><span id='exportLink' ng-click='getSelectRow()'>Export</span></a> <a href='#' title='Click here to edit selected row.'><span id='editLink' style='display:none'>Edit</span></a>");
             });
 
             function saveState() {
