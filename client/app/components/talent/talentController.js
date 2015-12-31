@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory', 'talentGridFactory', 'ethnicityFactory'])
-        .controller('talentController', function ($scope, $q, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory) {
+        .controller('talentController', function ($scope, $q, $timeout, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory, localStorageService) {
 
             ///////////////////////////////
             /// Initialize View
@@ -240,29 +240,51 @@
                 $("span.ui-grid-pager-row-count-label").html(" Records per page   <a href=\"#\" title=\"Click here to edit selected row.\"><span id=\"editLink\" ng-click=\"showPopSection();\" style=\"display:none;\">Edit</span></a>");
             });
 
+            function saveState() {
+                var state = $scope.gridApi.saveState.save();
+                localStorageService.set('gridState', state);
+              }
+
+              function restoreState() {
+                $timeout(function() {
+                  var state = localStorageService.get('gridState');
+                  if (state) $scope.gridApi.saveState.restore($scope, state);
+                });
+              }
+              
             $scope.mainTalent = false;
             $scope.activeSection = 'info';
             $scope.filterColumn = 'last_name';
             $scope.deletedComments = 0;
             $scope.talentGridOption.onRegisterApi = function (gridApi) {
-                    $scope.gridApi = gridApi;
-                    gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                        if(row.isSelected){
-                            updateMainTalent(row.entity.id);
-                            $scope.getTalentData = {};
-                            $scope.getTalentData.id = row.entity.id;
-                            $('.talent-right-container-content').show();
-                            //$scope.showLink = 'show';
-                            $("#editLink").show();
-                        }
-                        if(!row.isSelected){
-                            $scope.getTalentData = {};
-                            $scope.gridApi.selection.clearSelectedRows();
-                            $('.talent-right-container-content').hide();
-                            $("#editLink").hide();
-                            //$scope.showLink = 'hide';
-                        }
-                    });
+				$scope.gridApi = gridApi;
+				gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				    if(row.isSelected){
+				        updateMainTalent(row.entity.id);
+				        $scope.getTalentData = {};
+				        $scope.getTalentData.id = row.entity.id;
+				        $('.talent-right-container-content').show();
+				//$scope.showLink = 'show';
+				$("#editLink").show();
+				}
+				if(!row.isSelected){
+				    $scope.getTalentData = {};
+				    $scope.gridApi.selection.clearSelectedRows();
+				    $('.talent-right-container-content').hide();
+				$("#editLink").hide();
+				//$scope.showLink = 'hide';
+				        }
+				    });
+				    
+				 // Setup events so we're notified when grid state changes.
+				$scope.gridApi.colMovable.on.columnPositionChanged($scope, saveState);
+				$scope.gridApi.colResizable.on.columnSizeChanged($scope, saveState);
+				$scope.gridApi.core.on.columnVisibilityChanged($scope, saveState);
+				$scope.gridApi.core.on.filterChanged($scope, saveState);
+				$scope.gridApi.core.on.sortChanged($scope, saveState);
+				
+				// Restore previously saved state.
+				restoreState();
             };
 
             $scope.getTalentNames = function(val){
