@@ -32,7 +32,7 @@
                 rowTemplate: "<div ng-click=\"grid.appScope.showInfo($event,row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'rowClicked': row.isrowSelectionChangedOnclcik }\" ui-grid-cell></div>",
                 enableGridMenu: true,
                 enableSelectAll: true,
-                enableRowHeaderSelection: false,
+                //enableRowHeaderSelection: false,
                 enableColumnResizing: true,
                 enableColumnReordering: true,
                 enableFiltering: true,
