@@ -70,6 +70,12 @@
               // Add id to keep track of who created given talent
               $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
               $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
+              //Formatted url
+              $scope.activeElement.twitter_url = $scope.activeElement.twitter_url === null?$scope.activeElement.twitter_url:($scope.activeElement.twitter_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.facebook_url = $scope.activeElement.facebook_url === null?$scope.activeElement.facebook_url:($scope.activeElement.facebook_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.youtube_url = $scope.activeElement.youtube_url === null?$scope.activeElement.youtube_url:($scope.activeElement.youtube_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.vine_url = $scope.activeElement.vine_url === null?$scope.activeElement.vine_url:($scope.activeElement.vine_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.instagram_url = $scope.activeElement.instagram_url === null?$scope.activeElement.instagram_url:($scope.activeElement.instagram_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
               
               if(angular.isUndefined($scope.activeElement.partner)){
                 $scope.activeElement.partner = $scope.inputPartner;
