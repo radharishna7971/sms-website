@@ -355,7 +355,7 @@
                     <p class="input-label">Ethnicity</p>
                     <select class="data-input select-input" ng-model="activeElement.ethnicity_id">
                         <option></option>
-                        <option ng-repeat="ethnicity in data.Ethnicity | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
+                        <option ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
                     </select>
                     <p class="input-label">Partner</p>
                     <input type="hidden" ng-model="inputPartner">
