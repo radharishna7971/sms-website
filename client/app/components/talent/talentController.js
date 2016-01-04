@@ -263,7 +263,7 @@
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
-                $("span.ui-grid-pager-row-count-label").html(" Records per page <a href='#'' title='Click here to export selected row(s).'><span id='exportLink' ng-click='getSelectRow()'>Export</span></a> <a href='#' title='Click here to edit selected row.'><span id='editLink' style='display:none'>Edit</span></a>");
+                $("span.ui-grid-pager-row-count-label").html(" Records per page <a href='#'' title='Click here to export selected row(s).'><span id='exportLink' ng-click='getSelectRow()' class='glyphicon glyphicon-export'></span></a> <a href='#' title='Click here to edit selected row.'><span id='editLink' style='display:none' class='glyphicon glyphicon-edit'></span>");
             });
 
             function saveState() {
