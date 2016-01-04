@@ -102,9 +102,13 @@
             var checkRowId = "";
             $scope.showInfo = function(event,row){
                 row.isrowSelectionChangedOnclcik = false;
-                $('div.ui-grid-cell').removeClass('rowClicked');
+                if($( 'div.ui-grid-cell' ).hasClass( 'rowClicked' )){
+                    $('div.ui-grid-cell').removeClass('rowClicked');
+                }
+                
                 //console.log(event);
                 //$(event.target).closest('div.ui-grid-row').addClass('row-selected');
+
                 var clickedRowId = parseInt(row.entity.id);
                 if(parseInt(checkRowId)===clickedRowId && $("#editLink").is(':visible')){
                     $('.talent-right-container-content').hide();
@@ -1217,16 +1221,18 @@
             };
             var checkInputs = function(section) {
                   var result = true;
+
                   if (!section) {
                     $('input:visible, select:visible').each(function() {
                       if ($(this).attr('required')) {
+                        console.log($(this).val());
                         if ($(this).val() === null || $(this).val().length === 0) {
                           result = false;
                         }
                       }
                     });
                   } else {
-                    $('.talent-form').find('input, visible').each(function() {
+                    $('.talent-form input:visible').each(function() {
                       if ($(this).attr('required')) {
                         if ($(this).val() === null || $(this).val().length === 0) {
                           result = false;
