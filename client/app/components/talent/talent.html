@@ -148,12 +148,14 @@
       </div>
     </div>
   </div>
+   
   <div class="talent-center-div">
-    <div id="talentGrid" ui-grid="talentGridOption" ui-grid-selection ui-grid-pagination ui-grid-exporter ui-grid-resize-columns class="grid"></div>
+  <!--   <input id="exportData" class="btn btn-primary" type="button" ng-click="getSelectRow()" alt="XLSX" title="Export To XLSX" value="Export" /> -->
+    <div id="talentGrid" ui-grid="talentGridOption" ui-grid-selection ui-grid-pagination ui-grid-exporter ui-grid-resize-columns ui-grid-auto-resize ui-grid-move-columns ui-grid-save-state class="grid"></div>
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
-      <div id="infoTab" class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">Contact Info</div>
+      <div id="infoTab" class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">Profile & Contact Info</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'credits')">Credits</div>
       <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'award')">Awards</div>
@@ -163,11 +165,26 @@
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
     </br>
-    <p ng-repeat="associate in associateData | orderBy:'associatename'">     
-      <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
-    </p>
-    <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
-    <p><span class="tableLable">Phone</span>: <span>{{phone}}</span></p>
+    <div class="talentProfileRightPanel">
+      <div class="talentImgSection">
+        <img class="talentProfileImg" src="assets/img/default-talent-pic.png" alt="Smiley face" width="107" height="107">
+      </div>
+      <p><span class="tableLable">Name</span>: <span>{{TalentNameData}}</span></p>
+      <p><span class="tableLable">Age</span>: <span>{{talentDetailsInfoData.age}}</span></p>
+      <p><span class="tableLable">Gender</span>: <span>{{talentDetailsInfoData.gender}}</span></p>
+      <p><span class="tableLable">Ethnicity</span>: <span>{{talentDetailsInfoData.ethnicity}}</span></p>
+      <p class="talentList"><span class="tableLable">Role(s)</span>: <span>{{talentDetailsInfoData.roles}}</span></p>
+      <p class="talentList"><span class="tableLable">Genre(s)</span>: <span>{{talentDetailsInfoData.genres}}</span></p>
+    </div>
+    <div class="talentProfileLeftPanel">
+      <p ng-repeat="associate in associateData | orderBy:'associatename'">     
+        <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
+      </p>
+      <!-- <p><span class="tableLable">Partner</span>: <span><a href="#" 
+        ng-click="getPartnerDetailsInfo()">{{partner_name}}</a></span></p> -->
+      <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
+      <p><span class="tableLable">Phone</span>: <span>{{phone}}</span></p>
+  </div>
     </div>
     
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
@@ -254,7 +271,8 @@
 	<div class="talent-data-comment">
 		<div class="talent-data-comment-headers">Comments</div>
 		<div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
-			<div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+			<div class="data-entry-delete-comment-button" 
+      ng-if="comment.name===talent_display_username" ng-click="removeComment($event, comment.comment_id)">x</div>
 			<p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
 			<p class="comment-text">{{comment.text}}</p>
 		</div>
@@ -337,10 +355,14 @@
                     <p class="input-label">Ethnicity</p>
                     <select class="data-input select-input" ng-model="activeElement.ethnicity_id">
                         <option></option>
-                        <option ng-repeat="ethnicity in data.Ethnicity | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
+                        <option ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
                     </select>
+                    <p class="input-label">Partner</p>
+                    <input type="hidden" ng-model="inputPartner">
+                    <input type="text" ng-model="activeElement.partner" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+                    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                 </div>
-                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Updated">
+                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Update">
             </div>
 
 
@@ -396,8 +418,9 @@
                     <span class="input-url-pre-text">http://www.</span>
                     <input class="data-input" ng-model="activeElement.instagram_url" type="text">
                 </div>
-                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Updated">
+                <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Update">
             </div>
+
 
             <!-- Credits -->
 
@@ -405,25 +428,23 @@
                 <form ng-show="section==='Credits'">
                     <div class="talent-column">
                         <p class="input-label">Credit(s)</p>
-                        <select class="talent-credit-select" multiple required>
-                            <!-- If both genre and release_date exist -->
-                            <option ng-if="credit.genre && credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}}) - {{credit.genre}}</option>
-                            <!-- If genre but not release_date exists -->
-                            <option ng-if="!!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} - {{credit.genre}}</option>
-                            <!-- If release date but not genre exists -->
-                            <option ng-if="!credit.genre && !!credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}})</option>
-                            <!-- If neither genre nor release_date exist -->
-                            <option ng-if="!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}}</option>
-                        </select>
+                        <div class="data-left-column-data-row">
+                        <input type="text" ng-model="model.CreditInput" id="creditEntry"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" required>
+                        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                        </div>
+                        <div ng-show="noResults">
+                        <i class="glyphicon glyphicon-remove"></i> No Results Found
+                        </div>
                     </div>
-                    <div class="talent-column">
+                    <div class="talent-column" >
                         <p class="input-label">Role</p>
-                        <select class="talent-credit-role-select">
+                        <select class="talent-credit-role-select" id="rolesId">
                             <option></option>
                             <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
                         </select>
                     </div>
-                    <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="Updated">
+                  </br>
+                    <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="Update">
                 </form>
                 <div class="talent-credit-join-container">
                     <div ng-repeat="join in activeElement.talentCreditJoins">
@@ -438,12 +459,13 @@
             <div class="talent-data-comments-container" ng-show="talentSection==='comments'">
                 <div class="data-entry-comment-box">
                     <textarea class="data-entry-comment-input" type="textarea" placeholder="Enter comment here"></textarea>
-                    <input ng-click="submitComment()" class="data-entry-comment-submit" type="submit" value="Updated" />
+                    <input ng-click="submitCommentPopUp()" class="data-entry-comment-submit" type="submit" value="Update" />
                 </div>
                 <div class="talent-data-comments">
                     <div class="talent-data-comment-header">Comments</div>
                     <div class="comment-div" ng-repeat="comment in activeElement.comments | orderBy:'-date'">
-                        <div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+                        <div class="data-entry-delete-comment-button"
+                         ng-if="comment.name===talent_display_username" ng-click="removeComment($event, comment.comment_id)">x</div>
                         <p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
                         <p class="comment-text">{{comment.text}}</p>
                     </div>

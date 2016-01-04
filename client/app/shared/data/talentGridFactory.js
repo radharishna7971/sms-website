@@ -5,10 +5,12 @@
        var getGridOptions = function(scope){
               var talentGridInfo={
                   enableRowSelection: true,
-                  enableRowHeaderSelection: false,
-                  multiSelect :false,
-                  modifierKeysToMultiSelect:false,
-                  noUnselect:false,
+                  enableRowHeaderSelection: true,
+                  multiSelect :true,
+                  //displaySelectionCheckbox: true,
+                  //enableSelectAll: true,
+                  //modifierKeysToMultiSelect:false,
+                  noUnselect: false,
                   enableFiltering:true,
                   paginationPageSizes: [100, 150, 200],
                   paginationPageSize: 100,           
@@ -16,10 +18,7 @@
                     { field: 'id', displayName: 'id', type: 'number', visible: false},
                     { field: 'name', displayName: 'Name'},
                     { field: 'age', displayName: 'Age', width : '7%'},
-                    { field: 'gender', width : '7%',
-                       type: uiGridConstants.filter.SELECT, 
-                       selectOptions: [ {value: true, label: 'true'}, {value: false, label: 'false'} ]
-                    },
+                    { field: 'gender', width : '7%'},
                     { field: 'roles', displayName: 'Roles'},
                     { field: 'ethnicity', displayName: 'Ethnicity'},
                     { field: 'awards', displayName: 'Awards'},
@@ -30,6 +29,7 @@
                     { field: 'country', displayName: 'Country'},
                     { field: 'createdby', displayName: 'Created By', visible: false}
                 ],
+                rowTemplate: "<div ng-click=\"grid.appScope.showInfo($event,row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'rowClicked': row.isrowSelectionChangedOnclcik }\" ui-grid-cell></div>",
                 enableGridMenu: true,
                 enableSelectAll: true,
                 exporterCsvFilename: 'talentData.csv',

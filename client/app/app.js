@@ -12,6 +12,10 @@
     'ui.grid.pagination',
     'ui.grid.resizeColumns',
      'ui.bootstrap',
+     'LocalStorageModule',
+     'ui.grid.autoResize',
+     'ui.grid.moveColumns',
+     'ui.grid.saveState',
     
     // Componenets
     'landingController',
@@ -43,11 +47,15 @@
   .config(config)
   .run(run);
 
-  config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+  config.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', 'localStorageServiceProvider'];
 
 
-  function config($stateProvider, $urlRouterProvider, $locationProvider, $state) {
-    
+  function config($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider, $state) {
+	localStorageServiceProvider
+    .setPrefix('smstudios')
+    .setStorageType('localStorage')
+    .setNotify(true, true);
+	
     $locationProvider.html5Mode(true);
     // Default to index view if the URL loaded is not found
     $urlRouterProvider.otherwise('/');

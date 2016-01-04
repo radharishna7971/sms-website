@@ -1,11 +1,17 @@
 (function () {
     'use strict';
     angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory', 'talentGridFactory', 'ethnicityFactory'])
-        .controller('talentController', function ($scope, $q, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory) {
+        .controller('talentController', function ($scope, $q, $compile, $timeout, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory, localStorageService) {
 
             ///////////////////////////////
             /// Initialize View
             ///////////////////////////////
+            
+
+            if(!!window.localStorage.smstudiosLoginUserName){
+              $scope.talent_display_username = window.localStorage.smstudiosLoginUserName;
+            }
+
             $('.filter-header-container').find('.arrow').removeClass( "arrow-down" );
             $('.filter-header-container').find('.arrow').addClass( "arrow-right" );
              $scope.incomeMultiple = [
@@ -64,7 +70,12 @@
               // Add id to keep track of who created given talent
               $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
               $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
-
+              
+              if(angular.isUndefined($scope.activeElement.partner)){
+                $scope.activeElement.partner = $scope.inputPartner;
+              }else if($scope.activeElement.partner !== null){
+                $scope.activeElement.partner = $scope.activeElement.partner.name;
+              }
               talentFactory.addOrEdit($scope.activeElement, function(res) {
                 if (res.status !== 'error') {
                   if (res.status === 'edit') {
@@ -88,8 +99,54 @@
                         return '';
                     }
             };
+            var checkRowId = "";
+            $scope.showInfo = function(event,row){
+                row.isrowSelectionChangedOnclcik = false;
+                if($( 'div.ui-grid-cell' ).hasClass( 'rowClicked' )){
+                    $('div.ui-grid-cell').removeClass('rowClicked');
+                }
+                
+                //console.log(event);
+                //$(event.target).closest('div.ui-grid-row').addClass('row-selected');
+
+                var clickedRowId = parseInt(row.entity.id);
+                if(parseInt(checkRowId)===clickedRowId && $("#editLink").is(':visible')){
+                    $('.talent-right-container-content').hide();
+                    $("#editLink").hide();
+                    //$("#exportLink").hide();
+                    row.isrowSelectionChangedOnclcik = false;
+                    return false;
+                }
+                else{ 
+                    row.isrowSelectionChangedOnclcik = true;          
+                    updateMainTalent(row.entity.id,row.entity);
+                    $scope.getTalentData = {};
+                    $scope.getTalentData.id = row.entity.id;
+                    $('.talent-right-container-content').show();
+                    $("#editLink").show();
+                    //$("#exportLink").show();            
+                    checkRowId = row.entity.id;
+                    return false;
+                }
+                     
+            };
+            // $scope.getSelectRow = function(){
+            //     alert("hiiiiiiii");
+            //     var selectedTalentRowId = {};
+            //     selectedTalentRowId.pay=[];
+            //     angular.forEach($scope.gridApi.selection.getSelectedRows(), function(items){
+            //         selectedTalentRowId.pay.push(items.id);
+            //     });
+
+            //     talentFactory.exportTalentDetailXls(selectedTalentRowId, function(result) {
+            //         $scope.data.Contact = result;
+            //     });
+            //     //console.log(selectedTalentRowId);
+            // };
+
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
+            $scope.talentGridOption.appScopeProvider = $scope.myAppScopeProvider;
             $scope.section = 'Talent';
             $scope.talentSection = 'main';
             $scope.showPopUp = '';
@@ -123,35 +180,55 @@
             contactFactory.getAssociateNames(function(result) {
                 $scope.data.Contact = result;
             });
+            
+            function removeElement(arrayName,arrayElement)
+            {
+               for(var i=0; i<arrayName.length;i++ )
+                { 
+                   if(arrayName[i]==arrayElement)
+                       arrayName.splice(i,1); 
+                 } 
+             }
 
             talentFactory.getAll(function (data) {
-
                 angular.forEach(data,function(items){
+                    if(items.age == 0)
+                    {
+                        items.age="";
+                    }
                     if(items.estimatedBudget !==null && items.estimatedBudget){
                         var estimatedBudgets = items.estimatedBudget.split(',');
+                        removeElement(estimatedBudgets,0);
+                        removeElement(estimatedBudgets,0.0);
                         var maxBudget = Math.max.apply(Math, estimatedBudgets);
-                        maxBudget = numberFormatter(parseInt(maxBudget));
+                        var maxBudgetInformatted = numberFormatter(parseInt(maxBudget));
                         var minBudget = Math.min.apply(Math, estimatedBudgets);
-                        minBudget = numberFormatter(parseInt(minBudget));
-                        var estimatedBudgetVal = '$'+minBudget+'-'+'$'+maxBudget
-                        if(!minBudget && !maxBudget){
+                        var minBudgetInformatted = numberFormatter(parseInt(minBudget));
+                        var estimatedBudgetVal = '$'+minBudgetInformatted+'-'+'$'+maxBudgetInformatted
+                        if(!parseInt(minBudget) && !parseInt(maxBudget)){
                             estimatedBudgetVal = "Not Available";
-                        }else if(minBudget===maxBudget){
-                            estimatedBudgetVal = '$'+minBudget;
+                        }else if(parseInt(minBudget)===parseInt(maxBudget)){
+                            estimatedBudgetVal = '$'+minBudgetInformatted;
+                        }else if(!parseInt(minBudget) && parseInt(maxBudget)){
+                            estimatedBudgetVal = '$'+maxBudgetInformatted;
                         }
                         items.estimatedBudget = estimatedBudgetVal;
                     }
                     if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
                         var boxOfficeIncomes = items.boxOfficeIncome.split(',');
+                        removeElement(boxOfficeIncomes,0);
+                        removeElement(boxOfficeIncomes,0.0);
                         var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
-                        maxIncome = numberFormatter(parseInt(maxIncome));
+                        var maxIncomeInformatted = numberFormatter(parseInt(maxIncome));
                         var minIncome = Math.min.apply(Math, boxOfficeIncomes);
-                        minIncome = numberFormatter(parseInt(minIncome));
-                        var boxOfficeIncome = '$'+minIncome+'-'+'$'+maxIncome;
-                        if(!minBudget && !maxBudget){
+                        var minIncomeInformatted = numberFormatter(parseInt(minIncome));
+                        var boxOfficeIncome = '$'+minIncomeInformatted+'-'+'$'+maxIncomeInformatted;
+                        if(!parseInt(minIncome) && !parseInt(maxIncome)){
                             boxOfficeIncome = "Not Available";
-                        }else if(minBudget === maxBudget){
-                            boxOfficeIncome = '$'+minBudget;
+                        }else if(parseInt(minIncome) === parseInt(maxIncome)){
+                            boxOfficeIncome = '$'+minIncomeInformatted;
+                        }else if(!parseInt(minIncome) && parseInt(maxIncome)){
+                            boxOfficeIncome = '$'+maxIncomeInformatted;
                         }
                         items.boxOfficeIncome = boxOfficeIncome;
                     }
@@ -160,6 +237,8 @@
                     }
                     if(items.boxbudgetratio !==null && items.boxbudgetratio){
                         var incomeMultiple = items.boxbudgetratio.split(',');
+                        removeElement(incomeMultiple,0);
+                        removeElement(incomeMultiple,0.0);
                         var maxIncomeMul = Math.max.apply(Math, incomeMultiple);
                         //maxIncomeMul = numberFormatter(parseInt(maxIncomeMul));
                         var minIncomeMul = Math.min.apply(Math, incomeMultiple);
@@ -169,6 +248,9 @@
                             incomeMulStr = "Not Available";
                         }else if(minIncomeMul === maxIncomeMul){
                             incomeMulStr = minIncomeMul;
+                        }
+                        else if(!minIncomeMul && maxIncomeMul){
+                            incomeMulStr = maxIncomeMul;
                         }
                         items.boxbudgetratio = incomeMulStr;
 
@@ -181,34 +263,54 @@
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
-                $("span.ui-grid-pager-row-count-label").html(" Records per page   <a href=\"#\" title=\"Click here to edit selected row.\"><span id=\"editLink\" ng-click=\"showPopSection();\" style=\"display:none;\">Edit</span></a>");
+                $("span.ui-grid-pager-row-count-label").html(" Records per page <a href='#'' title='Click here to export selected row(s).'><span id='exportLink' ng-click='getSelectRow()'>Export</span></a> <a href='#' title='Click here to edit selected row.'><span id='editLink' style='display:none'>Edit</span></a>");
             });
 
+            function saveState() {
+                var state = $scope.gridApi.saveState.save();
+                localStorageService.set('gridState', state);
+              }
+
+              function restoreState() {
+                $timeout(function() {
+                  var state = localStorageService.get('gridState');
+                  if (state) $scope.gridApi.saveState.restore($scope, state);
+                });
+              }
+              
             $scope.mainTalent = false;
             $scope.activeSection = 'info';
             $scope.filterColumn = 'last_name';
             $scope.deletedComments = 0;
             $scope.talentGridOption.onRegisterApi = function (gridApi) {
-                    $scope.gridApi = gridApi;
-                    gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                        if(row.isSelected){
-                            updateMainTalent(row.entity.id);
-                            $scope.getTalentData = {};
-                            $scope.getTalentData.id = row.entity.id;
-                            $('.talent-right-container-content').show();
-                            //$scope.showLink = 'show';
-                            $("#editLink").show();
-                        }
-                        if(!row.isSelected){
-                            $scope.getTalentData = {};
-                            $scope.gridApi.selection.clearSelectedRows();
-                            $('.talent-right-container-content').hide();
-                            $("#editLink").hide();
-                            //$scope.showLink = 'hide';
-                        }
-                    });
+				$scope.gridApi = gridApi;
+				gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+				
+				    console.log(row);
+				});
+				    
+				 // Setup events so we're notified when grid state changes.
+				$scope.gridApi.colMovable.on.columnPositionChanged($scope, saveState);
+				$scope.gridApi.colResizable.on.columnSizeChanged($scope, saveState);
+				$scope.gridApi.core.on.columnVisibilityChanged($scope, saveState);
+				$scope.gridApi.core.on.filterChanged($scope, saveState);
+				$scope.gridApi.core.on.sortChanged($scope, saveState);
+				
+				// Restore previously saved state.
+				restoreState();
             };
 
+            $scope.getTalentNames = function(val){
+                var talentNames = [];
+                return talentFactory.getNames(val, angular.noop).then(function(result){
+                    return result.data;
+                });
+            };
+
+            $scope.getTalentDetails = function (itemval) {
+                console.log("selected items.......!!");
+                console.log(itemval);
+            };
             $scope.setLoading = function(loading) {
                 $scope.isLoading = loading;
             };
@@ -599,12 +701,19 @@
                     return findFlag;
                 });
             };
-            var updateMainTalent = function (talentId) {
+            var updateMainTalent = function (talentId, talentDetailsInfo) {
                 $scope.deletedComments = 0;
                 talentFactory.talentProfile(talentId, function (result) {
+                    $scope.TalentNameData = ((talentDetailsInfo.name.split(",")).reverse()).join("  ");
+                    $scope.talentDetailsInfoData = talentDetailsInfo;
+
                     $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
-                    var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
+                	
+                	$scope.partner_id = (result.details[0].partner) ? result.details[0].partner:'';
+                	$scope.partner_name = (result.details[0].partnername) ? result.details[0].partnername:'';
+                    
+                	var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
                     if(phoneNumber !== null){
                     	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
                     }else{
@@ -645,7 +754,7 @@
                     if(!!result.awards && result.awards.length>0){
                         angular.forEach(result.awards, function(value, key) {
                         awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
-                        awardObj.year = (value.release_date === null) ? 'Not Available' : value.release_date;
+                        awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
                         awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
                         awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
                         awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
@@ -1031,13 +1140,32 @@
         };
 
         $scope.submitTalentCreditData = function() {
-          var credits = $('.talent-credit-select').val();
+          //var credits = $('.talent-credit-select').val();
           var role = $('.talent-credit-role-select').val() || null;
+          //$scope.model.CreditInput.id
+          var credits = [];
+          if(angular.isUndefined($scope.model)){
+            alert("Credit(s) is required filed.");
+            $("#creditEntry").focus();
+            return false;
 
+          }else if(angular.isUndefined($scope.model.CreditInput)){
+            alert("Credit(s) is required filed.");
+            $("#creditEntry").focus();
+            return false;
+          }
+          else if(role ===null){
+            alert("role is required filed.");
+            $("#rolesId").focus();
+            return false;
+          }
+          var creditsId = $scope.model.CreditInput.id;
+          credits.push(creditsId);
           talentFactory.addTalentCreditJoin($scope.activeElement.id, credits, role, function(data) {
             if (data.length !== $scope.activeElement.talentCreditJoins.length) {
               $scope.showmsg.errorText = 'Credit(s) added to ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
               $scope.activeElement.talentCreditJoins = data;
+              $scope.model = {};
             } else {
               $scope.showmsg.errorText = 'Credit(s) already exists';
             }
@@ -1053,9 +1181,14 @@
           });
         };
 
-
+        $scope.getCreditsNames = function(val){
+      var talentNames = [];
+      return creditFactory.getCreditsNames(val, angular.noop).then(function(result){
+          return result.data;
+        });
+        };
         // Submit comment
-        $scope.submitComment = function() {
+        $scope.submitCommentPopUp = function() {
           // If text is in the textarea, submit the new comment
           if ($('.data-entry-comment-input').val() !== "") {
             commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function(result) {
@@ -1088,16 +1221,18 @@
             };
             var checkInputs = function(section) {
                   var result = true;
+
                   if (!section) {
                     $('input:visible, select:visible').each(function() {
                       if ($(this).attr('required')) {
+                        console.log($(this).val());
                         if ($(this).val() === null || $(this).val().length === 0) {
                           result = false;
                         }
                       }
                     });
                   } else {
-                    $('.talent-form').find('input, visible').each(function() {
+                    $('.talent-form input:visible').each(function() {
                       if ($(this).attr('required')) {
                         if ($(this).val() === null || $(this).val().length === 0) {
                           result = false;
@@ -1147,6 +1282,41 @@
                 $('.talent-left-col-container').show();
             });
 
+
+            $scope.getPartnerDetailsInfo = function(){
+                    //alert($scope.partner_id);
+                addFetchAssociateName($scope.partner_id,-1,-1);
+                $scope.setLoading(true);
+                 talentFactory.getTalentAllInfoById($scope.partner_id)
+                     .then(function (result){
+                        $scope.activeElement = result.data;
+                        $scope.showmsg= {};
+                        $scope.agentModel = {};
+                        $scope.section = 'Talent';
+                        $scope.talentSection = 'main';
+                            $scope.setLoading(false);
+                            $("#cover").show();
+                            $(".hiddenPopUp").show();                        
+                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                            $("#mainTab").addClass('talent-form-menu-button-active');   
+
+                    });
+            };
+            $(document).on('click', '#exportLink', function () {
+                var selectedTalentRowId = {};
+                selectedTalentRowId.pay=[];
+                if(!$scope.gridApi.selection.getSelectedRows().length){
+                    return false;
+                }
+                angular.forEach($scope.gridApi.selection.getSelectedRows(), function(items){
+                    selectedTalentRowId.pay.push(items.id);
+                });
+                console.log(selectedTalentRowId);
+                talentFactory.exportTalentDetailXls(selectedTalentRowId, function(result) {
+                    $scope.data.Contact = result;
+                });
+
+            });
             $(document).on('click', '#editLink', function () {
                 //getTalentAllDetailsById($scope.getTalentData.id);
                 addFetchAssociateName($scope.getTalentData.id,-1,-1);
@@ -1154,11 +1324,13 @@
                  talentFactory.getTalentAllInfoById($scope.getTalentData.id)
                      .then(function (result){
                         $scope.activeElement = result.data;
+                        $scope.inputPartner = result.data.partner;
                         $scope.showmsg= {};
+                        $scope.model= {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
                         $scope.talentSection = 'main';
-                         creditFactory.getAllNames()
+                         /*creditFactory.getAllNames()
                         .then(function(result) {
                             $scope.data.Credit= {};
                             $scope.data.Credit = result.data;
@@ -1167,12 +1339,15 @@
                             $(".hiddenPopUp").show();                        
                             $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                             $("#mainTab").addClass('talent-form-menu-button-active');                         
-                        });
+                        });*/
+                            $scope.setLoading(false);
+                            $("#cover").show();
+                            $(".hiddenPopUp").show();                        
+                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                            $("#mainTab").addClass('talent-form-menu-button-active');   
+
                     });
                
                 });
-
-
-
         });
 })();

@@ -8,13 +8,22 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'CreditType')">CREDIT TYPE</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Ethnicity')">ETHNICITY</div>
   </div>
-  <div class="data-left-column-data" ng-show="section!=='Talent'">
+  <div class="data-left-column-data" ng-show="section!=='Talent' && section!=='Credit'">
     <div class="data-left-column-data-row"  ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}" ng-if="element.name!=''">{{element.name}}
     </div>
   </div>
   <div class="data-left-column-data" ng-if="section==='Talent'">
     <div class="data-left-column-data-row">
    <input type="text" ng-model="model.talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+  </div>
+    <div ng-show="noResults">
+      <i class="glyphicon glyphicon-remove"></i> No Results Found
+    </div>
+  </div>
+  <div class="data-left-column-data" ng-if="section==='Credit'">
+    <div class="data-left-column-data-row">
+   <input type="text" ng-model="model.CreditInput" typeahead-on-select="getCreditDetails($item)" placeholder="Enter Credit Name ..." uib-typeahead="talentName as talentName.name for talentName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
   </div>
     <div ng-show="noResults">
@@ -81,7 +90,7 @@
       <input class="data-input" ng-model="activeElement.release_date" type="input">
       <p class="input-label">LogLine</p>
       <input class="data-input select-input" ng-model="activeElement.logline" type="input" />
-      <p class="input-label">EstimatedBudget</p>
+      <p class="input-label">Estimated Budget</p>
       <input class="data-input select-input" ng-model="activeElement.estimatedBudget" type="input"/>
       <p class="input-label">Box Office Income</p>
       <input class="data-input select-input" ng-model="activeElement.box_office_income" type="input">
@@ -198,20 +207,19 @@
         <form>
           <div class="talent-column">
             <p class="input-label">Credit(s)</p>
-            <select class="talent-credit-select" multiple required>
-              <!-- If both genre and release_date exist -->
-              <option ng-if="credit.genre && credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}}) - {{credit.genre}}</option>
-              <!-- If genre but not release_date exists -->
-              <option ng-if="!!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} - {{credit.genre}}</option>
-              <!-- If release date but not genre exists -->
-              <option ng-if="!credit.genre && !!credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}} ({{credit.release_date | date:'yyyy'}})</option>
-              <!-- If neither genre nor release_date exist -->
-              <option ng-if="!credit.genre && !credit.release_date" class="talent-credit-select-option" ng-repeat="credit in data.Credit | orderBy : 'name'" value="{{credit.id}}">{{credit.name}}</option>
-            </select>
+            <!-- <select class="talent-credit-select" multiple required> -->
+            <div class="data-left-column-data-row">
+            <input type="text" ng-model="model.creditsObj.CreditInputData" id="creditsIds"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+            </div>
+            <div ng-show="noResults">
+            <i class="glyphicon glyphicon-remove"></i> No Results Found
+            </div>
+            <!-- </select> -->
           </div>
           <div class="talent-column">
           <p class="input-label">Role</p>
-            <select class="talent-credit-role-select">
+            <select class="talent-credit-role-select" id="roleId">
               <option></option>
               <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
             </select>
@@ -235,8 +243,8 @@
       </div>
       <div class="talent-data-comments">
         <div class="talent-data-comment-header">Comments</div>
-        <div class="comment-div" ng-repeat="comment in activeElement.comments | orderBy:'-date'">
-          <div class="data-entry-delete-comment-button" ng-click="removeComment($event, comment.comment_id)">x</div>
+        <div class="comment-div"  ng-repeat="comment in activeElement.comments | orderBy:'-date'">
+          <div class="data-entry-delete-comment-button" ng-if="comment.name===data_entry_display_username" ng-click="removeComment($event, comment.comment_id)">x</div>
           <p ><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
           <p class="comment-text">{{comment.text}}</p>
         </div>

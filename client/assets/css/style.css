@@ -143,8 +143,6 @@ body {
   height: 85%;
   z-index:111111 !important;
   background-color: white;
-  overflow-x: scroll;
-  overflow-y: scroll;
   margin:-50px auto;
   border:2px solid rgba(53, 97, 104, 0.58);
   display: none;
@@ -153,12 +151,14 @@ body {
 .hiddenPopUp .data-main-section{
   overflow: hidden;
 }
-.hiddenPopUp .data-form-container{
-  overflow-x:hidden;
-  overflow-y:hidden; 
+.hiddenPopUp .data-form-container {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    width: 102%;
+    margin-left: 0%;
 }
 
-#editLink{
+#editLink, #exportLink{
   font-weight: bold;
   color: blue;
   margin-left: 2px;
@@ -192,12 +192,15 @@ body {
 
 #feedLoading {
   position: absolute;
-  top:200px;
+  top:150px;
   width:100%;
   text-align: center;
   font-size: 4em;
+  z-index: 111111;
+  color: rgba(0, 0, 0, 0.61)!important;
   color:white;
   text-shadow: 2px 2px 2px #021124;
+  cursor: not-allowed;
 }
 
 .hiddenPopUp .data-main-section{
