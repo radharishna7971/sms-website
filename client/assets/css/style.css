@@ -161,7 +161,7 @@ body {
 #editLink, #exportLink{
   font-weight: bold;
   color: blue;
-  margin-left: 12px;
+  margin-left: 13px;
 
 }
 #editLink:hover,#exportLink:hover{
