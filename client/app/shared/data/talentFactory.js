@@ -55,6 +55,18 @@
           callback(res.data);
         });
       },
+      updateTalentPartnerName: function(id, partnerName, callback) {
+        return $http({
+          method: 'GET',
+          url: 'api/talent/talentPartnerName',
+          params: {
+            'talent_id': id,
+            'partner_name':partnerName
+          }
+        }).then(function(res) {
+          callback(res.data);
+        });
+      },
       getTalent: function(id, callback) {
         return $http({
           method: 'GET',

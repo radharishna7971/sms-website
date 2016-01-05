@@ -631,6 +631,8 @@
         activeElementSetter['Talent']();
         $scope.btnTxt = "Update";
       };
+
+      
     // Ensures all required inputs have data
     // Takes in an optional section.  If section is passed in, it means it is part of the talent form.  This is done to handle that fact that some required inputs might be hidden
     var checkInputs = function(section) {
