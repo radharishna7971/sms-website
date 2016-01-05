@@ -177,6 +177,18 @@
       <p class="talentList"><span class="tableLable">Genre(s)</span>: <span>{{talentDetailsInfoData.genres}}</span></p>
     </div>
     <div class="talentProfileLeftPanel">
+      <table class="partnerDispalyTbl" ng-if="partnerData">
+        <tr><td>
+      <span class="tableLable">Partner</span>:</td>
+      <td>
+         <span> 
+          <input type="hidden" ng-model="inputPartner">
+          <input type="text" ng-model="talentModel.partner" typeahead-on-select="updateTalentPartner($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control partnerTypeAhead">
+          <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+        </td>
+        </span>
+      </tr>
+        </table>
       <p ng-repeat="associate in associateData | orderBy:'associatename'">     
         <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
       </p>

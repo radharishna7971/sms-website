@@ -7,6 +7,7 @@
   app.get('/api/talent/allAwards', talent.allAwards);
   app.get('/api/talent/allCountryNames', talent.getAllCountryNames);
   app.get('/api/talent/profile', talent.getProfile);
+  app.get('/api/talent/talentPartnerName', talent.talentPartnerName);
   app.get('/api/talent', talent.getTalent);
   app.post('/api/talent/add-edit', talent.addOrEdit);
   app.delete('/api/talent/delete', talent.remove);

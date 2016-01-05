@@ -16,6 +16,14 @@ exports.getProfile = function(req, res) {
   });
 };
 
+exports.talentPartnerName = function(req, res) {
+  var talentId = req.query.talent_id;
+  var partnerName = req.query.partner_name;
+  Talent.talentPartnerName(talentId, partnerName, function(result) {
+    res.json(result);
+  });
+};
+
 exports.getNames = function(req, res) {
   Talent.getNames(req.query.nameChars, function(result) {
     res.json(result);

@@ -42,6 +42,7 @@
             $scope.showmsg= {};
             $scope.showPopUp = false;
             $scope.getTalentData = {};
+            $scope.talentModel = {};
              // This contains functions for submitting data to the database
     var dataSubmitter = {
           Talent: function() {
@@ -317,6 +318,14 @@
                 console.log("selected items.......!!");
                 console.log(itemval);
             };
+
+            $scope.updateTalentPartner = function(itemval){
+              $scope.setLoading(true);
+               talentFactory.updateTalentPartnerName($scope.getTalentData.id,itemval.name, function(talentData) {
+                      $scope.setLoading(false);
+              });
+            };
+
             $scope.setLoading = function(loading) {
                 $scope.isLoading = loading;
             };
@@ -709,16 +718,25 @@
             };
             var updateMainTalent = function (talentId, talentDetailsInfo) {
                 $scope.deletedComments = 0;
+                $scope.talentModel = {};
+                $scope.partnerData = false;
                 talentFactory.talentProfile(talentId, function (result) {
+                    $scope.talentModel = {};
+                    $scope.partnerData = false;
                     $scope.TalentNameData = ((talentDetailsInfo.name.split(",")).reverse()).join("  ");
                     $scope.talentDetailsInfoData = talentDetailsInfo;
 
-                    $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
+                  $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
                 	
                 	$scope.partner_id = (result.details[0].partner) ? result.details[0].partner:'';
                 	$scope.partner_name = (result.details[0].partnername) ? result.details[0].partnername:'';
-                    
+                  if(result.details[0].partner !==null && result.details[0].partner !==''){
+                    $scope.partnerData = true;
+                    $scope.talentModel.partner = result.details[0].partner;
+
+                  }
+
                 	var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
                     if(phoneNumber !== null){
                     	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');

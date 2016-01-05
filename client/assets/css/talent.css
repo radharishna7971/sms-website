@@ -561,3 +561,11 @@ table.creditSection th, table.creditSection td {
 .talentDetails{
   width: 9% !important;
 }
+.partnerDispalyTbl{
+margin-left: 13%;
+}
+.partnerTypeAhead{
+  width: 100% !important;
+  height: 10% !important;
+
+}
