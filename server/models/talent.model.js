@@ -96,11 +96,13 @@ FROM talent t where t.id= ' + talentId)
 		    			 INNER JOIN awards a ON tacj.award_id = a.id \
 		    			 INNER JOIN credits c on tacj.credit_id=c.id \
 		    			 INNER JOIN talent t on t.id=tacj.talent_id \
-		    			 where tacj.talent_id='+talentId)
+               INNER JOIN credit_talent_role_join ctr on  \
+               tacj.credit_id= ctr.credit_id and  tacj.talent_id= ctr.talent_id \
+		    			 where tacj.talent_id='+talentId +' group by a.awardname, release_date, a.awardtype, a.awardfor , c.name')
 		  		       .then(function(results2) {
 		  		    	   ob.awards = results2[0];
 		  		    	 //callback(ob);
-			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%d %b %Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\, \') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
+			  		    	 db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\, \') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id ='+talentId+' GROUP BY creditname') 
 							    	.then(function(results3) {
 							    		ob.credits = results3[0];
 							    		
@@ -225,12 +227,12 @@ Talent.get = function(id, callback) {
        SELECT \
     	credit_talent_role_join.id AS id, \
         credits.name AS credit, \
-        credits.release_date AS release_date, \
+        DATE_FORMAT(credits.release_date,"%Y") as release_date, \
         roles.name AS role \
        FROM credit_talent_role_join \
-       LEFT JOIN talent ON credit_talent_role_join.talent_id = talent.id \
-       LEFT JOIN credits ON credit_talent_role_join.credit_id = credits.id \
-       LEFT JOIN roles ON credit_talent_role_join.role_id = roles.id \
+       INNER JOIN talent ON credit_talent_role_join.talent_id = talent.id \
+       INNER JOIN credits ON credit_talent_role_join.credit_id = credits.id \
+       INNER JOIN roles ON credit_talent_role_join.role_id = roles.id \
        WHERE talent.id = ' + data.id.toString())
       .then(function(results) {
        data.talentCreditJoins = results[0];
