@@ -237,11 +237,23 @@
             }
           }
           $scope.errorText = '';
+          //moment.utc(MYSQL_DATETIME, 'YYYY-MM-DD HH:mm:ss');
+          if(angular.isDefined($scope.activeElement.release_date) && $scope.activeElement.release_date!==null){
+            $scope.activeElement.release_date =$scope.activeElement.release_date+"-01-01";
+          }
+          
           creditFactory.addOrEdit($scope.activeElement, function(res) {
+            
+            if(angular.isDefined($scope.activeElement.release_date) && $scope.activeElement.release_date!==null){
+              var date_array = ($scope.activeElement.release_date).split("-");
+              $scope.activeElement.release_date = date_array[0];
+            }
+            
             if (res.status !== 'error') {
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
               } else {
+                //$scope.activeElement.release_date = ($scope.activeElement.release_date).split("-")[0];
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
@@ -410,7 +422,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";		  
+		      $scope.btnTxt = "Add";		  
         });
       },
       CreditType: function() {
@@ -421,7 +433,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";		  
+		      $scope.btnTxt = "Add";		  
         });
       },
       Credit: function() {

@@ -269,7 +269,7 @@
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
-                $("span.ui-grid-pager-row-count-label").html(" Records per page <a href='#'' title='Click here to export selected row(s).'><span id='exportLink' ng-click='getSelectRow()' class='glyphicon glyphicon-export'></span></a> <a href='#' title='Click here to edit selected row.'><span id='editLink' style='display:none' class='glyphicon glyphicon-edit'></span>");
+                $("span.ui-grid-pager-row-count-label").html(" Records per page <button id='exportLink' ng-click='getSelectRow()' class='btn btn-primary btn-xs'>Export</button> <button id='editLink' style='display:none' class='btn btn-primary btn-xs'>Edit</button>");
             });
 
             function saveState() {
@@ -744,8 +744,8 @@
                     creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
                     creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
                     creditObj.logline = (value.logline === null) ? 'Not Available' : value.logline;
-                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+numberFormatter(value.estimatedBudget);
-                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+numberFormatter(value.box_office_income);
+                    creditObj.budget = (value.estimatedBudget === 0 || value.estimatedBudget === null) ? 'Not Available' : '$'+numberFormatter(value.estimatedBudget);
+                    creditObj.boxoffice = (value.box_office_income === 0 || value.box_office_income === null) ? 'Not Available' : '$'+numberFormatter(value.box_office_income);
                     creditArray.push(creditObj);
                     creditObj = {};
                     });
@@ -756,9 +756,10 @@
                     $scope.awardsData = [];
                     var awardObj = {};
                     var awardsArray = [];
-                    
+                    var i = 0;
                     if(!!result.awards && result.awards.length>0){
                         angular.forEach(result.awards, function(value, key) {
+                          console.log(i);
                         awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
                         awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
                         awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
@@ -766,6 +767,7 @@
                         awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
                         awardsArray.push(awardObj);
                         awardObj = {};
+                        i++;
                         });
                         $scope.awardsData = awardsArray;
                     }

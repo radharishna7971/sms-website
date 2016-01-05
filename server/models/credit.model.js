@@ -11,7 +11,7 @@ Credit.getNames = function(callback) {
       credits.id, \
       credits.record_id, \
       credits.name, \
-      credits.release_date, \
+      DATE_FORMAT(credits.release_date,"%Y") as release_date, \
       credits.logline, \
       credits.estimatedBudget, \
       credits.box_office_income \
@@ -30,7 +30,7 @@ Credit.namesByChars = function(Chars, callback) {
       credits.id, \
       credits.record_id, \
       credits.name, \
-      credits.release_date, \
+      DATE_FORMAT(credits.release_date,"%Y") as release_date, \
       credits.logline, \
       credits.estimatedBudget, \
       credits.box_office_income \
@@ -44,7 +44,7 @@ Credit.get = function(id, callback) {
   db.knex.raw(' \
     SELECT \
       credits.id as id,credits.name as name,credits.record_id as record_id, \
-      credits.release_date as release_date,credits.logline as logline, \
+      DATE_FORMAT(credits.release_date,"%Y") as release_date,credits.logline as logline, \
       credits.estimatedBudget as estimatedBudget, \
       credits.box_office_income as box_office_income \
       FROM credits \

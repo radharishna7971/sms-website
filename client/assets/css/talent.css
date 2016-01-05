@@ -557,3 +557,7 @@ table.creditSection th, table.creditSection td {
 .rowClicked{
   background-color: rgba(0, 8, 255, 0.42) !important;
 }
+
+.talentDetails{
+  width: 9% !important;
+}

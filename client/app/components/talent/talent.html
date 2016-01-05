@@ -205,9 +205,9 @@
             <th class="col-md-2">Title</th>
             <th class="col-md-1">Release Date</th>
             <th class="col-md-3">Role</th>
-            <th class="col-md-2">Budget</th>
-            <th class="col-md-2">Box Office</th>
-            <th class="col-md-2">Log Line</th>
+            <th class="col-md-1">Budget</th>
+            <th class="col-md-1">Box Office</th>
+            <th class="col-md-4">Log Line</th>
         </tr>
     </thead>
 
@@ -217,9 +217,9 @@
             <td class="col-md-2">{{credits.title}}</td>
             <td class="col-md-1">{{credits.releasedate}}</td>
             <td class="col-md-3">{{credits.roll}}</td>
-            <td class="col-md-2">{{credits.budget}}</td>
-            <td class="col-md-2">{{credits.boxoffice}}</td>
-            <td class="col-md-2">{{credits.logline}}</td>
+            <td class="col-md-1">{{credits.budget}}</td>
+            <td class="col-md-1">{{credits.boxoffice}}</td>
+            <td class="col-md-4">{{credits.logline}}</td>
         </tr>
         </tbody>
 </table>
@@ -235,8 +235,8 @@
     <table class="creditSection">
     <thead>
         <tr>
-            <th class="col-md-2">Year</th>
-            <th class="col-md-2">Award</th>
+            <th class="col-md-1">Year</th>
+            <th class="col-md-3">Award</th>
             <th class="col-md-2">Category</th>
             <th class="col-md-2">Result</th>
             <th class="col-md-2">Credit</th>
@@ -250,8 +250,8 @@
 
 
         <tr ng-repeat="awards in awardsData | orderBy:'-year'">
-            <td class="col-md-2">{{awards.year}}</td>
-            <td class="col-md-2">{{awards.name}}</td>
+            <td class="col-md-1">{{awards.year}}</td>
+            <td class="col-md-3">{{awards.name}}</td>
             <td class="col-md-2">{{awards.awardfor}}</td>
             <td class="col-md-2">{{awards.type}}</td>
             <td class="col-md-2">{{awards.credit}}</td>
