@@ -42,6 +42,7 @@
             $scope.showmsg= {};
             $scope.showPopUp = false;
             $scope.getTalentData = {};
+            $scope.talentModel = {};
              // This contains functions for submitting data to the database
     var dataSubmitter = {
           Talent: function() {
@@ -70,6 +71,12 @@
               // Add id to keep track of who created given talent
               $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
               $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
+              //Formatted url
+              $scope.activeElement.twitter_url = $scope.activeElement.twitter_url === null?$scope.activeElement.twitter_url:($scope.activeElement.twitter_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.facebook_url = $scope.activeElement.facebook_url === null?$scope.activeElement.facebook_url:($scope.activeElement.facebook_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.youtube_url = $scope.activeElement.youtube_url === null?$scope.activeElement.youtube_url:($scope.activeElement.youtube_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.vine_url = $scope.activeElement.vine_url === null?$scope.activeElement.vine_url:($scope.activeElement.vine_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+              $scope.activeElement.instagram_url = $scope.activeElement.instagram_url === null?$scope.activeElement.instagram_url:($scope.activeElement.instagram_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
               
               if(angular.isUndefined($scope.activeElement.partner)){
                 $scope.activeElement.partner = $scope.inputPartner;
@@ -263,7 +270,7 @@
                 $scope.talentCount = data.length;
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
-                $("span.ui-grid-pager-row-count-label").html(" Records per page <a href='#'' title='Click here to export selected row(s).'><span id='exportLink' ng-click='getSelectRow()'>Export</span></a> <a href='#' title='Click here to edit selected row.'><span id='editLink' style='display:none'>Edit</span></a>");
+                $("span.ui-grid-pager-row-count-label").html(" Records per page <button id='exportLink' ng-click='getSelectRow()' class='btn btn-primary btn-xs'>Export</button> <button id='editLink' style='display:none' class='btn btn-primary btn-xs'>Edit</button>");
             });
 
             function saveState() {
@@ -311,6 +318,14 @@
                 console.log("selected items.......!!");
                 console.log(itemval);
             };
+
+            $scope.updateTalentPartner = function(itemval){
+              $scope.setLoading(true);
+               talentFactory.updateTalentPartnerName($scope.getTalentData.id,itemval.name, function(talentData) {
+                      $scope.setLoading(false);
+              });
+            };
+
             $scope.setLoading = function(loading) {
                 $scope.isLoading = loading;
             };
@@ -703,16 +718,25 @@
             };
             var updateMainTalent = function (talentId, talentDetailsInfo) {
                 $scope.deletedComments = 0;
+                $scope.talentModel = {};
+                $scope.partnerData = false;
                 talentFactory.talentProfile(talentId, function (result) {
+                    $scope.talentModel = {};
+                    $scope.partnerData = false;
                     $scope.TalentNameData = ((talentDetailsInfo.name.split(",")).reverse()).join("  ");
                     $scope.talentDetailsInfoData = talentDetailsInfo;
 
-                    $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
+                  $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
                 	$scope.id = (result.details[0].id) ? result.details[0].id:'';
                 	
                 	$scope.partner_id = (result.details[0].partner) ? result.details[0].partner:'';
                 	$scope.partner_name = (result.details[0].partnername) ? result.details[0].partnername:'';
-                    
+                  if(result.details[0].partner !==null && result.details[0].partner !==''){
+                    $scope.partnerData = true;
+                    $scope.talentModel.partner = result.details[0].partner;
+
+                  }
+
                 	var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
                     if(phoneNumber !== null){
                     	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
@@ -738,8 +762,8 @@
                     creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
                     creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
                     creditObj.logline = (value.logline === null) ? 'Not Available' : value.logline;
-                    creditObj.budget = (value.estimatedBudget === 0) ? 'Not Available' : '$'+numberFormatter(value.estimatedBudget);
-                    creditObj.boxoffice = (value.box_office_income === 0) ? 'Not Available' : '$'+numberFormatter(value.box_office_income);
+                    creditObj.budget = (value.estimatedBudget === 0 || value.estimatedBudget === null) ? 'Not Available' : '$'+numberFormatter(value.estimatedBudget);
+                    creditObj.boxoffice = (value.box_office_income === 0 || value.box_office_income === null) ? 'Not Available' : '$'+numberFormatter(value.box_office_income);
                     creditArray.push(creditObj);
                     creditObj = {};
                     });
@@ -750,9 +774,10 @@
                     $scope.awardsData = [];
                     var awardObj = {};
                     var awardsArray = [];
-                    
+                    var i = 0;
                     if(!!result.awards && result.awards.length>0){
                         angular.forEach(result.awards, function(value, key) {
+                          console.log(i);
                         awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
                         awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
                         awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
@@ -760,6 +785,7 @@
                         awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
                         awardsArray.push(awardObj);
                         awardObj = {};
+                        i++;
                         });
                         $scope.awardsData = awardsArray;
                     }

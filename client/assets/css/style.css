@@ -160,9 +160,12 @@ body {
 
 #editLink, #exportLink{
   font-weight: bold;
-  color: blue;
-  margin-left: 2px;
+  color: #fff;
+  margin-left: 13px;
 
+}
+#editLink:hover,#exportLink:hover{
+  background-color: #1E90FF;
 }
 
 #cover{ 

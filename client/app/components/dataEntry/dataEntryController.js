@@ -237,11 +237,23 @@
             }
           }
           $scope.errorText = '';
+          //moment.utc(MYSQL_DATETIME, 'YYYY-MM-DD HH:mm:ss');
+          if(angular.isDefined($scope.activeElement.release_date) && $scope.activeElement.release_date!==null){
+            $scope.activeElement.release_date =$scope.activeElement.release_date+"-01-01";
+          }
+          
           creditFactory.addOrEdit($scope.activeElement, function(res) {
+            
+            if(angular.isDefined($scope.activeElement.release_date) && $scope.activeElement.release_date!==null){
+              var date_array = ($scope.activeElement.release_date).split("-");
+              $scope.activeElement.release_date = date_array[0];
+            }
+            
             if (res.status !== 'error') {
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
               } else {
+                //$scope.activeElement.release_date = ($scope.activeElement.release_date).split("-")[0];
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
                 activeElementSetter[$scope.section]();
@@ -306,6 +318,11 @@
           // Add id to keep track of who created given talent
           $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
           $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
+          $scope.activeElement.twitter_url = $scope.activeElement.twitter_url === null?$scope.activeElement.twitter_url:($scope.activeElement.twitter_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+          $scope.activeElement.facebook_url = $scope.activeElement.facebook_url === null?$scope.activeElement.facebook_url:($scope.activeElement.facebook_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+          $scope.activeElement.youtube_url = $scope.activeElement.youtube_url === null?$scope.activeElement.youtube_url:($scope.activeElement.youtube_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+          $scope.activeElement.vine_url = $scope.activeElement.vine_url === null?$scope.activeElement.vine_url:($scope.activeElement.vine_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+          $scope.activeElement.instagram_url = $scope.activeElement.instagram_url === null?$scope.activeElement.instagram_url:($scope.activeElement.instagram_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
 
           talentFactory.addOrEdit($scope.activeElement, function(res) {
             if (res.status !== 'error') {
@@ -405,7 +422,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";		  
+		      $scope.btnTxt = "Add";		  
         });
       },
       CreditType: function() {
@@ -416,7 +433,7 @@
           // Reset elements and form
           $scope.editElement = null;
           $scope.activeElement = {};
-		  $scope.btnTxt = "Add";		  
+		      $scope.btnTxt = "Add";		  
         });
       },
       Credit: function() {
@@ -614,6 +631,8 @@
         activeElementSetter['Talent']();
         $scope.btnTxt = "Update";
       };
+
+      
     // Ensures all required inputs have data
     // Takes in an optional section.  If section is passed in, it means it is part of the talent form.  This is done to handle that fact that some required inputs might be hidden
     var checkInputs = function(section) {
