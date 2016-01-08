@@ -58,6 +58,20 @@
             	$scope.allGenreChecked = true;
             }
             
+            var checkAllGender = localStorageService.get("allGender");
+            if(checkAllGender && checkAllGender === 'unchecked'){
+            	$scope.allGenderChecked = false;
+            }else{
+            	$scope.allGenderChecked = true;
+            }
+            
+            var checkAllAge = localStorageService.get("allAge");
+            if(checkAllAge && checkAllAge === 'unchecked'){
+            	$scope.allAgeChecked = false;
+            }else{
+            	$scope.allAgeChecked = true;
+            }
+            
              // This contains functions for submitting data to the database
     var dataSubmitter = {
           Talent: function() {
@@ -368,6 +382,27 @@
             		 }
                  });
             	 
+            	 $('div#gender_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("gender-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allGender","unchecked");
+            			 }
+            			 localStorageService.set("gender-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#age_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("age-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allAge","unchecked");
+            			 }
+            			 localStorageService.set("age-"+$(this).val().trim(),"");
+            		 }
+                 });
             	 
                 if(!angular.isUndefined($event)){
                     /*if($($event.target).hasClass( "role-list-class" )){
@@ -376,12 +411,12 @@
                     /*if($($event.target).hasClass( "genre-list-class" )){
                         $("input#allGenres").prop("checked",false);
                     }*/
-                    if($($event.target).hasClass( "gender-input" )){
+                    /*if($($event.target).hasClass( "gender-input" )){
                         $("input#allGender").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "age-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "age-list-class" )){
                         $("input#allAges").prop("checked",false);
-                    }
+                    }*/
                     if($($event.target).hasClass( "budget-list-class" )){
                         $("input#allBudget").prop("checked",false);
                     }
@@ -416,20 +451,20 @@
                             });
                             $("input#allGenres").prop("checked",true);
                     }*/
-                     if($event.target.id==="allGender" && $event.target.checked){
+/*                     if($event.target.id==="allGender" && $event.target.checked){
 
                             $('div#gender_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allGender").prop("checked",true);
-                    }
-                    if($event.target.id==="allAges" && $event.target.checked){
+                    }*/
+/*                    if($event.target.id==="allAges" && $event.target.checked){
 
                             $('div#age_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allAges").prop("checked",true);
-                    }
+                    }*/
                     if($event.target.id==="allAwards" && $event.target.checked){
 
                             $('div#awards_list input').each(function () {
@@ -951,6 +986,35 @@
 			if(allGenre){
 				$scope.allGenreChecked = true;
 			}
+			
+			var allGender = localStorageService.get("gender-*");
+			if(allGender){
+				$scope.allGenderChecked = true;
+			}
+			
+			var male = localStorageService.get("gender-Male");
+            if(male && male.replace("gender-","") === 'Male'){
+				$scope.maleChecked = true;
+			}
+            
+            var female = localStorageService.get("gender-Female");
+            if(female && female.replace("gender-","") === 'Female'){
+				$scope.femaleChecked = true;
+			}
+            
+            var allAge = localStorageService.get("age-*");
+			if(allAge){
+				$scope.allAgeChecked = true;
+			}
+			
+			angular.forEach($scope.ages,function(items){
+                if(items && items.name.trim()){
+                   var age = localStorageService.get("age-"+items.name.trim());
+                   if(age && age.replace("age-","") === items.name.trim()){
+      					items.checked = true;
+      				}
+                }
+			});
 			
             $scope.data = {
                 Role: roleFactory.getNames(function (result) {

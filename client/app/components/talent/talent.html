@@ -46,12 +46,12 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="gender_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allGender"  type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allGender" ng-checked="{{allGenderChecked}}" type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*">All<br>
         <div>
-          <input class="filter-option gender-input"  type="checkbox" col="primary_role" value="Male" ng-click="updateFiltersByChckBox($event)" unchecked>Male<br>
+          <input class="filter-option gender-input" ng-checked="{{maleChecked}}"  type="checkbox" col="primary_role" value="Male" ng-click="updateFiltersByChckBox($event)">Male<br>
         </div>
         <div>
-          <input class="filter-option gender-input"  type="checkbox" col="primary_role" value="Female" ng-click="updateFiltersByChckBox($event)" unchecked>Female<br>
+          <input class="filter-option gender-input" ng-checked="{{femaleChecked}}"  type="checkbox" col="primary_role" value="Female" ng-click="updateFiltersByChckBox($event)">Female<br>
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -59,9 +59,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="age_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allAges" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allAges" ng-checked="{{allAgeChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All<br>
         <div ng-repeat="age in ages | orderBy : 'id'">
-          <input class="filter-option age-list-class" type="checkbox" ng-click="updateFiltersByChckBox($event)" col="primary_genre" value="{{age.name}}" unchecked>{{age.name}}<br>
+          <input class="filter-option age-list-class" ng-checked="{{age.checked}}" type="checkbox" ng-click="updateFiltersByChckBox($event)" col="primary_genre" value="{{age.name}}">{{age.name}}<br>
         </div>
       </div>
       <div class="filter-header-container clickable">
