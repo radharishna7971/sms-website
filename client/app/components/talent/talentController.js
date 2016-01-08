@@ -43,6 +43,21 @@
             $scope.showPopUp = false;
             $scope.getTalentData = {};
             $scope.talentModel = {};
+            
+            var checkAllRole = localStorageService.get("allRole");
+            if(checkAllRole && checkAllRole === 'unchecked'){
+            	$scope.allRoleChecked = false;
+            }else{
+            	$scope.allRoleChecked = true;
+            }
+            
+            var checkAllGenre = localStorageService.get("allGenre");
+            if(checkAllGenre && checkAllGenre === 'unchecked'){
+            	$scope.allGenreChecked = false;
+            }else{
+            	$scope.allGenreChecked = true;
+            }
+            
              // This contains functions for submitting data to the database
     var dataSubmitter = {
           Talent: function() {
@@ -112,9 +127,6 @@
                 if($( 'div.ui-grid-cell' ).hasClass( 'rowClicked' )){
                     $('div.ui-grid-cell').removeClass('rowClicked');
                 }
-                
-                //console.log(event);
-                //$(event.target).closest('div.ui-grid-row').addClass('row-selected');
 
                 var clickedRowId = parseInt(row.entity.id);
                 if(parseInt(checkRowId)===clickedRowId && $("#editLink").is(':visible')){
@@ -271,6 +283,9 @@
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
                 $("span.ui-grid-pager-row-count-label").html(" Records per page <button id='exportLink' ng-click='getSelectRow()' class='btn btn-primary btn-xs'>Export</button> <button id='editLink' style='display:none' class='btn btn-primary btn-xs'>Edit</button>");
+            
+                $scope.updateFiltersByChckBox();
+            
             });
 
             function saveState() {
@@ -293,7 +308,7 @@
 				$scope.gridApi = gridApi;
 				gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 				
-				    console.log(row);
+				    //console.log(row);
 				});
 				    
 				 // Setup events so we're notified when grid state changes.
@@ -315,8 +330,8 @@
             };
 
             $scope.getTalentDetails = function (itemval) {
-                console.log("selected items.......!!");
-                console.log(itemval);
+                //console.log("selected items.......!!");
+                //console.log(itemval);
             };
 
             $scope.updateTalentPartner = function(itemval){
@@ -330,13 +345,37 @@
                 $scope.isLoading = loading;
             };
              $scope.updateFiltersByChckBox = function ($event) {
+            	 
+            	 $('div#role_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("role-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allRole","unchecked");
+            			 }
+            			 localStorageService.set("role-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#genre_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("genre-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allGenre","unchecked");
+            			 }
+            			 localStorageService.set("genre-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 
                 if(!angular.isUndefined($event)){
-                    if($($event.target).hasClass( "role-list-class" )){
+                    /*if($($event.target).hasClass( "role-list-class" )){
                         $("input#allRole").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "genre-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "genre-list-class" )){
                         $("input#allGenres").prop("checked",false);
-                    }
+                    }*/
                     if($($event.target).hasClass( "gender-input" )){
                         $("input#allGender").prop("checked",false);
                     }
@@ -365,18 +404,18 @@
                         $("input#allAwards").prop("checked",false);
                     }
 
-                    if($event.target.id==="allRole" && $event.target.checked){
+                    /*if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allRole").prop("checked",true);
-                    }
-                    if($event.target.id==="allGenres" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allGenres" && $event.target.checked){
                             $('div#genre_list input').not(this).each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allGenres").prop("checked",true);
-                    }
+                    }*/
                      if($event.target.id==="allGender" && $event.target.checked){
 
                             $('div#gender_list input').each(function () {
@@ -569,7 +608,6 @@
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
                             var budgets = item['estimatedBudget'].split('-');
-                            console.log(budgets);
                             var lowerLimit = budgets[0];
                             var upperLimit = budgets[budgets.length-1];
                             var lowerLimitDigit = getNumber(lowerLimit);
@@ -777,7 +815,6 @@
                     var i = 0;
                     if(!!result.awards && result.awards.length>0){
                         angular.forEach(result.awards, function(value, key) {
-                          console.log(i);
                         awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
                         awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
                         awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
@@ -902,8 +939,19 @@
                 primary_genre: {"*": true},
                 secondary_genre: {"*": true}
             };
-
+            
             // Storage for all data points for filters
+            
+            var allRole = localStorageService.get("role-*");
+			if(allRole){
+				$scope.allRoleChecked = true;
+			}
+			
+			var allGenre = localStorageService.get("genre-*");
+			if(allGenre){
+				$scope.allGenreChecked = true;
+			}
+			
             $scope.data = {
                 Role: roleFactory.getNames(function (result) {
                     $scope.data.Role = result;
@@ -911,12 +959,18 @@
                     $scope.data.RoleNonPriority = [];
                     $scope.activeData = $scope.data.Role;
                     angular.forEach(result,function(items){
+                    if(items && items.name.trim()){
+                       var roll = localStorageService.get("role-"+items.name.trim());
+                       if(roll && roll.replace("role-","") === items.name.trim()){
+          					items.checked = true;
+          				}
                        var getPeiorityRoll =  (items.name.trim() ==="Actor" || items.name.trim() ==="Director" || items.name.trim() ==="Producer" || items.name.trim() ==="Writer");
                        if(getPeiorityRoll){
                             $scope.data.RolePriority.push(items);
                        }else{
                              $scope.data.RoleNonPriority.push(items);
                        }
+                    }
                     });
                     for (var i = 0; i < result.length; i++) {
                         $scope.filterData['primary_role'][result[i].name] = false;
@@ -937,13 +991,19 @@
                     $scope.data.GenreNonPriority = [];
                     $scope.data.Genre = result;
                     angular.forEach(result,function(items){
-                        var matchFound  = (items.name.trim() ==="Action" || items.name.trim() ==="Comedy" || items.name.trim() ==="Drama" || items.name.trim() ==="Horror" || items.name.trim() ==="Musical" || items.name.trim() ==="Thriller");
-                        if(matchFound){
-                            $scope.data.GenrePriority.push(items);
-                        }else{
-                            $scope.data.GenreNonPriority.push(items);
-
-                        }
+                    	if(items && items.name.trim()){
+                    		var genre = localStorageService.get("genre-"+items.name.trim());
+                            if(genre && genre.replace("genre-","") === items.name.trim()){
+               					items.checked = true;
+               				}
+	                        var matchFound  = (items.name.trim() ==="Action" || items.name.trim() ==="Comedy" || items.name.trim() ==="Drama" || items.name.trim() ==="Horror" || items.name.trim() ==="Musical" || items.name.trim() ==="Thriller");
+	                        if(matchFound){
+	                            $scope.data.GenrePriority.push(items);
+	                        }else{
+	                            $scope.data.GenreNonPriority.push(items);
+	
+	                        }
+                    	}
                     });
                     $scope.activeData = $scope.data.Genre;
                     for (var i = 0; i < result.length; i++) {
@@ -1075,8 +1135,6 @@
             dataList['associte_types_id'] = typeid;
             dataList['associate_id'] = associate_id;
             contactFactory.addGetAssociateNamesById(dataList,function(result) {
-            	console.log('AssoResult');
-            	console.log(result);
             	if(result.details.length > 0){
            		 angular.forEach(result.details, function(value, key) {
            			 if(value.type === 'Agent'){
@@ -1251,7 +1309,6 @@
                   if (!section) {
                     $('input:visible, select:visible').each(function() {
                       if ($(this).attr('required')) {
-                        console.log($(this).val());
                         if ($(this).val() === null || $(this).val().length === 0) {
                           result = false;
                         }
@@ -1290,12 +1347,11 @@
             // JQuery
 
             // Expand/collapse checkbox containers
-            $(document).on('click', '.filter-header-container', function () {
+            $(document).off('click').on('click', '.filter-header-container', function () {
                 if ($(this).next('.filter-option-container').is(':visible')) {
                     $(this).next('.filter-option-container').hide();
                     $(this).find('.arrow').removeClass( "arrow-down" );
                     $(this).find('.arrow').addClass( "arrow-right" );
-
                 } else {
                     $(this).next('.filter-option-container').show();
                     //$(this).find('.arrow').removeClass( "arrow-right" );
@@ -1337,7 +1393,6 @@
                 angular.forEach($scope.gridApi.selection.getSelectedRows(), function(items){
                     selectedTalentRowId.pay.push(items.id);
                 });
-                console.log(selectedTalentRowId);
                 talentFactory.exportTalentDetailXls(selectedTalentRowId, function(result) {
                     $scope.data.Contact = result;
                 });

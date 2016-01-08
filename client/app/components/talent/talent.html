@@ -16,14 +16,13 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="role_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allRole" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*" checked>All
+        <input class="filter-option all-option" id="allRole" ng-checked="{{allRoleChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*">All
         <div ng-repeat="role in data.RolePriority | orderBy : 'name'">
-          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}
+          <input class="filter-option role-list-class" ng-checked="{{role.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}">{{role.name}}
         </div>
          <div ng-repeat="role in data.RoleNonPriority | orderBy : 'name'">
-          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}
+          <input class="filter-option role-list-class" ng-checked="{{role.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}">{{role.name}}
         </div>
-        
       </div>
 
       <div class="filter-header-container clickable">
@@ -31,13 +30,13 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="genre_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option all-option" id="allGenres" ng-checked="{{allGenreChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="genre in data.GenrePriority | orderBy : 'name'">
-          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}
+          <input class="filter-option genre-list-class" ng-checked="{{genre.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}">{{genre.name}}
         </div>
         <!-- <div>---------</div> -->
         <div ng-repeat="genre in data.GenreNonPriority | orderBy : 'name'">
-          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+          <input class="filter-option genre-list-class" ng-checked="{{genre.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}">{{genre.name}}<br>
         </div>
       </div>
 
