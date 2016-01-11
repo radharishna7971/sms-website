@@ -623,7 +623,7 @@
       };
 
     setTimeout(function() {
-      console.log($scope.data);
+      //console.log($scope.data);
     }, 2000);
 
       $scope.getTalentDetails = function (itemval) {
