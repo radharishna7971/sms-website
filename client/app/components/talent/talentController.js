@@ -25,6 +25,12 @@
                  {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"},
                  {"id": 7,"name":"Above $100M"}
              ];
+            $scope.boxofficerev = [
+	              {"id": 1,"name": "Under $250K"}, {"id": 2,"name": "$250K-$1M"},
+	              {"id": 3,"name": "$1M-$5M"}, {"id": 4,"name":"$5M-$10M"},
+	              {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"},
+	              {"id": 7,"name":"Above $100M"}
+	          ];
             $scope.ages = [
                  {"id": 1,"name": "Less than 20"}, {"id": 2,"name": "20-30"},
                  {"id": 3,"name": "30-40"}, {"id": 4,"name": "40-50"},
@@ -70,6 +76,48 @@
             	$scope.allAgeChecked = false;
             }else{
             	$scope.allAgeChecked = true;
+            }
+            
+            var checkAllEthnicity = localStorageService.get("allEthnicity");
+            if(checkAllEthnicity && checkAllEthnicity === 'unchecked'){
+            	$scope.allEthnicityChecked = false;
+            }else{
+            	$scope.allEthnicityChecked = true;
+            }
+            
+            var checkAllCountry = localStorageService.get("allCountry");
+            if(checkAllCountry && checkAllCountry === 'unchecked'){
+            	$scope.allCountryChecked = false;
+            }else{
+            	$scope.allCountryChecked = true;
+            }
+            
+            var checkAllCreatedBy = localStorageService.get("allCreatedBy");
+            if(checkAllCreatedBy && checkAllCreatedBy === 'unchecked'){
+            	$scope.allCreatedByChecked = false;
+            }else{
+            	$scope.allCreatedByChecked = true;
+            }
+            
+            var checkAllAward = localStorageService.get("allAward");
+            if(checkAllAward && checkAllAward === 'unchecked'){
+            	$scope.allAwardsChecked = false;
+            }else{
+            	$scope.allAwardsChecked = true;
+            }
+            
+            var checkAllBudget = localStorageService.get("allBudget");
+            if(checkAllBudget && checkAllBudget === 'unchecked'){
+            	$scope.allBudgetChecked = false;
+            }else{
+            	$scope.allBudgetChecked = true;
+            }
+            
+            var checkAllallBoxOfficeRev = localStorageService.get("allBoxOfficeRev");
+            if(checkAllallBoxOfficeRev && checkAllallBoxOfficeRev === 'unchecked'){
+            	$scope.allBoxOfficeRevChecked = false;
+            }else{
+            	$scope.allBoxOfficeRevChecked = true;
             }
             
              // This contains functions for submitting data to the database
@@ -404,6 +452,72 @@
             		 }
                  });
             	 
+            	 $('div#ethnicity_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("ethnicity-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allEthnicity","unchecked");
+            			 }
+            			 localStorageService.set("ethnicity-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#country_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("country-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allCountry","unchecked");
+            			 }
+            			 localStorageService.set("country-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#createdby_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("createdby-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allCreatedBy","unchecked");
+            			 }
+            			 localStorageService.set("createdby-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#awards_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("award-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allAward","unchecked");
+            			 }
+            			 localStorageService.set("award-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#budget_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("budget-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allBudget","unchecked");
+            			 }
+            			 localStorageService.set("budget-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#box_office_income_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("boxofficerev-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allBoxOfficeRev","unchecked");
+            			 }
+            			 localStorageService.set("boxofficerev-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
                 if(!angular.isUndefined($event)){
                     /*if($($event.target).hasClass( "role-list-class" )){
                         $("input#allRole").prop("checked",false);
@@ -417,7 +531,7 @@
                     /*if($($event.target).hasClass( "age-list-class" )){
                         $("input#allAges").prop("checked",false);
                     }*/
-                    if($($event.target).hasClass( "budget-list-class" )){
+                    /*if($($event.target).hasClass( "budget-list-class" )){
                         $("input#allBudget").prop("checked",false);
                     }
                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
@@ -425,19 +539,19 @@
                     }
                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
                         $("input#allBoxRevenue").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "ethnicity-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "ethnicity-list-class" )){
                         $("input#allEthnicity").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "createdby-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "createdby-list-class" )){
                         $("input#allCreatedBy").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "country-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "country-list-class" )){
                         $("input#allCountries").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "awards-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "awards-list-class" )){
                         $("input#allAwards").prop("checked",false);
-                    }
+                    }*/
 
                     /*if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
@@ -465,21 +579,21 @@
                             });
                             $("input#allAges").prop("checked",true);
                     }*/
-                    if($event.target.id==="allAwards" && $event.target.checked){
+/*                    if($event.target.id==="allAwards" && $event.target.checked){
 
                             $('div#awards_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allAwards").prop("checked",true);
-                    }
-                    if($event.target.id==="allCountries" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allCountries" && $event.target.checked){
 
                             $('div#country_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allCountries").prop("checked",true);
-                    }
-                    if($event.target.id==="allBudget" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allBudget" && $event.target.checked){
                             $('div#budget_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
@@ -490,19 +604,19 @@
                                  $(this).prop("checked",false);
                             });
                             $("input#allBoxRevenue").prop("checked",true);
-                    }
-                    if($event.target.id==="allEthnicity" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allEthnicity" && $event.target.checked){
                             $('div#ethnicity_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allEthnicity").prop("checked",true);
-                    }
-                    if($event.target.id==="allCreatedBy" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allCreatedBy" && $event.target.checked){
                             $('div#createdby_list').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allCreatedBy").prop("checked",true);
-                    }
+                    }*/
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
@@ -1007,6 +1121,36 @@
 				$scope.allAgeChecked = true;
 			}
 			
+			var allEthnicity = localStorageService.get("ethnicity-*");
+			if(allEthnicity){
+				$scope.allEthnicityChecked = true;
+			}
+			
+			var allCountry = localStorageService.get("country-*");
+			if(allCountry){
+				$scope.allCountryChecked = true;
+			}
+			
+			var allCreatedBy = localStorageService.get("createdby-*");
+			if(allCreatedBy){
+				$scope.allCreatedByChecked = true;
+			}
+			
+			var allAward = localStorageService.get("award-*");
+			if(allAward){
+				$scope.allAwardsChecked = true;
+			}
+			
+			var allBudget = localStorageService.get("budget-*");
+			if(allBudget){
+				$scope.allBudgetChecked = true;
+			}
+			
+			var allBoxOfficeRev = localStorageService.get("boxofficerev-*");
+			if(allBoxOfficeRev){
+				$scope.allBoxOfficeRevChecked = true;
+			}
+			
 			angular.forEach($scope.ages,function(items){
                 if(items && items.name.trim()){
                    var age = localStorageService.get("age-"+items.name.trim());
@@ -1015,6 +1159,25 @@
       				}
                 }
 			});
+			
+			angular.forEach($scope.budgets,function(items){
+                if(items && items.name.trim()){
+                   var age = localStorageService.get("budget-"+items.name.trim());
+                   if(age && age.replace("budget-","") === items.name.trim()){
+      					items.checked = true;
+      				}
+                }
+			});
+
+			angular.forEach($scope.boxofficerev,function(items){
+                if(items && items.name.trim()){
+                   var age = localStorageService.get("boxofficerev-"+items.name.trim());
+                   if(age && age.replace("boxofficerev-","") === items.name.trim()){
+      					items.checked = true;
+      				}
+                }
+			});
+			
 			
             $scope.data = {
                 Role: roleFactory.getNames(function (result) {
@@ -1042,12 +1205,36 @@
                     }
                 }),
                 TalentCreatedBy: talentFactory.getAllCreatedBy(function (result) {
+                	angular.forEach(result,function(items){
+                        if(items && items.createdby.trim()){
+                           var createdby = localStorageService.get("createdby-"+items.createdby.trim());
+                           if(createdby && createdby.replace("createdby-","") === items.createdby.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
                     $scope.data.createdByNames = result;
                 }),
                 TalentAwards: talentFactory.getAwardsNames(function (result) {
+                	angular.forEach(result,function(items){
+                        if(items && items.awardname.trim()){
+                           var award = localStorageService.get("award-"+items.awardname.trim());
+                           if(award && award.replace("award-","") === items.awardname.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
                     $scope.data.awardsNameList = result;
                 }),
                 TalentCountryNames: talentFactory.getCountryNames(function (result) {
+                	angular.forEach(result,function(items){
+                        if(items && items.country.trim()){
+                           var country = localStorageService.get("country-"+items.country.trim());
+                           if(country && country.replace("country-","") === items.country.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
                     $scope.data.countryNames = result;
                 }),
                 Genre: genreFactory.getNames(function (result) {
@@ -1076,7 +1263,15 @@
                     }
                 }),
                 Ethnicity: ethnicityFactory.getNames(function (result) {
-                        $scope.data.Ethnicities = result;
+                	angular.forEach(result,function(items){
+                        if(items && items.name.trim()){
+                           var ethnicity = localStorageService.get("ethnicity-"+items.name.trim());
+                           if(ethnicity && ethnicity.replace("ethnicity-","") === items.name.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
+                    $scope.data.Ethnicities = result;
                 })
             };
 

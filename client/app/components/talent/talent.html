@@ -69,9 +69,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="ethnicity_list" class="filter-option-container">
-        <input class="filter-option" id="allEthnicity" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All
+        <input class="filter-option" id="allEthnicity" ng-checked="{{allEthnicityChecked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*">All
         <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" ng-if="ethnicity.name!==''">
-          <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}
+          <input class="filter-option ethnicity-list-class" ng-checked="{{ethnicity.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}">{{ethnicity.name}}
         </div>
       </div>
       <!-- div class="filter-header-container">
@@ -84,9 +84,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="country_list" class="filter-option-container">
-        <input class="filter-option" id="allCountries" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option" id="allCountries" ng-checked="{{allCountryChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="item in data.countryNames | orderBy : 'country'">
-          <input class="filter-option country-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.country}}" unchecked>{{item.country}}
+          <input class="filter-option country-list-class" ng-checked="{{item.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.country}}">{{item.country}}
         </div>
       </div>
 
@@ -96,9 +96,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="createdby_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allCreatedBy" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option all-option" id="allCreatedBy" ng-checked="{{allCreatedByChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="item in data.createdByNames | orderBy : 'createdby'">
-          <input class="filter-option createdby-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.createdby}}" unchecked>{{item.createdby}}
+          <input class="filter-option createdby-list-class" ng-checked="{{item.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.createdby}}">{{item.createdby}}
         </div>
       </div>
 
@@ -107,9 +107,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="awards_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allAwards" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option all-option" id="allAwards" ng-checked="{{allAwardsChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="item in data.awardsNameList | orderBy : 'awardname'">
-          <input class="filter-option awards-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.awardname}}" unchecked>{{item.awardname}}
+          <input class="filter-option awards-list-class" ng-checked="{{item.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.awardname}}">{{item.awardname}}
         </div>
       </div>
 
@@ -118,9 +118,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="budget_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allBudget"  type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allBudget" ng-checked="{{allBudgetChecked}}" type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*">All<br>
         <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option budget-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}
+          <input class="filter-option budget-list-class" ng-checked="{{budget.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}">{{budget.name}}
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -128,9 +128,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="box_office_income_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allBoxRevenue" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All<br>
-        <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option BoxOfficeIncome-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}
+        <input class="filter-option all-option" id="allBoxRevenue" ng-checked="{{allBoxOfficeRevChecked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*">All<br>
+        <div ng-repeat="boxoffice in boxofficerev | orderBy : 'id'">
+          <input class="filter-option BoxOfficeIncome-list-class" ng-checked="{{boxoffice.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{boxoffice.name}}">{{boxoffice.name}}
         </div>
       </div>
       <div class="filter-header-container clickable">
