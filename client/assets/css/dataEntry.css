@@ -124,15 +124,30 @@
   padding: 0;
   padding-left: 3px;
   padding-right: 3px;
-  height: 35px;
+  height: 37px;
   line-height: 35px;
   border: 1px solid #66B3F1;
   font-size: 16px;
-  width: 250px;
+  width: 258px;
   margin: 5px 0px 5px 0px;
   background-color: white;
-  -webkit-appearance: none;
   -webkit-border-radius: 0px;
+}
+
+.role-input {
+  outline:none;
+  padding: 0;
+  padding-left: 3px;
+  padding-right: 3px;
+  height: 37px;
+  line-height: 35px;
+  border: 1px solid #66B3F1;
+  font-size: 16px;
+  width: 258px;
+  margin: 5px 0px 5px 0px;
+  background-color: white;
+  -webkit-border-radius: 0px;
+  margin-top: 0px;
 }
 
 .select-input {
@@ -150,6 +165,37 @@
   display: block;
   margin-bottom: 20px;
   clear: both;
+}
+
+
+
+.credit-submit {
+    background-color: #66B3F1;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+    
+}
+
+.credit-input {
+  outline:none;
+  padding: 0;
+  padding-left: 3px;
+  padding-right: 3px;
+  height: 37px;
+  line-height: 35px;
+  border: 1px solid #66B3F1;
+  font-size: 16px;
+  width: 258px;
+  margin: 5px 0px 5px 0px;
+  background-color: #66B3F1;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  margin-left: -529px;
+    margin-top: 38px;
+}
+.credit-submit:hover,.credit-submit:focus{
+  background-color: #1E90FF;
 }
 
 .data-submit:hover,.data-submit:focus{
@@ -222,6 +268,7 @@
 .talent-credit-join-text {
   clear: left;
   float: left;
+  margin-top: 11px;
 }
 
 .delete-talent-credit-join-button {
@@ -234,7 +281,7 @@
   font-size: 12px;
   text-align: center;
   line-height: 12px;
-  margin-top: 5px;
+  margin-top: 17px;
   margin-left: 10px;
   cursor: pointer;
 }
@@ -298,7 +345,7 @@
   outline: none;
   height: 35px;
   background-size: red;
-  width: 100%;
+  width: 248px;
   border: none;
   color: white;
   background-color: #66B3F1;
@@ -308,6 +355,10 @@
   cursor: pointer;
   margin-top: -4px;
 }
+.data-entry-comment-submit:hover,.data-entry-comment-submit:focus{
+  background-color: #1E90FF;
+}
+
 
 .data-entry-delete-comment-button {
   background-color: #E88080;

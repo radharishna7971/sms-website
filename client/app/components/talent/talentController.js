@@ -25,6 +25,12 @@
                  {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"},
                  {"id": 7,"name":"Above $100M"}
              ];
+            $scope.boxofficerev = [
+	              {"id": 1,"name": "Under $250K"}, {"id": 2,"name": "$250K-$1M"},
+	              {"id": 3,"name": "$1M-$5M"}, {"id": 4,"name":"$5M-$10M"},
+	              {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"},
+	              {"id": 7,"name":"Above $100M"}
+	          ];
             $scope.ages = [
                  {"id": 1,"name": "Less than 20"}, {"id": 2,"name": "20-30"},
                  {"id": 3,"name": "30-40"}, {"id": 4,"name": "40-50"},
@@ -43,6 +49,77 @@
             $scope.showPopUp = false;
             $scope.getTalentData = {};
             $scope.talentModel = {};
+            
+            var checkAllRole = localStorageService.get("allRole");
+            if(checkAllRole && checkAllRole === 'unchecked'){
+            	$scope.allRoleChecked = false;
+            }else{
+            	$scope.allRoleChecked = true;
+            }
+            
+            var checkAllGenre = localStorageService.get("allGenre");
+            if(checkAllGenre && checkAllGenre === 'unchecked'){
+            	$scope.allGenreChecked = false;
+            }else{
+            	$scope.allGenreChecked = true;
+            }
+            
+            var checkAllGender = localStorageService.get("allGender");
+            if(checkAllGender && checkAllGender === 'unchecked'){
+            	$scope.allGenderChecked = false;
+            }else{
+            	$scope.allGenderChecked = true;
+            }
+            
+            var checkAllAge = localStorageService.get("allAge");
+            if(checkAllAge && checkAllAge === 'unchecked'){
+            	$scope.allAgeChecked = false;
+            }else{
+            	$scope.allAgeChecked = true;
+            }
+            
+            var checkAllEthnicity = localStorageService.get("allEthnicity");
+            if(checkAllEthnicity && checkAllEthnicity === 'unchecked'){
+            	$scope.allEthnicityChecked = false;
+            }else{
+            	$scope.allEthnicityChecked = true;
+            }
+            
+            var checkAllCountry = localStorageService.get("allCountry");
+            if(checkAllCountry && checkAllCountry === 'unchecked'){
+            	$scope.allCountryChecked = false;
+            }else{
+            	$scope.allCountryChecked = true;
+            }
+            
+            var checkAllCreatedBy = localStorageService.get("allCreatedBy");
+            if(checkAllCreatedBy && checkAllCreatedBy === 'unchecked'){
+            	$scope.allCreatedByChecked = false;
+            }else{
+            	$scope.allCreatedByChecked = true;
+            }
+            
+            var checkAllAward = localStorageService.get("allAward");
+            if(checkAllAward && checkAllAward === 'unchecked'){
+            	$scope.allAwardsChecked = false;
+            }else{
+            	$scope.allAwardsChecked = true;
+            }
+            
+            var checkAllBudget = localStorageService.get("allBudget");
+            if(checkAllBudget && checkAllBudget === 'unchecked'){
+            	$scope.allBudgetChecked = false;
+            }else{
+            	$scope.allBudgetChecked = true;
+            }
+            
+            var checkAllallBoxOfficeRev = localStorageService.get("allBoxOfficeRev");
+            if(checkAllallBoxOfficeRev && checkAllallBoxOfficeRev === 'unchecked'){
+            	$scope.allBoxOfficeRevChecked = false;
+            }else{
+            	$scope.allBoxOfficeRevChecked = true;
+            }
+            
              // This contains functions for submitting data to the database
     var dataSubmitter = {
           Talent: function() {
@@ -112,9 +189,6 @@
                 if($( 'div.ui-grid-cell' ).hasClass( 'rowClicked' )){
                     $('div.ui-grid-cell').removeClass('rowClicked');
                 }
-                
-                //console.log(event);
-                //$(event.target).closest('div.ui-grid-row').addClass('row-selected');
 
                 var clickedRowId = parseInt(row.entity.id);
                 if(parseInt(checkRowId)===clickedRowId && $("#editLink").is(':visible')){
@@ -271,6 +345,9 @@
                 $scope.visibleTalent = data.length;
                 $('.talent-right-container-content').hide();
                 $("span.ui-grid-pager-row-count-label").html(" Records per page <button id='exportLink' ng-click='getSelectRow()' class='btn btn-primary btn-xs'>Export</button> <button id='editLink' style='display:none' class='btn btn-primary btn-xs'>Edit</button>");
+            
+                $scope.updateFiltersByChckBox();
+            
             });
 
             function saveState() {
@@ -293,7 +370,7 @@
 				$scope.gridApi = gridApi;
 				gridApi.selection.on.rowSelectionChanged($scope, function (row) {
 				
-				    console.log(row);
+				    //console.log(row);
 				});
 				    
 				 // Setup events so we're notified when grid state changes.
@@ -315,8 +392,8 @@
             };
 
             $scope.getTalentDetails = function (itemval) {
-                console.log("selected items.......!!");
-                console.log(itemval);
+                //console.log("selected items.......!!");
+                //console.log(itemval);
             };
 
             $scope.updateTalentPartner = function(itemval){
@@ -330,20 +407,131 @@
                 $scope.isLoading = loading;
             };
              $scope.updateFiltersByChckBox = function ($event) {
+            	 
+            	 $('div#role_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("role-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allRole","unchecked");
+            			 }
+            			 localStorageService.set("role-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#genre_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("genre-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allGenre","unchecked");
+            			 }
+            			 localStorageService.set("genre-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#gender_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("gender-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allGender","unchecked");
+            			 }
+            			 localStorageService.set("gender-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#age_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("age-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allAge","unchecked");
+            			 }
+            			 localStorageService.set("age-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#ethnicity_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("ethnicity-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allEthnicity","unchecked");
+            			 }
+            			 localStorageService.set("ethnicity-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#country_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("country-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allCountry","unchecked");
+            			 }
+            			 localStorageService.set("country-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#createdby_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("createdby-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allCreatedBy","unchecked");
+            			 }
+            			 localStorageService.set("createdby-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#awards_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("award-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allAward","unchecked");
+            			 }
+            			 localStorageService.set("award-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#budget_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("budget-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allBudget","unchecked");
+            			 }
+            			 localStorageService.set("budget-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
+            	 $('div#box_office_income_list input').each(function () {
+            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
+            			 localStorageService.set("boxofficerev-"+$(this).val().trim(),$(this).val().trim());
+            		 }else{
+            			 if($(this).val().trim() === '*'){
+            				 localStorageService.set("allBoxOfficeRev","unchecked");
+            			 }
+            			 localStorageService.set("boxofficerev-"+$(this).val().trim(),"");
+            		 }
+                 });
+            	 
                 if(!angular.isUndefined($event)){
-                    if($($event.target).hasClass( "role-list-class" )){
+                    /*if($($event.target).hasClass( "role-list-class" )){
                         $("input#allRole").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "genre-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "genre-list-class" )){
                         $("input#allGenres").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "gender-input" )){
+                    }*/
+                    /*if($($event.target).hasClass( "gender-input" )){
                         $("input#allGender").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "age-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "age-list-class" )){
                         $("input#allAges").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "budget-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "budget-list-class" )){
                         $("input#allBudget").prop("checked",false);
                     }
                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
@@ -351,61 +539,61 @@
                     }
                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
                         $("input#allBoxRevenue").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "ethnicity-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "ethnicity-list-class" )){
                         $("input#allEthnicity").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "createdby-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "createdby-list-class" )){
                         $("input#allCreatedBy").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "country-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "country-list-class" )){
                         $("input#allCountries").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "awards-list-class" )){
+                    }*/
+                    /*if($($event.target).hasClass( "awards-list-class" )){
                         $("input#allAwards").prop("checked",false);
-                    }
+                    }*/
 
-                    if($event.target.id==="allRole" && $event.target.checked){
+                    /*if($event.target.id==="allRole" && $event.target.checked){
                             $('div#role_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allRole").prop("checked",true);
-                    }
-                    if($event.target.id==="allGenres" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allGenres" && $event.target.checked){
                             $('div#genre_list input').not(this).each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allGenres").prop("checked",true);
-                    }
-                     if($event.target.id==="allGender" && $event.target.checked){
+                    }*/
+/*                     if($event.target.id==="allGender" && $event.target.checked){
 
                             $('div#gender_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allGender").prop("checked",true);
-                    }
-                    if($event.target.id==="allAges" && $event.target.checked){
+                    }*/
+/*                    if($event.target.id==="allAges" && $event.target.checked){
 
                             $('div#age_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allAges").prop("checked",true);
-                    }
-                    if($event.target.id==="allAwards" && $event.target.checked){
+                    }*/
+/*                    if($event.target.id==="allAwards" && $event.target.checked){
 
                             $('div#awards_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allAwards").prop("checked",true);
-                    }
-                    if($event.target.id==="allCountries" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allCountries" && $event.target.checked){
 
                             $('div#country_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allCountries").prop("checked",true);
-                    }
-                    if($event.target.id==="allBudget" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allBudget" && $event.target.checked){
                             $('div#budget_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
@@ -416,19 +604,19 @@
                                  $(this).prop("checked",false);
                             });
                             $("input#allBoxRevenue").prop("checked",true);
-                    }
-                    if($event.target.id==="allEthnicity" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allEthnicity" && $event.target.checked){
                             $('div#ethnicity_list input').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allEthnicity").prop("checked",true);
-                    }
-                    if($event.target.id==="allCreatedBy" && $event.target.checked){
+                    }*/
+                    /*if($event.target.id==="allCreatedBy" && $event.target.checked){
                             $('div#createdby_list').each(function () {
                                  $(this).prop("checked",false);
                             });
                             $("input#allCreatedBy").prop("checked",true);
-                    }
+                    }*/
                 }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
@@ -569,7 +757,6 @@
                             selectedNames = $(this).val().trim();
                             selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
                             var budgets = item['estimatedBudget'].split('-');
-                            console.log(budgets);
                             var lowerLimit = budgets[0];
                             var upperLimit = budgets[budgets.length-1];
                             var lowerLimitDigit = getNumber(lowerLimit);
@@ -777,7 +964,6 @@
                     var i = 0;
                     if(!!result.awards && result.awards.length>0){
                         angular.forEach(result.awards, function(value, key) {
-                          console.log(i);
                         awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
                         awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
                         awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
@@ -902,8 +1088,97 @@
                 primary_genre: {"*": true},
                 secondary_genre: {"*": true}
             };
-
+            
             // Storage for all data points for filters
+            
+            var allRole = localStorageService.get("role-*");
+			if(allRole){
+				$scope.allRoleChecked = true;
+			}
+			
+			var allGenre = localStorageService.get("genre-*");
+			if(allGenre){
+				$scope.allGenreChecked = true;
+			}
+			
+			var allGender = localStorageService.get("gender-*");
+			if(allGender){
+				$scope.allGenderChecked = true;
+			}
+			
+			var male = localStorageService.get("gender-Male");
+            if(male && male.replace("gender-","") === 'Male'){
+				$scope.maleChecked = true;
+			}
+            
+            var female = localStorageService.get("gender-Female");
+            if(female && female.replace("gender-","") === 'Female'){
+				$scope.femaleChecked = true;
+			}
+            
+            var allAge = localStorageService.get("age-*");
+			if(allAge){
+				$scope.allAgeChecked = true;
+			}
+			
+			var allEthnicity = localStorageService.get("ethnicity-*");
+			if(allEthnicity){
+				$scope.allEthnicityChecked = true;
+			}
+			
+			var allCountry = localStorageService.get("country-*");
+			if(allCountry){
+				$scope.allCountryChecked = true;
+			}
+			
+			var allCreatedBy = localStorageService.get("createdby-*");
+			if(allCreatedBy){
+				$scope.allCreatedByChecked = true;
+			}
+			
+			var allAward = localStorageService.get("award-*");
+			if(allAward){
+				$scope.allAwardsChecked = true;
+			}
+			
+			var allBudget = localStorageService.get("budget-*");
+			if(allBudget){
+				$scope.allBudgetChecked = true;
+			}
+			
+			var allBoxOfficeRev = localStorageService.get("boxofficerev-*");
+			if(allBoxOfficeRev){
+				$scope.allBoxOfficeRevChecked = true;
+			}
+			
+			angular.forEach($scope.ages,function(items){
+                if(items && items.name.trim()){
+                   var age = localStorageService.get("age-"+items.name.trim());
+                   if(age && age.replace("age-","") === items.name.trim()){
+      					items.checked = true;
+      				}
+                }
+			});
+			
+			angular.forEach($scope.budgets,function(items){
+                if(items && items.name.trim()){
+                   var age = localStorageService.get("budget-"+items.name.trim());
+                   if(age && age.replace("budget-","") === items.name.trim()){
+      					items.checked = true;
+      				}
+                }
+			});
+
+			angular.forEach($scope.boxofficerev,function(items){
+                if(items && items.name.trim()){
+                   var age = localStorageService.get("boxofficerev-"+items.name.trim());
+                   if(age && age.replace("boxofficerev-","") === items.name.trim()){
+      					items.checked = true;
+      				}
+                }
+			});
+			
+			
             $scope.data = {
                 Role: roleFactory.getNames(function (result) {
                     $scope.data.Role = result;
@@ -911,12 +1186,18 @@
                     $scope.data.RoleNonPriority = [];
                     $scope.activeData = $scope.data.Role;
                     angular.forEach(result,function(items){
+                    if(items && items.name.trim()){
+                       var roll = localStorageService.get("role-"+items.name.trim());
+                       if(roll && roll.replace("role-","") === items.name.trim()){
+          					items.checked = true;
+          				}
                        var getPeiorityRoll =  (items.name.trim() ==="Actor" || items.name.trim() ==="Director" || items.name.trim() ==="Producer" || items.name.trim() ==="Writer");
                        if(getPeiorityRoll){
                             $scope.data.RolePriority.push(items);
                        }else{
                              $scope.data.RoleNonPriority.push(items);
                        }
+                    }
                     });
                     for (var i = 0; i < result.length; i++) {
                         $scope.filterData['primary_role'][result[i].name] = false;
@@ -924,12 +1205,36 @@
                     }
                 }),
                 TalentCreatedBy: talentFactory.getAllCreatedBy(function (result) {
+                	angular.forEach(result,function(items){
+                        if(items && items.createdby.trim()){
+                           var createdby = localStorageService.get("createdby-"+items.createdby.trim());
+                           if(createdby && createdby.replace("createdby-","") === items.createdby.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
                     $scope.data.createdByNames = result;
                 }),
                 TalentAwards: talentFactory.getAwardsNames(function (result) {
+                	angular.forEach(result,function(items){
+                        if(items && items.awardname.trim()){
+                           var award = localStorageService.get("award-"+items.awardname.trim());
+                           if(award && award.replace("award-","") === items.awardname.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
                     $scope.data.awardsNameList = result;
                 }),
                 TalentCountryNames: talentFactory.getCountryNames(function (result) {
+                	angular.forEach(result,function(items){
+                        if(items && items.country.trim()){
+                           var country = localStorageService.get("country-"+items.country.trim());
+                           if(country && country.replace("country-","") === items.country.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
                     $scope.data.countryNames = result;
                 }),
                 Genre: genreFactory.getNames(function (result) {
@@ -937,13 +1242,19 @@
                     $scope.data.GenreNonPriority = [];
                     $scope.data.Genre = result;
                     angular.forEach(result,function(items){
-                        var matchFound  = (items.name.trim() ==="Action" || items.name.trim() ==="Comedy" || items.name.trim() ==="Drama" || items.name.trim() ==="Horror" || items.name.trim() ==="Musical" || items.name.trim() ==="Thriller");
-                        if(matchFound){
-                            $scope.data.GenrePriority.push(items);
-                        }else{
-                            $scope.data.GenreNonPriority.push(items);
-
-                        }
+                    	if(items && items.name.trim()){
+                    		var genre = localStorageService.get("genre-"+items.name.trim());
+                            if(genre && genre.replace("genre-","") === items.name.trim()){
+               					items.checked = true;
+               				}
+	                        var matchFound  = (items.name.trim() ==="Action" || items.name.trim() ==="Comedy" || items.name.trim() ==="Drama" || items.name.trim() ==="Horror" || items.name.trim() ==="Musical" || items.name.trim() ==="Thriller");
+	                        if(matchFound){
+	                            $scope.data.GenrePriority.push(items);
+	                        }else{
+	                            $scope.data.GenreNonPriority.push(items);
+	
+	                        }
+                    	}
                     });
                     $scope.activeData = $scope.data.Genre;
                     for (var i = 0; i < result.length; i++) {
@@ -952,7 +1263,15 @@
                     }
                 }),
                 Ethnicity: ethnicityFactory.getNames(function (result) {
-                        $scope.data.Ethnicities = result;
+                	angular.forEach(result,function(items){
+                        if(items && items.name.trim()){
+                           var ethnicity = localStorageService.get("ethnicity-"+items.name.trim());
+                           if(ethnicity && ethnicity.replace("ethnicity-","") === items.name.trim()){
+              					items.checked = true;
+              				}
+                        }
+        			});
+                    $scope.data.Ethnicities = result;
                 })
             };
 
@@ -1075,8 +1394,6 @@
             dataList['associte_types_id'] = typeid;
             dataList['associate_id'] = associate_id;
             contactFactory.addGetAssociateNamesById(dataList,function(result) {
-            	console.log('AssoResult');
-            	console.log(result);
             	if(result.details.length > 0){
            		 angular.forEach(result.details, function(value, key) {
            			 if(value.type === 'Agent'){
@@ -1251,7 +1568,6 @@
                   if (!section) {
                     $('input:visible, select:visible').each(function() {
                       if ($(this).attr('required')) {
-                        console.log($(this).val());
                         if ($(this).val() === null || $(this).val().length === 0) {
                           result = false;
                         }
@@ -1290,12 +1606,11 @@
             // JQuery
 
             // Expand/collapse checkbox containers
-            $(document).on('click', '.filter-header-container', function () {
+            $(document).off('click').on('click', '.filter-header-container', function () {
                 if ($(this).next('.filter-option-container').is(':visible')) {
                     $(this).next('.filter-option-container').hide();
                     $(this).find('.arrow').removeClass( "arrow-down" );
                     $(this).find('.arrow').addClass( "arrow-right" );
-
                 } else {
                     $(this).next('.filter-option-container').show();
                     //$(this).find('.arrow').removeClass( "arrow-right" );
@@ -1337,7 +1652,6 @@
                 angular.forEach($scope.gridApi.selection.getSelectedRows(), function(items){
                     selectedTalentRowId.pay.push(items.id);
                 });
-                console.log(selectedTalentRowId);
                 talentFactory.exportTalentDetailXls(selectedTalentRowId, function(result) {
                     $scope.data.Contact = result;
                 });

@@ -16,14 +16,13 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="role_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allRole" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*" checked>All
+        <input class="filter-option all-option" id="allRole" ng-checked="{{allRoleChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="*">All
         <div ng-repeat="role in data.RolePriority | orderBy : 'name'">
-          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}
+          <input class="filter-option role-list-class" ng-checked="{{role.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}">{{role.name}}
         </div>
          <div ng-repeat="role in data.RoleNonPriority | orderBy : 'name'">
-          <input class="filter-option role-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}" unchecked>{{role.name}}
+          <input class="filter-option role-list-class" ng-checked="{{role.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_role" value="{{role.name}}">{{role.name}}
         </div>
-        
       </div>
 
       <div class="filter-header-container clickable">
@@ -31,13 +30,13 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="genre_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allGenres" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option all-option" id="allGenres" ng-checked="{{allGenreChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="genre in data.GenrePriority | orderBy : 'name'">
-          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}
+          <input class="filter-option genre-list-class" ng-checked="{{genre.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}">{{genre.name}}
         </div>
         <!-- <div>---------</div> -->
         <div ng-repeat="genre in data.GenreNonPriority | orderBy : 'name'">
-          <input class="filter-option genre-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}" unchecked>{{genre.name}}<br>
+          <input class="filter-option genre-list-class" ng-checked="{{genre.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{genre.name}}">{{genre.name}}<br>
         </div>
       </div>
 
@@ -47,12 +46,12 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="gender_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allGender"  type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allGender" ng-checked="{{allGenderChecked}}" type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*">All<br>
         <div>
-          <input class="filter-option gender-input"  type="checkbox" col="primary_role" value="Male" ng-click="updateFiltersByChckBox($event)" unchecked>Male<br>
+          <input class="filter-option gender-input" ng-checked="{{maleChecked}}"  type="checkbox" col="primary_role" value="Male" ng-click="updateFiltersByChckBox($event)">Male<br>
         </div>
         <div>
-          <input class="filter-option gender-input"  type="checkbox" col="primary_role" value="Female" ng-click="updateFiltersByChckBox($event)" unchecked>Female<br>
+          <input class="filter-option gender-input" ng-checked="{{femaleChecked}}"  type="checkbox" col="primary_role" value="Female" ng-click="updateFiltersByChckBox($event)">Female<br>
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -60,9 +59,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="age_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allAges" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allAges" ng-checked="{{allAgeChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All<br>
         <div ng-repeat="age in ages | orderBy : 'id'">
-          <input class="filter-option age-list-class" type="checkbox" ng-click="updateFiltersByChckBox($event)" col="primary_genre" value="{{age.name}}" unchecked>{{age.name}}<br>
+          <input class="filter-option age-list-class" ng-checked="{{age.checked}}" type="checkbox" ng-click="updateFiltersByChckBox($event)" col="primary_genre" value="{{age.name}}">{{age.name}}<br>
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -70,9 +69,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="ethnicity_list" class="filter-option-container">
-        <input class="filter-option" id="allEthnicity" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All
+        <input class="filter-option" id="allEthnicity" ng-checked="{{allEthnicityChecked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*">All
         <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" ng-if="ethnicity.name!==''">
-          <input class="filter-option ethnicity-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}" unchecked>{{ethnicity.name}}
+          <input class="filter-option ethnicity-list-class" ng-checked="{{ethnicity.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}">{{ethnicity.name}}
         </div>
       </div>
       <!-- div class="filter-header-container">
@@ -85,9 +84,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="country_list" class="filter-option-container">
-        <input class="filter-option" id="allCountries" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option" id="allCountries" ng-checked="{{allCountryChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="item in data.countryNames | orderBy : 'country'">
-          <input class="filter-option country-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.country}}" unchecked>{{item.country}}
+          <input class="filter-option country-list-class" ng-checked="{{item.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.country}}">{{item.country}}
         </div>
       </div>
 
@@ -97,9 +96,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="createdby_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allCreatedBy" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option all-option" id="allCreatedBy" ng-checked="{{allCreatedByChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="item in data.createdByNames | orderBy : 'createdby'">
-          <input class="filter-option createdby-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.createdby}}" unchecked>{{item.createdby}}
+          <input class="filter-option createdby-list-class" ng-checked="{{item.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.createdby}}">{{item.createdby}}
         </div>
       </div>
 
@@ -108,9 +107,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="awards_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allAwards" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*" checked>All
+        <input class="filter-option all-option" id="allAwards" ng-checked="{{allAwardsChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="item in data.awardsNameList | orderBy : 'awardname'">
-          <input class="filter-option awards-list-class" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.awardname}}" unchecked>{{item.awardname}}
+          <input class="filter-option awards-list-class" ng-checked="{{item.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.awardname}}">{{item.awardname}}
         </div>
       </div>
 
@@ -119,9 +118,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="budget_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allBudget"  type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*" checked>All<br>
+        <input class="filter-option all-option" id="allBudget" ng-checked="{{allBudgetChecked}}" type="checkbox" ng-click="updateFiltersByChckBox($event)" value="*">All<br>
         <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option budget-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}
+          <input class="filter-option budget-list-class" ng-checked="{{budget.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}">{{budget.name}}
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -129,9 +128,9 @@
         <div class="arrow arrow-right arrow-down"></div>
       </div>
       <div id="box_office_income_list" class="filter-option-container">
-        <input class="filter-option all-option" id="allBoxRevenue" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*" checked>All<br>
-        <div ng-repeat="budget in budgets | orderBy : 'id'">
-          <input class="filter-option BoxOfficeIncome-list-class" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{budget.name}}" unchecked>{{budget.name}}
+        <input class="filter-option all-option" id="allBoxRevenue" ng-checked="{{allBoxOfficeRevChecked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*">All<br>
+        <div ng-repeat="boxoffice in boxofficerev | orderBy : 'id'">
+          <input class="filter-option BoxOfficeIncome-list-class" ng-checked="{{boxoffice.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{boxoffice.name}}">{{boxoffice.name}}
         </div>
       </div>
       <div class="filter-header-container clickable">
@@ -155,13 +154,13 @@
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
-      <div id="infoTab" class="right-talent-container-menu-link left-link active-talent-link" ng-click="updateTalentSection($event, 'info')">Profile & Contact Info</div>
-      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</div>
-      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'credits')">Credits</div>
-      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'award')">Awards</div>
-      <div class="right-talent-container-menu-link center-link" ng-click="updateTalentSection($event, 'comments')">Comments</div>
-      <div class="right-talent-container-menu-link right-link" ng-click="updateTalentSection($event, 'contacts')">Other Info</div>
-    </div>
+                <button  class=" right-talent-container-menu-link credit-info1" ng-click="updateTalentSection($event, 'info')">Profile & Contact Info</button>
+                <button class=" right-talent-container-menu-link credit-info2" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</button>
+                <button class=" right-talent-container-menu-link credit-info3" ng-click="updateTalentSection($event, 'credits')">Credits</button>
+                <button class="right-talent-container-menu-link credit-info4" ng-click="updateTalentSection($event, 'award')">Awards</button>
+                <button class=" right-talent-container-menu-link credit-info5" ng-click="updateTalentSection($event, 'comments')">Comments</button>
+                <button class=" right-talent-container-menu-link credit-info6" ng-click="updateTalentSection($event, 'contacts')">Other Info</button>
+            </div>
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
     </br>
@@ -280,15 +279,15 @@
 <div class="talent-right-container-other-div contacts" ng-show="activeSectionInfo==='comments'">
     </br>  
 
-	<div class="talent-data-comment">
-		<div class="talent-data-comment-headers">Comments</div>
-		<div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
-			<div class="data-entry-delete-comment-button" 
+  <div class="talent-data-comment">
+    <div class="talent-data-comment-headers">Comments</div>
+    <div class="comment-div" ng-repeat="comment in commentsData | orderBy:'-date'">
+      <div class="data-entry-delete-comment-button" 
       ng-if="comment.name===talent_display_username" ng-click="removeComment($event, comment.comment_id)">x</div>
-			<p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
-			<p class="comment-text">{{comment.text}}</p>
-		</div>
-	</div>
+      <p><span class="comment-name">{{comment.name}}</span>, <span class="comment-date">{{comment.date | date}}</span></p>
+      <p class="comment-text">{{comment.text}}</p>
+    </div>
+  </div>
   
        <!--  <div ng-show='comStatus'>{{commentMsg}}</div> -->
         <div class="comment-box" style="margin-left: 54%;margin-bottom: 73px;">
@@ -370,8 +369,8 @@
                         <option ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" value="{{ethnicity.id}}">{{ethnicity.name}}</option>
                     </select>
                     <p class="input-label">Partner</p>
-                    <input type="hidden" ng-model="inputPartner">
-                    <input type="text" ng-model="activeElement.partner" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+                    <input type="hidden" class="data-input" ng-model="inputPartner">
+                    <input type="text" class="data-input" ng-model="activeElement.partner" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
                     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                 </div>
                 <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Update">
@@ -383,29 +382,29 @@
             <div ng-show="talentSection==='management'">
               <div ng-show="successmsgtalent" style="color:red;">Management info updated successfully</div>
           <p class="input-label">Attorney</p>
-			<select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
-				<option value=''>Select</option>
-				<option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
-				</option>
-			</select>
+      <select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
+        <option value=''>Select</option>
+        <option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
+        </option>
+      </select>
           <p class="input-label">Agent</p>
-          	<select name="agent" id="agent" ng-model="agent" class="data-input select-input">
-				<option value=''>Select</option>
-				<option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
-				</option>
-			</select>
+            <select name="agent" id="agent" ng-model="agent" class="data-input select-input">
+        <option value=''>Select</option>
+        <option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
+        </option>
+      </select>
           <p class="input-label">Manager</p>
-          	<select name="manager" id="manager" ng-model="manager" class="data-input select-input">
-				<option value=''>Select</option>
-				<option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
-				</option>
-			</select>
+            <select name="manager" id="manager" ng-model="manager" class="data-input select-input">
+        <option value=''>Select</option>
+        <option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
+        </option>
+      </select>
           <p class="input-label">Publicist</p>
-          	<select name="publicist" id="publicist" ng-model="publicist" class="data-input select-input">
-				<option value=''>Select</option>
-				<option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
-				</option>
-			</select>
+            <select name="publicist" id="publicist" ng-model="publicist" class="data-input select-input">
+        <option value=''>Select</option>
+        <option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
+        </option>
+      </select>
               <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="Update">
             </div>
 
@@ -441,7 +440,7 @@
                     <div class="talent-column">
                         <p class="input-label">Credit(s)</p>
                         <div class="data-left-column-data-row">
-                        <input type="text" ng-model="model.CreditInput" id="creditEntry"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" required>
+                        <input type="text" class="role-input" ng-model="model.CreditInput" id="creditEntry"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" required>
                         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                         </div>
                         <div ng-show="noResults">
@@ -450,13 +449,13 @@
                     </div>
                     <div class="talent-column" >
                         <p class="input-label">Role</p>
-                        <select class="talent-credit-role-select" id="rolesId">
+                        <select class="role-input" id="rolesId">
                             <option></option>
                             <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
                         </select>
                     </div>
                   </br>
-                    <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="Update">
+                    <input class="credit-input credit-submit" ng-click="submitTalentCreditData()" type="submit" value="Update">
                 </form>
                 <div class="talent-credit-join-container">
                     <div ng-repeat="join in activeElement.talentCreditJoins">
