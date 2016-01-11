@@ -7,29 +7,325 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Genre')">GENRE</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'CreditType')">CREDIT TYPE</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Ethnicity')">ETHNICITY</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
   <div class="data-left-column-data" ng-show="section!=='Talent' && section!=='Credit'">
     <div class="data-left-column-data-row"  ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}" ng-if="element.name!=''">{{element.name}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
   <div class="data-left-column-data" ng-if="section==='Talent'">
     <div class="data-left-column-data-row">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    <input type="text" ng-model="model.talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+
+
+
+
+
+
+
+
+
+
+
   </div>
+
+
     <div ng-show="noResults">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
+
+
+
+
+
+
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </div>
   <div class="data-left-column-data" ng-if="section==='Credit'">
     <div class="data-left-column-data-row">
    <input type="text" ng-model="model.CreditInput" typeahead-on-select="getCreditDetails($item)" placeholder="Enter Credit Name ..." uib-typeahead="talentName as talentName.name for talentName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+
   </div>
+
+
+
     <div ng-show="noResults">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
+
   </div>
+
 </div>
 <div class="data-main-section">
   <div class="form-title-div">
@@ -45,8 +341,9 @@
     <div class="talent-form-menu-button" talent-form-section="social" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'social', 'talent-form-menu-button-inactive': !editElement}">Social Profiles</div>
     <div class="talent-form-menu-button" talent-form-section="credits" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'credits', 'talent-form-menu-button-inactive': !editElement}">Credits</div>
     <div class="talent-form-menu-button" talent-form-section="comments" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'comments', 'talent-form-menu-button-inactive': !editElement}">Comments</div>
-	<div class="talent-form-menu-button" talent-form-section="info" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'info', 'talent-form-menu-button-inactive': !editElement}">Info</div>
+  <div class="talent-form-menu-button" talent-form-section="info" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'info', 'talent-form-menu-button-inactive': !editElement}">Info</div>
   </div>
+
 
   <div class="data-form-container">
     <!-- ROLE FORM -->
@@ -79,8 +376,32 @@
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form>
 
+
+
+
+
+
+
+
+
+
+
     <!-- CREDIT FORM -->
+
     <form ng-show="section==='Credit'">
+
+
+
+
+
+
+
+
+
+
+
+
+
       <input class="id-input" ng-model="activeElement.id" type="text">
       <p class="input-label">Record</p>
       <input class="data-input" ng-model="activeElement.record_id" type="input" />
@@ -88,14 +409,36 @@
       <input class="data-input" ng-model="activeElement.name" placeholder="Enter Credit Name..." type="text" required="true">
       <p class="input-label">Release Year (YYYY)</p>
       <input class="data-input" ng-model="activeElement.release_date" placeholder="Enter Release Year (YYYY)" type="input">
+
+
       <p class="input-label">LogLine</p>
       <input class="data-input select-input" ng-model="activeElement.logline" placeholder="Enter LogLine..." type="input" />
+
+
+
+
+
+
       <p class="input-label">Estimated Budget</p>
       <input class="data-input select-input" ng-model="activeElement.estimatedBudget" placeholder="Enter Estimated Budget..." type="input"/>
+
+
+
+
+
       <p class="input-label">Box Office Income</p>
       <input class="data-input select-input" ng-model="activeElement.box_office_income" type="input" placeholder="Enter Box Office Income...">
+
+
+
+
+
+
+
+
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
       </form>
+
 
     <!-- CONTACT FORM -->
     <form ng-show="section==='Contact'">
@@ -109,8 +452,8 @@
       <p class="input-label">Phone</p>
       <input class="data-input" ng-model="activeElement.phone" type="text" placeholder="Enter Phone...">
       <p class="input-label">Type</p>
-      <select  ng-model="activeElement.types">
-        <option value="">Select Type</option>
+      <select class="data-input" ng-model="activeElement.types">
+        <option  value="">Select Type</option>
         <option ng-repeat="item in typesDetails" value="{{item.id}}">{{item.type}}</option>
       </select>
       <!-- <input class="data-input" ng-model="activeElement.types" type="text"> -->
@@ -118,6 +461,7 @@
     </form>
 
     <!-- TALENT FORM -->
+
 
     <!-- Main, Management, Social -->
     <form class="talent-form" name="talent-form" ng-show="section==='Talent'" novalidate>
@@ -155,31 +499,31 @@
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
        </div>
       <div ng-show="talentSection==='management'">
-      		<div id="mgntmsg" ng-show="successmsg" style="color:red;">Management info updated successfully</div>
+          <div id="mgntmsg" ng-show="successmsg" style="color:red;">Management info updated successfully</div>
           <p class="input-label">Attorney</p>
-			<select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
-				<option value=''>Select Attorney</option>
-				<option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
-				</option>
-			</select>
+      <select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
+        <option value=''>Select Attorney</option>
+        <option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
+        </option>
+      </select>
           <p class="input-label">Agent</p>
-          	<select name="agent" id="agent" ng-model="agent" class="data-input select-input">
-				<option value=''>Select Agent</option>
-				<option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
-				</option>
-			</select>
+            <select name="agent" id="agent" ng-model="agent" class="data-input select-input">
+        <option value=''>Select Agent</option>
+        <option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
+        </option>
+      </select>
           <p class="input-label">Manager</p>
-          	<select name="manager" id="manager" ng-model="manager" class="data-input select-input">
-				<option value=''>Select Manager</option>
-				<option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
-				</option>
-			</select>
+            <select name="manager" id="manager" ng-model="manager" class="data-input select-input">
+        <option value=''>Select Manager</option>
+        <option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
+        </option>
+      </select>
           <p class="input-label">Publicist</p>
-          	<select name="publicist" id="publicist" ng-model="publicist" class="data-input select-input">
-				<option value=''>Select Publicist</option>
-				<option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
-				</option>
-			</select>
+            <select name="publicist" id="publicist" ng-model="publicist" class="data-input select-input">
+        <option value=''>Select Publicist</option>
+        <option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
+        </option>
+      </select>
         <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="{{btnTxt}}">
       </div>
 
@@ -209,17 +553,66 @@
             <p class="input-label">Credit(s)</p>
             <!-- <select class="talent-credit-select" multiple required> -->
             <div class="data-left-column-data-row">
-            <input type="text" ng-model="model.creditsObj.CreditInputData" id="creditsIds"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+            <input type="text" class="role-input"  ng-model="model.creditsObj.CreditInputData" id="creditsIds"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
             <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
             <div ng-show="noResults">
             <i class="glyphicon glyphicon-remove"></i> No Results Found
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
             <!-- </select> -->
           </div>
           <div class="talent-column">
           <p class="input-label">Role</p>
-            <select class="talent-credit-role-select" id="roleId">
+            <select class="role-input" id="roleId">
               <option value=""> Select Role</option>
               <option class="talent-credit-select-option" ng-repeat="role in data.Role | orderBy : 'name'" value="{{role.id}}">{{role.name}}</option>
             </select>
@@ -233,7 +626,31 @@
           </div>
         </div>
 
+
+
+
+
+
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Comments -->
     <div class="talent-data-comments-container"  ng-show="talentSection==='comments'">
@@ -257,10 +674,10 @@
       
       </div> -->
     </div>
-	
-	<!-- Info	-->
-	
-	<div ng-show="talentSection==='info'">
+  
+  <!-- Info -->
+  
+  <div ng-show="talentSection==='info'">
       <p class="input-label">Created By: {{activeElement.createdby}}</p>
       <p class="input-label">Created Date:{{activeElement.created_at | date }}</p>
       <p class="input-label">Modified By:{{activeElement.modifiedby}}</p>
@@ -269,3 +686,6 @@
 
   </div>
 </div>
+
+
+
