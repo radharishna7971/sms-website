@@ -408,6 +408,106 @@
             };
              $scope.updateFiltersByChckBox = function ($event) {
             	 
+                 if(!angular.isUndefined($event)){
+                     if($($event.target).hasClass( "role-list-class" )){
+                         $("input#allRole").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "genre-list-class" )){
+                         $("input#allGenres").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "gender-input" )){
+                         $("input#allGender").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "age-list-class" )){
+                         $("input#allAges").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "budget-list-class" )){
+                         $("input#allBudget").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
+                         $("input#allBoxRevenue").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
+                         $("input#allBoxRevenue").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "ethnicity-list-class" )){
+                         $("input#allEthnicity").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "createdby-list-class" )){
+                         $("input#allCreatedBy").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "country-list-class" )){
+                         $("input#allCountries").prop("checked",false);
+                     }
+                     if($($event.target).hasClass( "awards-list-class" )){
+                         $("input#allAwards").prop("checked",false);
+                     }
+                	 if($event.target.id==="allRole" && $event.target.checked){
+                             $('div#role_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allRole").prop("checked",true);
+                     }
+                     if($event.target.id==="allGenres" && $event.target.checked){
+                             $('div#genre_list input').not(this).each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allGenres").prop("checked",true);
+                     }
+                	 if($event.target.id==="allGender" && $event.target.checked){
+
+                             $('div#gender_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allGender").prop("checked",true);
+                     }
+                     if($event.target.id==="allAges" && $event.target.checked){
+
+                             $('div#age_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allAges").prop("checked",true);
+                     }
+                	 if($event.target.id==="allAwards" && $event.target.checked){
+
+                             $('div#awards_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allAwards").prop("checked",true);
+                     }
+                     if($event.target.id==="allCountries" && $event.target.checked){
+
+                             $('div#country_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allCountries").prop("checked",true);
+                     }
+                     if($event.target.id==="allBudget" && $event.target.checked){
+                             $('div#budget_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allBudget").prop("checked",true);
+                     }
+                     if($event.target.id==="allBoxRevenue" && $event.target.checked){
+                             $('div#box_office_income_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allBoxRevenue").prop("checked",true);
+                     }
+                     if($event.target.id==="allEthnicity" && $event.target.checked){
+                             $('div#ethnicity_list input').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allEthnicity").prop("checked",true);
+                     }
+                     if($event.target.id==="allCreatedBy" && $event.target.checked){
+                             $('div#createdby_list').each(function () {
+                                  $(this).prop("checked",false);
+                             });
+                             $("input#allCreatedBy").prop("checked",true);
+                     }
+                 }
+            	 
             	 $('div#role_list input').each(function () {
             		 if($(this).val().trim() !== "" && $(this).prop("checked")){
             			 localStorageService.set("role-"+$(this).val().trim(),$(this).val().trim());
@@ -518,106 +618,6 @@
             		 }
                  });
             	 
-                if(!angular.isUndefined($event)){
-                    /*if($($event.target).hasClass( "role-list-class" )){
-                        $("input#allRole").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "genre-list-class" )){
-                        $("input#allGenres").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "gender-input" )){
-                        $("input#allGender").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "age-list-class" )){
-                        $("input#allAges").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "budget-list-class" )){
-                        $("input#allBudget").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
-                        $("input#allBoxRevenue").prop("checked",false);
-                    }
-                    if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
-                        $("input#allBoxRevenue").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "ethnicity-list-class" )){
-                        $("input#allEthnicity").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "createdby-list-class" )){
-                        $("input#allCreatedBy").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "country-list-class" )){
-                        $("input#allCountries").prop("checked",false);
-                    }*/
-                    /*if($($event.target).hasClass( "awards-list-class" )){
-                        $("input#allAwards").prop("checked",false);
-                    }*/
-
-                    /*if($event.target.id==="allRole" && $event.target.checked){
-                            $('div#role_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allRole").prop("checked",true);
-                    }*/
-                    /*if($event.target.id==="allGenres" && $event.target.checked){
-                            $('div#genre_list input').not(this).each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allGenres").prop("checked",true);
-                    }*/
-/*                     if($event.target.id==="allGender" && $event.target.checked){
-
-                            $('div#gender_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allGender").prop("checked",true);
-                    }*/
-/*                    if($event.target.id==="allAges" && $event.target.checked){
-
-                            $('div#age_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allAges").prop("checked",true);
-                    }*/
-/*                    if($event.target.id==="allAwards" && $event.target.checked){
-
-                            $('div#awards_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allAwards").prop("checked",true);
-                    }*/
-                    /*if($event.target.id==="allCountries" && $event.target.checked){
-
-                            $('div#country_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allCountries").prop("checked",true);
-                    }*/
-                    /*if($event.target.id==="allBudget" && $event.target.checked){
-                            $('div#budget_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allBudget").prop("checked",true);
-                    }
-                    if($event.target.id==="allBoxRevenue" && $event.target.checked){
-                            $('div#box_office_income_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allBoxRevenue").prop("checked",true);
-                    }*/
-                    /*if($event.target.id==="allEthnicity" && $event.target.checked){
-                            $('div#ethnicity_list input').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allEthnicity").prop("checked",true);
-                    }*/
-                    /*if($event.target.id==="allCreatedBy" && $event.target.checked){
-                            $('div#createdby_list').each(function () {
-                                 $(this).prop("checked",false);
-                            });
-                            $("input#allCreatedBy").prop("checked",true);
-                    }*/
-                }
                 $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
                     var findNameFlag = false;
                     var findCountryFlag = false;
@@ -1094,61 +1094,85 @@
             var allRole = localStorageService.get("role-*");
 			if(allRole){
 				$scope.allRoleChecked = true;
+				$('#role-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#role_list').css("display","none");
 			}
 			
 			var allGenre = localStorageService.get("genre-*");
 			if(allGenre){
 				$scope.allGenreChecked = true;
+				$('#genre-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#genre_list').css("display","none");
 			}
 			
 			var allGender = localStorageService.get("gender-*");
 			if(allGender){
 				$scope.allGenderChecked = true;
+				$('#gender-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#gender_list').css("display","none");
 			}
 			
 			var male = localStorageService.get("gender-Male");
             if(male && male.replace("gender-","") === 'Male'){
 				$scope.maleChecked = true;
+				$('#gender-arrow').addClass('arrow-down').addClass('arrow-right');
+				$('#gender_list').css("display","block");
 			}
             
             var female = localStorageService.get("gender-Female");
             if(female && female.replace("gender-","") === 'Female'){
 				$scope.femaleChecked = true;
+				$('#gender-arrow').addClass('arrow-down').addClass('arrow-right');
+				$('#gender_list').css("display","block");
 			}
             
             var allAge = localStorageService.get("age-*");
 			if(allAge){
 				$scope.allAgeChecked = true;
+				$('#age-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#age_list').css("display","none");
 			}
 			
 			var allEthnicity = localStorageService.get("ethnicity-*");
 			if(allEthnicity){
 				$scope.allEthnicityChecked = true;
+				$('#ethnicity-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#ethnicity_list').css("display","none");
 			}
 			
 			var allCountry = localStorageService.get("country-*");
 			if(allCountry){
 				$scope.allCountryChecked = true;
+				$('#country-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#country_list').css("display","none");
 			}
 			
 			var allCreatedBy = localStorageService.get("createdby-*");
 			if(allCreatedBy){
 				$scope.allCreatedByChecked = true;
+				$('#createdby-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#createdby_list').css("display","none");
 			}
 			
 			var allAward = localStorageService.get("award-*");
 			if(allAward){
 				$scope.allAwardsChecked = true;
+				$('#award-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#awards_list').css("display","none");
 			}
 			
 			var allBudget = localStorageService.get("budget-*");
 			if(allBudget){
 				$scope.allBudgetChecked = true;
+				$('#budget-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#budget_list').css("display","none");
 			}
 			
 			var allBoxOfficeRev = localStorageService.get("boxofficerev-*");
 			if(allBoxOfficeRev){
 				$scope.allBoxOfficeRevChecked = true;
+				$('#boxofficerev-arrow').removeClass('arrow-down').addClass('arrow-right');
+				$('#box_office_income_list').css("display","none");
 			}
 			
 			angular.forEach($scope.ages,function(items){
@@ -1156,15 +1180,19 @@
                    var age = localStorageService.get("age-"+items.name.trim());
                    if(age && age.replace("age-","") === items.name.trim()){
       					items.checked = true;
+      					$('#age-arrow').addClass('arrow-down').addClass('arrow-right');
+      					$('#age_list').css("display","block");
       				}
                 }
 			});
 			
 			angular.forEach($scope.budgets,function(items){
                 if(items && items.name.trim()){
-                   var age = localStorageService.get("budget-"+items.name.trim());
-                   if(age && age.replace("budget-","") === items.name.trim()){
+                   var budget = localStorageService.get("budget-"+items.name.trim());
+                   if(budget && budget.replace("budget-","") === items.name.trim()){
       					items.checked = true;
+      					$('#budget-arrow').addClass('arrow-down').addClass('arrow-right');
+      					$('#budget_list').css("display","block");
       				}
                 }
 			});
@@ -1174,6 +1202,8 @@
                    var age = localStorageService.get("boxofficerev-"+items.name.trim());
                    if(age && age.replace("boxofficerev-","") === items.name.trim()){
       					items.checked = true;
+      					$('#boxofficerev-arrow').addClass('arrow-down').addClass('arrow-right');
+      					$('#box_office_income_list').css("display","block");
       				}
                 }
 			});
@@ -1190,6 +1220,8 @@
                        var roll = localStorageService.get("role-"+items.name.trim());
                        if(roll && roll.replace("role-","") === items.name.trim()){
           					items.checked = true;
+          					$('#role-arrow').addClass('arrow-down').addClass('arrow-right');
+          					$('#role_list').css("display","block");
           				}
                        var getPeiorityRoll =  (items.name.trim() ==="Actor" || items.name.trim() ==="Director" || items.name.trim() ==="Producer" || items.name.trim() ==="Writer");
                        if(getPeiorityRoll){
@@ -1210,6 +1242,8 @@
                            var createdby = localStorageService.get("createdby-"+items.createdby.trim());
                            if(createdby && createdby.replace("createdby-","") === items.createdby.trim()){
               					items.checked = true;
+              					$('#createdby-arrow').addClass('arrow-down').addClass('arrow-right');
+              					$('#createdby_list').css("display","block");
               				}
                         }
         			});
@@ -1221,6 +1255,8 @@
                            var award = localStorageService.get("award-"+items.awardname.trim());
                            if(award && award.replace("award-","") === items.awardname.trim()){
               					items.checked = true;
+              					$('#award-arrow').addClass('arrow-down').addClass('arrow-right');
+              					$('#awards_list').css("display","block");
               				}
                         }
         			});
@@ -1232,6 +1268,8 @@
                            var country = localStorageService.get("country-"+items.country.trim());
                            if(country && country.replace("country-","") === items.country.trim()){
               					items.checked = true;
+              					$('#country-arrow').addClass('arrow-down').addClass('arrow-right');
+              					$('#country_list').css("display","block");
               				}
                         }
         			});
@@ -1246,6 +1284,8 @@
                     		var genre = localStorageService.get("genre-"+items.name.trim());
                             if(genre && genre.replace("genre-","") === items.name.trim()){
                					items.checked = true;
+               					$('#genre-arrow').addClass('arrow-down').addClass('arrow-right');
+              					$('#genre_list').css("display","block");
                				}
 	                        var matchFound  = (items.name.trim() ==="Action" || items.name.trim() ==="Comedy" || items.name.trim() ==="Drama" || items.name.trim() ==="Horror" || items.name.trim() ==="Musical" || items.name.trim() ==="Thriller");
 	                        if(matchFound){
@@ -1268,6 +1308,8 @@
                            var ethnicity = localStorageService.get("ethnicity-"+items.name.trim());
                            if(ethnicity && ethnicity.replace("ethnicity-","") === items.name.trim()){
               					items.checked = true;
+              					$('#ethnicity-arrow').addClass('arrow-down').addClass('arrow-right');
+              					$('#ethnicity_list').css("display","block");
               				}
                         }
         			});
