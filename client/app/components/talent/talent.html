@@ -135,7 +135,7 @@
       </div>
       <div class="filter-header-container clickable">
         <p class="filter-header">Box Office/Budget Multiple</p>
-        <div class="arrow arrow-right arrow-down"></div>
+        <div class="arrow arrow-right arrow-down" style="margin-top:-41px;"></div>
       </div>
       <div id="income_list" class="filter-option-container">
         <select ng-model="budgetMultipleOption" ng-change="updateFiltersByChckBox($event);">
@@ -346,9 +346,9 @@
                     <p class="input-label">Last Name (Required)</p>
                     <input class="data-input" ng-model="activeElement.last_name" type="text" required="true">
                     <p class="input-label">Email</p>
-                    <input class="data-input" ng-model="activeElement.email" type="text">
+                    <input class="data-input" ng-model="activeElement.email" validate="email" type="text">
                     <p class="input-label">Phone</p>
-                    <input class="data-input" ng-model="activeElement.phone" type="text">
+                    <input class="data-input" ng-model="activeElement.phone" validate="phone" type="text">
                     <p class="input-label">Gender</p>
                     <select class="data-input select-input" ng-model="activeElement.gender">
                         <option></option>

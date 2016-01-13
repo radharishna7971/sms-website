@@ -448,9 +448,9 @@
       <p class="input-label">Last Name (Required)</p>
       <input class="data-input" ng-model="activeElement.lastName" type="text" placeholder="Enter Last Name...">
       <p class="input-label">Email</p>
-      <input class="data-input" ng-model="activeElement.email" type="text" placeholder="Enter Email...">
+      <input class="data-input" ng-model="activeElement.email" validate="email" type="text" placeholder="Enter Email...">
       <p class="input-label">Phone</p>
-      <input class="data-input" ng-model="activeElement.phone" type="text" placeholder="Enter Phone...">
+      <input class="data-input" ng-model="activeElement.phone" validate="phone" type="text" placeholder="Enter Phone...">
       <p class="input-label">Type</p>
       <select class="data-input" ng-model="activeElement.types">
         <option  value="">Select Type</option>
@@ -473,9 +473,9 @@
           <p class="input-label">Last Name (Required)</p>
           <input class="data-input" ng-model="activeElement.last_name" type="text" required="true" placeholder="Enter Last Name...">
           <p class="input-label">Email</p>
-          <input class="data-input" ng-model="activeElement.email" type="text" placeholder="Enter Email...">
+          <input class="data-input" ng-model="activeElement.email" validate="email" type="text" placeholder="Enter Email...">
           <p class="input-label">Phone</p>
-          <input class="data-input" ng-model="activeElement.phone" type="text" placeholder="Enter Phone...">
+          <input class="data-input" ng-model="activeElement.phone" validate="phone" type="text" placeholder="Enter Phone...">
           <p class="input-label">Gender</p>
           <select class="data-input select-input" ng-model="activeElement.gender">
             <option value="">Select Gender</option>
