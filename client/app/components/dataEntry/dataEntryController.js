@@ -644,6 +644,18 @@
               result = false;
             }
           }
+          if ($(this).attr('validate') && $(this).attr('validate') === 'email') {
+        	  var re = /\S+@\S+\.\S+/;
+              if (re.test($(this).val()) === false) {
+                result = false;
+              }
+            }
+          	if ($(this).attr('validate') && $(this).attr('validate') === 'phone') {
+        	  var re = /^\d{10}$/;
+              if (re.test($(this).val()) === false) {
+                result = false;
+              }
+            }
         });
       } else {
         $('.talent-form').find('input, visible').each(function() {
@@ -652,6 +664,18 @@
               result = false;
             }
           }
+          if ($(this).attr('validate') && $(this).attr('validate') === 'email') {
+        	  var re = /\S+@\S+\.\S+/;
+              if (re.test($(this).val()) === false) {
+                result = false;
+              }
+            }
+          	if ($(this).attr('validate') && $(this).attr('validate') === 'phone') {
+        	  var re = /^\d{10}$/;
+              if (re.test($(this).val()) === false) {
+                result = false;
+              }
+            }
         });
       }
       
