@@ -124,7 +124,7 @@
     var dataSubmitter = {
           Talent: function() {
             if (!checkInputs('talent')) {
-              $scope.showmsg.errorText = 'Please make sure all required fields are entered';
+              $scope.showmsg.errorText = 'Please make sure all required fields are entered and others in correct format';
             } else {
               // Set blank values to null so they can be properly saved in database
               for (var key in $scope.activeElement) {
@@ -1622,13 +1622,13 @@
                           result = false;
                         }
                       }
-                      if ($(this).attr('validate') && $(this).attr('validate') === 'email') {
+                      if ($(this).attr('validate') && $(this).attr('validate') === 'email' && $(this).val() !== '' && $(this).val() !=='null') {
                     	  var re = /\S+@\S+\.\S+/;
                           if (re.test($(this).val()) === false) {
                             result = false;
                           }
                         }
-                      	if ($(this).attr('validate') && $(this).attr('validate') === 'phone') {
+                      	if ($(this).attr('validate') && $(this).attr('validate') === 'phone' && $(this).val() !== '' && $(this).val() !=='null') {
                     	  var re = /^\d{10}$/;
                           if (re.test($(this).val()) === false) {
                             result = false;

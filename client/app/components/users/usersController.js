@@ -20,7 +20,7 @@
     $scope.createUser = function() {
        $scope.errorText = '';
       if (!checkInputs()) {
-        $scope.errorText = "Please fill in all fields";
+        $scope.errorText = "Please fill in all fields and in correct format";
       }
       else if($scope.btnTxt == "Add"){
         if ( $scope.userData.password !== $scope.userData.confirmPassword) {
@@ -129,7 +129,7 @@
             result = false;
           }
         }
-        if ($(this).attr('validate') && $(this).attr('validate') === 'email') {
+        if ($(this).attr('validate') && $(this).attr('validate') === 'email' && $(this).val() !== '' && $(this).val() !=='null') {
       	  var re = /\S+@\S+\.\S+/;
             if (re.test($(this).val()) === false) {
               result = false;
