@@ -207,7 +207,7 @@
 }
 
 .talent-form-menu {
-  width: 100%;
+  width: 98%;
   height: 40px;
   background-color: #66B3F1;
   margin-bottom: 10px;
@@ -353,7 +353,7 @@
   font-size: 14px;
   padding: 0px;
   cursor: pointer;
-  margin-top: -4px;
+  margin-top: 0px;
 }
 .data-entry-comment-submit:hover,.data-entry-comment-submit:focus{
   background-color: #1E90FF;
