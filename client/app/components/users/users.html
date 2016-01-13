@@ -33,7 +33,7 @@
     <p class="input-label">Last Name (Required)</p>
     <input class="data-input" ng-model="userData.last_name" type="text" required="true">
     <p class="input-label">Email (Required)</p>
-    <input class="data-input" ng-model="userData.email" type="text" required="true">
+    <input class="data-input" ng-model="userData.email" validate="email" type="text" required="true">
     <p class="input-label">Password (Required)</p>
     <input class="data-input" ng-model="userData.password" type="password" required="true">
     <span ng-click="changePasswordLink()" ng-if="editElement"><a href="#">Change Password?</a></span>
