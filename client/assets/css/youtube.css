@@ -25,10 +25,10 @@
 .filter-text-input {
   margin-bottom: 5px;
   width: 125px;
-  height: 20px;
+  height: 30px;
   font-size: 13px;
   clear: left;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .check-toggle {

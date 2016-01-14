@@ -410,7 +410,9 @@
                     });
                     //alert(arrayLenths);
                     if (arrayLenths) {
+                         taletDataLenght();
                         $scope.visibleTalent = data.length;
+
                         if (data.length > 100) {
                             $scope.talentGridOption.useExternalPagination = false;
                         }
