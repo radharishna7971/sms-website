@@ -6,38 +6,91 @@
             ///////////////////////////////
             /// Initialize View
             ///////////////////////////////
-            
 
-            if(!!window.localStorage.smstudiosLoginUserName){
-              $scope.talent_display_username = window.localStorage.smstudiosLoginUserName;
+
+            if (!!window.localStorage.smstudiosLoginUserName) {
+                $scope.talent_display_username = window.localStorage.smstudiosLoginUserName;
             }
+            $('.filter-header-container').find('.arrow').removeClass("arrow-down");
+            $('.filter-header-container').find('.arrow').addClass("arrow-right");
+            $scope.incomeMultiple = [{
+                "id": 1,
+                "name": 1
+            }, {
+                "id": 2,
+                "name": 2
+            }, {
+                "id": 3,
+                "name": 3
+            }, {
+                "id": 4,
+                "name": 4
+            }, {
+                "id": 5,
+                "name": 5
+            }];
+            $scope.budgets = [{
+                "id": 1,
+                "name": "Under $250K"
+            }, {
+                "id": 2,
+                "name": "$250K-$1M"
+            }, {
+                "id": 3,
+                "name": "$1M-$5M"
+            }, {
+                "id": 4,
+                "name": "$5M-$10M"
+            }, {
+                "id": 5,
+                "name": "$10M-$50M"
+            }, {
+                "id": 6,
+                "name": "$50M-$100M"
+            }, {
+                "id": 7,
+                "name": "Above $100M"
+            }];
+            $scope.boxofficerev = [{
+                "id": 1,
+                "name": "Under $250K"
+            }, {
+                "id": 2,
+                "name": "$250K-$1M"
+            }, {
+                "id": 3,
+                "name": "$1M-$5M"
+            }, {
+                "id": 4,
+                "name": "$5M-$10M"
+            }, {
+                "id": 5,
+                "name": "$10M-$50M"
+            }, {
+                "id": 6,
+                "name": "$50M-$100M"
+            }, {
+                "id": 7,
+                "name": "Above $100M"
+            }];
+            $scope.ages = [{
+                "id": 1,
+                "name": "Less than 20"
+            }, {
+                "id": 2,
+                "name": "20-30"
+            }, {
+                "id": 3,
+                "name": "30-40"
+            }, {
+                "id": 4,
+                "name": "40-50"
+            }, {
+                "id": 5,
+                "name": "over 50"
+            }];
 
-            $('.filter-header-container').find('.arrow').removeClass( "arrow-down" );
-            $('.filter-header-container').find('.arrow').addClass( "arrow-right" );
-             $scope.incomeMultiple = [
-                 {"id": 1,"name": 1}, {"id": 2,"name": 2},
-                 {"id": 3,"name": 3}, {"id": 4,"name":4},
-                 {"id": 5,"name":5}
-             ];
-            $scope.budgets = [
-                 {"id": 1,"name": "Under $250K"}, {"id": 2,"name": "$250K-$1M"},
-                 {"id": 3,"name": "$1M-$5M"}, {"id": 4,"name":"$5M-$10M"},
-                 {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"},
-                 {"id": 7,"name":"Above $100M"}
-             ];
-            $scope.boxofficerev = [
-	              {"id": 1,"name": "Under $250K"}, {"id": 2,"name": "$250K-$1M"},
-	              {"id": 3,"name": "$1M-$5M"}, {"id": 4,"name":"$5M-$10M"},
-	              {"id": 5,"name":"$10M-$50M"},{"id": 6,"name":"$50M-$100M"},
-	              {"id": 7,"name":"Above $100M"}
-	          ];
-            $scope.ages = [
-                 {"id": 1,"name": "Less than 20"}, {"id": 2,"name": "20-30"},
-                 {"id": 3,"name": "30-40"}, {"id": 4,"name": "40-50"},
-                 {"id": 5,"name": "over 50"}
-             ];
-             
-            $scope.term ="";
+            $scope.term = "";
             $scope.successmsgtalent = false;
             var filereName = $scope.term;
             $scope.talentGridOption = {};
@@ -45,162 +98,182 @@
             $scope.filerByname = "";
             var Rolls = [];
             var Genres = [];
-            $scope.showmsg= {};
+            $scope.showmsg = {};
             $scope.showPopUp = false;
             $scope.getTalentData = {};
             $scope.talentModel = {};
-            
+
             var checkAllRole = localStorageService.get("allRole");
-            if(checkAllRole && checkAllRole === 'unchecked'){
-            	$scope.allRoleChecked = false;
-            }else{
-            	$scope.allRoleChecked = true;
-            }
-            
-            var checkAllGenre = localStorageService.get("allGenre");
-            if(checkAllGenre && checkAllGenre === 'unchecked'){
-            	$scope.allGenreChecked = false;
-            }else{
-            	$scope.allGenreChecked = true;
-            }
-            
-            var checkAllGender = localStorageService.get("allGender");
-            if(checkAllGender && checkAllGender === 'unchecked'){
-            	$scope.allGenderChecked = false;
-            }else{
-            	$scope.allGenderChecked = true;
-            }
-            
-            var checkAllAge = localStorageService.get("allAge");
-            if(checkAllAge && checkAllAge === 'unchecked'){
-            	$scope.allAgeChecked = false;
-            }else{
-            	$scope.allAgeChecked = true;
-            }
-            
-            var checkAllEthnicity = localStorageService.get("allEthnicity");
-            if(checkAllEthnicity && checkAllEthnicity === 'unchecked'){
-            	$scope.allEthnicityChecked = false;
-            }else{
-            	$scope.allEthnicityChecked = true;
-            }
-            
-            var checkAllCountry = localStorageService.get("allCountry");
-            if(checkAllCountry && checkAllCountry === 'unchecked'){
-            	$scope.allCountryChecked = false;
-            }else{
-            	$scope.allCountryChecked = true;
-            }
-            
-            var checkAllCreatedBy = localStorageService.get("allCreatedBy");
-            if(checkAllCreatedBy && checkAllCreatedBy === 'unchecked'){
-            	$scope.allCreatedByChecked = false;
-            }else{
-            	$scope.allCreatedByChecked = true;
-            }
-            
-            var checkAllAward = localStorageService.get("allAward");
-            if(checkAllAward && checkAllAward === 'unchecked'){
-            	$scope.allAwardsChecked = false;
-            }else{
-            	$scope.allAwardsChecked = true;
-            }
-            
-            var checkAllBudget = localStorageService.get("allBudget");
-            if(checkAllBudget && checkAllBudget === 'unchecked'){
-            	$scope.allBudgetChecked = false;
-            }else{
-            	$scope.allBudgetChecked = true;
-            }
-            
-            var checkAllallBoxOfficeRev = localStorageService.get("allBoxOfficeRev");
-            if(checkAllallBoxOfficeRev && checkAllallBoxOfficeRev === 'unchecked'){
-            	$scope.allBoxOfficeRevChecked = false;
-            }else{
-            	$scope.allBoxOfficeRevChecked = true;
-            }
-            
-             // This contains functions for submitting data to the database
-    var dataSubmitter = {
-          Talent: function() {
-            if (!checkInputs('talent')) {
-              $scope.showmsg.errorText = 'Please make sure all required fields are entered and others in correct format';
+            if (checkAllRole && checkAllRole === 'unchecked') {
+                $scope.allRoleChecked = false;
             } else {
-              // Set blank values to null so they can be properly saved in database
-              for (var key in $scope.activeElement) {
-                if (!$scope.activeElement[key]) {
-                  $scope.activeElement[key] = null;
-                }
-              }
-
-              if (!$scope.activeElement.created_by) {
-                $scope.activeElement.created_by = window.localStorage.smstudiosId;
-              }
-              if (!$scope.activeElement.createdby) {
-                $scope.activeElement.createdby = window.localStorage.smstudiosLoginUserName;
-              }
-              if (!$scope.activeElement.createdbycomments) {
-                $scope.activeElement.createdbycomments = window.localStorage.smstudiosLoginUserName;
-              }
-              $scope.activeElement.modifiedby = window.localStorage.smstudiosLoginUserName;
-     
-
-              // Add id to keep track of who created given talent
-              $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
-              $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
-              //Formatted url
-              $scope.activeElement.twitter_url = $scope.activeElement.twitter_url === null?$scope.activeElement.twitter_url:($scope.activeElement.twitter_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
-              $scope.activeElement.facebook_url = $scope.activeElement.facebook_url === null?$scope.activeElement.facebook_url:($scope.activeElement.facebook_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
-              $scope.activeElement.youtube_url = $scope.activeElement.youtube_url === null?$scope.activeElement.youtube_url:($scope.activeElement.youtube_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
-              $scope.activeElement.vine_url = $scope.activeElement.vine_url === null?$scope.activeElement.vine_url:($scope.activeElement.vine_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
-              $scope.activeElement.instagram_url = $scope.activeElement.instagram_url === null?$scope.activeElement.instagram_url:($scope.activeElement.instagram_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
-              
-              if(angular.isUndefined($scope.activeElement.partner)){
-                $scope.activeElement.partner = $scope.inputPartner;
-              }else if($scope.activeElement.partner !== null){
-                $scope.activeElement.partner = $scope.activeElement.partner.name;
-              }
-              talentFactory.addOrEdit($scope.activeElement, function(res) {
-                if (res.status !== 'error') {
-                  if (res.status === 'edit') {
-                    //$scope.editElement.name = res.name;
-                  } else {
-                    // $scope.data[$scope.section].push(res);
-                     //  $scope.editElement = res;
-                     //  activeElementSetter[$scope.section]();
-                     // $scope.btnTxt = "Update";               
-                  }
-                }
-                $scope.showmsg.errorText = res.text;
-              });
+                $scope.allRoleChecked = true;
             }
-          }
-        };
-            $scope.highlightFilteredHeader = function( row, rowRenderIndex, col, colRenderIndex ) {
-                    if( col.filters[0].term ){
-                        return 'header-filtered';
+
+            var checkAllGenre = localStorageService.get("allGenre");
+            if (checkAllGenre && checkAllGenre === 'unchecked') {
+                $scope.allGenreChecked = false;
+            } else {
+                $scope.allGenreChecked = true;
+            }
+
+            var checkAllGender = localStorageService.get("allGender");
+            if (checkAllGender && checkAllGender === 'unchecked') {
+                $scope.allGenderChecked = false;
+            } else {
+                $scope.allGenderChecked = true;
+            }
+
+            var checkAllAge = localStorageService.get("allAge");
+            if (checkAllAge && checkAllAge === 'unchecked') {
+                $scope.allAgeChecked = false;
+            } else {
+                $scope.allAgeChecked = true;
+            }
+
+            var checkAllEthnicity = localStorageService.get("allEthnicity");
+            if (checkAllEthnicity && checkAllEthnicity === 'unchecked') {
+                $scope.allEthnicityChecked = false;
+            } else {
+                $scope.allEthnicityChecked = true;
+            }
+
+            var checkAllCountry = localStorageService.get("allCountry");
+            if (checkAllCountry && checkAllCountry === 'unchecked') {
+                $scope.allCountryChecked = false;
+            } else {
+                $scope.allCountryChecked = true;
+            }
+
+            var checkAllCreatedBy = localStorageService.get("allCreatedBy");
+            if (checkAllCreatedBy && checkAllCreatedBy === 'unchecked') {
+                $scope.allCreatedByChecked = false;
+            } else {
+                $scope.allCreatedByChecked = true;
+            }
+
+            var checkAllAward = localStorageService.get("allAward");
+            if (checkAllAward && checkAllAward === 'unchecked') {
+                $scope.allAwardsChecked = false;
+            } else {
+                $scope.allAwardsChecked = true;
+            }
+
+            var checkAllBudget = localStorageService.get("allBudget");
+            if (checkAllBudget && checkAllBudget === 'unchecked') {
+                $scope.allBudgetChecked = false;
+            } else {
+                $scope.allBudgetChecked = true;
+            }
+
+            var checkAllallBoxOfficeRev = localStorageService.get("allBoxOfficeRev");
+            if (checkAllallBoxOfficeRev && checkAllallBoxOfficeRev === 'unchecked') {
+                $scope.allBoxOfficeRevChecked = false;
+            } else {
+                $scope.allBoxOfficeRevChecked = true;
+            }
+            var paginationOptions = {
+                pageNumber: 1,
+                pageSize: 100,
+                sort: null
+            };
+            var arrayLenths = 0;
+            var isIncomeBudgetRatioEnabled = 0;
+            var filerDataInputs = {};
+            filerDataInputs.gender = [];
+            filerDataInputs.nameVal = [];
+            filerDataInputs.role = [];
+            filerDataInputs.genres = [];
+            filerDataInputs.age = [];
+            filerDataInputs.country = [];
+            filerDataInputs.createdby = [];
+            filerDataInputs.EthnicityID = [];
+            filerDataInputs.budgetsValues = [];
+            filerDataInputs.incomeValues = [];
+            filerDataInputs.awardsList = [];
+            // This contains functions for submitting data to the database
+            var dataSubmitter = {
+                Talent: function () {
+                    if (!checkInputs('talent')) {
+                        $scope.showmsg.errorText = 'Please fill all required fields in correct format';
                     } else {
-                        return '';
+                        // Set blank values to null so they can be properly saved in database
+                        for (var key in $scope.activeElement) {
+                            if (!$scope.activeElement[key]) {
+                                $scope.activeElement[key] = null;
+                            }
+                        }
+
+                        if (!$scope.activeElement.created_by) {
+                            $scope.activeElement.created_by = window.localStorage.smstudiosId;
+                        }
+                        if (!$scope.activeElement.createdby) {
+                            $scope.activeElement.createdby = window.localStorage.smstudiosLoginUserName;
+                        }
+                        if (!$scope.activeElement.createdbycomments) {
+                            $scope.activeElement.createdbycomments = window.localStorage.smstudiosLoginUserName;
+                        }
+                        $scope.activeElement.modifiedby = window.localStorage.smstudiosLoginUserName;
+
+
+                        // Add id to keep track of who created given talent
+                        $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
+                        $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
+                        //Formatted url
+                        $scope.activeElement.twitter_url = $scope.activeElement.twitter_url === null ? $scope.activeElement.twitter_url : ($scope.activeElement.twitter_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+                        $scope.activeElement.facebook_url = $scope.activeElement.facebook_url === null ? $scope.activeElement.facebook_url : ($scope.activeElement.facebook_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+                        $scope.activeElement.youtube_url = $scope.activeElement.youtube_url === null ? $scope.activeElement.youtube_url : ($scope.activeElement.youtube_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+                        $scope.activeElement.vine_url = $scope.activeElement.vine_url === null ? $scope.activeElement.vine_url : ($scope.activeElement.vine_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+                        $scope.activeElement.instagram_url = $scope.activeElement.instagram_url === null ? $scope.activeElement.instagram_url : ($scope.activeElement.instagram_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
+
+                        if (angular.isUndefined($scope.activeElement.partner)) {
+                            $scope.activeElement.partner = $scope.inputPartner;
+                        } else if ($scope.activeElement.partner !== null) {
+                            $scope.activeElement.partner = $scope.activeElement.partner.name;
+                        }
+                        talentFactory.addOrEdit($scope.activeElement, function (res) {
+                            if (res.status !== 'error') {
+                                if (res.status === 'edit') {
+                                    //$scope.editElement.name = res.name;
+                                } else {
+                                    // $scope.data[$scope.section].push(res);
+                                    //  $scope.editElement = res;
+                                    //  activeElementSetter[$scope.section]();
+                                    // $scope.btnTxt = "Update";               
+                                }
+                            }
+                            $scope.showmsg.errorText = res.text;
+                        });
                     }
+                }
+            };
+            $scope.highlightFilteredHeader = function (row, rowRenderIndex, col, colRenderIndex) {
+                if (col.filters[0].term) {
+                    return 'header-filtered';
+                } else {
+                    return '';
+                }
             };
             var checkRowId = "";
-            $scope.showInfo = function(event,row){
+            $scope.showInfo = function (event, row) {
                 row.isrowSelectionChangedOnclcik = false;
-                if($( 'div.ui-grid-cell' ).hasClass( 'rowClicked' )){
+                if ($('div.ui-grid-cell').hasClass('rowClicked')) {
                     $('div.ui-grid-cell').removeClass('rowClicked');
                 }
 
+                //console.log(event);
+                //$(event.target).closest('div.ui-grid-row').addClass('row-selected');
+
                 var clickedRowId = parseInt(row.entity.id);
-                if(parseInt(checkRowId)===clickedRowId && $("#editLink").is(':visible')){
+                if (parseInt(checkRowId) === clickedRowId && $("#editLink").is(':visible')) {
                     $('.talent-right-container-content').hide();
                     $("#editLink").hide();
                     //$("#exportLink").hide();
                     row.isrowSelectionChangedOnclcik = false;
                     return false;
-                }
-                else{ 
-                    row.isrowSelectionChangedOnclcik = true;          
-                    updateMainTalent(row.entity.id,row.entity);
+                } else {
+                    row.isrowSelectionChangedOnclcik = true;
+                    updateMainTalent(row.entity.id, row.entity);
                     $scope.getTalentData = {};
                     $scope.getTalentData.id = row.entity.id;
                     $('.talent-right-container-content').show();
@@ -209,21 +282,9 @@
                     checkRowId = row.entity.id;
                     return false;
                 }
-                     
-            };
-            // $scope.getSelectRow = function(){
-            //     alert("hiiiiiiii");
-            //     var selectedTalentRowId = {};
-            //     selectedTalentRowId.pay=[];
-            //     angular.forEach($scope.gridApi.selection.getSelectedRows(), function(items){
-            //         selectedTalentRowId.pay.push(items.id);
-            //     });
 
-            //     talentFactory.exportTalentDetailXls(selectedTalentRowId, function(result) {
-            //         $scope.data.Contact = result;
-            //     });
-            //     //console.log(selectedTalentRowId);
-            // };
+            };
+
 
             $scope.gridData = [];
             $scope.talentGridOption = talentGridFactory.getGridOptions();
@@ -231,8 +292,8 @@
             $scope.section = 'Talent';
             $scope.talentSection = 'main';
             $scope.showPopUp = '';
-            $scope.showsection = function($event,sectioname) {
-            	$scope.successmsgtalent = false;
+            $scope.showsection = function ($event, sectioname) {
+                $scope.successmsgtalent = false;
                 if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                     $($event.target).addClass('talent-form-menu-button-active');
@@ -240,6 +301,7 @@
                 $scope.talentSection = sectioname;
 
             };
+
             function numberFormatter(num) {
                 if (num >= 1000000000) {
                     return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
@@ -253,140 +315,321 @@
                 return num;
             }
 
-            function getNumber(inputStr){
-                var numberValue = Number(inputStr .replace(/[^0-9\.]+/g,""));
+            function getNumber(inputStr) {
+                var numberValue = Number(inputStr.replace(/[^0-9\.]+/g, ""));
                 return parseInt(numberValue);
             }
 
-            contactFactory.getAssociateNames(function(result) {
+            contactFactory.getAssociateNames(function (result) {
                 $scope.data.Contact = result;
             });
-            
-            function removeElement(arrayName,arrayElement)
-            {
-               for(var i=0; i<arrayName.length;i++ )
-                { 
-                   if(arrayName[i]==arrayElement)
-                       arrayName.splice(i,1); 
-                 } 
-             }
 
-            talentFactory.getAll(function (data) {
-                angular.forEach(data,function(items){
-                    if(items.age == 0)
-                    {
-                        items.age="";
-                    }
-                    if(items.estimatedBudget !==null && items.estimatedBudget){
-                        var estimatedBudgets = items.estimatedBudget.split(',');
-                        removeElement(estimatedBudgets,0);
-                        removeElement(estimatedBudgets,0.0);
-                        var maxBudget = Math.max.apply(Math, estimatedBudgets);
-                        var maxBudgetInformatted = numberFormatter(parseInt(maxBudget));
-                        var minBudget = Math.min.apply(Math, estimatedBudgets);
-                        var minBudgetInformatted = numberFormatter(parseInt(minBudget));
-                        var estimatedBudgetVal = '$'+minBudgetInformatted+'-'+'$'+maxBudgetInformatted
-                        if(!parseInt(minBudget) && !parseInt(maxBudget)){
-                            estimatedBudgetVal = "Not Available";
-                        }else if(parseInt(minBudget)===parseInt(maxBudget)){
-                            estimatedBudgetVal = '$'+minBudgetInformatted;
-                        }else if(!parseInt(minBudget) && parseInt(maxBudget)){
-                            estimatedBudgetVal = '$'+maxBudgetInformatted;
-                        }
-                        items.estimatedBudget = estimatedBudgetVal;
-                    }
-                    if(items.boxOfficeIncome !==null && items.boxOfficeIncome){
-                        var boxOfficeIncomes = items.boxOfficeIncome.split(',');
-                        removeElement(boxOfficeIncomes,0);
-                        removeElement(boxOfficeIncomes,0.0);
-                        var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
-                        var maxIncomeInformatted = numberFormatter(parseInt(maxIncome));
-                        var minIncome = Math.min.apply(Math, boxOfficeIncomes);
-                        var minIncomeInformatted = numberFormatter(parseInt(minIncome));
-                        var boxOfficeIncome = '$'+minIncomeInformatted+'-'+'$'+maxIncomeInformatted;
-                        if(!parseInt(minIncome) && !parseInt(maxIncome)){
-                            boxOfficeIncome = "Not Available";
-                        }else if(parseInt(minIncome) === parseInt(maxIncome)){
-                            boxOfficeIncome = '$'+minIncomeInformatted;
-                        }else if(!parseInt(minIncome) && parseInt(maxIncome)){
-                            boxOfficeIncome = '$'+maxIncomeInformatted;
-                        }
-                        items.boxOfficeIncome = boxOfficeIncome;
-                    }
-                    if(items.boxbudgetratio==="0.0"){
-                        items.boxbudgetratio = "Not Available";
-                    }
-                    if(items.boxbudgetratio !==null && items.boxbudgetratio){
-                        var incomeMultiple = items.boxbudgetratio.split(',');
-                        removeElement(incomeMultiple,0);
-                        removeElement(incomeMultiple,0.0);
-                        var maxIncomeMul = Math.max.apply(Math, incomeMultiple);
-                        //maxIncomeMul = numberFormatter(parseInt(maxIncomeMul));
-                        var minIncomeMul = Math.min.apply(Math, incomeMultiple);
-                        //minIncomeMul = numberFormatter(parseInt(minIncomeMul));
-                        var incomeMulStr = minIncomeMul+'-'+maxIncomeMul
-                        if(!minIncomeMul && !maxIncomeMul){
-                            incomeMulStr = "Not Available";
-                        }else if(minIncomeMul === maxIncomeMul){
-                            incomeMulStr = minIncomeMul;
-                        }
-                        else if(!minIncomeMul && maxIncomeMul){
-                            incomeMulStr = maxIncomeMul;
-                        }
-                        items.boxbudgetratio = incomeMulStr;
-
-                    }
-
+            function removeElement(arrayName, arrayElement) {
+                for (var i = 0; i < arrayName.length; i++) {
+                    if (arrayName[i] == arrayElement)
+                        arrayName.splice(i, 1);
+                }
+            }
+            var taletDataLenght = function () {
+                talentFactory.getTalentRowCount(function (data) {
+                    $scope.talentGridOption.totalItems = data[0].rowCount;
+                    $scope.talentCount = data[0].rowCount;
+                    $scope.visibleTalent = data[0].rowCount;
                 });
-                $scope.talentGridOption.data = data;
-                $scope.gridData = data;
-                $scope.filteredRows = data;
-                $scope.talentCount = data.length;
-                $scope.visibleTalent = data.length;
-                $('.talent-right-container-content').hide();
-                $("span.ui-grid-pager-row-count-label").html(" Records per page <button id='exportLink' ng-click='getSelectRow()' class='btn btn-primary btn-xs'>Export</button> <button id='editLink' style='display:none' class='btn btn-primary btn-xs'>Edit</button>");
-            
-                $scope.updateFiltersByChckBox();
-            
-            });
+            };
+
+
+            var bindTalentData = function () {
+                if (arrayLenths) {
+                    $scope.setLoading(true);
+                }
+                talentFactory.getAll(paginationOptions.pageNumber, paginationOptions.pageSize, filerDataInputs, arrayLenths, function (data) {
+                    angular.forEach(data, function (items) {
+                        if (items.age == 0) {
+                            items.age = "";
+                        }
+                        if (items.estimatedBudget !== null && items.estimatedBudget) {
+                            var estimatedBudgets = items.estimatedBudget.split(',');
+                            removeElement(estimatedBudgets, 0);
+                            removeElement(estimatedBudgets, 0.0);
+                            var maxBudget = Math.max.apply(Math, estimatedBudgets);
+                            var maxBudgetInformatted = numberFormatter(parseInt(maxBudget));
+                            var minBudget = Math.min.apply(Math, estimatedBudgets);
+                            var minBudgetInformatted = numberFormatter(parseInt(minBudget));
+                            var estimatedBudgetVal = '$' + minBudgetInformatted + '-' + '$' + maxBudgetInformatted
+                            if (!parseInt(minBudget) && !parseInt(maxBudget)) {
+                                estimatedBudgetVal = "Not Available";
+                            } else if (parseInt(minBudget) === parseInt(maxBudget)) {
+                                estimatedBudgetVal = '$' + minBudgetInformatted;
+                            } else if (!parseInt(minBudget) && parseInt(maxBudget)) {
+                                estimatedBudgetVal = '$' + maxBudgetInformatted;
+                            }
+                            items.estimatedBudget = estimatedBudgetVal;
+                        }
+                        if (items.boxOfficeIncome !== null && items.boxOfficeIncome) {
+                            var boxOfficeIncomes = items.boxOfficeIncome.split(',');
+                            removeElement(boxOfficeIncomes, 0);
+                            removeElement(boxOfficeIncomes, 0.0);
+                            var maxIncome = Math.max.apply(Math, boxOfficeIncomes);
+                            var maxIncomeInformatted = numberFormatter(parseInt(maxIncome));
+                            var minIncome = Math.min.apply(Math, boxOfficeIncomes);
+                            var minIncomeInformatted = numberFormatter(parseInt(minIncome));
+                            var boxOfficeIncome = '$' + minIncomeInformatted + '-' + '$' + maxIncomeInformatted;
+                            if (!parseInt(minIncome) && !parseInt(maxIncome)) {
+                                boxOfficeIncome = "Not Available";
+                            } else if (parseInt(minIncome) === parseInt(maxIncome)) {
+                                boxOfficeIncome = '$' + minIncomeInformatted;
+                            } else if (!parseInt(minIncome) && parseInt(maxIncome)) {
+                                boxOfficeIncome = '$' + maxIncomeInformatted;
+                            }
+                            items.boxOfficeIncome = boxOfficeIncome;
+                        }
+                        if (items.boxbudgetratio === "0.0") {
+                            items.boxbudgetratio = "Not Available";
+                        }
+                        if (items.boxbudgetratio !== null && items.boxbudgetratio) {
+                            var incomeMultiple = items.boxbudgetratio.split(',');
+                            removeElement(incomeMultiple, 0);
+                            removeElement(incomeMultiple, 0.0);
+                            var maxIncomeMul = Math.max.apply(Math, incomeMultiple);
+                            //maxIncomeMul = numberFormatter(parseInt(maxIncomeMul));
+                            var minIncomeMul = Math.min.apply(Math, incomeMultiple);
+                            //minIncomeMul = numberFormatter(parseInt(minIncomeMul));
+                            var incomeMulStr = minIncomeMul + '-' + maxIncomeMul
+                            if (!minIncomeMul && !maxIncomeMul) {
+                                incomeMulStr = "Not Available";
+                            } else if (minIncomeMul === maxIncomeMul) {
+                                incomeMulStr = minIncomeMul;
+                            } else if (!minIncomeMul && maxIncomeMul) {
+                                incomeMulStr = maxIncomeMul;
+                            }
+                            items.boxbudgetratio = incomeMulStr;
+
+                        }
+
+                    });
+                    //alert(arrayLenths);
+                    if (arrayLenths) {
+                        $scope.visibleTalent = data.length;
+                        if (data.length > 100) {
+                            $scope.talentGridOption.useExternalPagination = false;
+                        }
+                    } else {
+                        taletDataLenght();
+                        $scope.talentGridOption.useExternalPagination = true;
+                    }
+                    $scope.gridData = data;
+                    //alert('hii' + isIncomeBudgetRatioEnabled);
+                    if (isIncomeBudgetRatioEnabled) {
+                        $scope.talentGridOption.data = _.filter($scope.gridData, function (item) {
+                            var isValidOptionRatio = ($scope.budgetMultipleOption !== null) && !(angular.isUndefined($scope.budgetMultipleOption)) && ($scope.budgetMultipleOption !== "");
+                            var isValidRatio = ($scope.incomeMultipleInput !== null) && !(angular.isUndefined($scope.incomeMultipleInput)) && !isNaN($scope.incomeMultipleInput) && ($scope.incomeMultipleInput !== "");
+
+                            var findBudgetFlag = false;
+                            var findBoxOfficeIncomeFlag = false;
+                            var findAwardsFlag = false;
+                            var findRatioFlag = false;
+                            var selectedNames = '';
+                            if (item.estimatedBudget !== null && item.estimatedBudget !== "Not Available") {
+                                $('div#budget_list div input:checked').each(function () {
+                                    selectedNames = $(this).val().trim();
+                                    //.log(selectedNames);
+                                    selectedNames = selectedNames.replace(/ /g, '').toLowerCase();
+                                    var budgets = item['estimatedBudget'].split('-');
+                                    var lowerLimit = budgets[0];
+                                    var upperLimit = budgets[budgets.length - 1];
+                                    var lowerLimitDigit = getNumber(lowerLimit);
+                                    var upperLimitDigit = getNumber(upperLimit);
+                                    var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                                    var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                                    if (selectedNames === "under$250k" && (upperLimitSuffix === "k" || upperLimitSuffix === "0")) {
+                                        if (upperLimitDigit < 250) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$250k-$1m" && lowerLimitSuffix === "k" && upperLimitSuffix === "k") {
+                                        if (lowerLimitDigit >= 250 && upperLimitDigit <= 999999) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$1m-$5m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 1 && upperLimitDigit < 5) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$5m-$10m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 5 && upperLimitDigit < 10) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$10m-$50m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 10 && upperLimitDigit < 50) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$50m-$100m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 50 && upperLimitDigit < 100) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "above$100m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (upperLimitDigit >= 100) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+
+                                });
+                            }
+                            if (item.boxOfficeIncome !== null && item.boxOfficeIncome !== "Not Available") {
+                                $('div#box_office_income_list div input.BoxOfficeIncome-list-class:checked').each(function () {
+                                    selectedNames = $(this).val().trim();
+                                    selectedNames = selectedNames.replace(/ /g, '').toLowerCase();
+                                    //console.log(selectedNames);
+                                    var budgets = item['boxOfficeIncome'].split('-');
+                                    var lowerLimit = budgets[0];
+                                    var upperLimit = budgets[budgets.length - 1];
+                                    var lowerLimitDigit = getNumber(lowerLimit);
+                                    var upperLimitDigit = getNumber(upperLimit);
+                                    var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
+                                    var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
+                                    if (selectedNames === "under$250k" && (upperLimitSuffix === "k" || upperLimitSuffix === "0")) {
+                                        if (upperLimitDigit < 250) {
+                                            findBoxOfficeIncomeFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$250k-$1m" && lowerLimitSuffix === "k" && upperLimitSuffix === "k") {
+                                        if (lowerLimitDigit >= 250 && upperLimitDigit <= 999999) {
+                                            findBoxOfficeIncomeFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$1m-$5m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 1 && upperLimitDigit < 5) {
+                                            findBoxOfficeIncomeFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$5m-$10m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 5 && upperLimitDigit < 10) {
+                                            findBoxOfficeIncomeFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$10m-$50m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 10 && upperLimitDigit < 50) {
+                                            findBoxOfficeIncomeFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$50m-$100m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 50 && upperLimitDigit < 100) {
+                                            findBoxOfficeIncomeFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "above$100m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (upperLimitDigit >= 100) {
+                                            findBoxOfficeIncomeFlag = true;
+                                        }
+                                    }
+
+                                });
+                            }
+                            if (item.awards !== null) {
+                                $('div#awards_list input:checked').each(function () {
+                                    selectedNames = $(this).val().trim();
+                                    if ((item['awards'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !== -1) {
+                                        findAwardsFlag = true;
+                                    }
+                                });
+                            }
+                            if (isValidRatio && isValidOptionRatio) {
+                                //selectedNames = $scope.filerByname;
+                                var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(1);
+                                var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
+                                var boxbudgetratio = "";
+                                if (item.boxbudgetratio !== null && item.boxbudgetratio !== "Not Available") {
+                                    if (seletedRatio === "maxgreaterorequal") {
+                                        boxbudgetratio = item['boxbudgetratio'].toString().split('-');
+                                        var maxRatio = parseFloat(getNumber(boxbudgetratio[boxbudgetratio.length - 1])).toFixed(1);
+                                        //maxRatio = getNumber(maxRatio);
+                                        //var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
+                                        if (maxRatio >= inputRatio) {
+                                            findRatioFlag = true;
+                                        }
+
+                                    } else if (seletedRatio === "mingreaterorequal") {
+                                        boxbudgetratio = item['boxbudgetratio'].toString().split('-');
+                                        //var minRatio = parseFloat(boxbudgetratio[0]);
+                                        var minRatio = parseFloat(getNumber(boxbudgetratio[0])).toFixed(1);
+                                        if (minRatio >= inputRatio) {
+                                            findRatioFlag = true;
+                                        }
+
+                                    }
+                                }
+                            }
+                            if ($("input#allBudget").is(':checked')) {
+                                findBudgetFlag = true;
+                            }
+                            if ($("input#allBoxRevenue").is(':checked')) {
+                                findBoxOfficeIncomeFlag = true;
+                            }
+                            if ($("input#allAwards").is(':checked')) {
+                                findAwardsFlag = true;
+                            }
+                            if (!isValidRatio || !isValidOptionRatio) {
+                                findRatioFlag = true;
+                            }
+                            if (findBudgetFlag && findBoxOfficeIncomeFlag && findAwardsFlag && findRatioFlag) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+
+                        });
+                        $scope.talentGridOption.totalItems = $scope.talentGridOption.data.length;
+                    } else {
+                        $scope.talentGridOption.data = data;
+                    }
+                    $scope.setLoading(false);
+                    $scope.filteredRows = $scope.talentGridOption.data;
+
+                    $('.talent-right-container-content').hide();
+                    $("span.ui-grid-pager-row-count-label").html(" Records per page <button id='exportLink' ng-click='getSelectRow()' class='btn btn-primary btn-xs'>Export</button> <button id='editLink' style='display:none' class='btn btn-primary btn-xs'>Edit</button>");
+                });
+            };
+            bindTalentData('');
 
             function saveState() {
                 var state = $scope.gridApi.saveState.save();
                 localStorageService.set('gridState', state);
-              }
+            }
 
-              function restoreState() {
-                $timeout(function() {
-                  var state = localStorageService.get('gridState');
-                  if (state) $scope.gridApi.saveState.restore($scope, state);
+            function restoreState() {
+                $timeout(function () {
+                    var state = localStorageService.get('gridState');
+                    if (state) $scope.gridApi.saveState.restore($scope, state);
                 });
-              }
-              
+            }
+
             $scope.mainTalent = false;
             $scope.activeSection = 'info';
             $scope.filterColumn = 'last_name';
             $scope.deletedComments = 0;
             $scope.talentGridOption.onRegisterApi = function (gridApi) {
-				$scope.gridApi = gridApi;
-				gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-				
-				    //console.log(row);
-				});
-				    
-				 // Setup events so we're notified when grid state changes.
-				$scope.gridApi.colMovable.on.columnPositionChanged($scope, saveState);
-				$scope.gridApi.colResizable.on.columnSizeChanged($scope, saveState);
-				$scope.gridApi.core.on.columnVisibilityChanged($scope, saveState);
-				$scope.gridApi.core.on.filterChanged($scope, saveState);
-				$scope.gridApi.core.on.sortChanged($scope, saveState);
-				
-				// Restore previously saved state.
-				restoreState();
+                $scope.gridApi = gridApi;
+                gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                    paginationOptions.pageNumber = newPage;
+                    paginationOptions.pageSize = pageSize;
+                    bindTalentData();
+                });
+                $scope.gridApi.colMovable.on.columnPositionChanged($scope, saveState);
+                $scope.gridApi.colResizable.on.columnSizeChanged($scope, saveState);
+                $scope.gridApi.core.on.columnVisibilityChanged($scope, saveState);
+                $scope.gridApi.core.on.filterChanged($scope, saveState);
+                $scope.gridApi.core.on.sortChanged($scope, saveState);
+                restoreState();
             };
 
-            $scope.getTalentNames = function(val){
+            $scope.getTalentNames = function (val) {
                 var talentNames = [];
-                return talentFactory.getNames(val, angular.noop).then(function(result){
+                return talentFactory.getNames(val, angular.noop).then(function (result) {
                     return result.data;
                 });
             };
@@ -396,512 +639,193 @@
                 //console.log(itemval);
             };
 
-            $scope.updateTalentPartner = function(itemval){
-              $scope.setLoading(true);
-               talentFactory.updateTalentPartnerName($scope.getTalentData.id,itemval.name, function(talentData) {
-                      $scope.setLoading(false);
-              });
+            $scope.updateTalentPartner = function (itemval) {
+                $scope.setLoading(true);
+                talentFactory.updateTalentPartnerName($scope.getTalentData.id, itemval.name, function (talentData) {
+                    $scope.setLoading(false);
+                });
             };
 
-            $scope.setLoading = function(loading) {
+            $scope.setLoading = function (loading) {
                 $scope.isLoading = loading;
             };
-             $scope.updateFiltersByChckBox = function ($event) {
-            	 
-                 if(!angular.isUndefined($event)){
-                     if($($event.target).hasClass( "role-list-class" )){
-                         $("input#allRole").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "genre-list-class" )){
-                         $("input#allGenres").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "gender-input" )){
-                         $("input#allGender").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "age-list-class" )){
-                         $("input#allAges").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "budget-list-class" )){
-                         $("input#allBudget").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
-                         $("input#allBoxRevenue").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "BoxOfficeIncome-list-class" )){
-                         $("input#allBoxRevenue").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "ethnicity-list-class" )){
-                         $("input#allEthnicity").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "createdby-list-class" )){
-                         $("input#allCreatedBy").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "country-list-class" )){
-                         $("input#allCountries").prop("checked",false);
-                     }
-                     if($($event.target).hasClass( "awards-list-class" )){
-                         $("input#allAwards").prop("checked",false);
-                     }
-                	 if($event.target.id==="allRole" && $event.target.checked){
-                             $('div#role_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allRole").prop("checked",true);
-                     }
-                     if($event.target.id==="allGenres" && $event.target.checked){
-                             $('div#genre_list input').not(this).each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allGenres").prop("checked",true);
-                     }
-                	 if($event.target.id==="allGender" && $event.target.checked){
+            $scope.applyAllFilter = function () {
+                arrayLenths = 0;
+                isIncomeBudgetRatioEnabled = 0;
+                filerDataInputs.gender.length = 0;
+                filerDataInputs.nameVal.length = 0;
+                filerDataInputs.role.length = 0;
+                filerDataInputs.genres.length = 0;
+                filerDataInputs.awardsList.length = 0;
+                filerDataInputs.age.length = 0;
+                filerDataInputs.country.length = 0;
+                filerDataInputs.createdby.length = 0;
+                filerDataInputs.EthnicityID.length = 0;
+                filerDataInputs.budgetsValues.length = 0;
+                filerDataInputs.incomeValues.length = 0;
+                var isValidOptionRatios = ($scope.budgetMultipleOption !== null) && !(angular.isUndefined($scope.budgetMultipleOption)) && ($scope.budgetMultipleOption !== "");
+                var isValidRatios = ($scope.incomeMultipleInput !== null) && !(angular.isUndefined($scope.incomeMultipleInput)) && !isNaN($scope.incomeMultipleInput) && ($scope.incomeMultipleInput !== "");
 
-                             $('div#gender_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allGender").prop("checked",true);
-                     }
-                     if($event.target.id==="allAges" && $event.target.checked){
 
-                             $('div#age_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allAges").prop("checked",true);
-                     }
-                	 if($event.target.id==="allAwards" && $event.target.checked){
-
-                             $('div#awards_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allAwards").prop("checked",true);
-                     }
-                     if($event.target.id==="allCountries" && $event.target.checked){
-
-                             $('div#country_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allCountries").prop("checked",true);
-                     }
-                     if($event.target.id==="allBudget" && $event.target.checked){
-                             $('div#budget_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allBudget").prop("checked",true);
-                     }
-                     if($event.target.id==="allBoxRevenue" && $event.target.checked){
-                             $('div#box_office_income_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allBoxRevenue").prop("checked",true);
-                     }
-                     if($event.target.id==="allEthnicity" && $event.target.checked){
-                             $('div#ethnicity_list input').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allEthnicity").prop("checked",true);
-                     }
-                     if($event.target.id==="allCreatedBy" && $event.target.checked){
-                             $('div#createdby_list').each(function () {
-                                  $(this).prop("checked",false);
-                             });
-                             $("input#allCreatedBy").prop("checked",true);
-                     }
-                 }
-            	 
-            	 $('div#role_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("role-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allRole","unchecked");
-            			 }
-            			 localStorageService.set("role-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#genre_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("genre-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allGenre","unchecked");
-            			 }
-            			 localStorageService.set("genre-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#gender_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("gender-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allGender","unchecked");
-            			 }
-            			 localStorageService.set("gender-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#age_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("age-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allAge","unchecked");
-            			 }
-            			 localStorageService.set("age-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#ethnicity_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("ethnicity-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allEthnicity","unchecked");
-            			 }
-            			 localStorageService.set("ethnicity-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#country_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("country-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allCountry","unchecked");
-            			 }
-            			 localStorageService.set("country-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#createdby_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("createdby-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allCreatedBy","unchecked");
-            			 }
-            			 localStorageService.set("createdby-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#awards_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("award-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allAward","unchecked");
-            			 }
-            			 localStorageService.set("award-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#budget_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("budget-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allBudget","unchecked");
-            			 }
-            			 localStorageService.set("budget-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-            	 $('div#box_office_income_list input').each(function () {
-            		 if($(this).val().trim() !== "" && $(this).prop("checked")){
-            			 localStorageService.set("boxofficerev-"+$(this).val().trim(),$(this).val().trim());
-            		 }else{
-            			 if($(this).val().trim() === '*'){
-            				 localStorageService.set("allBoxOfficeRev","unchecked");
-            			 }
-            			 localStorageService.set("boxofficerev-"+$(this).val().trim(),"");
-            		 }
-                 });
-            	 
-                $scope.talentGridOption.data = _.filter( $scope.gridData, function (item) {
-                    var findNameFlag = false;
-                    var findCountryFlag = false;
-                    var findRoleFlag = false;
-                    var findCreatedByFlag = false;
-                    var findAgeFlag = false;
-                    var findEthnicityFlag = false;
-                    var findGenresFlag = false;
-                    var findGenderFlag =false;
-                    var findBudgetFlag = false;
-                    var findBoxOfficeIncomeFlag = false;
-                    var findAwardsFlag = false;
-                    var findFlag = false;
-                    var findRatioFlag = false;
-                    var selectedNames ="";
-                    var validNameInput = ($scope.filerByname!==null) && !(angular.isUndefined($scope.filerByname)) && ($scope.filerByname !=="");
-                    var isValidOptionRatio = ($scope.budgetMultipleOption!==null) && !(angular.isUndefined($scope.budgetMultipleOption)) && ($scope.budgetMultipleOption !=="");
-                    var isValidRatio = ($scope.incomeMultipleInput!==null) && !(angular.isUndefined($scope.incomeMultipleInput)) && !isNaN($scope.incomeMultipleInput) && ($scope.incomeMultipleInput !=="");
-                    if(validNameInput){
-                        selectedNames = $scope.filerByname;
-                        if(item.name !==null){
-                            if(item['name'].toLowerCase().search(selectedNames)!==-1){
-                                findNameFlag = true;
-                            }
-                        }
+                if ($scope.filerByname !== '' && $scope.filerByname != null && !angular.isUndefined($scope.filerByname)) {
+                    filerDataInputs.nameVal.push($scope.filerByname);
+                    arrayLenths = 1;
+                }
+                var checkValues = $('div.filter-option-container input[type=checkbox]:checked').map(function () {
+                    if ($(this).hasClass('gender-input')) {
+                        filerDataInputs.gender.push($(this).val());
+                        arrayLenths = 1;
                     }
-                    if(isValidRatio && isValidOptionRatio){
-                        selectedNames = $scope.filerByname;
-                        var inputRatio = parseFloat($scope.incomeMultipleInput).toFixed(1);
-                        var seletedRatio = ($scope.budgetMultipleOption).toLowerCase();
-                        var boxbudgetratio = "";
-                        if(item.boxbudgetratio !==null && item.boxbudgetratio !=="Not Available"){
-                            if(seletedRatio==="maxgreaterorequal"){
-                                boxbudgetratio = item['boxbudgetratio'].toString().split('-');
-                                var maxRatio = parseFloat(getNumber(boxbudgetratio[boxbudgetratio.length-1])).toFixed(1);
-                                //maxRatio = getNumber(maxRatio);
-                                //var maxRatio = parseFloat(Math.max.apply(Math, boxbudgetratio)).toFixed(2);
-                                if(maxRatio >=inputRatio){
-                                    findRatioFlag = true;
-                                }
-
-                            }else if(seletedRatio==="mingreaterorequal"){
-                                boxbudgetratio = item['boxbudgetratio'].toString().split('-');
-                                //var minRatio = parseFloat(boxbudgetratio[0]);
-                                var minRatio = parseFloat(getNumber(boxbudgetratio[0])).toFixed(1);
-                                if(minRatio >=inputRatio){
-                                    findRatioFlag = true;
-                                }
-
-                            }
-                        }
+                    if ($(this).hasClass('role-list-class')) {
+                        filerDataInputs.role.push($(this).val());
+                        arrayLenths = 1;
                     }
-                    if(item.roles !==null){
-                        $('div#role_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            if((item['roles'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !==-1){
-                                    findRoleFlag = true;
-                            }
-                        });                      
-                    }
-                    if(item.genres !==null){
-                        $('div#genre_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            if((item['genres'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !==-1){
-                                    findGenresFlag = true;
-                            }
-                        });                      
-                    }
-                    if(item.gender !==null){
-                        $('div#gender_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            if((item['gender'].toLowerCase())===selectedNames.toLowerCase()){
-                                    findGenderFlag = true;
-                            }
-                        });                      
-                    }
-                    if(item.awards !==null){
-                        $('div#awards_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            if((item['awards'].toLowerCase()).indexOf(selectedNames.toLowerCase()) !==-1){
-                                    findAwardsFlag = true;
-                            }
-                        });                      
-                    }
-                    if(item.country !==null){
-                        $('div#country_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            if((item['country'].toLowerCase())===selectedNames.toLowerCase()){
-                                    findCountryFlag = true;
-                            }
-                        });                      
-                    }
-                    if(item.createdby !==null){
-                        $('div#createdby_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            if((item['createdby'].toLowerCase())===selectedNames.toLowerCase()){
-                                    findCreatedByFlag = true;
-                            }
-                        });                      
+                    if ($(this).hasClass('genre-list-class')) {
+                        filerDataInputs.genres.push($(this).val());
+                        arrayLenths = 1;
                     }
 
-                    if(item.age !==null){
-                        $('div#age_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
-                            if(selectedNames ==="lessthan20"){
-                                if(parseInt(item['age']) < 20){
-                                    findAgeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="20-30"){
-                                if(parseInt(item['age']) >= 20 && parseInt(item['age']) < 30){
-                                    findAgeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="30-40"){
-                                if(parseInt(item['age']) >= 30 && parseInt(item['age']) < 40){
-                                    findAgeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="40-50"){
-                                if(parseInt(item['age']) >= 40 && parseInt(item['age']) < 50){
-                                    findAgeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="over50"){
-                                if(parseInt(item['age']) >= 50){
-                                    findAgeFlag = true;
-                                }
-                            }
+                    if ($(this).hasClass('age-list-class')) {
+                        filerDataInputs.age.push($(this).val());
+                        arrayLenths = 1;
+                    }
+                    if ($(this).hasClass('country-list-class')) {
+                        filerDataInputs.country.push($(this).val());
+                        arrayLenths = 1;
+                    }
+                    if ($(this).hasClass('createdby-list-class')) {
+                        filerDataInputs.createdby.push($(this).val());
+                        arrayLenths = 1;
+                    }
+                    if ($(this).hasClass('ethnicity-list-class')) {
+                        filerDataInputs.EthnicityID.push($(this).val());
+                        arrayLenths = 1;
+                    }
+                    if ($(this).hasClass('budget-list-class')) {
+                        filerDataInputs.budgetsValues.push($(this).val());
+                        arrayLenths = 1;
+                        isIncomeBudgetRatioEnabled = 1;
+                        //alert(isIncomeBudgetRatioEnabled);
+                    }
+                    if ($(this).hasClass('BoxOfficeIncome-list-class')) {
+                        filerDataInputs.incomeValues.push($(this).val());
+                        arrayLenths = 1;
+                        isIncomeBudgetRatioEnabled = 1;
+                        //alert(isIncomeBudgetRatioEnabled);
+                    }
+                    if ($(this).hasClass('awards-list-class')) {
+                        filerDataInputs.awardsList.push($(this).val());
+                        arrayLenths = 1;
+                        isIncomeBudgetRatioEnabled = 1;
+                    }
+                    if (isValidOptionRatios && isValidRatios) {
+                        arrayLenths = 1;
+                        isIncomeBudgetRatioEnabled = 1;
+                    }
+                }).get();
+                bindTalentData();
+            };
+            $scope.updateFiltersByChckBox = function ($event) {
+                if (!angular.isUndefined($event)) {
+                    if ($($event.target).hasClass("role-list-class")) {
+                        $("input#allRole").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("genre-list-class")) {
+                        $("input#allGenres").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("gender-input")) {
+                        $("input#allGender").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("age-list-class")) {
+                        $("input#allAges").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("budget-list-class")) {
+                        $("input#allBudget").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("BoxOfficeIncome-list-class")) {
+                        $("input#allBoxRevenue").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("BoxOfficeIncome-list-class")) {
+                        $("input#allBoxRevenue").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("ethnicity-list-class")) {
+                        $("input#allEthnicity").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("createdby-list-class")) {
+                        $("input#allCreatedBy").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("country-list-class")) {
+                        $("input#allCountries").prop("checked", false);
+                    }
+                    if ($($event.target).hasClass("awards-list-class")) {
+                        $("input#allAwards").prop("checked", false);
+                    }
 
+                    if ($event.target.id === "allRole" && $event.target.checked) {
+                        $('div#role_list input').each(function () {
+                            $(this).prop("checked", false);
                         });
+                        $("input#allRole").prop("checked", true);
                     }
-
-                    if(item.estimatedBudget !==null && item.estimatedBudget !=="Not Available"){
-                        $('div#budget_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
-                            var budgets = item['estimatedBudget'].split('-');
-                            var lowerLimit = budgets[0];
-                            var upperLimit = budgets[budgets.length-1];
-                            var lowerLimitDigit = getNumber(lowerLimit);
-                            var upperLimitDigit = getNumber(upperLimit);
-                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
-                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
-                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
-                                if(upperLimitDigit < 250){
-                                    findBudgetFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
-                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
-                                    findBudgetFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
-                                    findBudgetFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
-                                    findBudgetFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
-                                    findBudgetFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
-                                    findBudgetFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(upperLimitDigit>= 100){
-                                    findBudgetFlag = true;
-                                }
-                            }
-                            
+                    if ($event.target.id === "allGenres" && $event.target.checked) {
+                        $('div#genre_list input').not(this).each(function () {
+                            $(this).prop("checked", false);
                         });
+                        $("input#allGenres").prop("checked", true);
                     }
+                    if ($event.target.id === "allGender" && $event.target.checked) {
 
-                    if(item.boxOfficeIncome !==null && item.boxOfficeIncome !=="Not Available"){
-                        $('div#box_office_income_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            selectedNames = selectedNames.replace(/ /g,'').toLowerCase();
-                            var budgets = item['boxOfficeIncome'].split('-');
-                            var lowerLimit = budgets[0];
-                            var upperLimit = budgets[budgets.length-1];
-                            var lowerLimitDigit = getNumber(lowerLimit);
-                            var upperLimitDigit = getNumber(upperLimit);
-                            var lowerLimitSuffix = lowerLimit.slice(-1).toLowerCase();
-                            var upperLimitSuffix = upperLimit.slice(-1).toLowerCase();
-                            if(selectedNames ==="under$250k" && (upperLimitSuffix ==="k" || upperLimitSuffix==="0")){
-                                if(upperLimitDigit < 250){
-                                    findBoxOfficeIncomeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$250k-$1m" && lowerLimitSuffix ==="k" && upperLimitSuffix==="k"){
-                                if(lowerLimitDigit >= 250 && upperLimitDigit<= 999999){
-                                    findBoxOfficeIncomeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$1m-$5m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 1 && upperLimitDigit< 5){
-                                    findBoxOfficeIncomeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$5m-$10m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 5 && upperLimitDigit< 10){
-                                    findBoxOfficeIncomeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$10m-$50m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 10 && upperLimitDigit< 50){
-                                    findBoxOfficeIncomeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="$50m-$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(lowerLimitDigit >= 50 && upperLimitDigit< 100){
-                                    findBoxOfficeIncomeFlag = true;
-                                }
-                            }
-                            if(selectedNames ==="above$100m" && lowerLimitSuffix ==="m" && upperLimitSuffix==="m"){
-                                if(upperLimitDigit>= 100){
-                                    findBoxOfficeIncomeFlag = true;
-                                }
-                            }
-                            
+                        $('div#gender_list input').each(function () {
+                            $(this).prop("checked", false);
                         });
+                        $("input#allGender").prop("checked", true);
                     }
+                    if ($event.target.id === "allAges" && $event.target.checked) {
 
-                    if(item.ethnicity !==null){
-                        $('div#ethnicity_list input:checked').each(function () {
-                            selectedNames = $(this).val().trim();
-                            if((item['ethnicity'].toLowerCase())===selectedNames.toLowerCase()){
-                                findEthnicityFlag = true;
-                            }
+                        $('div#age_list input').each(function () {
+                            $(this).prop("checked", false);
                         });
+                        $("input#allAges").prop("checked", true);
                     }
+                    if ($event.target.id === "allAwards" && $event.target.checked) {
 
-                    if(!validNameInput){
-                        findNameFlag = true;
+                        $('div#awards_list input').each(function () {
+                            $(this).prop("checked", false);
+                        });
+                        $("input#allAwards").prop("checked", true);
                     }
-                    if(!isValidRatio || !isValidOptionRatio){
-                        findRatioFlag = true;
+                    if ($event.target.id === "allCountries" && $event.target.checked) {
+
+                        $('div#country_list input').each(function () {
+                            $(this).prop("checked", false);
+                        });
+                        $("input#allCountries").prop("checked", true);
                     }
-                    if($("input#allRole").is(':checked')){
-                        findRoleFlag = true;
+                    if ($event.target.id === "allBudget" && $event.target.checked) {
+                        $('div#budget_list input').each(function () {
+                            $(this).prop("checked", false);
+                        });
+                        $("input#allBudget").prop("checked", true);
                     }
-                    if($("input#allCountries").is(':checked')){
-                        findCountryFlag = true;
+                    if ($event.target.id === "allBoxRevenue" && $event.target.checked) {
+                        $('div#box_office_income_list input').each(function () {
+                            $(this).prop("checked", false);
+                        });
+                        $("input#allBoxRevenue").prop("checked", true);
                     }
-                    if($("input#allAwards").is(':checked')){
-                        findAwardsFlag = true;
+                    if ($event.target.id === "allEthnicity" && $event.target.checked) {
+                        $('div#ethnicity_list input').each(function () {
+                            $(this).prop("checked", false);
+                        });
+                        $("input#allEthnicity").prop("checked", true);
                     }
-                    if($("input#allGenres").is(':checked')){
-                        findGenresFlag = true;
+                    if ($event.target.id === "allCreatedBy" && $event.target.checked) {
+                        $('div#createdby_list').each(function () {
+                            $(this).prop("checked", false);
+                        });
+                        $("input#allCreatedBy").prop("checked", true);
                     }
-                    if($("input#allGender").is(':checked')){
-                        findGenderFlag = true;
-                    }
-                    if($("input#allCreatedBy").is(':checked')){
-                        findCreatedByFlag = true;
-                    }
-                    if($("input#allAges").is(':checked')){
-                        findAgeFlag = true;
-                    }
-                    if($("input#allEthnicity").is(':checked')){
-                        findEthnicityFlag = true;
-                    }
-                    if($("input#allBudget").is(':checked')){
-                        findBudgetFlag = true;
-                    }
-                    if($("input#allBoxRevenue").is(':checked')){
-                        findBoxOfficeIncomeFlag = true;
-                    }
-                    if(findNameFlag && findRoleFlag && findGenresFlag && findGenderFlag && findCountryFlag && findCreatedByFlag && findEthnicityFlag && findAgeFlag && findBudgetFlag && findBoxOfficeIncomeFlag && findRatioFlag && findAwardsFlag){
-                        findFlag = true;
-                    }
-                    return findFlag;
-                });
+                }
             };
             var updateMainTalent = function (talentId, talentDetailsInfo) {
                 $scope.deletedComments = 0;
@@ -913,65 +837,66 @@
                     $scope.TalentNameData = ((talentDetailsInfo.name.split(",")).reverse()).join("  ");
                     $scope.talentDetailsInfoData = talentDetailsInfo;
 
-                  $scope.mainTalent = (result.details[0]) ? result.details[0]:'';
-                	$scope.id = (result.details[0].id) ? result.details[0].id:'';
-                	
-                	$scope.partner_id = (result.details[0].partner) ? result.details[0].partner:'';
-                	$scope.partner_name = (result.details[0].partnername) ? result.details[0].partnername:'';
-                  if(result.details[0].partner !==null && result.details[0].partner !==''){
-                    $scope.partnerData = true;
-                    $scope.talentModel.partner = result.details[0].partner;
+                    $scope.mainTalent = (result.details[0]) ? result.details[0] : '';
+                    $scope.id = (result.details[0].id) ? result.details[0].id : '';
 
-                  }
+                    $scope.partner_id = (result.details[0].partner) ? result.details[0].partner : '';
+                    $scope.partner_name = (result.details[0].partnername) ? result.details[0].partnername : '';
+                    if (result.details[0].partner !== null && result.details[0].partner !== '') {
+                        $scope.partnerData = true;
+                        $scope.talentModel.partner = result.details[0].partner;
 
-                	var phoneNumber = (result.details[0].phone) ? result.details[0].phone:'';
-                    if(phoneNumber !== null){
-                    	var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
-                    }else{
-                    	var formattedNo = '';
+                    }
+
+                    var phoneNumber = (result.details[0].phone) ? result.details[0].phone : '';
+                    if (phoneNumber !== null) {
+                        var formattedNo = phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                    } else {
+                        var formattedNo = '';
                     }
                     $scope.phone = formattedNo;
-                    $scope.email = (result.details[0].email) ? result.details[0].email :'';
-                    
-                    $scope.facebookurl = (result.details[0].facebookurl) ? 'http://www.'+result.details[0].facebookurl:'';
-                    $scope.instagramurl = (result.details[0].instagramurl) ?'http://www.'+result.details[0].instagramurl:'';
-                    $scope.twitterurl = (result.details[0].twitterurl) ?'http://www.'+result.details[0].twitterurl:'';
-                    $scope.vineurl = (result.details[0].vineurl) ? 'http://www.'+result.details[0].vineurl:'';
-                    $scope.youtubeurl = (result.details[0].youtubeurl) ?'http://www.'+result.details[0].youtubeurl:'';
-                    
+                    $scope.email = (result.details[0].email) ? result.details[0].email : '';
+
+                    $scope.facebookurl = (result.details[0].facebookurl) ? 'http://www.' + result.details[0].facebookurl : '';
+                    $scope.instagramurl = (result.details[0].instagramurl) ? 'http://www.' + result.details[0].instagramurl : '';
+                    $scope.twitterurl = (result.details[0].twitterurl) ? 'http://www.' + result.details[0].twitterurl : '';
+                    $scope.vineurl = (result.details[0].vineurl) ? 'http://www.' + result.details[0].vineurl : '';
+                    $scope.youtubeurl = (result.details[0].youtubeurl) ? 'http://www.' + result.details[0].youtubeurl : '';
+
                     $scope.creditsData = [];
                     var creditObj = {};
                     var creditArray = [];
 
-                    if(!!result.credits && result.credits.length>0){
-                    angular.forEach(result.credits, function(value, key) {
-                    creditObj.title = (value.creditname === null) ? 'Not Available' : value.creditname;
-                    creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
-                    creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
-                    creditObj.logline = (value.logline === null) ? 'Not Available' : value.logline;
-                    creditObj.budget = (value.estimatedBudget === 0 || value.estimatedBudget === null) ? 'Not Available' : '$'+numberFormatter(value.estimatedBudget);
-                    creditObj.boxoffice = (value.box_office_income === 0 || value.box_office_income === null) ? 'Not Available' : '$'+numberFormatter(value.box_office_income);
-                    creditArray.push(creditObj);
-                    creditObj = {};
-                    });
-                    $scope.creditsData = creditArray;
+                    if (!!result.credits && result.credits.length > 0) {
+                        angular.forEach(result.credits, function (value, key) {
+                            creditObj.title = (value.creditname === null) ? 'Not Available' : value.creditname;
+                            creditObj.releasedate = (value.release_date === null) ? 'Not Available' : value.release_date;
+                            creditObj.roll = (value.rolename === null) ? 'Not Available' : value.rolename;
+                            creditObj.logline = (value.logline === null) ? 'Not Available' : value.logline;
+                            creditObj.budget = (value.estimatedBudget === 0 || value.estimatedBudget === null) ? 'Not Available' : '$' + numberFormatter(value.estimatedBudget);
+                            creditObj.boxoffice = (value.box_office_income === 0 || value.box_office_income === null) ? 'Not Available' : '$' + numberFormatter(value.box_office_income);
+                            creditArray.push(creditObj);
+                            creditObj = {};
+                        });
+                        $scope.creditsData = creditArray;
                     }
 
-                    
+
                     $scope.awardsData = [];
                     var awardObj = {};
                     var awardsArray = [];
                     var i = 0;
-                    if(!!result.awards && result.awards.length>0){
-                        angular.forEach(result.awards, function(value, key) {
-                        awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
-                        awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
-                        awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
-                        awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
-                        awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
-                        awardsArray.push(awardObj);
-                        awardObj = {};
-                        i++;
+                    if (!!result.awards && result.awards.length > 0) {
+                        angular.forEach(result.awards, function (value, key) {
+                            //console.log(i);
+                            awardObj.name = (value.awardname === null) ? 'Not Available' : value.awardname;
+                            awardObj.year = (value.release_date === null || value.release_date === '0000') ? 'Not Available' : value.release_date;
+                            awardObj.type = (value.awardtype === null) ? 'Not Available' : value.awardtype;
+                            awardObj.credit = (value.name === null) ? 'Not Available' : value.name;
+                            awardObj.awardfor = (value.awardfor === null) ? 'Not Available' : value.awardfor;
+                            awardsArray.push(awardObj);
+                            awardObj = {};
+                            i++;
                         });
                         $scope.awardsData = awardsArray;
                     }
@@ -979,69 +904,69 @@
                     $scope.commentsData = [];
                     var commentObj = {};
                     var commentArray = [];
-                    
-                    if(!!result.comments && result.comments.length>0){
-                    	angular.forEach(result.comments, function(value, key) {
-                    		commentObj.text = value.text;
-                    		commentObj.name = value.name;
-                    		commentObj.date = value.date;
+
+                    if (!!result.comments && result.comments.length > 0) {
+                        angular.forEach(result.comments, function (value, key) {
+                            commentObj.text = value.text;
+                            commentObj.name = value.name;
+                            commentObj.date = value.date;
                             commentObj.comment_id = value.comment_id;
-                    		commentArray.push(commentObj);
-                    		commentObj = {};
-                    	});
-                    	$scope.commentsData = commentArray;
+                            commentArray.push(commentObj);
+                            commentObj = {};
+                        });
+                        $scope.commentsData = commentArray;
                     }
-                     
+
                     $scope.associateData = [];
                     var associateObj = {};
                     var associateArray = [];
                     var typeArray = [];
-                    if(!!result.associateInfo && result.associateInfo.length>0){
-                    	angular.forEach(result.associateInfo, function(value, key) {
-	                    	associateObj.associatename = value.type;
-	                    	associateObj.firstname = value.firstName;
-	                    	associateObj.lastname = value.lastName;
-                    		associateArray.push(associateObj);
-                    		typeArray.push(value.type);
-                    		associateObj = {};
-                    	});
+                    if (!!result.associateInfo && result.associateInfo.length > 0) {
+                        angular.forEach(result.associateInfo, function (value, key) {
+                            associateObj.associatename = value.type;
+                            associateObj.firstname = value.firstName;
+                            associateObj.lastname = value.lastName;
+                            associateArray.push(associateObj);
+                            typeArray.push(value.type);
+                            associateObj = {};
+                        });
                     }
 
-            		if($.inArray( "Manager",typeArray) === -1){
-            			associateObj.associatename = 'Manager';
-                    	associateObj.firstname = '';
-                    	associateObj.lastname = '';
-                		associateArray.push(associateObj);
-                		associateObj = {};
-            		}
-            		
-            		if($.inArray( "Agent",typeArray) === -1){
-            			associateObj.associatename = 'Agent';
-                    	associateObj.firstname = '';
-                    	associateObj.lastname = '';
-                		associateArray.push(associateObj);
-                		associateObj = {};
-            		}
-            		
-            		if($.inArray( "Attorney",typeArray) === -1){
-            			associateObj.associatename = 'Attorney';
-                    	associateObj.firstname = '';
-                    	associateObj.lastname = '';
-                		associateArray.push(associateObj);
-                		associateObj = {};
-            		}
-            		
-            		if($.inArray( "Publicist",typeArray) === -1){
-            			associateObj.associatename = 'Publicist';
-                    	associateObj.firstname = '';
-                    	associateObj.lastname = '';
-                		associateArray.push(associateObj);
-                		associateObj = {};
-            		}
-                		
-                	$scope.associateData = associateArray;
-                    
-                    
+                    if ($.inArray("Manager", typeArray) === -1) {
+                        associateObj.associatename = 'Manager';
+                        associateObj.firstname = '';
+                        associateObj.lastname = '';
+                        associateArray.push(associateObj);
+                        associateObj = {};
+                    }
+
+                    if ($.inArray("Agent", typeArray) === -1) {
+                        associateObj.associatename = 'Agent';
+                        associateObj.firstname = '';
+                        associateObj.lastname = '';
+                        associateArray.push(associateObj);
+                        associateObj = {};
+                    }
+
+                    if ($.inArray("Attorney", typeArray) === -1) {
+                        associateObj.associatename = 'Attorney';
+                        associateObj.firstname = '';
+                        associateObj.lastname = '';
+                        associateArray.push(associateObj);
+                        associateObj = {};
+                    }
+
+                    if ($.inArray("Publicist", typeArray) === -1) {
+                        associateObj.associatename = 'Publicist';
+                        associateObj.firstname = '';
+                        associateObj.lastname = '';
+                        associateArray.push(associateObj);
+                        associateObj = {};
+                    }
+
+                    $scope.associateData = associateArray;
+
+
                     $('.right-talent-container-menu-link').removeClass('active-talent-link');
                     $("#infoTab").addClass('active-talent-link');
                     $scope.activeSectionInfo = 'info';
@@ -1051,23 +976,20 @@
                 });
             };
 
-            var getTalentAllDetailsById = function(talentId){
+            var getTalentAllDetailsById = function (talentId) {
                 creditFactory.getAllNames()
-                .then(function(result) {
-                    $scope.data.Credit= {};
-                    $scope.data.Credit = result;
-                     talentFactory.getTalentAllInfoById(talentId)
-                     .then(function (result){
+                    .then(function (result) {
+                        $scope.data.Credit = {};
+                        $scope.data.Credit = result;
+                        talentFactory.getTalentAllInfoById(talentId)
+                            .then(function (result) {
+                                $scope.activeElement = result;
+                            });
+                    });
+                talentFactory.getTalentAllInfoById(talentId)
+                    .then(function (result) {
                         $scope.activeElement = result;
                     });
-                });
-                 talentFactory.getTalentAllInfoById(talentId)
-                     .then(function (result){
-                        $scope.activeElement = result;
-                    });
-                // talentFactory.getTalent(talentId, function (result) {
-                //     $scope.activeElement = result;
-                // });
             };
             $scope.updateTalentSection = function ($event, section) {
                 $('.right-talent-container-menu-link').removeClass('active-talent-link');
@@ -1083,153 +1005,159 @@
                 name: "",
                 location: "",
                 partner: "",
-                primary_role: {"*": true},
-                secondary_role: {"*": true},
-                primary_genre: {"*": true},
-                secondary_genre: {"*": true}
+                primary_role: {
+                    "*": true
+                },
+                secondary_role: {
+                    "*": true
+                },
+                primary_genre: {
+                    "*": true
+                },
+                secondary_genre: {
+                    "*": true
+                }
             };
-            
-            // Storage for all data points for filters
-            
-            var allRole = localStorageService.get("role-*");
-			if(allRole){
-				$scope.allRoleChecked = true;
-				$('#role-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#role_list').css("display","none");
-			}
-			
-			var allGenre = localStorageService.get("genre-*");
-			if(allGenre){
-				$scope.allGenreChecked = true;
-				$('#genre-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#genre_list').css("display","none");
-			}
-			
-			var allGender = localStorageService.get("gender-*");
-			if(allGender){
-				$scope.allGenderChecked = true;
-				$('#gender-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#gender_list').css("display","none");
-			}
-			
-			var male = localStorageService.get("gender-Male");
-            if(male && male.replace("gender-","") === 'Male'){
-				$scope.maleChecked = true;
-				$('#gender-arrow').addClass('arrow-down').addClass('arrow-right');
-				$('#gender_list').css("display","block");
-			}
-            
-            var female = localStorageService.get("gender-Female");
-            if(female && female.replace("gender-","") === 'Female'){
-				$scope.femaleChecked = true;
-				$('#gender-arrow').addClass('arrow-down').addClass('arrow-right');
-				$('#gender_list').css("display","block");
-			}
-            
-            var allAge = localStorageService.get("age-*");
-			if(allAge){
-				$scope.allAgeChecked = true;
-				$('#age-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#age_list').css("display","none");
-			}
-			
-			var allEthnicity = localStorageService.get("ethnicity-*");
-			if(allEthnicity){
-				$scope.allEthnicityChecked = true;
-				$('#ethnicity-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#ethnicity_list').css("display","none");
-			}
-			
-			var allCountry = localStorageService.get("country-*");
-			if(allCountry){
-				$scope.allCountryChecked = true;
-				$('#country-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#country_list').css("display","none");
-			}
-			
-			var allCreatedBy = localStorageService.get("createdby-*");
-			if(allCreatedBy){
-				$scope.allCreatedByChecked = true;
-				$('#createdby-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#createdby_list').css("display","none");
-			}
-			
-			var allAward = localStorageService.get("award-*");
-			if(allAward){
-				$scope.allAwardsChecked = true;
-				$('#award-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#awards_list').css("display","none");
-			}
-			
-			var allBudget = localStorageService.get("budget-*");
-			if(allBudget){
-				$scope.allBudgetChecked = true;
-				$('#budget-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#budget_list').css("display","none");
-			}
-			
-			var allBoxOfficeRev = localStorageService.get("boxofficerev-*");
-			if(allBoxOfficeRev){
-				$scope.allBoxOfficeRevChecked = true;
-				$('#boxofficerev-arrow').removeClass('arrow-down').addClass('arrow-right');
-				$('#box_office_income_list').css("display","none");
-			}
-			
-			angular.forEach($scope.ages,function(items){
-                if(items && items.name.trim()){
-                   var age = localStorageService.get("age-"+items.name.trim());
-                   if(age && age.replace("age-","") === items.name.trim()){
-      					items.checked = true;
-      					$('#age-arrow').addClass('arrow-down').addClass('arrow-right');
-      					$('#age_list').css("display","block");
-      				}
-                }
-			});
-			
-			angular.forEach($scope.budgets,function(items){
-                if(items && items.name.trim()){
-                   var budget = localStorageService.get("budget-"+items.name.trim());
-                   if(budget && budget.replace("budget-","") === items.name.trim()){
-      					items.checked = true;
-      					$('#budget-arrow').addClass('arrow-down').addClass('arrow-right');
-      					$('#budget_list').css("display","block");
-      				}
-                }
-			});
 
-			angular.forEach($scope.boxofficerev,function(items){
-                if(items && items.name.trim()){
-                   var age = localStorageService.get("boxofficerev-"+items.name.trim());
-                   if(age && age.replace("boxofficerev-","") === items.name.trim()){
-      					items.checked = true;
-      					$('#boxofficerev-arrow').addClass('arrow-down').addClass('arrow-right');
-      					$('#box_office_income_list').css("display","block");
-      				}
+            // Storage for all data points for filters
+
+            var allRole = localStorageService.get("role-*");
+            if (allRole) {
+                $scope.allRoleChecked = true;
+                $('#role-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#role_list').css("display", "none");
+            }
+
+            var allGenre = localStorageService.get("genre-*");
+            if (allGenre) {
+                $scope.allGenreChecked = true;
+                $('#genre-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#genre_list').css("display", "none");
+            }
+
+            var allGender = localStorageService.get("gender-*");
+            if (allGender) {
+                $scope.allGenderChecked = true;
+                $('#gender-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#gender_list').css("display", "none");
+            }
+
+            var male = localStorageService.get("gender-Male");
+            if (male && male.replace("gender-", "") === 'Male') {
+                $scope.maleChecked = true;
+                $('#gender-arrow').addClass('arrow-down').addClass('arrow-right');
+                $('#gender_list').css("display", "block");
+            }
+
+            var female = localStorageService.get("gender-Female");
+            if (female && female.replace("gender-", "") === 'Female') {
+                $scope.femaleChecked = true;
+                $('#gender-arrow').addClass('arrow-down').addClass('arrow-right');
+                $('#gender_list').css("display", "block");
+            }
+
+            var allAge = localStorageService.get("age-*");
+            if (allAge) {
+                $scope.allAgeChecked = true;
+                $('#age-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#age_list').css("display", "none");
+            }
+
+            var allEthnicity = localStorageService.get("ethnicity-*");
+            if (allEthnicity) {
+                $scope.allEthnicityChecked = true;
+                $('#ethnicity-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#ethnicity_list').css("display", "none");
+            }
+
+            var allCountry = localStorageService.get("country-*");
+            if (allCountry) {
+                $scope.allCountryChecked = true;
+                $('#country-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#country_list').css("display", "none");
+            }
+
+            var allCreatedBy = localStorageService.get("createdby-*");
+            if (allCreatedBy) {
+                $scope.allCreatedByChecked = true;
+                $('#createdby-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#createdby_list').css("display", "none");
+            }
+
+            var allAward = localStorageService.get("award-*");
+            if (allAward) {
+                $scope.allAwardsChecked = true;
+                $('#award-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#awards_list').css("display", "none");
+            }
+
+            var allBudget = localStorageService.get("budget-*");
+            if (allBudget) {
+                $scope.allBudgetChecked = true;
+                $('#budget-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#budget_list').css("display", "none");
+            }
+
+            var allBoxOfficeRev = localStorageService.get("boxofficerev-*");
+            if (allBoxOfficeRev) {
+                $scope.allBoxOfficeRevChecked = true;
+                $('#boxofficerev-arrow').removeClass('arrow-down').addClass('arrow-right');
+                $('#box_office_income_list').css("display", "none");
+            }
+
+            angular.forEach($scope.ages, function (items) {
+                if (items && items.name.trim()) {
+                    var age = localStorageService.get("age-" + items.name.trim());
+                    if (age && age.replace("age-", "") === items.name.trim()) {
+                        items.checked = true;
+                        $('#age-arrow').addClass('arrow-down').addClass('arrow-right');
+                        $('#age_list').css("display", "block");
+                    }
                 }
-			});
-			
-			
+            });
+
+            angular.forEach($scope.budgets, function (items) {
+                if (items && items.name.trim()) {
+                    var budget = localStorageService.get("budget-" + items.name.trim());
+                    if (budget && budget.replace("budget-", "") === items.name.trim()) {
+                        items.checked = true;
+                        $('#budget-arrow').addClass('arrow-down').addClass('arrow-right');
+                        $('#budget_list').css("display", "block");
+                    }
+                }
+            });
+
+            angular.forEach($scope.boxofficerev, function (items) {
+                if (items && items.name.trim()) {
+                    var age = localStorageService.get("boxofficerev-" + items.name.trim());
+                    if (age && age.replace("boxofficerev-", "") === items.name.trim()) {
+                        items.checked = true;
+                        $('#boxofficerev-arrow').addClass('arrow-down').addClass('arrow-right');
+                        $('#box_office_income_list').css("display", "block");
+                    }
+                }
+            });
             $scope.data = {
                 Role: roleFactory.getNames(function (result) {
                     $scope.data.Role = result;
-                    $scope.data.RolePriority = []; 
+                    $scope.data.RolePriority = [];
                     $scope.data.RoleNonPriority = [];
                     $scope.activeData = $scope.data.Role;
-                    angular.forEach(result,function(items){
-                    if(items && items.name.trim()){
-                       var roll = localStorageService.get("role-"+items.name.trim());
-                       if(roll && roll.replace("role-","") === items.name.trim()){
-          					items.checked = true;
-          					$('#role-arrow').addClass('arrow-down').addClass('arrow-right');
-          					$('#role_list').css("display","block");
-          				}
-                       var getPeiorityRoll =  (items.name.trim() ==="Actor" || items.name.trim() ==="Director" || items.name.trim() ==="Producer" || items.name.trim() ==="Writer");
-                       if(getPeiorityRoll){
-                            $scope.data.RolePriority.push(items);
-                       }else{
-                             $scope.data.RoleNonPriority.push(items);
-                       }
-                    }
+                    angular.forEach(result, function (items) {
+                        if (items && items.name.trim()) {
+                            var roll = localStorageService.get("role-" + items.name.trim());
+                            if (roll && roll.replace("role-", "") === items.name.trim()) {
+                                items.checked = true;
+                                $('#role-arrow').addClass('arrow-down').addClass('arrow-right');
+                                $('#role_list').css("display", "block");
+                            }
+                            var getPeiorityRoll = (items.name.trim() === "Actor" || items.name.trim() === "Director" || items.name.trim() === "Producer" || items.name.trim() === "Writer");
+                            if (getPeiorityRoll) {
+                                $scope.data.RolePriority.push(items);
+                            } else {
+                                $scope.data.RoleNonPriority.push(items);
+                            }
+                        }
                     });
                     for (var i = 0; i < result.length; i++) {
                         $scope.filterData['primary_role'][result[i].name] = false;
@@ -1237,64 +1165,64 @@
                     }
                 }),
                 TalentCreatedBy: talentFactory.getAllCreatedBy(function (result) {
-                	angular.forEach(result,function(items){
-                        if(items && items.createdby.trim()){
-                           var createdby = localStorageService.get("createdby-"+items.createdby.trim());
-                           if(createdby && createdby.replace("createdby-","") === items.createdby.trim()){
-              					items.checked = true;
-              					$('#createdby-arrow').addClass('arrow-down').addClass('arrow-right');
-              					$('#createdby_list').css("display","block");
-              				}
+                    angular.forEach(result, function (items) {
+                        if (items && items.createdby.trim()) {
+                            var createdby = localStorageService.get("createdby-" + items.createdby.trim());
+                            if (createdby && createdby.replace("createdby-", "") === items.createdby.trim()) {
+                                items.checked = true;
+                                $('#createdby-arrow').addClass('arrow-down').addClass('arrow-right');
+                                $('#createdby_list').css("display", "block");
+                            }
                         }
-        			});
+                    });
                     $scope.data.createdByNames = result;
                 }),
                 TalentAwards: talentFactory.getAwardsNames(function (result) {
-                	angular.forEach(result,function(items){
-                        if(items && items.awardname.trim()){
-                           var award = localStorageService.get("award-"+items.awardname.trim());
-                           if(award && award.replace("award-","") === items.awardname.trim()){
-              					items.checked = true;
-              					$('#award-arrow').addClass('arrow-down').addClass('arrow-right');
-              					$('#awards_list').css("display","block");
-              				}
+                    angular.forEach(result, function (items) {
+                        if (items && items.awardname.trim()) {
+                            var award = localStorageService.get("award-" + items.awardname.trim());
+                            if (award && award.replace("award-", "") === items.awardname.trim()) {
+                                items.checked = true;
+                                $('#award-arrow').addClass('arrow-down').addClass('arrow-right');
+                                $('#awards_list').css("display", "block");
+                            }
                         }
-        			});
+                    });
                     $scope.data.awardsNameList = result;
                 }),
                 TalentCountryNames: talentFactory.getCountryNames(function (result) {
-                	angular.forEach(result,function(items){
-                        if(items && items.country.trim()){
-                           var country = localStorageService.get("country-"+items.country.trim());
-                           if(country && country.replace("country-","") === items.country.trim()){
-              					items.checked = true;
-              					$('#country-arrow').addClass('arrow-down').addClass('arrow-right');
-              					$('#country_list').css("display","block");
-              				}
+                    angular.forEach(result, function (items) {
+                        if (items && items.country.trim()) {
+                            var country = localStorageService.get("country-" + items.country.trim());
+                            if (country && country.replace("country-", "") === items.country.trim()) {
+                                items.checked = true;
+                                $('#country-arrow').addClass('arrow-down').addClass('arrow-right');
+                                $('#country_list').css("display", "block");
+                            }
                         }
-        			});
+                    });
                     $scope.data.countryNames = result;
                 }),
                 Genre: genreFactory.getNames(function (result) {
-                    $scope.data.GenrePriority = []; 
+                    $scope.data.GenrePriority = [];
                     $scope.data.GenreNonPriority = [];
                     $scope.data.Genre = result;
-                    angular.forEach(result,function(items){
-                    	if(items && items.name.trim()){
-                    		var genre = localStorageService.get("genre-"+items.name.trim());
-                            if(genre && genre.replace("genre-","") === items.name.trim()){
-               					items.checked = true;
-               					$('#genre-arrow').addClass('arrow-down').addClass('arrow-right');
-              					$('#genre_list').css("display","block");
-               				}
-	                        var matchFound  = (items.name.trim() ==="Action" || items.name.trim() ==="Comedy" || items.name.trim() ==="Drama" || items.name.trim() ==="Horror" || items.name.trim() ==="Musical" || items.name.trim() ==="Thriller");
-	                        if(matchFound){
-	                            $scope.data.GenrePriority.push(items);
-	                        }else{
-	                            $scope.data.GenreNonPriority.push(items);
-	
-	                        }
-                    	}
+                    angular.forEach(result, function (items) {
+                        if (items && items.name.trim()) {
+                            var genre = localStorageService.get("genre-" + items.name.trim());
+                            if (genre && genre.replace("genre-", "") === items.name.trim()) {
+                                items.checked = true;
+                                $('#genre-arrow').addClass('arrow-down').addClass('arrow-right');
+                                $('#genre_list').css("display", "block");
+                            }
+                            var matchFound = (items.name.trim() === "Action" || items.name.trim() === "Comedy" || items.name.trim() === "Drama" || items.name.trim() === "Horror" || items.name.trim() === "Musical" || items.name.trim() === "Thriller");
+                            if (matchFound) {
+                                $scope.data.GenrePriority.push(items);
+                            } else {
+                                $scope.data.GenreNonPriority.push(items);
+
+                            }
+                        }
                     });
                     $scope.activeData = $scope.data.Genre;
                     for (var i = 0; i < result.length; i++) {
@@ -1303,16 +1231,16 @@
                     }
                 }),
                 Ethnicity: ethnicityFactory.getNames(function (result) {
-                	angular.forEach(result,function(items){
-                        if(items && items.name.trim()){
-                           var ethnicity = localStorageService.get("ethnicity-"+items.name.trim());
-                           if(ethnicity && ethnicity.replace("ethnicity-","") === items.name.trim()){
-              					items.checked = true;
-              					$('#ethnicity-arrow').addClass('arrow-down').addClass('arrow-right');
-              					$('#ethnicity_list').css("display","block");
-              				}
+                    angular.forEach(result, function (items) {
+                        if (items && items.name.trim()) {
+                            var ethnicity = localStorageService.get("ethnicity-" + items.name.trim());
+                            if (ethnicity && ethnicity.replace("ethnicity-", "") === items.name.trim()) {
+                                items.checked = true;
+                                $('#ethnicity-arrow').addClass('arrow-down').addClass('arrow-right');
+                                $('#ethnicity_list').css("display", "block");
+                            }
                         }
-        			});
+                    });
                     $scope.data.Ethnicities = result;
                 })
             };
@@ -1321,7 +1249,7 @@
             $scope.checkAll = function () {
                 $('.filter-option').prop('checked', true);
                 for (var col in $scope.filterData) {
-                    if (typeof($scope.filterData[col]) === "object") {
+                    if (typeof ($scope.filterData[col]) === "object") {
                         for (var elem in $scope.filterData[col]) {
                             $scope.filterData[col][elem] = true;
                         }
@@ -1333,7 +1261,7 @@
             $scope.uncheckAll = function () {
                 $('.filter-option').prop('checked', false);
                 for (var col in $scope.filterData) {
-                    if (typeof($scope.filterData[col]) === "object") {
+                    if (typeof ($scope.filterData[col]) === "object") {
                         for (var elem in $scope.filterData[col]) {
                             $scope.filterData[col][elem] = false;
                         }
@@ -1385,346 +1313,315 @@
 
             // Filter for talent
             $scope.talentFilter = function (talent) {
-                return textChecker(talent)
-                    && ($scope.filterData.primary_role['*'] || $scope.filterData.primary_role[talent.primary_role])
-                    && ($scope.filterData.secondary_role['*'] || $scope.filterData.secondary_role[talent.secondary_role])
-                    && ($scope.filterData.primary_genre['*'] || $scope.filterData.primary_genre[talent.primary_genre])
-                    && ($scope.filterData.secondary_genre['*'] || $scope.filterData.secondary_genre[talent.secondary_genre])
-                    ;
+                return textChecker(talent) && ($scope.filterData.primary_role['*'] || $scope.filterData.primary_role[talent.primary_role]) && ($scope.filterData.secondary_role['*'] || $scope.filterData.secondary_role[talent.secondary_role]) && ($scope.filterData.primary_genre['*'] || $scope.filterData.primary_genre[talent.primary_genre]) && ($scope.filterData.secondary_genre['*'] || $scope.filterData.secondary_genre[talent.secondary_genre]);
             };
 
             $scope.submitComment = function () {
                 // If text is in the textarea, submit the new comment
                 if ($('.comment-input').val() !== "") {
-                	$scope.commentMsg = '';
-					$scope.sweetAlert;
-                	$scope.comStatus = false;
-                	var commentObj = {};
+                    $scope.commentMsg = '';
+                    $scope.sweetAlert;
+                    $scope.comStatus = false;
+                    var commentObj = {};
                     commentFactory.addComment($('.comment-input').val(), $scope.id, function (result) {
-                    	$scope.commentsData.unshift(result);
+                        $scope.commentsData.unshift(result);
                         $('.comment-input').val('');
                     });
                 }
             };
             $scope.removeComment = function ($event, comment_id) {
-                // $($event.target).parent().slideUp();
-                // commentFactory.removeComment(comment_id);
-                // $scope.deletedComments++;
-                    var r = confirm("Do you really want to delete this comment?");
-                    if (r == true) {
-                        $($event.target).parent().slideUp();
-                        commentFactory.removeComment(comment_id);
-                        $scope.deletedComments++;
-                    } else {
-                    //return false;
-                    }
-
-            };
-        
-           
-        var addFetchAssociateName = function(talentid,typeid,associate_id){
-            var dataList = [];
-            $scope.agents = {};
-            $scope.managers = {};
-            $scope.attornies = {};
-            $scope.publicists = {};
-            $scope.agentname = {};
-            $scope.managername = {};
-            $scope.attornyname = {};
-            $scope.publicistname = {};
-            dataList['talent_id'] = talentid;
-            dataList['associte_types_id'] = typeid;
-            dataList['associate_id'] = associate_id;
-            contactFactory.addGetAssociateNamesById(dataList,function(result) {
-            	if(result.details.length > 0){
-           		 angular.forEach(result.details, function(value, key) {
-           			 if(value.type === 'Agent'){
-           				 $scope.agentname = value.name;  
-           			 }
-           			 if(value.type === 'Manager'){
-           				 $scope.managername = value.name;  
-           			 }
-           			 if(value.type === 'Attorney'){
-           				 $scope.attornyname = value.name;  
-           			 }
-           			 if(value.type === 'Publicist'){
-           				 $scope.publicistname = value.name;  
-           			 }
-           		 })
-           	 }
-           	 $scope.agents = result.agents;
-           	 $scope.managers = result.managers;
-           	 $scope.attornies = result.attornies;
-           	 $scope.publicists = result.publicists;
-                if(result==="Error"){
-                    alert("Error:Duplicate associate not allowed");
-                    return false;
-                }
-                /*for(var i in result){
-                    if(result[i].type==="Agent"){
-                    $scope.agentModel.AgentName=result[i].name;
-                    }
-                    if(result[i].type==="Manager"){
-                    $scope.agentModel.ManagerName=result[i].name;
-                    }
-                    if(result[i].type==="Attorney"){
-                    $scope.agentModel.AttorneyName=result[i].name;
-                    }
-                    if(result[i].type==="Publicist"){
-                      $scope.agentModel.PublicistName=result[i].name;
-                    }
-                }*/
-            //$scope.data.ContactInfo = result;
-            });
-            
-        };
-        
-        $scope.submitManagement = function(){
-        	var dataList = [];
-        	if($('#agent').val() && $('#agent').val() !==""){
-        		dataList['talent_id'] = $scope.activeElement.id;
-        		dataList['associte_types_id'] = 1;
-                dataList['associate_id'] = $('#agent').val();
-                contactFactory.addGetAssociateNamesById(dataList,function(result) {
-                	$scope.successmsgtalent = true;
-                });
-        	}
-        	
-        	if($('#manager').val() && $('#manager').val() !==""){
-        		dataList['talent_id'] = $scope.activeElement.id;
-        		dataList['associte_types_id'] = 2;
-                dataList['associate_id'] = $('#manager').val();
-                contactFactory.addGetAssociateNamesById(dataList,function(result) {
-                	$scope.successmsgtalent = true;
-                });
-        	}
-        	
-        	if($('#attorney').val() && $('#attorney').val() !==""){
-        		dataList['talent_id'] = $scope.activeElement.id;
-        		dataList['associte_types_id'] = 3	;
-                dataList['associate_id'] = $('#attorney').val();
-                contactFactory.addGetAssociateNamesById(dataList,function(result) {
-                	$scope.successmsgtalent = true;
-                });
-        	}
-        	
-        	if($('#publicist').val() && $('#publicist').val() !==""){
-        		dataList['talent_id'] = $scope.activeElement.id;
-        		dataList['associte_types_id'] = 4;
-                dataList['associate_id'] = $('#publicist').val();
-                contactFactory.addGetAssociateNamesById(dataList,function(result) {
-                	$scope.successmsgtalent = true;
-                });
-        	}
-            
-        }
-
-        $scope.submitAssociate = function(){
-            var getAssociateInfo = JSON.parse($scope.activeElement.associate_obj);
-            addFetchAssociateName($scope.activeElement.id,getAssociateInfo.typeid,getAssociateInfo.id);
-        };
-
-        $scope.submitTalentCreditData = function() {
-          //var credits = $('.talent-credit-select').val();
-          var role = $('.talent-credit-role-select').val() || null;
-          //$scope.model.CreditInput.id
-          var credits = [];
-          if(angular.isUndefined($scope.model)){
-            alert("Credit(s) is required filed.");
-            $("#creditEntry").focus();
-            return false;
-
-          }else if(angular.isUndefined($scope.model.CreditInput)){
-            alert("Credit(s) is required filed.");
-            $("#creditEntry").focus();
-            return false;
-          }
-          else if(role ===null){
-            alert("role is required filed.");
-            $("#rolesId").focus();
-            return false;
-          }
-          var creditsId = $scope.model.CreditInput.id;
-          credits.push(creditsId);
-          talentFactory.addTalentCreditJoin($scope.activeElement.id, credits, role, function(data) {
-            if (data.length !== $scope.activeElement.talentCreditJoins.length) {
-              $scope.showmsg.errorText = 'Credit(s) added to ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
-              $scope.activeElement.talentCreditJoins = data;
-              $scope.model = {};
-            } else {
-              $scope.showmsg.errorText = 'Credit(s) already exists';
-            }
-          });
-        };
-
-         $scope.removeTalentCreditJoin = function($event, join_id) {
-          talentFactory.removeTalentCreditJoin(join_id, function(data) {
-            $($event.target).parent().slideUp();
-            $($event.target).parent().remove();
-            $scope.showmsg.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
-            $scope.activeElement.talentCreditJoins = data;
-          });
-        };
-
-        $scope.getCreditsNames = function(val){
-      var talentNames = [];
-      return creditFactory.getCreditsNames(val, angular.noop).then(function(result){
-          return result.data;
-        });
-        };
-        // Submit comment
-        $scope.submitCommentPopUp = function() {
-          // If text is in the textarea, submit the new comment
-          if ($('.data-entry-comment-input').val() !== "") {
-            commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function(result) {
-              $scope.activeElement.comments.unshift(result);
-              //Once comment is added, append it to the comments-container and clear the textarea
-              $('.data-entry-comment-input').val('');
-            });
-          }
-        };
-
-
-             // Remove comment when delete button is clicked
-            $scope.removeComment = function($event, comment_id) {
-            var r = confirm("Do you really want to delete this comment?");
+                var r = confirm("Do you really want to delete this comment?");
                 if (r == true) {
                     $($event.target).parent().slideUp();
-                  commentFactory.removeComment(comment_id);
+                    commentFactory.removeComment(comment_id);
+                    $scope.deletedComments++;
+                } else {
+                    //return false;
+                }
+
+            };
+
+
+            var addFetchAssociateName = function (talentid, typeid, associate_id) {
+                var dataList = [];
+                $scope.agents = {};
+                $scope.managers = {};
+                $scope.attornies = {};
+                $scope.publicists = {};
+                $scope.agentname = {};
+                $scope.managername = {};
+                $scope.attornyname = {};
+                $scope.publicistname = {};
+                dataList['talent_id'] = talentid;
+                dataList['associte_types_id'] = typeid;
+                dataList['associate_id'] = associate_id;
+                contactFactory.addGetAssociateNamesById(dataList, function (result) {
+                    console.log('AssoResult');
+                    console.log(result);
+                    if (result.details.length > 0) {
+                        angular.forEach(result.details, function (value, key) {
+                            if (value.type === 'Agent') {
+                                $scope.agentname = value.name;
+                            }
+                            if (value.type === 'Manager') {
+                                $scope.managername = value.name;
+                            }
+                            if (value.type === 'Attorney') {
+                                $scope.attornyname = value.name;
+                            }
+                            if (value.type === 'Publicist') {
+                                $scope.publicistname = value.name;
+                            }
+                        })
+                    }
+                    $scope.agents = result.agents;
+                    $scope.managers = result.managers;
+                    $scope.attornies = result.attornies;
+                    $scope.publicists = result.publicists;
+                    if (result === "Error") {
+                        alert("Error:Duplicate associate not allowed");
+                        return false;
+                    }
+                });
+
+            };
+
+            $scope.submitManagement = function () {
+                var dataList = [];
+                if ($('#agent').val() && $('#agent').val() !== "") {
+                    dataList['talent_id'] = $scope.activeElement.id;
+                    dataList['associte_types_id'] = 1;
+                    dataList['associate_id'] = $('#agent').val();
+                    contactFactory.addGetAssociateNamesById(dataList, function (result) {
+                        $scope.successmsgtalent = true;
+                    });
+                }
+
+                if ($('#manager').val() && $('#manager').val() !== "") {
+                    dataList['talent_id'] = $scope.activeElement.id;
+                    dataList['associte_types_id'] = 2;
+                    dataList['associate_id'] = $('#manager').val();
+                    contactFactory.addGetAssociateNamesById(dataList, function (result) {
+                        $scope.successmsgtalent = true;
+                    });
+                }
+
+                if ($('#attorney').val() && $('#attorney').val() !== "") {
+                    dataList['talent_id'] = $scope.activeElement.id;
+                    dataList['associte_types_id'] = 3;
+                    dataList['associate_id'] = $('#attorney').val();
+                    contactFactory.addGetAssociateNamesById(dataList, function (result) {
+                        $scope.successmsgtalent = true;
+                    });
+                }
+
+                if ($('#publicist').val() && $('#publicist').val() !== "") {
+                    dataList['talent_id'] = $scope.activeElement.id;
+                    dataList['associte_types_id'] = 4;
+                    dataList['associate_id'] = $('#publicist').val();
+                    contactFactory.addGetAssociateNamesById(dataList, function (result) {
+                        $scope.successmsgtalent = true;
+                    });
+                }
+
+            }
+
+            $scope.submitAssociate = function () {
+                var getAssociateInfo = JSON.parse($scope.activeElement.associate_obj);
+                addFetchAssociateName($scope.activeElement.id, getAssociateInfo.typeid, getAssociateInfo.id);
+            };
+
+            $scope.submitTalentCreditData = function () {
+                //var credits = $('.talent-credit-select').val();
+                var role = $('.talent-credit-role-select').val() || null;
+                //$scope.model.CreditInput.id
+                var credits = [];
+                if (angular.isUndefined($scope.model)) {
+                    alert("Credit(s) is required filed.");
+                    $("#creditEntry").focus();
+                    return false;
+
+                } else if (angular.isUndefined($scope.model.CreditInput)) {
+                    alert("Credit(s) is required filed.");
+                    $("#creditEntry").focus();
+                    return false;
+                } else if (role === null) {
+                    alert("role is required filed.");
+                    $("#rolesId").focus();
+                    return false;
+                }
+                var creditsId = $scope.model.CreditInput.id;
+                credits.push(creditsId);
+                talentFactory.addTalentCreditJoin($scope.activeElement.id, credits, role, function (data) {
+                    if (data.length !== $scope.activeElement.talentCreditJoins.length) {
+                        $scope.showmsg.errorText = 'Credit(s) added to ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+                        $scope.activeElement.talentCreditJoins = data;
+                        $scope.model = {};
+                    } else {
+                        $scope.showmsg.errorText = 'Credit(s) already exists';
+                    }
+                });
+            };
+
+            $scope.removeTalentCreditJoin = function ($event, join_id) {
+                talentFactory.removeTalentCreditJoin(join_id, function (data) {
+                    $($event.target).parent().slideUp();
+                    $($event.target).parent().remove();
+                    $scope.showmsg.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+                    $scope.activeElement.talentCreditJoins = data;
+                });
+            };
+
+            $scope.getCreditsNames = function (val) {
+                var talentNames = [];
+                return creditFactory.getCreditsNames(val, angular.noop).then(function (result) {
+                    return result.data;
+                });
+            };
+            // Submit comment
+            $scope.submitCommentPopUp = function () {
+                // If text is in the textarea, submit the new comment
+                if ($('.data-entry-comment-input').val() !== "") {
+                    commentFactory.addComment($('.data-entry-comment-input').val(), $scope.activeElement.id, function (result) {
+                        $scope.activeElement.comments.unshift(result);
+                        //Once comment is added, append it to the comments-container and clear the textarea
+                        $('.data-entry-comment-input').val('');
+                    });
+                }
+            };
+
+
+            // Remove comment when delete button is clicked
+            $scope.removeComment = function ($event, comment_id) {
+                var r = confirm("Do you really want to delete this comment?");
+                if (r == true) {
+                    $($event.target).parent().slideUp();
+                    commentFactory.removeComment(comment_id);
                 } else {
                     //return false;
                 }
             };
 
-            $scope.submitData = function() {
-              dataSubmitter[$scope.section]();
+            $scope.submitData = function () {
+                dataSubmitter[$scope.section]();
             };
-            $scope.closepopup = function(){
+            $scope.closepopup = function () {
                 $scope.activeElement = {};
                 $(".hiddenPopUp").hide();
-                 $("#cover").hide();
+                $("#cover").hide();
             };
-            var checkInputs = function(section) {
-                  var result = true;
+            var checkInputs = function (section) {
+                var result = true;
 
-                  if (!section) {
-                    $('input:visible, select:visible').each(function() {
-                      if ($(this).attr('required')) {
-                        if ($(this).val() === null || $(this).val().length === 0) {
-                          result = false;
-                        }
-                      }
-                    });
-                  } else {
-                    $('.talent-form input:visible').each(function() {
-                      if ($(this).attr('required')) {
-                        if ($(this).val() === null || $(this).val().length === 0) {
-                          result = false;
-                        }
-                      }
-                      if ($(this).attr('validate') && $(this).attr('validate') === 'email' && $(this).val() !== '' && $(this).val() !=='null') {
-                    	  var re = /\S+@\S+\.\S+/;
-                          if (re.test($(this).val()) === false) {
-                            result = false;
-                          }
-                        }
-                      	if ($(this).attr('validate') && $(this).attr('validate') === 'phone' && $(this).val() !== '' && $(this).val() !=='null') {
-                    	  var re = /^\d{10}$/;
-                          if (re.test($(this).val()) === false) {
-                            result = false;
-                          }
+                if (!section) {
+                    $('input:visible, select:visible').each(function () {
+                        if ($(this).attr('required')) {
+                            console.log($(this).val());
+                            if ($(this).val() === null || $(this).val().length === 0) {
+                                result = false;
+                            }
                         }
                     });
-                  }
-                  
-                  return result;
+                } else {
+                    $('.talent-form input:visible').each(function () {
+                        if ($(this).attr('required')) {
+                            if ($(this).val() === null || $(this).val().length === 0) {
+                                result = false;
+                            }
+                        }
+                        if ($(this).attr('validate') && $(this).attr('validate') === 'email' && $(this).val() !== '' && $(this).val() !== 'null') {
+                            var re = /\S+@\S+\.\S+/;
+                            if (re.test($(this).val()) === false) {
+                                result = false;
+                            }
+                        }
+                        if ($(this).attr('validate') && $(this).attr('validate') === 'phone' && $(this).val() !== '' && $(this).val() !== 'null') {
+                            var re = /^\d{10}$/;
+                            if (re.test($(this).val()) === false) {
+                                result = false;
+                            }
+                        }
+                    });
+                }
+
+                return result;
             };
 
             // Updates visible talent count on th upper left
             var updateVisibleCount = function () {
                 setTimeout(function () {
-                    $scope.visibleTalent = $('.talent-table-row').length;
+                    //$scope.visibleTalent = $('.talent-table-row').length;
                     $scope.$apply();
                 }, 100);
 
             };
-
-            // $scope.closepopup = function(){
-            //     $s
-            // };
-
-            // $scope.showPopSection = function(){
-            //     alert('hiiiiiiiii');
-            //     $scope.showPopUp = 'Show';
-            // };
-            // JQuery
-
-            // Expand/collapse checkbox containers
-            $(document).off('click').on('click', '.filter-header-container', function () {
+            $(document).on('click', '.filter-header-container', function () {
                 if ($(this).next('.filter-option-container').is(':visible')) {
                     $(this).next('.filter-option-container').hide();
-                    $(this).find('.arrow').removeClass( "arrow-down" );
-                    $(this).find('.arrow').addClass( "arrow-right" );
+                    $(this).find('.arrow').removeClass("arrow-down");
+                    $(this).find('.arrow').addClass("arrow-right");
+
                 } else {
                     $(this).next('.filter-option-container').show();
                     //$(this).find('.arrow').removeClass( "arrow-right" );
-                    $(this).find('.arrow').addClass( "arrow-down" );
+                    $(this).find('.arrow').addClass("arrow-down");
                 }
                 // $(this).next('.filter-option-container').slideToggle();
-                
+
 
                 $('.talent-left-col-container').hide();
                 $('.talent-left-col-container').show();
             });
 
 
-            $scope.getPartnerDetailsInfo = function(){
-                    //alert($scope.partner_id);
-                addFetchAssociateName($scope.partner_id,-1,-1);
+            $scope.getPartnerDetailsInfo = function () {
+                //alert($scope.partner_id);
+                addFetchAssociateName($scope.partner_id, -1, -1);
                 $scope.setLoading(true);
-                 talentFactory.getTalentAllInfoById($scope.partner_id)
-                     .then(function (result){
+                talentFactory.getTalentAllInfoById($scope.partner_id)
+                    .then(function (result) {
                         $scope.activeElement = result.data;
-                        $scope.showmsg= {};
+                        $scope.showmsg = {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
                         $scope.talentSection = 'main';
-                            $scope.setLoading(false);
-                            $("#cover").show();
-                            $(".hiddenPopUp").show();                        
-                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                            $("#mainTab").addClass('talent-form-menu-button-active');   
+                        $scope.setLoading(false);
+                        $("#cover").show();
+                        $(".hiddenPopUp").show();
+                        $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                        $("#mainTab").addClass('talent-form-menu-button-active');
 
                     });
             };
             $(document).on('click', '#exportLink', function () {
                 var selectedTalentRowId = {};
-                selectedTalentRowId.pay=[];
-                if(!$scope.gridApi.selection.getSelectedRows().length){
+                selectedTalentRowId.pay = [];
+                if (!$scope.gridApi.selection.getSelectedRows().length) {
                     return false;
                 }
-                angular.forEach($scope.gridApi.selection.getSelectedRows(), function(items){
+                angular.forEach($scope.gridApi.selection.getSelectedRows(), function (items) {
                     selectedTalentRowId.pay.push(items.id);
                 });
-                talentFactory.exportTalentDetailXls(selectedTalentRowId, function(result) {
+                console.log(selectedTalentRowId);
+                talentFactory.exportTalentDetailXls(selectedTalentRowId, function (result) {
                     $scope.data.Contact = result;
                 });
 
             });
             $(document).on('click', '#editLink', function () {
                 //getTalentAllDetailsById($scope.getTalentData.id);
-                addFetchAssociateName($scope.getTalentData.id,-1,-1);
+                addFetchAssociateName($scope.getTalentData.id, -1, -1);
                 $scope.setLoading(true);
-                 talentFactory.getTalentAllInfoById($scope.getTalentData.id)
-                     .then(function (result){
+                talentFactory.getTalentAllInfoById($scope.getTalentData.id)
+                    .then(function (result) {
                         $scope.activeElement = result.data;
                         $scope.inputPartner = result.data.partner;
-                        $scope.showmsg= {};
-                        $scope.model= {};
+                        $scope.showmsg = {};
+                        $scope.model = {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
                         $scope.talentSection = 'main';
-                         /*creditFactory.getAllNames()
+                        /*creditFactory.getAllNames()
                         .then(function(result) {
                             $scope.data.Credit= {};
                             $scope.data.Credit = result.data;
@@ -1734,14 +1631,14 @@
                             $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                             $("#mainTab").addClass('talent-form-menu-button-active');                         
                         });*/
-                            $scope.setLoading(false);
-                            $("#cover").show();
-                            $(".hiddenPopUp").show();                        
-                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                            $("#mainTab").addClass('talent-form-menu-button-active');   
+                        $scope.setLoading(false);
+                        $("#cover").show();
+                        $(".hiddenPopUp").show();
+                        $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
+                        $("#mainTab").addClass('talent-form-menu-button-active');
 
                     });
-               
-                });
+
+            });
         });
 })();
