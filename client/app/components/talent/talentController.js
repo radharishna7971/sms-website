@@ -124,7 +124,7 @@
     var dataSubmitter = {
           Talent: function() {
             if (!checkInputs('talent')) {
-              $scope.showmsg.errorText = 'Please make sure all required fields are entered and others in correct format';
+              $scope.showmsg.errorText = 'Please fill all required fields in correct format';
             } else {
               // Set blank values to null so they can be properly saved in database
               for (var key in $scope.activeElement) {

@@ -20,7 +20,7 @@
     $scope.createUser = function() {
        $scope.errorText = '';
       if (!checkInputs()) {
-        $scope.errorText = "Please fill in all fields and in correct format";
+        $scope.errorText = "Please fill all required fields in correct format";
       }
       else if($scope.btnTxt == "Add"){
         if ( $scope.userData.password !== $scope.userData.confirmPassword) {
