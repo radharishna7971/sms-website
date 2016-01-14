@@ -332,7 +332,7 @@
             }
             var taletDataLenght = function () {
                 talentFactory.getTalentRowCount(function (data) {
-                    $scope.talentGridOption.totalItems = data[0].rowCount;
+                    //$scope.talentGridOption.totalItems = data[0].rowCount;
                     $scope.talentCount = data[0].rowCount;
                     $scope.visibleTalent = data[0].rowCount;
                 });
@@ -344,6 +344,7 @@
                     $scope.setLoading(true);
                 }
                 talentFactory.getAll(paginationOptions.pageNumber, paginationOptions.pageSize, filerDataInputs, arrayLenths, function (data) {
+                    $scope.setLoading(false);
                     angular.forEach(data, function (items) {
                         if (items.age == 0) {
                             items.age = "";
@@ -410,7 +411,8 @@
                     });
                     //alert(arrayLenths);
                     if (arrayLenths) {
-                         taletDataLenght();
+                         //taletDataLenght();
+                         $scope.talentGridOption.totalItems = data.length;
                         $scope.visibleTalent = data.length;
 
                         if (data.length > 100) {
@@ -589,7 +591,7 @@
                     } else {
                         $scope.talentGridOption.data = data;
                     }
-                    $scope.setLoading(false);
+                    
                     $scope.filteredRows = $scope.talentGridOption.data;
 
                     $('.talent-right-container-content').hide();
@@ -669,6 +671,7 @@
                         arrayLenths = 1;
                         isIncomeBudgetRatioEnabled = 1;
                     }
+                    taletDataLenght();
                 }).get();
                 bindTalentData();
             };
