@@ -148,7 +148,7 @@
     var dataSubmitter = {
       Role: function() {
         if (!checkInputs()) {
-           $scope.errorText = 'Please make sure all required fields are entered';
+           $scope.errorText = 'Please fill all required fields in correct format';
         } else {
           $scope.errorText = '';
           roleFactory.addOrEdit($scope.activeElement, function(res) {
@@ -168,7 +168,7 @@
       },
 	  Ethnicity: function() {
         if (!checkInputs()) {
-           $scope.errorText = 'Please make sure all required fields are entered';
+           $scope.errorText = 'Please fill all required fields in correct format';
         } else {
           $scope.errorText = '';
           ethnicityFactory.addOrEdit($scope.activeElement, function(res) {
@@ -188,7 +188,7 @@
       },
       Genre: function() {
         if (!checkInputs()) {
-           $scope.errorText = 'Please make sure all required fields are entered';
+           $scope.errorText = 'Please fill all required fields in correct format';
         } else {
           $scope.errorText = '';
           genreFactory.addOrEdit($scope.activeElement, function(res) {
@@ -208,7 +208,7 @@
       },
       CreditType: function() {
         if (!checkInputs()) {
-           $scope.errorText = 'Please make sure all required fields are entered';
+           $scope.errorText = 'Please fill all required fields in correct format';
         } else {
           $scope.errorText = '';
           creditTypeFactory.addOrEdit($scope.activeElement, function(res) {
@@ -228,7 +228,7 @@
       },
       Credit: function() {
         if (!checkInputs()) {
-           $scope.errorText = 'Please make sure all required fields are entered';
+           $scope.errorText = 'Please fill all required fields in correct format';
         } else {
           // Set blank values to null so they can be properly saved in database
           for (var key in $scope.activeElement) {
@@ -266,7 +266,7 @@
       },
       Contact: function() {
         if (!checkInputs()) {
-          $scope.errorText = 'Please make sure all required fields are entered and others in correct format';
+          $scope.errorText = 'Please fill all required fields in correct format';
         } else {
 
           // Set blank values to null so they can be properly saved in database
@@ -294,7 +294,7 @@
       },
       Talent: function() {
         if (!checkInputs('talent')) {
-          $scope.errorText = 'Please make sure all required fields are entered and others in correct format';
+          $scope.errorText = 'Please fill all required fields in correct format';
         } else {
           // Set blank values to null so they can be properly saved in database
           for (var key in $scope.activeElement) {
