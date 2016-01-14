@@ -177,18 +177,10 @@
       <p class="talentList"><span class="tableLable">Genre(s)</span>: <span>{{talentDetailsInfoData.genres}}</span></p>
     </div>
     <div class="talentProfileLeftPanel">
-      <table class="partnerDispalyTbl" ng-if="partnerData">
-        <tr><td>
-      <span class="tableLable">Partner</span>:</td>
-      <td>
-         <span> 
-          <input type="hidden" ng-model="inputPartner">
-          <input type="text" ng-model="talentModel.partner" typeahead-on-select="updateTalentPartner($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control partnerTypeAhead">
-          <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-        </td>
-        </span>
-      </tr>
-        </table>
+      <p ng-if="partnerData">
+      <span class="tableLable">Partner</span>:
+        <span><a href="#">{{talentModel.partner}}</a></span>
+        </p>
       <p ng-repeat="associate in associateData | orderBy:'associatename'">     
         <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
       </p>
@@ -225,7 +217,7 @@
 
 
     <tbody>
-        <tr ng-repeat="credits in creditsData | orderBy:'-releasedate'">
+        <tr ng-repeat="credits in creditsData | orderBy:'releasedate'">
             <td class="col-md-2">{{credits.title}}</td>
             <td class="col-md-1">{{credits.releasedate}}</td>
             <td class="col-md-3">{{credits.roll}}</td>
@@ -261,7 +253,7 @@
 
 
 
-        <tr ng-repeat="awards in awardsData | orderBy:'-year'">
+        <tr ng-repeat="awards in awardsData | orderBy:'year'">
             <td class="col-md-1">{{awards.year}}</td>
             <td class="col-md-3">{{awards.name}}</td>
             <td class="col-md-2">{{awards.awardfor}}</td>
