@@ -594,62 +594,7 @@
                     $("span.ui-grid-pager-row-count-label").html(" Records per page <button id='exportLink' ng-click='getSelectRow()' class='btn btn-primary btn-xs'>Export</button> <button id='editLink' style='display:none' class='btn btn-primary btn-xs'>Edit</button>");
                 });
             };
-            bindTalentData('');
-
-            function saveState() {
-                var state = $scope.gridApi.saveState.save();
-                localStorageService.set('gridState', state);
-            }
-
-            function restoreState() {
-                $timeout(function () {
-                    var state = localStorageService.get('gridState');
-                    if (state) $scope.gridApi.saveState.restore($scope, state);
-                });
-            }
-
-            $scope.mainTalent = false;
-            $scope.activeSection = 'info';
-            $scope.filterColumn = 'last_name';
-            $scope.deletedComments = 0;
-            $scope.talentGridOption.onRegisterApi = function (gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    paginationOptions.pageNumber = newPage;
-                    paginationOptions.pageSize = pageSize;
-                    bindTalentData();
-                });
-                $scope.gridApi.colMovable.on.columnPositionChanged($scope, saveState);
-                $scope.gridApi.colResizable.on.columnSizeChanged($scope, saveState);
-                $scope.gridApi.core.on.columnVisibilityChanged($scope, saveState);
-                $scope.gridApi.core.on.filterChanged($scope, saveState);
-                $scope.gridApi.core.on.sortChanged($scope, saveState);
-                restoreState();
-            };
-
-            $scope.getTalentNames = function (val) {
-                var talentNames = [];
-                return talentFactory.getNames(val, angular.noop).then(function (result) {
-                    return result.data;
-                });
-            };
-
-            $scope.getTalentDetails = function (itemval) {
-                //console.log("selected items.......!!");
-                //console.log(itemval);
-            };
-
-            $scope.updateTalentPartner = function (itemval) {
-                $scope.setLoading(true);
-                talentFactory.updateTalentPartnerName($scope.getTalentData.id, itemval.name, function (talentData) {
-                    $scope.setLoading(false);
-                });
-            };
-
-            $scope.setLoading = function (loading) {
-                $scope.isLoading = loading;
-            };
-            $scope.applyAllFilter = function () {
+             var filterAll = function () {
                 arrayLenths = 0;
                 isIncomeBudgetRatioEnabled = 0;
                 filerDataInputs.gender.length = 0;
@@ -725,6 +670,67 @@
                 }).get();
                 bindTalentData();
             };
+
+            $timeout(function() {
+                filterAll();
+            }, 500);
+            function saveState() {
+                var state = $scope.gridApi.saveState.save();
+                localStorageService.set('gridState', state);
+            }
+
+            function restoreState() {
+                $timeout(function () {
+                    var state = localStorageService.get('gridState');
+                    if (state) $scope.gridApi.saveState.restore($scope, state);
+                });
+            }
+
+            $scope.mainTalent = false;
+            $scope.activeSection = 'info';
+            $scope.filterColumn = 'last_name';
+            $scope.deletedComments = 0;
+            $scope.talentGridOption.onRegisterApi = function (gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
+                    paginationOptions.pageNumber = newPage;
+                    paginationOptions.pageSize = pageSize;
+                    bindTalentData();
+                });
+                $scope.gridApi.colMovable.on.columnPositionChanged($scope, saveState);
+                $scope.gridApi.colResizable.on.columnSizeChanged($scope, saveState);
+                $scope.gridApi.core.on.columnVisibilityChanged($scope, saveState);
+                $scope.gridApi.core.on.filterChanged($scope, saveState);
+                $scope.gridApi.core.on.sortChanged($scope, saveState);
+                restoreState();
+            };
+
+            $scope.getTalentNames = function (val) {
+                var talentNames = [];
+                return talentFactory.getNames(val, angular.noop).then(function (result) {
+                    return result.data;
+                });
+            };
+
+            $scope.getTalentDetails = function (itemval) {
+                //console.log("selected items.......!!");
+                //console.log(itemval);
+            };
+
+            $scope.updateTalentPartner = function (itemval) {
+                $scope.setLoading(true);
+                talentFactory.updateTalentPartnerName($scope.getTalentData.id, itemval.name, function (talentData) {
+                    $scope.setLoading(false);
+                });
+            };
+
+            $scope.setLoading = function (loading) {
+                $scope.isLoading = loading;
+            };
+            $scope.applyAllFilter = function () {
+                filterAll();
+            };
+            
             $scope.updateFiltersByChckBox = function ($event) {
                 if (!angular.isUndefined($event)) {
                     if ($($event.target).hasClass("role-list-class")) {
@@ -826,6 +832,118 @@
                         $("input#allCreatedBy").prop("checked", true);
                     }
                 }
+
+                $('div#role_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("role-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allRole", "unchecked");
+                        }
+                        localStorageService.set("role-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#genre_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("genre-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allGenre", "unchecked");
+                        }
+                        localStorageService.set("genre-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#gender_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("gender-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allGender", "unchecked");
+                        }
+                        localStorageService.set("gender-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#age_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("age-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allAge", "unchecked");
+                        }
+                        localStorageService.set("age-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#ethnicity_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("ethnicity-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allEthnicity", "unchecked");
+                        }
+                        localStorageService.set("ethnicity-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#country_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("country-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allCountry", "unchecked");
+                        }
+                        localStorageService.set("country-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#createdby_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("createdby-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allCreatedBy", "unchecked");
+                        }
+                        localStorageService.set("createdby-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#awards_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("award-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allAward", "unchecked");
+                        }
+                        localStorageService.set("award-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#budget_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("budget-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allBudget", "unchecked");
+                        }
+                        localStorageService.set("budget-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#box_office_income_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("boxofficerev-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allBoxOfficeRev", "unchecked");
+                        }
+                        localStorageService.set("boxofficerev-" + $(this).val().trim(), "");
+                    }
+                });
+
+               
             };
             var updateMainTalent = function (talentId, talentDetailsInfo) {
                 $scope.deletedComments = 0;
