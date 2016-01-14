@@ -3,60 +3,69 @@ var TalentCreditJoin = require('../models/talentCreditJoin.model');
 var jwt = require('jwt-simple');
 var jwtSecret = process.env.jwtSecret;
 
-exports.getAll = function(req, res) {
-  Talent.getAll(function(result) {
+exports.getAll = function (req, res) {
+  var page_number = req.body.page_number;
+  var page_size = req.body.page_size;
+  var filer_data_inputs = req.body.filer_data_inputs;
+  var array_lenths = req.body.array_lenths;
+  Talent.getAll(page_number, page_size, filer_data_inputs, array_lenths, function (result) {
     res.json(result);
   });
 };
 
-exports.getProfile = function(req, res) {
+exports.getTalentRowsNumber = function (req, res) {
+  Talent.getRowCout(function (result) {
+    res.json(result);
+  });
+};
+exports.getProfile = function (req, res) {
   var talentId = req.query.talent_id;
-  Talent.getProfile(talentId, function(result) {
+  Talent.getProfile(talentId, function (result) {
     res.json(result);
   });
 };
 
-exports.talentPartnerName = function(req, res) {
+exports.talentPartnerName = function (req, res) {
   var talentId = req.query.talent_id;
   var partnerName = req.query.partner_name;
-  Talent.talentPartnerName(talentId, partnerName, function(result) {
+  Talent.talentPartnerName(talentId, partnerName, function (result) {
     res.json(result);
   });
 };
 
-exports.getNames = function(req, res) {
-  Talent.getNames(req.query.nameChars, function(result) {
+exports.getNames = function (req, res) {
+  Talent.getNames(req.query.nameChars, function (result) {
     res.json(result);
   });
 };
 
-exports.getAllCreatedByname = function(req, res) {
-  Talent.getAllCreatedByname(function(result) {
+exports.getAllCreatedByname = function (req, res) {
+  Talent.getAllCreatedByname(function (result) {
     res.json(result);
   });
 };
 
-exports.allAwards = function(req, res) {
-  Talent.allAwards(function(result) {
+exports.allAwards = function (req, res) {
+  Talent.allAwards(function (result) {
     res.json(result);
   });
 };
 
-exports.getAllCountryNames = function(req, res) {
-  Talent.getAllCountryNames(function(result) {
+exports.getAllCountryNames = function (req, res) {
+  Talent.getAllCountryNames(function (result) {
     res.json(result);
   });
 };
 
-exports.getTalent = function(req, res) {
-  Talent.get(req.query.id, function(result) {
+exports.getTalent = function (req, res) {
+  Talent.get(req.query.id, function (result) {
     res.json(result);
   });
 };
 
-exports.addOrEdit = function(req, res) {
+exports.addOrEdit = function (req, res) {
   req.body.last_edited = new Date().toMysqlFormat();
-  Talent.addOrEdit(req.body, function(err, result) {
+  Talent.addOrEdit(req.body, function (err, result) {
     if (!err) {
       res.json(result);
     } else {
@@ -65,14 +74,14 @@ exports.addOrEdit = function(req, res) {
   });
 };
 
-exports.remove = function(req, res) {
+exports.remove = function (req, res) {
   var data = {
     talentId: req.query.id,
     userId: req.query.user_id,
     deletedAt: new Date().toMysqlFormat()
   };
 
-  Talent.remove(data, function(success) {
+  Talent.remove(data, function (success) {
     if (success) {
       res.json(true);
     } else {
@@ -81,14 +90,14 @@ exports.remove = function(req, res) {
   });
 };
 
-exports.addTalentCreditJoin = function(req, res) {
-  TalentCreditJoin.add(req.body.talent_id, req.body.credit_ids, req.body.role_id, function(result) {
+exports.addTalentCreditJoin = function (req, res) {
+  TalentCreditJoin.add(req.body.talent_id, req.body.credit_ids, req.body.role_id, function (result) {
     res.json(result);
   });
 };
 
-exports.deleteTalentCreditJoin = function(req, res) {
-  TalentCreditJoin.remove(req.query.join_id, function(result) {
+exports.deleteTalentCreditJoin = function (req, res) {
+  TalentCreditJoin.remove(req.query.join_id, function (result) {
     res.json(result);
   })
 }
@@ -98,9 +107,9 @@ exports.deleteTalentCreditJoin = function(req, res) {
  * You first need to create a formatting function to pad numbers to two digits…
  **/
 function twoDigits(d) {
-    if(0 <= d && d < 10) return "0" + d.toString();
-    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
-    return d.toString();
+  if (0 <= d && d < 10) return "0" + d.toString();
+  if (-10 < d && d < 0) return "-0" + (-1 * d).toString();
+  return d.toString();
 }
 
 /**
@@ -109,6 +118,6 @@ function twoDigits(d) {
  * to apply this to more than one Date object, having it as a prototype
  * makes sense.
  **/
-Date.prototype.toMysqlFormat = function() {
-    return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+Date.prototype.toMysqlFormat = function () {
+  return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 };
