@@ -348,8 +348,9 @@
 
     $scope.submitTalentCreditData = function() {
          //var credits = $('.talent-credit-select').val();
-          var role = $('.talent-credit-role-select').val() || null;
+          var role = $('#roleId').val() || null;
           //$scope.model.CreditInput.id
+         
           var credits = [];
           if(angular.isUndefined($scope.model.creditsObj)){
             alert("Credit(s) is required filed.");
@@ -387,12 +388,14 @@
     };
 
     $scope.removeTalentCreditJoin = function($event, join_id) {
-      talentFactory.removeTalentCreditJoin(join_id, function(data) {
-        $($event.target).parent().slideUp();
-        $($event.target).parent().remove();
-        $scope.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
-        $scope.activeElement.talentCreditJoins = data;
-      });
+      if(confirm("Do you really want to delete this credit?")){
+        talentFactory.removeTalentCreditJoin(join_id, function(data) {
+          $($event.target).parent().slideUp();
+          $($event.target).parent().remove();
+          $scope.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+          $scope.activeElement.talentCreditJoins = data;
+        });
+      }
     }
 
     // This contains functions for removing data from the database
