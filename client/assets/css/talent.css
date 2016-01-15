@@ -310,6 +310,18 @@
     font-weight: 500;
     
 }
+.credit-info7 {
+    background-color:white;
+    padding-right: 6%;
+    margin-right: -4px;
+    border-left: 1px solid #66B3F1;
+    border-right: 1px solid #66B3F1;
+    border-top: 1px solid #66B3F1;
+    border-bottom: 1px solid #66B3F1;
+    height: 26px;
+    font-weight: 500;
+    
+}
 .credit-info3 {
    
     background-color:white;

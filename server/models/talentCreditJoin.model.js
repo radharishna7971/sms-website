@@ -56,7 +56,7 @@ TalentCreditJoin.remove = function(joinId, callback) {
         SELECT \
     	credit_talent_role_join.id AS id, \
          credits.name AS credit, \
-         credits.release_date AS release_date, \
+         DATE_FORMAT(credits.release_date,"%Y") as release_date, \
          roles.name AS role \
         FROM credit_talent_role_join \
         LEFT JOIN talent ON credit_talent_role_join.talent_id = talent.id \

@@ -1049,6 +1049,9 @@
                             associateObj.associatename = value.type;
                             associateObj.firstname = value.firstName;
                             associateObj.lastname = value.lastName;
+                            associateObj.email = value.email;
+                            associateObj.phone = value.phone;
+                            associateObj.companyname = value.companyname;
                             associateArray.push(associateObj);
                             typeArray.push(value.type);
                             associateObj = {};
@@ -1556,7 +1559,7 @@
 
             $scope.submitTalentCreditData = function () {
                 //var credits = $('.talent-credit-select').val();
-                var role = $('.talent-credit-role-select').val() || null;
+                var role = $('#rolesId').val() || null;
                 //$scope.model.CreditInput.id
                 var credits = [];
                 if (angular.isUndefined($scope.model)) {
@@ -1587,12 +1590,14 @@
             };
 
             $scope.removeTalentCreditJoin = function ($event, join_id) {
-                talentFactory.removeTalentCreditJoin(join_id, function (data) {
-                    $($event.target).parent().slideUp();
-                    $($event.target).parent().remove();
-                    $scope.showmsg.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
-                    $scope.activeElement.talentCreditJoins = data;
-                });
+                if(confirm("Do you really want to delete this credit?")){
+                    talentFactory.removeTalentCreditJoin(join_id, function (data) {
+                        $($event.target).parent().slideUp();
+                        $($event.target).parent().remove();
+                        $scope.showmsg.errorText = 'Credit removed from ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
+                        $scope.activeElement.talentCreditJoins = data;
+                    });
+                }
             };
 
             $scope.getCreditsNames = function (val) {

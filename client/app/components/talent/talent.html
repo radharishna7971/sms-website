@@ -155,7 +155,8 @@
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
-                <button  class=" right-talent-container-menu-link credit-info1" ng-click="updateTalentSection($event, 'info')">Profile & Contact Info</button>
+                <button id="infoTab"  class=" right-talent-container-menu-link credit-info1" ng-click="updateTalentSection($event, 'info')">Profile</button>
+                <button class=" right-talent-container-menu-link credit-info7" ng-click="updateTalentSection($event, 'reps')">Reps</button>
                 <button class=" right-talent-container-menu-link credit-info2" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</button>
                 <button class=" right-talent-container-menu-link credit-info3" ng-click="updateTalentSection($event, 'credits')">Credits</button>
                 <button class="right-talent-container-menu-link credit-info4" ng-click="updateTalentSection($event, 'award')">Awards</button>
@@ -181,14 +182,21 @@
       <span class="tableLable">Partner</span>:
         <span><a href="#">{{talentModel.partner}}</a></span>
         </p>
-      <p ng-repeat="associate in associateData | orderBy:'associatename'">     
-        <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>
-      </p>
       <!-- <p><span class="tableLable">Partner</span>: <span><a href="#" 
         ng-click="getPartnerDetailsInfo()">{{partner_name}}</a></span></p> -->
       <p><span class="tableLable">Email</span>: <span>{{email}}</span></p>
       <p><span class="tableLable">Phone</span>: <span>{{phone}}</span></p>
   </div>
+    </div>
+    
+    <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='reps'">
+    </br>
+	    <p ng-repeat="associate in associateData | orderBy:'associatename'">     
+	        <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>,
+	        <span class="tableLable">Company Name</span>: <span>{{associate.companyname}}</span>,
+	        <span class="tableLable">Email</span>: <span>{{associate.email}}</span>,
+	        <span class="tableLable">Phone</span>: <span>{{associate.phone}}</span>
+	    </p>
     </div>
     
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
@@ -450,12 +458,24 @@
                   </br>
                     <input class="credit-input credit-submit" ng-click="submitTalentCreditData()" type="submit" value="Update">
                 </form>
-                <div class="talent-credit-join-container">
+                <!-- <div class="talent-credit-join-container">
                     <div ng-repeat="join in activeElement.talentCreditJoins">
                         <p class="talent-credit-join-text">{{join.credit}} ({{join.release_date}}) | {{join.role}}</p>
                         <div class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</div>
                     </div>
-                </div>
+                </div> -->
+                <table class="table table-striped creditsRoleJoin">
+                    <tr>
+                      <th>Credit</th>
+                      <th>Release Year</th>
+                      <th>Role</th>
+                      <th></th>
+                    </tr>
+                    <tr ng-repeat="join in activeElement.talentCreditJoins">
+                      <td>{{join.credit}}</td><td>{{join.release_date}}</td>
+                      <td>{{join.role}}</td><td><span class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</span></td>
+                    </tr>
+                  </table>
 
             </div>
 
