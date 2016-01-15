@@ -291,7 +291,7 @@ FROM talent t where t.id= ' + talentId)
                 .then(function (results3) {
                   ob.credits = results3[0];
 
-                  db.knex.raw('select `at`.type,a.firstName,a.lastName from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id  where atj.talent_id = ' + talentId)
+                  db.knex.raw('select `at`.type,a.firstName,a.lastName,a.email,a.phone,c.`name` as companyname from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id inner join company c on c.id=a.company_id where atj.talent_id = ' + talentId)
                     .then(function (results4) {
                       ob.associateInfo = results4[0];
                       callback(ob);
