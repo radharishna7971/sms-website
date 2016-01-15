@@ -1,10 +1,3 @@
-.user-main-container {
-    height: 100%;
-    overflow-x: scroll;
-    font-size: 13px;
-    min-width: 750px;
-}
-
 .user-table, .user-table-row, .user-table-column {
    border: 1px solid black;
    border-collapse:collapse;
@@ -12,10 +5,17 @@
 
 .user-table {
   margin-left: 20px;
-  max-width: 600px;
-  margin-top: 20px;
+  width: 700px;
+  margin-top: 29px;
   float: left;
-  
+  }
+
+.table-scroll {
+    overflow-y: scroll;
+    float: left;
+    max-width: 800px;
+    height: 530px;
+    margin-top: 49px;
 }
 
 .user-table-row {
@@ -23,18 +23,23 @@
 }
 
 .user-table-column {
-  padding-left: 3px;
+  padding-left: 0px;
   height: 30px;
 }
 
 .center {
-  padding: 0px;
+  padding: 10px;
   text-align: center;
 }
 
 .user-table-header {
-  background-color: #66B3F1;
+    background-color: #66B3F1;
+    position: absolute;
+    width: 700px;
+    margin-top: -30px;
+    margin-left: -1px;
 }
+
 .user-table-header td{
   width: 200px;
   color: white;

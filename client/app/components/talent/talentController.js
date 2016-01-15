@@ -1049,6 +1049,9 @@
                             associateObj.associatename = value.type;
                             associateObj.firstname = value.firstName;
                             associateObj.lastname = value.lastName;
+                            associateObj.email = value.email;
+                            associateObj.phone = value.phone;
+                            associateObj.companyname = value.companyname;
                             associateArray.push(associateObj);
                             typeArray.push(value.type);
                             associateObj = {};
