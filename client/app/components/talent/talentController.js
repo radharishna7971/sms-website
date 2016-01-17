@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular.module('talentController', ['talentFactory', 'contactFactory', 'roleFactory', 'genreFactory', 'commentFactory', 'talentGridFactory', 'ethnicityFactory'])
-        .controller('talentController', function ($scope, $q, $compile, $timeout, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory, localStorageService) {
+        .controller('talentController', function ($rootScope, $scope, $q, $compile, $timeout, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, commentFactory, talentGridFactory, ethnicityFactory, localStorageService) {
 
             ///////////////////////////////
             /// Initialize View
@@ -256,14 +256,10 @@
             };
             var checkRowId = "";
             $scope.showInfo = function (event, row) {
-                row.isrowSelectionChangedOnclcik = false;
-                if ($('div.ui-grid-cell').hasClass('rowClicked')) {
-                    $('div.ui-grid-cell').removeClass('rowClicked');
-                }
-
-                //console.log(event);
-                //$(event.target).closest('div.ui-grid-row').addClass('row-selected');
-
+                $scope.filteredRows = $scope.gridApi.core.getVisibleRows($scope.gridApi.grid);
+                angular.forEach($scope.filteredRows, function(items){
+                    items.isrowSelectionChangedOnclcik = false;
+                });
                 var clickedRowId = parseInt(row.entity.id);
                 if (parseInt(checkRowId) === clickedRowId && $("#editLink").is(':visible')) {
                     $('.talent-right-container-content').hide();
@@ -709,7 +705,6 @@
                 $scope.gridApi.core.on.sortChanged($scope, saveState);
                 restoreState();
             };
-
             $scope.getTalentNames = function (val) {
                 var talentNames = [];
                 return talentFactory.getNames(val, angular.noop).then(function (result) {
