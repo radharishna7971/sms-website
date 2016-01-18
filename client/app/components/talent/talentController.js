@@ -827,7 +827,7 @@
                         $("input#allEthnicity").prop("checked", true);
                     }
                     if ($event.target.id === "allCreatedBy" && $event.target.checked) {
-                        $('div#createdby_list').each(function () {
+                        $('div#createdby_list input').each(function () {
                             $(this).prop("checked", false);
                         });
                         $("input#allCreatedBy").prop("checked", true);
