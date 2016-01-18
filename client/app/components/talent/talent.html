@@ -4,7 +4,8 @@
       {{talentGridOption.data.length}}/{{talentCount}}
     </div>
     <div class="talent-left-col-container">
-      <button class="btn btn-primary btn-xs" ng-click="applyAllFilter()">Apply</button>
+      <span class="applyReset"><button class="btn btn-primary btn-xs" ng-click="applyAllFilter()">Apply</button>
+      <button class="btn btn-primary btn-xs" ng-click="applyReset()">Reset</button></span>
       <div class="filter-header-container">
         <p class="filter-header">Name</p>
       </div>
@@ -70,7 +71,7 @@
         <div class="arrow " id='ethnicity-arrow'></div>
       </div>
       <div id="ethnicity_list" class="filter-option-container">
-        <input class="filter-option" id="allEthnicity" ng-checked="{{allEthnicityChecked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*">All
+        <input class="filter-option all-option" id="allEthnicity" ng-checked="{{allEthnicityChecked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*">All
         <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" ng-if="ethnicity.name!==''">
           <input class="filter-option ethnicity-list-class" ng-checked="{{ethnicity.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}">{{ethnicity.name}}
         </div>
@@ -85,7 +86,7 @@
         <div class="arrow " id='country-arrow'></div>
       </div>
       <div id="country_list" class="filter-option-container">
-        <input class="filter-option" id="allCountries" ng-checked="{{allCountryChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
+        <input class="filter-option all-option" id="allCountries" ng-checked="{{allCountryChecked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="*">All
         <div ng-repeat="item in data.countryNames | orderBy : 'country'">
           <input class="filter-option country-list-class" ng-checked="{{item.checked}}" ng-click="updateFiltersByChckBox($event)" type="checkbox" col="primary_genre" value="{{item.country}}">{{item.country}}
         </div>

@@ -702,3 +702,10 @@ margin-left: 13%;
   margin-left: 5px;
 
 }
+.applyReset{
+  width: 100%;
+  margin: 3px;
+}
+.applyReset button{
+  margin-right: 10%;
+}
