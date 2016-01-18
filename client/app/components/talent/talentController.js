@@ -328,7 +328,9 @@
             }
             var taletDataLenght = function () {
                 talentFactory.getTalentRowCount(function (data) {
-                    $scope.talentGridOption.totalItems = data[0].rowCount;
+                    if (!arrayLenths){
+                        $scope.talentGridOption.totalItems = data[0].rowCount;
+                    }
                     $scope.talentCount = data[0].rowCount;
                     $scope.visibleTalent = data[0].rowCount;
                 });
@@ -407,6 +409,7 @@
                     	}
                     });
                     //alert(arrayLenths);
+
                     if (arrayLenths) {
                          //taletDataLenght();
                          $scope.talentGridOption.totalItems = data.length;
