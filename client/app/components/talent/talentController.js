@@ -1719,6 +1719,7 @@
             };
 
             $scope.applyReset = function(){
+                    $scope.filerByname = "";
                     $('.filter-option').prop('checked', false);
                     $('.all-option').prop('checked', true);
 
