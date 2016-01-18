@@ -328,7 +328,7 @@
             }
             var taletDataLenght = function () {
                 talentFactory.getTalentRowCount(function (data) {
-                    //$scope.talentGridOption.totalItems = data[0].rowCount;
+                    $scope.talentGridOption.totalItems = data[0].rowCount;
                     $scope.talentCount = data[0].rowCount;
                     $scope.visibleTalent = data[0].rowCount;
                 });
@@ -1385,7 +1385,7 @@
                 for (var col in $scope.filterData) {
                     if (typeof ($scope.filterData[col]) === "object") {
                         for (var elem in $scope.filterData[col]) {
-                            $scope.filterData[col][elem] = false;
+                            $scope.filterData[col][elem] = true;
                         }
                     }
                 }
@@ -1717,6 +1717,123 @@
 
                     });
             };
+
+            $scope.applyReset = function(){
+                    $('.filter-option').prop('checked', false);
+                    $('.all-option').prop('checked', true);
+
+                    $('div#role_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("role-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allRole", "unchecked");
+                        }
+                        localStorageService.set("role-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#genre_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("genre-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allGenre", "unchecked");
+                        }
+                        localStorageService.set("genre-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#gender_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("gender-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allGender", "unchecked");
+                        }
+                        localStorageService.set("gender-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#age_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("age-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allAge", "unchecked");
+                        }
+                        localStorageService.set("age-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#ethnicity_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("ethnicity-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allEthnicity", "unchecked");
+                        }
+                        localStorageService.set("ethnicity-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#country_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("country-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allCountry", "unchecked");
+                        }
+                        localStorageService.set("country-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#createdby_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("createdby-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allCreatedBy", "unchecked");
+                        }
+                        localStorageService.set("createdby-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#awards_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("award-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allAward", "unchecked");
+                        }
+                        localStorageService.set("award-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#budget_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("budget-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allBudget", "unchecked");
+                        }
+                        localStorageService.set("budget-" + $(this).val().trim(), "");
+                    }
+                });
+
+                $('div#box_office_income_list input').each(function () {
+                    if ($(this).val().trim() !== "" && $(this).prop("checked")) {
+                        localStorageService.set("boxofficerev-" + $(this).val().trim(), $(this).val().trim());
+                    } else {
+                        if ($(this).val().trim() === '*') {
+                            localStorageService.set("allBoxOfficeRev", "unchecked");
+                        }
+                        localStorageService.set("boxofficerev-" + $(this).val().trim(), "");
+                    }
+                });
+                    filterAll();
+            };
+
             $(document).on('click', '#exportLink', function () {
                 var selectedTalentRowId = {};
                 selectedTalentRowId.pay = [];
