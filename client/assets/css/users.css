@@ -1,3 +1,15 @@
+.user-main-container {
+    width: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    height: -moz-calc(100% - 48px);
+    height: -webkit-calc(100% - 48px);
+    height: calc(100% - 48px);
+}
+
 .user-table, .user-table-row, .user-table-column {
    border: 1px solid black;
    border-collapse:collapse;
