@@ -399,8 +399,9 @@
 .RepsScroll {
     overflow: auto;
     height: 170px;
-    margin-top: 15px;
+    margin-top: 3px;
     margin-left: 37px;
+    width:93%;
 }
 
 .talent-right-container-other-div-reps p {
