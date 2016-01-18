@@ -189,8 +189,9 @@
   </div>
     </div>
     
-    <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='reps'">
+    <div class="talent-right-container-other-div-reps" ng-show="activeSectionInfo==='reps'">
     </br>
+    <div class="RepsScroll">
 	    <p ng-repeat="associate in associateData | orderBy:'associatename'">     
 	        <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>,
 	        <span class="tableLable">Company Name</span>: <span>{{associate.companyname}}</span>,
@@ -198,7 +199,8 @@
 	        <span class="tableLable">Phone</span>: <span>{{associate.phone}}</span>
 	    </p>
     </div>
-    
+    </div>
+
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
     </br>
     <p><span class="tableLable">Facebook Url</span>: <span><a target="_blank" href="{{facebookurl}}">{{facebookurl}}</a></span></p>

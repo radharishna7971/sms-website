@@ -219,7 +219,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \
     where cjoin.talent_id = t.id) as boxbudgetratio \
-  FROM talent t' + applyWhereFilter + offSetLimitValueStr)
+  FROM talent t' + applyWhereFilter +' order by name asc '+ offSetLimitValueStr)
     .then(function (results) {
       var data = results[0];
       callback(data);
