@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('authFactory', [])
-  .factory('authFactory', function($http, $state) {
+  .factory('authFactory', function($http, $state, localStorageService) {
     return {
       login: function(email, password) {
         return $http({
@@ -67,7 +67,7 @@
 			id: window.localStorage.smstudiosId
 		}
 		}).then(function(res) {
-			console.log(res);
+			localStorageService.clearAll();
 		});
         delete window.localStorage.smstudiosJwtToken;
         delete window.localStorage.smstudiosId;

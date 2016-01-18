@@ -651,7 +651,7 @@ table.creditSection th, table.creditSection td {
   float: left;
   position: absolute;
   left: 200px;
-  top:2px;
+  top:-10px;
   display: block;
   z-index: 2px;
 }

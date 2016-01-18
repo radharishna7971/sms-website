@@ -342,6 +342,7 @@
                 talentFactory.getAll(paginationOptions.pageNumber, paginationOptions.pageSize, filerDataInputs, arrayLenths, function (data) {
                     $scope.setLoading(false);
                     angular.forEach(data, function (items) {
+                    	if(items.name !== '' && items.name !== null){
                         if (items.age == 0) {
                             items.age = "";
                         }
@@ -403,7 +404,7 @@
                             items.boxbudgetratio = incomeMulStr;
 
                         }
-
+                    	}
                     });
                     //alert(arrayLenths);
                     if (arrayLenths) {
@@ -952,7 +953,7 @@
                 talentFactory.talentProfile(talentId, function (result) {
                     $scope.talentModel = {};
                     $scope.partnerData = false;
-                    $scope.TalentNameData = ((talentDetailsInfo.name.split(",")).reverse()).join("  ");
+                    $scope.TalentNameData = (talentDetailsInfo.name) ? ((talentDetailsInfo.name.split(",")).reverse()).join("  ") : '';
                     $scope.talentDetailsInfoData = talentDetailsInfo;
 
                     $scope.mainTalent = (result.details[0]) ? result.details[0] : '';
@@ -1678,7 +1679,7 @@
                 }, 100);
 
             };
-            $(document).on('click', '.filter-header-container', function () {
+            $(document).off('click').on('click', '.filter-header-container', function () {
                 if ($(this).next('.filter-option-container').is(':visible')) {
                     $(this).next('.filter-option-container').hide();
                     $(this).find('.arrow').removeClass("arrow-down");
