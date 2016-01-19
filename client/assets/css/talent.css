@@ -396,22 +396,6 @@
     margin-left: 2px;
 }
 
-.RepsScroll {
-    overflow: auto;
-    height: 170px;
-    margin-top: 3px;
-    margin-left: 37px;
-    width:93%;
-}
-
-.talent-right-container-other-div-reps p {
-    font-size: 14px;
-    font-family: vardana;
-    color: #555;
-    margin-left: 0px;
-    width: 97%;
-} 
-
 .comment-div {
   margin-bottom: 5px;
   clear: left;
@@ -524,6 +508,63 @@
   color: #fff;
   font-weight: bold;
 }
+
+.ui-grid-pager-row-count-picker select {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 13px;
+    line-height: 0.5;
+    border-radius: 3px;
+    height: 26px;
+    width: 70px;
+    display: inline;
+}
+
+
+.ui-grid-pager-control input {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 13px;
+    line-height: 0.5;
+    border-radius: 3px;
+    display: inline;
+    height: 26px;
+    width: 53px;
+    vertical-align: top;
+}
+
 table.creditSection {
     display: table;
     border-collapse: collapse;
