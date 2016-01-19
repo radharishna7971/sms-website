@@ -190,16 +190,28 @@
   </div>
     </div>
     
-    <div class="talent-right-container-other-div-reps" ng-show="activeSectionInfo==='reps'">
+   <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='reps'">
     </br>
-    <div class="RepsScroll">
-	    <p ng-repeat="associate in associateData | orderBy:'associatename'">     
-	        <span class="tableLable">{{associate.associatename}}</span>: <span>{{associate.firstname}} {{associate.lastname}}</span>,
-	        <span class="tableLable">Company Name</span>: <span>{{associate.companyname}}</span>,
-	        <span class="tableLable">Email</span>: <span>{{associate.email}}</span>,
-	        <span class="tableLable">Phone</span>: <span>{{associate.phone}}</span>
-	    </p>
-    </div>
+    <table class="creditSection">
+    <thead>
+        <tr>
+            <th class="col-md-2">Type</th>
+            <th class="col-md-3">Name</th>
+            <th class="col-md-2">Company</th>
+            <th class="col-md-3">Email</th>
+            <th class="col-md-2">Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="associate in associateData | orderBy:'associatename'">
+            <td class="col-md-2">{{associate.associatename}}</td>
+            <td class="col-md-3">{{associate.firstname}} {{associate.lastname}}</td>
+            <td class="col-md-2">{{associate.companyname}}</td>
+            <td class="col-md-3">{{associate.email}}</td>
+            <td class="col-md-2">{{associate.phone}}</td>
+        </tr>
+        </tbody>
+    </table>
     </div>
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='socialprofiles'">
