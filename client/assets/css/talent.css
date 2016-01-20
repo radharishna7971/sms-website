@@ -265,12 +265,12 @@
 
 .talent-data-comment {
     height: 176px;
-    width: 727px;
+    width: 63%;
     border: 1px solid #66B3F1;
     float: left;
     overflow-y: scroll;
     overflow-x: hidden;
-    margin-left: 29px;
+    margin-left: 2%;
 }
 
 .right-talent-container-menu {
@@ -374,12 +374,12 @@
   border: none;
   border: 1px solid #66B3F1;
   height: 103px;
-  width: 357px;
+  width: 31%;
   padding: 5px;
   margin: 0px;
   font-size: 14px;
   resize: none;
-  margin-left: 5px;
+  margin-left: 1%;
 }
 
 .comment-submit {
@@ -495,10 +495,9 @@
 table.creditSection {
     display: table;
     border-collapse: collapse;
-    width: 1092px;
+    width: 99%;
     margin-bottom: 5px;
-    margin-left: 15px;
-    width: 100%;
+    margin-left: 22px;
 }
 table.creditSection thead, table.creditSection tbody {
     float: left;
@@ -514,7 +513,7 @@ table.creditSection tr {
   width: 100%;
   display: table;
   text-align: left;
-  height: 55px;
+  height: 10%;
   margin-left: -4px;
 }
 table.creditSection th {
