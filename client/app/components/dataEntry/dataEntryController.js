@@ -12,7 +12,8 @@
     $scope.model ={};
     $scope.model.creditsObj = {};
     $scope.addAgentRow = {};
-    $scope.noResultsTag = null;
+    $scope.talenNameNoResult = null;
+    $scope.cmpnyNameNoResult = null;
     $scope.model ={};
     $scope.successmsg = false;
     $scope.isCmpnyDisabled = true;
@@ -538,33 +539,61 @@
 
     $scope.selectTaletCmpny = {
         formatNoMatches: function(term) {
-            console.log("Term: " + term);
-            var message = '<a ng-click="addTag()">Add tag:"' + term + '"</a>';
+            //console.log("Term: " + term);
+            var message = '<a ng-click="addTagCmpnyName()" >Add:"' + term + '"</a>';
             if(!$scope.$$phase) {
                 $scope.$apply(function() {
-                    $scope.noResultsTag = term;
-                });
-            }
-            return message;
-        }
-    };
-    $scope.selectTaletAgent = {
-        formatNoMatches: function(term) {
-            console.log("Term: " + term);
-            var message = '<a ng-click="addTag()">Add tag:"' + term + '"</a>';
-            if(!$scope.$$phase) {
-                $scope.$apply(function() {
-                    $scope.noResultsTag = term;
+                    $scope.cmpnyNameNoResult = term;
                 });
             }
             return message;
         }
     };
 
-    $scope.addTag = function() {
-        console.log("hiii");
+    $scope.selectTaletAgent = {
+        formatNoMatches: function(term) {
+            //console.log("Term: " + term);
+            var message = '<a ng-click="addTagAgentName()">Add:"' + term + '"</a>';
+            if(!$scope.$$phase) {
+                $scope.$apply(function() {
+                    $scope.talenNameNoResult = term;
+                });
+            }
+            return message;
+        }
     };
-    $scope.$watch('noResultsTag', function(newVal, oldVal) {
+
+    $scope.addTagCmpnyName = function() {
+      
+        $scope.allAgentDetails.push({
+            companyid: $scope.cmpnyNameNoResult+'#newCmpny',
+            companyname: $scope.cmpnyNameNoResult
+        });
+        alert("New company name added into list.Type company name again and select the new company name.");
+        //console.log("hiii");
+    };
+
+    $scope.addTagAgentName = function() {
+        alert("New agent name added into list.Type agent name again and select the new agent name.");  
+        //$scope.addAgentRow.name = $scope.talenNameNoResult;
+        $scope.agentNameByType.push({
+            allAgentDetails: $scope.talenNameNoResult+'#newAgent',
+            name: $scope.talenNameNoResult
+        });
+        //console.log("hiiiiiiiii");
+        //console.log("hiii");
+    };
+    $scope.$watch('talenNameNoResult', function(newVal, oldVal) {
+        if(newVal && newVal !== oldVal) {
+            $timeout(function() {
+                var noResultsLink = $('.select2-no-results');
+                console.log(noResultsLink.contents());
+                $compile(noResultsLink.contents())($scope);
+            });
+        }
+    }, true);
+
+    $scope.$watch('cmpnyNameNoResult', function(newVal, oldVal) {
         if(newVal && newVal !== oldVal) {
             $timeout(function() {
                 var noResultsLink = $('.select2-no-results');
@@ -592,7 +621,7 @@
     $scope.addAgentRowData = function(){
       var objectForamtted = {};
       console.log($scope.addAgentRow);
-      // return false;
+      //return false;
       var isNewRow = 0;
       
       if(angular.isUndefined($scope.addAgentRow.name)){
@@ -604,9 +633,22 @@
           return false;
         }
         var nameArray = JSON.parse($scope.addAgentRow.name);
-        objectForamtted['agentNameid'] = nameArray.asdid;
-        objectForamtted['agentTypeid'] = nameArray.atypeid;
-        objectForamtted['cmpnyId'] = $scope.addAgentRow.companyNameId;
+        if(angular.isUndefined(nameArray.asdid) || angular.isUndefined(nameArray.atypeid)){
+            objectForamtted['agentNameid'] = nameArray.name;
+            objectForamtted['agentTypeid'] = $scope.addAgentRow.type;
+            isNewRow = 1;
+        }else{
+            objectForamtted['agentNameid'] = nameArray.asdid;
+            objectForamtted['agentTypeid'] = nameArray.atypeid;
+        }
+        var cmnyArray = $scope.addAgentRow.companyNameId.split('#');
+        if(cmnyArray.length>1){
+          objectForamtted['cmpnyId'] = cmnyArray[0];
+          isNewRow = 1;
+        }else{
+          objectForamtted['cmpnyId'] = $scope.addAgentRow.companyNameId;
+        }
+
         if($scope.addAgentRow.Email==null || angular.isUndefined($scope.addAgentRow.Email) || $scope.addAgentRow.Email ==""){
           objectForamtted['agentEmail'] = null;
         }else{
