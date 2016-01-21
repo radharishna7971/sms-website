@@ -501,6 +501,7 @@
       <div ng-show="talentSection==='management'">
           <div id="mgntmsg" ng-show="successmsg" style="color:red;">Management info updated successfully</div>
           <!-- <div><span><input type=""/></span><span></span><span></span><span></span></div> -->
+           <div class="table-responsive">
           <table class="table">
             <tr>
               <td>Type</td>
@@ -522,7 +523,7 @@
               </td>
               <td>
                 <!-- <input type="text" ng-model="addAgentRow.name" /> -->
-                  <select style="width: 173px;" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
+                  <select style="width: 140px;" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
                   <option ng-repeat="allAgentDetail in agentNameByType" value="{{allAgentDetail}}">{{allAgentDetail.name}}</option>
                   </select>
               </td>
@@ -550,6 +551,7 @@
               <td><span class="delete-talent-credit-join-button addAgentRemoveLink" ng-click="removeAgent($event,item.asdid,item.atypeid)">x</span></td>
             </tr>  
           </table>
+        </div>
        <!--  <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="{{btnTxt}}"> -->
       </div>
 
