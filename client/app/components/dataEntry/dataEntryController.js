@@ -569,12 +569,12 @@
             companyid: $scope.cmpnyNameNoResult+'#newCmpny',
             companyname: $scope.cmpnyNameNoResult
         });
-        alert("New company name added into list.Type company name again and select the new company name.");
+        alert("New company name added into list.");
         //console.log("hiii");
     };
 
     $scope.addTagAgentName = function() {
-        alert("New agent name added into list.Type agent name again and select the new agent name.");  
+        alert("New agent name added into list.");
         //$scope.addAgentRow.name = $scope.talenNameNoResult;
         $scope.agentNameByType.push({
             allAgentDetails: $scope.talenNameNoResult+'#newAgent',
