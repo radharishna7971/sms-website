@@ -353,23 +353,74 @@ Talent.getAgentDetails = function (CheckType,callback) {
 // Return list of all agent details
 Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
   //var updateType = "";
+  var newCmpnyIdVal = '';
+  var newAgentId = '';
   if(dataList['agentTypeIDVal']!==null){
     dataList['agentTypeid'] = dataList['agentTypeIDVal'];
   }
   var addParams = dataList['talentId']+','+dataList['agentTypeid']+','+dataList['agentNameid'];
 
   if(isNewrow){
-    db.knex.raw(' \
-      INSERT INTO company(name) \
-      values('+dataList['cmpnyName']+')')
-      .then(function (results) {
-        db.knex.raw(' \
-          INSERT INTO  associate (firstName,lastName,phone,company_id,types,email) \
-          values ('+dataList['first_name']+','+dataList['last_name']+','+dataList['phone']+',1,null,'+dataList['email_id']+')')
-          .then(function (results) {
-            callback(results[0]);
+    if(isNaN(dataList['cmpnyId']) && isNaN(dataList['agentNameid'])){
+      db.knex.raw(' \
+        INSERT INTO company(name) \
+        values('+'"'+dataList['cmpnyId']+'"'+')')
+        .then(function (results) {
+          console.log("add company details");
+          newCmpnyIdVal = results[0].insertId;
+          db.knex.raw(' \
+            INSERT INTO  associate (firstName,lastName,phone,company_id,types,email) \
+            values ('+'"'+dataList['agentNameid']+'"'+','+'null'+','+'"'+dataList['agentPhone']+'"'+','+newCmpnyIdVal+','+dataList['agentTypeid']+','+'"'+dataList['agentEmail']+'"'+')')
+            .then(function (results) {
+              console.log("add agent details");
+              newAgentId = results[0].insertId;
+              db.knex.raw(' \
+                INSERT INTO  associate_talent_associate_type_join \
+                (talent_id,associte_types_id,associate_id) \
+                VALUES ('+dataList['talentId']+','+dataList['agentTypeid']+','+newAgentId+')')
+              .then(function (results) {
+                callback(results[0]);
+              });
+            });
           });
-        });
+    }else if(isNaN(dataList['cmpnyId']) && !isNaN(dataList['agentNameid'])){
+      db.knex.raw(' \
+        INSERT INTO company(name) \
+        values('+'"'+dataList['cmpnyId']+'"'+')')
+        .then(function (results) {
+          console.log("add company details");
+          newCmpnyIdVal = results[0].insertId;
+          db.knex.raw(' \
+            UPDATE associate SET email='+'"'+dataList['agentEmail']+'"'+',company_id='+newCmpnyIdVal+',phone='+'"'+dataList['agentPhone']+'"'+' WHERE id='+dataList['agentNameid'])
+            .then(function (results) {
+              console.log("add agent details");
+              newAgentId = results[0].insertId;
+              db.knex.raw(' \
+                INSERT INTO  associate_talent_associate_type_join \
+                (talent_id,associte_types_id,associate_id) \
+                VALUES ('+dataList['talentId']+','+dataList['agentTypeid']+','+dataList['agentNameid']+')')
+              .then(function (results) {
+                callback(results[0]);
+              });
+            });
+          });
+    }
+    else if(!isNaN(dataList['cmpnyId']) && isNaN(dataList['agentNameid'])){
+          db.knex.raw(' \
+            INSERT INTO  associate (firstName,lastName,phone,company_id,types,email) \
+            values ('+'"'+dataList['agentNameid']+'"'+','+'null'+','+'"'+dataList['agentPhone']+'"'+','+dataList['cmpnyId']+','+dataList['agentTypeid']+','+'"'+dataList['agentEmail']+'"'+')')
+            .then(function (results) {
+              console.log("add agent details");
+              newAgentId = results[0].insertId;
+              db.knex.raw(' \
+                INSERT INTO  associate_talent_associate_type_join \
+                (talent_id,associte_types_id,associate_id) \
+                VALUES ('+dataList['talentId']+','+dataList['agentTypeid']+','+newAgentId+')')
+              .then(function (results) {
+                callback(results[0]);
+              });
+            });
+    }
   }else{
      db.knex.raw(' \
       UPDATE associate SET email='+'"'+dataList['agentEmail']+'"'+',company_id='+dataList['cmpnyId']+',phone='+'"'+dataList['agentPhone']+'"'+' WHERE id='+dataList['agentNameid'])
