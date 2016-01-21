@@ -25,10 +25,49 @@
             callback(res.data);
           });
         },
+
+        getAgentDetailsData: function (checkAgentType,callback) {
+          return $http({
+            method: 'GET',
+            url: 'api/talent/getAgentDetails',
+            params: {
+              'checkType':checkAgentType
+            }
+          }).then(function (res) {
+            callback(res.data);
+          });
+        },
+
+        addAgentDetails: function (isNewRow,addAgentArray,callback) {
+          return $http({
+            method: 'POST',
+            url: '/api/talent/addAgentDetails',
+             data: {
+              isNewRow: isNewRow,
+              addAgentArray: addAgentArray
+            }
+          }).then(function (res) {
+            callback(res.data);
+          });
+        },
+
+        removeTalentAgentJoin: function (talentID,asdid,atypeid,callback) {
+          return $http({
+            method: 'GET',
+            url: 'api/talent/removeTalentAgent',
+            params: {
+              'talentID':talentID,
+              'asdid': asdid,
+              'atypeid': atypeid
+            }
+          }).then(function (res) {
+            callback(res.data);
+          });
+        },
         getTalentRowCount: function (callback) {
           return $http({
             method: 'GET',
-            url: 'api/talent/all/talentRowsNumber'
+            url: 'api/talent/all/talentRowsNumber',
           }).then(function (res) {
             callback(res.data);
           });

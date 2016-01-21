@@ -25,6 +25,16 @@ exports.getProfile = function (req, res) {
   });
 };
 
+
+exports.removeTalentAgent = function (req, res) {
+  var talentId = req.query.talentID;
+  var associateId = req.query.asdid;
+  var associateTypeId = req.query.atypeid;
+  Talent.removeTalentAgentJoin(talentId,associateId,associateTypeId, function (result) {
+    res.json(result);
+  });
+};
+
 exports.talentPartnerName = function (req, res) {
   var talentId = req.query.talent_id;
   var partnerName = req.query.partner_name;
@@ -42,6 +52,27 @@ exports.getNames = function (req, res) {
 exports.getAllCreatedByname = function (req, res) {
   Talent.getAllCreatedByname(function (result) {
     res.json(result);
+  });
+};
+
+exports.getAgentDetails = function (req, res) {
+  var checkTypeVal = req.query.checkType;
+  console.log(checkTypeVal);
+  Talent.getAgentDetails(checkTypeVal,function (result) {
+    res.json(result);
+  });
+};
+
+exports.addAgentDetails = function (req, res) {
+  var dataList = req.body.addAgentArray;
+  console.log(dataList);
+  var isNewrow = req.body.isNewRow;
+  Talent.addNewTalentAgentJoin(isNewrow, dataList, function (err, result) {
+    if (!err) {
+      res.json(result);
+    } else {
+      res.json(err);
+    }
   });
 };
 

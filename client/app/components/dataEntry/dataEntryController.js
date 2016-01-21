@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'creditTypeFactory', 'commentFactory', 'ethnicityFactory'])
-  .controller('dataEntryController', function($scope, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory, ethnicityFactory) {
+  .controller('dataEntryController', function($scope,$compile,$timeout, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory, ethnicityFactory) {
     $scope.section = 'Talent'; // Represents current section
     $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
@@ -11,9 +11,13 @@
     $scope.filterData = 'last_name';
     $scope.model ={};
     $scope.model.creditsObj = {};
-    //$scope.talentNameInput = {};
+    $scope.addAgentRow = {};
+    $scope.noResultsTag = null;
     $scope.model ={};
     $scope.successmsg = false;
+    $scope.isCmpnyDisabled = true;
+    $scope.isNameDisabled = true;
+    $scope.agentNameByType = [];
     if(!!window.localStorage.smstudiosLoginUserName){
       $scope.data_entry_display_username = window.localStorage.smstudiosLoginUserName;
     }
@@ -139,7 +143,7 @@
               talentData.last_edited = "";
            }
           $scope.activeElement = talentData;
-          addFetchAssociateName(-1,-1);
+          addFetchAssociateName();
         });
       }
     };
@@ -346,6 +350,7 @@
       }
     };
 
+
     $scope.submitTalentCreditData = function() {
          //var credits = $('.talent-credit-select').val();
           var role = $('#roleId').val() || null;
@@ -396,7 +401,9 @@
           $scope.activeElement.talentCreditJoins = data;
         });
       }
-    }
+    };
+
+
 
     // This contains functions for removing data from the database
     var deleteData = {
@@ -481,64 +488,156 @@
       }
     };
 
-    var addFetchAssociateName = function(typeid,associate_id){
-      var dataList = [];
-      $scope.agents = {};
-      $scope.managers = {};
-      $scope.attornies = {};
-      $scope.publicists = {};
-      $scope.agentname = {};
-      $scope.managername = {};
-      $scope.attornyname = {};
-      $scope.publicistname = {};
-      var details = [];
-      dataList['talent_id'] = $scope.activeElement.id;
-      dataList['associte_types_id'] = typeid;
-      dataList['associate_id'] = associate_id;
-      contactFactory.addGetAssociateNamesById(dataList,function(result) {
-    	 if(result.details.length > 0){
-    		 angular.forEach(result.details, function(value, key) {
-    			 if(value.type === 'Agent'){
-    				 $scope.agentname = value.name;  
-    			 }
-    			 if(value.type === 'Manager'){
-    				 $scope.managername = value.name;  
-    			 }
-    			 if(value.type === 'Attorney'){
-    				 $scope.attornyname = value.name;  
-    			 }
-    			 if(value.type === 'Publicist'){
-    				 $scope.publicistname = value.name;  
-    			 }
-    		 })
-    	 }
-    	 $scope.agents = result.agents;
-    	 $scope.managers = result.managers;
-    	 $scope.attornies = result.attornies;
-    	 $scope.publicists = result.publicists;
-        if(result==="Error"){
-          alert("Error:Duplicate associate not allowed");
+    var addFetchAssociateName = function(){
+      var associateObj = {};
+      $scope.associateArray = [];
+      $scope.allAgentDetails = [];
+      var typeArray = [];
+      var agentIDval = -1;
+      talentFactory.talentProfile($scope.activeElement.id, function (result) {
+        if (!!result.associateInfo && result.associateInfo.length > 0) {
+              angular.forEach(result.associateInfo, function (value, key) {
+                  associateObj.asdid = value.asdid;
+                  associateObj.atypeid = value.atypeid;
+                  associateObj.associatename = value.type;
+                  associateObj.firstname = value.firstName;
+                  associateObj.lastname = value.lastName;
+                  associateObj.email = value.email;
+                  associateObj.phone = value.phone;
+                  associateObj.companyname = value.companyname;
+                  $scope.associateArray.push(associateObj);
+                  typeArray.push(value.type);
+                  associateObj = {};
+              });
+        }
+        talentFactory.getAgentDetailsData(agentIDval,function (allAgent) {
+          $scope.allAgentDetails = allAgent;
+        });
+
+      });
+    };
+
+    $scope.getAgentNameByType = function(){
+      var agentTypeIdVal = parseInt($scope.addAgentRow.type);
+      talentFactory.getAgentDetailsData(agentTypeIdVal,function (allAgent) {
+          $scope.agentNameByType = allAgent;
+          $scope.isNameDisabled = false;
+        });
+    };
+    $scope.agentDataObj = function(){
+      $scope.isCmpnyDisabled = false;
+      var agnetNameObj =JSON.parse($scope.addAgentRow.name);
+      if(angular.isUndefined(agnetNameObj.companyid) || agnetNameObj.companyid ==""){
+        $scope.addAgentRow.companyNameId = "";
+      }else{
+        $scope.addAgentRow.companyNameId=agnetNameObj.companyid;
+      }
+      $scope.addAgentRow.Email = agnetNameObj.email==null?"":agnetNameObj.email;
+      $scope.addAgentRow.Phone = agnetNameObj.Phone==null?"":agnetNameObj.Phone;
+    };
+
+    $scope.selectTaletCmpny = {
+        formatNoMatches: function(term) {
+            console.log("Term: " + term);
+            var message = '<a ng-click="addTag()">Add tag:"' + term + '"</a>';
+            if(!$scope.$$phase) {
+                $scope.$apply(function() {
+                    $scope.noResultsTag = term;
+                });
+            }
+            return message;
+        }
+    };
+    $scope.selectTaletAgent = {
+        formatNoMatches: function(term) {
+            console.log("Term: " + term);
+            var message = '<a ng-click="addTag()">Add tag:"' + term + '"</a>';
+            if(!$scope.$$phase) {
+                $scope.$apply(function() {
+                    $scope.noResultsTag = term;
+                });
+            }
+            return message;
+        }
+    };
+
+    $scope.addTag = function() {
+        console.log("hiii");
+    };
+    $scope.$watch('noResultsTag', function(newVal, oldVal) {
+        if(newVal && newVal !== oldVal) {
+            $timeout(function() {
+                var noResultsLink = $('.select2-no-results');
+                console.log(noResultsLink.contents());
+                $compile(noResultsLink.contents())($scope);
+            });
+        }
+    }, true);
+
+    $scope.removeAgent = function($event,asdid,atypeid){
+      if(confirm("Are you sure you want to delete this record?")){
+        var indexVal = _.findIndex($scope.associateArray, {'asdid': asdid});
+        // $scope.associateArray.splice(indexVal, 1);
+        // return false;
+        talentFactory.removeTalentAgentJoin($scope.activeElement.id,asdid,atypeid,function(result) {
+              $scope.associateArray.splice(indexVal, 1);
+        });
+      }   
+    };
+
+    $scope.clearAgentAddRow = function(){
+      $scope.addAgentRow = {};
+    };
+
+    $scope.addAgentRowData = function(){
+      var objectForamtted = {};
+      console.log($scope.addAgentRow);
+      // return false;
+      var isNewRow = 0;
+      
+      if(angular.isUndefined($scope.addAgentRow.name)){
+          alert("Please select agent name.");
+          return false;
+      }
+      if(angular.isUndefined($scope.addAgentRow.companyNameId) || $scope.addAgentRow.companyNameId==null){
+          alert("Please select company name.");
           return false;
         }
-        for(var i in result){
-            if(result[i].type==="Agent"){
-            $scope.AgentName=result[i].name;
-          }
-           if(result[i].type==="Manager"){
-            $scope.ManagerName=result[i].name;
-          }
-           if(result[i].type==="Attorney"){
-            $scope.AttorneyName=result[i].name;
-          }
-          if(result[i].type==="Publicist"){
-              $scope.PublicistName=result[i].name;
+        var nameArray = JSON.parse($scope.addAgentRow.name);
+        objectForamtted['agentNameid'] = nameArray.asdid;
+        objectForamtted['agentTypeid'] = nameArray.atypeid;
+        objectForamtted['cmpnyId'] = $scope.addAgentRow.companyNameId;
+        if($scope.addAgentRow.Email==null || angular.isUndefined($scope.addAgentRow.Email) || $scope.addAgentRow.Email ==""){
+          objectForamtted['agentEmail'] = null;
+        }else{
+          objectForamtted['agentEmail'] = $scope.addAgentRow.Email;
+        }
+        if($scope.addAgentRow.Phone==null || angular.isUndefined($scope.addAgentRow.Phone) || $scope.addAgentRow.Phone ==""){
+          objectForamtted['agentPhone'] = null;
+        }else{
+          objectForamtted['agentPhone'] = $scope.addAgentRow.Phone;
+        }
+        if(angular.isUndefined($scope.addAgentRow.type)){
+            objectForamtted['agentTypeIDVal']  = null;
+        }else if(angular.isDefined($scope.addAgentRow.type)){
+          if($scope.addAgentRow.type ==="0"){
+            objectForamtted['agentTypeIDVal'] = null;
+          }else{
+              objectForamtted['agentTypeIDVal'] = $scope.addAgentRow.type;
           }
         }
         
-        //$scope.data.ContactInfo = result;
-      });
-
+      objectForamtted['talentId'] = $scope.activeElement.id;
+      talentFactory.addAgentDetails(isNewRow,objectForamtted,function(result) {
+              addFetchAssociateName();
+              $scope.addAgentRow = {};
+              $scope.agentNameByType.length=0;
+              $scope.isCmpnyDisabled = true;
+              $scope.isNameDisabled = true;
+              //$scope.associateArray.splice(indexVal, 1);
+        });
     };
+
     $scope.submitManagement = function(){
     	var dataList = [];
     	if($('#agent').val() && $('#agent').val() !==""){
@@ -581,7 +680,7 @@
 
     $scope.submitAssociate = function(){
      var getAssociateInfo = JSON.parse($scope.activeElement.associate_obj);
-      addFetchAssociateName(getAssociateInfo.typeid,getAssociateInfo.id);
+      addFetchAssociateName();
     };
     
     // storage for all data points that are added or pulled from database

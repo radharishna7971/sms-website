@@ -290,8 +290,7 @@ FROM talent t where t.id= ' + talentId)
               db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\, \') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id =' + talentId + ' GROUP BY creditname')
                 .then(function (results3) {
                   ob.credits = results3[0];
-
-                  db.knex.raw('select `at`.type,a.firstName,a.lastName,a.email,a.phone,c.`name` as companyname from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id inner join company c on c.id=a.company_id where atj.talent_id = ' + talentId)
+                  db.knex.raw('select `at`.type,at.id as atypeid,a.id as asdid, a.firstName,a.lastName,a.email,a.phone, c.`name` as companyname from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id inner join company c on c.id=a.company_id where atj.talent_id = ' + talentId)
                     .then(function (results4) {
                       ob.associateInfo = results4[0];
                       callback(ob);
@@ -305,6 +304,18 @@ FROM talent t where t.id= ' + talentId)
 
 };
 
+Talent.removeTalentAgentJoin = function(talentId,associateId,associateTypeId, callback){
+  var sqlstr = 'DELETE FROM associate_talent_associate_type_join WHERE talent_id='+talentId+'AND associte_types_id='+associateTypeId+'AND associate_id='+associateTypeId;
+  console.log(sqlstr);
+
+  db.knex.raw(' \
+    DELETE \
+    FROM associate_talent_associate_type_join \
+    WHERE talent_id='+talentId+' AND associte_types_id='+associateTypeId+' AND associate_id='+associateId)
+    .then(function (results) {
+      callback(results[0]);
+    });
+};
 // Return list of all talent names
 Talent.getNames = function (nameChars, callback) {
   var findNameWith = "'" + "%" + nameChars + "%" + "'";
@@ -318,6 +329,62 @@ Talent.getNames = function (nameChars, callback) {
     .then(function (results) {
       callback(results[0]);
     });
+};
+
+// Return list of all agent details
+Talent.getAgentDetails = function (CheckType,callback) {
+  var applyAgentType = "";
+  if(CheckType!=-1){
+    applyAgentType = " WHERE at.id="+CheckType;
+  }
+  db.knex.raw(' \
+    select `at`.type,at.id as atypeid,a.id as asdid, \
+    CONCAT(a.firstName, \' \', a.lastName) AS name,a.email as email,a.phone as phone, \
+    c.`id` as companyid,c.`name` as companyname \
+    from associate_talent_associate_type_join atj \
+    inner join associate_types at ON atj.associte_types_id=`at`.id \
+    inner join associate a ON a.id=atj.associate_id inner join \
+    company c on c.id=a.company_id'+applyAgentType)
+    .then(function (results) {
+      callback(results[0]);
+    });
+};
+
+// Return list of all agent details
+Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
+  //var updateType = "";
+  if(dataList['agentTypeIDVal']!==null){
+    dataList['agentTypeid'] = dataList['agentTypeIDVal'];
+  }
+  var addParams = dataList['talentId']+','+dataList['agentTypeid']+','+dataList['agentNameid'];
+
+  if(isNewrow){
+    db.knex.raw(' \
+      INSERT INTO company(name) \
+      values('+dataList['cmpnyName']+')')
+      .then(function (results) {
+        db.knex.raw(' \
+          INSERT INTO  associate (firstName,lastName,phone,company_id,types,email) \
+          values ('+dataList['first_name']+','+dataList['last_name']+','+dataList['phone']+',1,null,'+dataList['email_id']+')')
+          .then(function (results) {
+            callback(results[0]);
+          });
+        });
+  }else{
+     db.knex.raw(' \
+      UPDATE associate SET email='+'"'+dataList['agentEmail']+'"'+',company_id='+dataList['cmpnyId']+',phone='+'"'+dataList['agentPhone']+'"'+' WHERE id='+dataList['agentNameid'])
+      .then(function (results) {
+        db.knex.raw(' \
+          INSERT INTO  associate_talent_associate_type_join \
+          (talent_id,associte_types_id,associate_id) \
+          VALUES ('+addParams+')')
+        .then(function (results) {
+          callback(results[0]);
+      });
+      });
+    
+  }
+  
 };
 
 // Return list of all createdby names

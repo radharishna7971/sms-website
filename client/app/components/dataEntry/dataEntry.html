@@ -500,31 +500,57 @@
        </div>
       <div ng-show="talentSection==='management'">
           <div id="mgntmsg" ng-show="successmsg" style="color:red;">Management info updated successfully</div>
-          <p class="input-label">Attorney</p>
-      <select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
-        <option value=''>Select Attorney</option>
-        <option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
-        </option>
-      </select>
-          <p class="input-label">Agent</p>
-            <select name="agent" id="agent" ng-model="agent" class="data-input select-input">
-        <option value=''>Select Agent</option>
-        <option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
-        </option>
-      </select>
-          <p class="input-label">Manager</p>
-            <select name="manager" id="manager" ng-model="manager" class="data-input select-input">
-        <option value=''>Select Manager</option>
-        <option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
-        </option>
-      </select>
-          <p class="input-label">Publicist</p>
-            <select name="publicist" id="publicist" ng-model="publicist" class="data-input select-input">
-        <option value=''>Select Publicist</option>
-        <option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
-        </option>
-      </select>
-        <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="{{btnTxt}}">
+          <!-- <div><span><input type=""/></span><span></span><span></span><span></span></div> -->
+          <table class="table">
+            <tr>
+              <td>Type</td>
+              <td>Name</td>
+              <td>Company Name</td>
+              <td>Email</td>
+              <td>Phone</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <select type="text" ng-model="addAgentRow.type" ng-change="getAgentNameByType()">
+                  <option value="0">Select Type</option>
+                  <option value="1">Agent</option>
+                  <option value="2">Manager</option>
+                  <option value="3">Attorney</option>
+                  <option value="4">Publicist</option>
+              </select>
+              </td>
+              <td>
+                <!-- <input type="text" ng-model="addAgentRow.name" /> -->
+                  <select style="width: 173px;" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
+                  <option ng-repeat="allAgentDetail in agentNameByType" value="{{allAgentDetail}}">{{allAgentDetail.name}}</option>
+                  </select>
+              </td>
+              <td>
+                <!-- <input type="text" ng-model="addAgentRow.companyName" /> -->
+                <select style="width: 200px;" ui-select2="selectTaletCmpny" ng-model="addAgentRow.companyNameId" ng-disabled="isCmpnyDisabled">
+                  <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}">{{allAgentDetail.companyname}}</option>
+                  </select>
+              </td>
+              <td><input type="text" ng-model="addAgentRow.Email" /></td>
+              <td><input type="text" ng-model="addAgentRow.Phone" /></td>
+              <td>
+                <button class= "btn btn-primary btn-xs" ng-click="addAgentRowData()">
+                  Add</button>
+                  <button class= "btn btn-primary btn-xs" ng-click="clearAgentAddRow()">
+                  Clear</button>
+              </td>
+            </tr>
+            <tr ng-repeat="item in associateArray">
+              <td>{{item.associatename}}</td>
+              <td>{{item.firstname}}</td>
+              <td>{{item.companyname}}</td>
+              <td>{{item.email}}</td>
+              <td>{{item.phone}}</td>
+              <td><span class="delete-talent-credit-join-button" ng-click="removeAgent($event,item.asdid,item.atypeid)">x</span></td>
+            </tr>  
+          </table>
+       <!--  <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="{{btnTxt}}"> -->
       </div>
 
       <div ng-show="talentSection==='social'">
