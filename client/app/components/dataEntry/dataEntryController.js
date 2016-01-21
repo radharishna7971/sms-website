@@ -641,8 +641,9 @@
             objectForamtted['agentNameid'] = nameArray.asdid;
             objectForamtted['agentTypeid'] = nameArray.atypeid;
         }
-        var cmnyArray = $scope.addAgentRow.companyNameId.split('#');
-        if(cmnyArray.length>1){
+        var isNewCmp = (($scope.addAgentRow.companyNameId).toString()).indexOf("#");
+        if(isNewCmp!=-1){
+          var cmnyArray = $scope.addAgentRow.companyNameId.split('#');
           objectForamtted['cmpnyId'] = cmnyArray[0];
           isNewRow = 1;
         }else{
