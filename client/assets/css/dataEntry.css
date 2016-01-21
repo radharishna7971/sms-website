@@ -375,3 +375,7 @@
   cursor: pointer;
 }
 
+.addAgentRemoveLink{
+  margin-top: 5px !important; 
+}
+
