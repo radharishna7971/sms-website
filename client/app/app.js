@@ -42,7 +42,8 @@
     'talentGridFactory',
     // 'youtubeFactory',
     'commentFactory',
-    'topnavDirective'
+    'topnavDirective',
+    'ui.select2'
   ])
   .config(config)
   .run(run);
