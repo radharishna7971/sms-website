@@ -70,6 +70,11 @@
       }
     };
 
+    function validateEmail(email) 
+    {
+      var re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    }
 
     $scope.setActiveElement = function($event, element) {
       $scope.errorText = '';
@@ -617,7 +622,13 @@
         if($scope.addAgentRow.Email=="" || angular.isUndefined($scope.addAgentRow.Email)){
             dataList['email_id'] = null;
         }else{
-            dataList['email_id'] = $scope.addAgentRow.Email;
+            if(validateEmail($scope.addAgentRow.Email)){
+              dataList['email_id'] = $scope.addAgentRow.Email;
+            }else{
+              alert("Please enter valid email Id.");
+              return false;
+            }
+            
         }
         if($scope.addAgentRow.Email=="" || angular.isUndefined($scope.addAgentRow.Email)){
             dataList['phone_num'] = null;
@@ -716,7 +727,12 @@
         if($scope.addAgentRow.Email==null || angular.isUndefined($scope.addAgentRow.Email) || $scope.addAgentRow.Email ==""){
           objectForamtted['agentEmail'] = null;
         }else{
-          objectForamtted['agentEmail'] = $scope.addAgentRow.Email;
+          if(validateEmail($scope.addAgentRow.Email)){
+              objectForamtted['agentEmail'] = $scope.addAgentRow.Email;
+            }else{
+              alert("Please enter valid email Id.");
+              return false;
+            }
         }
         if($scope.addAgentRow.Phone==null || angular.isUndefined($scope.addAgentRow.Phone) || $scope.addAgentRow.Phone ==""){
           objectForamtted['agentPhone'] = null;
