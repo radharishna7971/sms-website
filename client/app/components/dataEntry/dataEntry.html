@@ -513,7 +513,7 @@
             </tr>
             <tr>
               <td>
-                <select type="text" ng-model="addAgentRow.type" ng-change="getAgentNameByType()">
+                <select type="text" ng-model="addAgentRow.type" ng-change="getAgentNameByType()" ng-disabled="isAgentTypeDisabled">
                   <option value="0">Select Type</option>
                   <option value="1">Agent</option>
                   <option value="2">Manager</option>
@@ -522,8 +522,10 @@
               </select>
               </td>
               <td>
+                <input type="hidden" ng-model="addAgentRow.updatedNameID">
+                <input type="text" ng-model="addAgentRow.updatedName" ng-if="updateAgentPanel" ng-disabled="isAgentTypeDisabled">
                 <!-- <input type="text" ng-model="addAgentRow.name" /> -->
-                  <select style="width: 140px;" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
+                  <select style="width: 140px;" ng-if="addAgentPanel" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
                   <option ng-repeat="allAgentDetail in agentNameByType" value="{{allAgentDetail}}">{{allAgentDetail.name}}</option>
                   </select>
               </td>
@@ -536,10 +538,18 @@
               <td><input type="text" ng-model="addAgentRow.Email" /></td>
               <td><input type="text" ng-model="addAgentRow.Phone" /></td>
               <td>
+                <span ng-if="addAgentPanel">
                 <button class= "btn btn-primary btn-xs" ng-click="addAgentRowData()">
                   Add</button>
                   <button class= "btn btn-primary btn-xs" ng-click="clearAgentAddRow()">
                   Clear</button>
+                </span>
+                <span ng-if="updateAgentPanel">
+                <button class= "btn btn-primary btn-xs" ng-click="upDateAgentRow()">
+                  Update</button>
+                  <button class= "btn btn-primary btn-xs" ng-click="cancelAgentRow()">
+                  Cancel</button>
+                </span>
               </td>
             </tr>
             <tr ng-repeat="item in associateArray">
@@ -548,7 +558,11 @@
               <td>{{item.companyname}}</td>
               <td>{{item.email}}</td>
               <td>{{item.phone}}</td>
-              <td><span class="delete-talent-credit-join-button addAgentRemoveLink" ng-click="removeAgent($event,item.asdid,item.atypeid)">x</span></td>
+              <td><span class="delete-talent-credit-join-button addAgentRemoveLink" ng-click="removeAgent($event,item.asdid,item.atypeid)">x</span>&nbsp;&nbsp;
+                <a href="#" ng-click="editAgentRecord($event,item.asdid,item.atypeid)">
+                  <span class="addAgentEditLink">Edit</span>
+                </a>
+              </td>
             </tr>  
           </table>
         </div>

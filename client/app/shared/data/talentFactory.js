@@ -51,6 +51,30 @@
           });
         },
 
+        getTalenNamesDataById: function (idsList,callback) {
+          return $http({
+            method: 'POST',
+            url: '/api/talent/getAgentDetailsById',
+             data: {
+              id_data_list: idsList
+            }
+          }).then(function (res) {
+            callback(res.data);
+          });
+        },
+        updateAgentRowDetailsById: function (data_List,callback) {
+          return $http({
+            method: 'POST',
+            url: '/api/talent/updateAgentRowDetails',
+             data: {
+              dataList: data_List
+            }
+          }).then(function (res) {
+            callback(res.data);
+          });
+        },
+        
+
         removeTalentAgentJoin: function (talentID,asdid,atypeid,callback) {
           return $http({
             method: 'GET',

@@ -350,6 +350,21 @@ Talent.getAgentDetails = function (CheckType,callback) {
     });
 };
 
+Talent.getAgentDetailsById = function(idDataList,callback){
+  db.knex.raw(' \
+    select `at`.type,at.id as atypeid,a.id as asdid, \
+    CONCAT(a.firstName, \' \', a.lastName) AS name,a.email as email,a.phone as phone, \
+    c.`id` as companyid,c.`name` as companyname \
+    from associate_talent_associate_type_join atj \
+    inner join associate_types at ON atj.associte_types_id=`at`.id \
+    inner join associate a ON a.id=atj.associate_id inner join \
+    company c on c.id=a.company_id where atj.talent_id='+idDataList['talentID']+' and atj.associte_types_id='+idDataList['agentTypeid']+' and atj.associate_id='+idDataList['agentID'])
+    .then(function (results) {
+      callback(results[0]);
+    });
+
+};
+
 // Return list of all agent details
 Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
   //var updateType = "";
@@ -436,6 +451,14 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
     
   }
   
+};
+
+Talent.updateAgentRowDetails = function(dataRowList,callback){
+  db.knex.raw(' \
+    UPDATE associate SET email='+'"'+dataRowList['email_id']+'"'+',company_id='+dataRowList['companynameIdVal']+',phone='+'"'+dataRowList['phone_num']+'"'+' WHERE id='+dataRowList['agent_id'])
+  .then(function (results) {
+    callback(results[0]);
+  });
 };
 
 // Return list of all createdby names
