@@ -512,6 +512,7 @@
                   associateObj.associatename = value.type;
                   associateObj.firstname = value.firstName;
                   associateObj.lastname = value.lastName;
+                  associateObj.fullname = value.firstName+' '+value.lastName;
                   associateObj.email = value.email;
                   associateObj.phone = value.phone;
                   associateObj.companyname = value.companyname;
