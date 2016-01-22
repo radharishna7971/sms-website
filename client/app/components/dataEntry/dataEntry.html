@@ -529,9 +529,9 @@
                   <option ng-repeat="allAgentDetail in agentNameByType" value="{{allAgentDetail}}">{{allAgentDetail.name}}</option>
                   </select>
               </td>
-              <td>
+              <td style="width:170px">
                 <!-- <input type="text" ng-model="addAgentRow.companyName" /> -->
-                <select style="width: 200px;" ui-select2="selectTaletCmpny" ng-model="addAgentRow.companyNameId" ng-disabled="isCmpnyDisabled">
+                <select style="width: 170px;" ui-select2="selectTaletCmpny" ng-model="addAgentRow.companyNameId" ng-disabled="isCmpnyDisabled">
                   <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}">{{allAgentDetail.companyname}}</option>
                   </select>
               </td>
