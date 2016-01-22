@@ -375,7 +375,12 @@
   cursor: pointer;
 }
 
-.addAgentRemoveLink{
+.addAgentRemoveLink,.addAgentEditLink{
   margin-top: 5px !important; 
+}
+
+.addAgentEditLink{
+  color: rgba(0, 0, 255, 0.88);
+  font-weight: bold;
 }
 

@@ -7,6 +7,8 @@
 
    app.get('/api/talent/getAgentDetails', talent.getAgentDetails);
    app.post('/api/talent/addAgentDetails', talent.addAgentDetails);
+   app.post('/api/talent/getAgentDetailsById', talent.getAgentDetailsById);
+   app.post('/api/talent/updateAgentRowDetails', talent.updateAgentRowDetails);
    
    app.get('/api/talent/all/talentRowsNumber', talent.getTalentRowsNumber);
    app.get('/api/talent/allCreatedBy', talent.getAllCreatedByname);

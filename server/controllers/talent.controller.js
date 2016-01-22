@@ -65,9 +65,30 @@ exports.getAgentDetails = function (req, res) {
 
 exports.addAgentDetails = function (req, res) {
   var dataList = req.body.addAgentArray;
-  console.log(dataList);
   var isNewrow = req.body.isNewRow;
   Talent.addNewTalentAgentJoin(isNewrow, dataList, function (err, result) {
+    if (!err) {
+      res.json(result);
+    } else {
+      res.json(err);
+    }
+  });
+};
+
+exports.getAgentDetailsById = function (req, res) {
+  var idListData = req.body.id_data_list;
+  Talent.getAgentDetailsById(idListData, function (err, result) {
+    if (!err) {
+      res.json(result);
+    } else {
+      res.json(err);
+    }
+  });
+};
+
+exports.updateAgentRowDetails = function (req, res) {
+  var dataRowDetails = req.body.dataList;
+  Talent.updateAgentRowDetails(dataRowDetails, function (err, result) {
     if (!err) {
       res.json(result);
     } else {
