@@ -531,7 +531,7 @@
               </td>
               <td style="width:170px">
                 <!-- <input type="text" ng-model="addAgentRow.companyName" /> -->
-                <select style="width: 170px;" ui-select2="selectTaletCmpny" ng-model="addAgentRow.companyNameId" ng-disabled="isCmpnyDisabled">
+                <select style="width: 170px;" ui-select2="selectTaletCmpny" ng-model="addAgentRow.companyNameId">
                   <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}">{{allAgentDetail.companyname}}</option>
                   </select>
               </td>

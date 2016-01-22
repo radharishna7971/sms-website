@@ -509,15 +509,15 @@
               angular.forEach(result.associateInfo, function (value, key) {
                   associateObj.asdid = value.asdid;
                   associateObj.atypeid = value.atypeid;
-                  associateObj.associatename = value.type;
+                  associateObj.associatename = value.type =="NA"?"":value.type;
                   associateObj.firstname = value.firstName;
-                  associateObj.lastname = value.lastName;
-                  associateObj.fullname = value.firstName+' '+value.lastName;
-                  associateObj.email = value.email;
-                  associateObj.phone = value.phone;
-                  associateObj.companyname = value.companyname;
+                  associateObj.lastname = value.lastName==null || value.lastName=="null"?"":value.lastName;
+                  associateObj.fullname = value.firstName=='NA'?"":value.firstName+' '+associateObj.lastname;
+                  associateObj.email = value.email=="null" || value.email==null?"":value.email;
+                  associateObj.phone = value.phone==null || value.phone=="null"?"":value.phone;
+                  associateObj.companyname = value.companyname==null || value.companyname=="null"?"":value.companyname;
                   $scope.associateArray.push(associateObj);
-                  typeArray.push(value.type);
+                  //typeArray.push(value.type);
                   associateObj = {};
               });
         }
@@ -696,18 +696,21 @@
     $scope.addAgentRowData = function(){
       var objectForamtted = {};
       console.log($scope.addAgentRow);
-      //return false;
       var isNewRow = 0;
-      
-      if(angular.isUndefined($scope.addAgentRow.name)){
-          alert("Please select agent name.");
-          return false;
+      var nameArray = {};
+      if($scope.addAgentRow.type=="0" || angular.isUndefined($scope.addAgentRow.type)){
+        $scope.addAgentRow.type = 5;
+      }
+      if($scope.addAgentRow.name=="" || angular.isUndefined($scope.addAgentRow.name)){
+        nameArray.name = 'NA';
       }
       if(angular.isUndefined($scope.addAgentRow.companyNameId) || $scope.addAgentRow.companyNameId==null){
           alert("Please select company name.");
           return false;
         }
-        var nameArray = JSON.parse($scope.addAgentRow.name);
+        if($scope.addAgentRow.type!==5){
+          nameArray = JSON.parse($scope.addAgentRow.name);
+        }
         if(angular.isUndefined(nameArray.asdid) || angular.isUndefined(nameArray.atypeid)){
             objectForamtted['agentNameid'] = nameArray.name;
             objectForamtted['agentTypeid'] = $scope.addAgentRow.type;
