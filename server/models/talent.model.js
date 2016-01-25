@@ -155,11 +155,11 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       applyWhereFilter = applyWhereFilter + addAges;
     }
     offSetLimitValueStr = '';
-  }
+  }//CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name
   db.knex.raw(' \
     SELECT \
     DISTINCT(t.id) as id, \
-    CONCAT(t.last_name, \', \', t.first_name) AS name, \
+    CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name, \
     t.age as age, \
     t.gender as gender, \
     t.country as country , \
@@ -482,11 +482,11 @@ Talent.getAllCountryNames = function (callback) {
     });
 };
 
-
+//CONCAT(COALESCE(talent.first_name,''),\' \',COALESCE(talent.last_name,'') AS name
 Talent.getName = function (id, callback) {
   db.knex.raw(' \
     SELECT \
-      CONCAT(talent.first_name, \' \', talent.last_name) AS name \
+    CONCAT(COALESCE(talent.first_name,\'\'),\' \',COALESCE(talent.last_name,\'\')) AS name \
     FROM talent \
     WHERE talent.id = ' + id)
     .then(function (results) {
@@ -672,6 +672,8 @@ Talent.addOrEdit = function (talentData, callback) {
             .then(function (talent) {
               Talent.matchPartner(talent.get('id'), talent.get('partner_id'));
               Talent.getName(talent.get('id'), function (name) {
+                console.log("kkkkkkkkkkkkkk....!!");
+                console.log(name);
                 callback(null, {
                   status: 'add',
                   text: 'Added new talent ' + name,

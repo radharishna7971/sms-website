@@ -309,14 +309,19 @@
       Talent: function() {
         if (!checkInputs('talent')) {
           $scope.errorText = 'Please fill all required fields in correct format';
+
         } else {
+          if(($scope.activeElement.first_name=="" && $scope.activeElement.last_name =="") || ($scope.activeElement.first_name==null && $scope.activeElement.last_name ==null)){
+            $scope.errorText = 'Please fill either firstname or lastname';
+            return false;
+          }
           // Set blank values to null so they can be properly saved in database
           for (var key in $scope.activeElement) {
             if (!$scope.activeElement[key]) {
               $scope.activeElement[key] = null;
             }
           }
-
+          
           if (!$scope.activeElement.created_by) {
             $scope.activeElement.created_by = window.localStorage.smstudiosId;
           }

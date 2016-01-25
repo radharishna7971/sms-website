@@ -468,10 +468,12 @@
        <div ng-show="talentSection==='main'">
         <div class="talent-column">
           <input class="id-input" ng-model="activeElement.id" type="text">
-          <p class="input-label">First Name (Required)</p>
-          <input class="data-input" ng-model="activeElement.first_name" type="text" required="true" placeholder="Enter First Name...">
-          <p class="input-label">Last Name (Required)</p>
-          <input class="data-input" ng-model="activeElement.last_name" type="text" required="true" placeholder="Enter Last Name...">
+          <p class="input-label">First Name</p>
+          <input class="data-input" ng-model="activeElement.first_name" 
+          type="text" placeholder="Enter First Name...">
+          <p class="input-label">Last Name</p>
+          <input class="data-input" ng-model="activeElement.last_name" 
+          type="text" placeholder="Enter Last Name...">
           <p class="input-label">Email</p>
           <input class="data-input" ng-model="activeElement.email" validate="email" type="text" placeholder="Enter Email...">
           <p class="input-label">Phone</p>

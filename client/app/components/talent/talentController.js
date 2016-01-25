@@ -205,6 +205,10 @@
                     if (!checkInputs('talent')) {
                         $scope.showmsg.errorText = 'Please fill all required fields in correct format';
                     } else {
+                        if(($scope.activeElement.first_name=="" && $scope.activeElement.last_name =="") || ($scope.activeElement.first_name==null && $scope.activeElement.last_name ==null)){
+                            $scope.showmsg.errorText = 'Please fill either firstname or lastname';
+                            return false;
+                        }
                         // Set blank values to null so they can be properly saved in database
                         for (var key in $scope.activeElement) {
                             if (!$scope.activeElement[key]) {
