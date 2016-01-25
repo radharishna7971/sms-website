@@ -973,6 +973,8 @@
     };
    
 
+
+
     // Remove comment when delete button is clicked
     $scope.removeComment = function($event, comment_id) {
     var r = confirm("Do you really want to delete this comment?");
@@ -983,5 +985,19 @@
 		    //return false;
 		}
     };
+
+    $("#phoneNumberId").mask("(999)999-9999");
+$("#phoneNumberId").on("blur", function() {
+    var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+    
+    if( last.length == 3 ) {
+        var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+        var lastfour = move + last;
+        
+        var first = $(this).val().substr( 0, 9 );
+        
+        $(this).val( first + '-' + lastfour );
+    }
+  });
   });
 })();

@@ -399,33 +399,7 @@
             <!-- management -->
 
             <div ng-show="talentSection==='management'">
-              <!-- <div ng-show="successmsgtalent" style="color:red;">Management info updated successfully</div>
-          <p class="input-label">Attorney</p>
-      <select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
-        <option value=''>Select</option>
-        <option ng-repeat="attorney in attornies" value="{{attorney.associate_id}}" ng-selected="attornyname == attorney.name">{{attorney.name}}
-        </option>
-      </select>
-          <p class="input-label">Agent</p>
-            <select name="agent" id="agent" ng-model="agent" class="data-input select-input">
-        <option value=''>Select</option>
-        <option ng-repeat="agent in agents" value="{{agent.associate_id}}" ng-selected="agentname == agent.name">{{agent.name}}
-        </option>
-      </select>
-          <p class="input-label">Manager</p>
-            <select name="manager" id="manager" ng-model="manager" class="data-input select-input">
-        <option value=''>Select</option>
-        <option ng-repeat="manager in managers" value="{{manager.associate_id}}" ng-selected="managername == manager.name">{{manager.name}}
-        </option>
-      </select>
-          <p class="input-label">Publicist</p>
-            <select name="publicist" id="publicist" ng-model="publicist" class="data-input select-input">
-        <option value=''>Select</option>
-        <option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
-        </option>
-      </select>
-              <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="Update"> -->
-              <div class="table-responsive  add-agent-table">
+      <div class="table-responsive  add-agent-table">
           <table class="table">
             <tr>
               <td>Type</td>
@@ -460,7 +434,7 @@
                   </select>
               </td>
               <td><input type="text" ng-model="addAgentRow.Email" /></td>
-              <td><input type="text" ng-model="addAgentRow.Phone" /></td>
+              <td><input type="text" id="phoneNumberIdTalent"  ng-model="addAgentRow.Phone" /></td>
               <td>
                 <span ng-if="addAgentPanel">
                 <button class= "btn btn-primary btn-xs" ng-click="addAgentRowData()">
