@@ -634,6 +634,11 @@
         if($scope.addAgentRow.Email=="" || angular.isUndefined($scope.addAgentRow.Email)){
             dataList['phone_num'] = null;
         }else{
+           var PhoneNumber = $scope.addAgentRow.Phone.replace(/[\s()-]+/gi, '');
+          if(PhoneNumber.length!==10 || isNaN(PhoneNumber)){
+            alert("Please enter valid phone number.");
+            return false;
+          }
             dataList['phone_num'] = $scope.addAgentRow.Phone;
         }
         
