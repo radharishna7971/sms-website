@@ -139,9 +139,9 @@ body {
 
 .hiddenPopUp{
   position:absolute;
-  left:27%;
+  left:16%;
   top:9%;
-  width: 53%;
+  width: 67%;
   height: 85%;
   z-index:111111 !important;
   background-color: white;
