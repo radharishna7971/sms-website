@@ -215,3 +215,9 @@ body {
   overflow: hidden;
   height: 119px !important;
 }
+
+.table-responsive {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: -2%;
+}
