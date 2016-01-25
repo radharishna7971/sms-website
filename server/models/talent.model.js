@@ -357,7 +357,10 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
                 (talent_id,associte_types_id,associate_id) \
                 VALUES ('+dataList['talentId']+','+dataList['agentTypeid']+','+newAgentId+')')
               .then(function (results) {
-                callback(results[0]);
+                return callback({
+                  status: 'success',
+                  text: "Successfully added Agent with talent."
+                });
               });
             });
           });
@@ -376,7 +379,10 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
                 (talent_id,associte_types_id,associate_id) \
                 VALUES ('+dataList['talentId']+','+dataList['agentTypeid']+','+dataList['agentNameid']+')')
               .then(function (results) {
-                callback(results[0]);
+                return callback({
+                  status: 'success',
+                  text: "Successfully added Agent with talent."
+                });
               });
             });
           });
@@ -392,7 +398,10 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
                 (talent_id,associte_types_id,associate_id) \
                 VALUES ('+dataList['talentId']+','+dataList['agentTypeid']+','+newAgentId+')')
               .then(function (results) {
-                callback(results[0]);
+                return callback({
+                  status: 'success',
+                  text: "Successfully added Agent with talent."
+                });
               });
             });
     }
@@ -433,7 +442,10 @@ Talent.updateAgentRowDetails = function(dataRowList,callback){
   db.knex.raw(' \
     UPDATE associate SET email='+'"'+dataRowList['email_id']+'"'+',company_id='+dataRowList['companynameIdVal']+',phone='+'"'+dataRowList['phone_num']+'"'+' WHERE id='+dataRowList['agent_id'])
   .then(function (results) {
-    callback(results[0]);
+      return callback({
+                  status: 'success',
+                  text: "Successfully updated Agent record."
+          });
   });
 };
 
