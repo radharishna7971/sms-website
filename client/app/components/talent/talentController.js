@@ -191,6 +191,14 @@
             filerDataInputs.budgetsValues = [];
             filerDataInputs.incomeValues = [];
             filerDataInputs.awardsList = [];
+
+            $scope.addAgentRow = {};
+            $scope.isAgentTypeDisabled = false;
+            $scope.isCmpnyDisabled = true;
+            $scope.isNameDisabled = true;
+            $scope.addAgentPanel = true;
+            $scope.updateAgentPanel = false;
+            $scope.agentNameByType = [];
             // This contains functions for submitting data to the database
             var dataSubmitter = {
                 Talent: function () {
@@ -288,6 +296,12 @@
             $scope.section = 'Talent';
             $scope.talentSection = 'main';
             $scope.showPopUp = '';
+
+            function validateEmail(email) {
+                var re = /\S+@\S+\.\S+/;
+                return re.test(email);
+            }
+
             $scope.showsection = function ($event, sectioname) {
                 $scope.successmsgtalent = false;
                 if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
@@ -1721,6 +1735,291 @@
                     });
             };
 
+            //start agent entry
+                    var addFetchAssociateName = function(){
+      var associateObj = {};
+      $scope.associateArray = [];
+      $scope.allAgentDetails = [];
+      var typeArray = [];
+      var agentIDval = -1;
+      talentFactory.talentProfile(checkRowId, function (result) {
+        if (!!result.associateInfo && result.associateInfo.length > 0) {
+              angular.forEach(result.associateInfo, function (value, key) {
+                  associateObj.asdid = value.asdid;
+                  associateObj.atypeid = value.atypeid;
+                  associateObj.associatename = value.type =="NA"?"":value.type;
+                  associateObj.firstname = value.firstName;
+                  associateObj.lastname = value.lastName==null || value.lastName=="null"?"":value.lastName;
+                  associateObj.fullname = value.firstName=='NA'?"":value.firstName+' '+associateObj.lastname;
+                  associateObj.email = value.email=="null" || value.email==null?"":value.email;
+                  associateObj.phone = value.phone==null || value.phone=="null"?"":value.phone;
+                  associateObj.companyname = value.companyname==null || value.companyname=="null"?"":value.companyname;
+                  $scope.associateArray.push(associateObj);
+                  //typeArray.push(value.type);
+                  associateObj = {};
+              });
+        }
+        talentFactory.getAgentDetailsData(agentIDval,function (allAgent) {
+          $scope.allAgentDetails = allAgent;
+        });
+
+      });
+    };
+
+    var getAllAgentNameByType = function(){
+       var agentTypeIdVal = parseInt($scope.addAgentRow.type);
+      talentFactory.getAgentDetailsData(agentTypeIdVal,function (allAgent) {
+          $scope.agentNameByType = allAgent;
+          $scope.isNameDisabled = false;
+        });
+    };
+    $scope.getAgentNameByType = function(){
+      getAllAgentNameByType();
+    };
+    $scope.agentDataObj = function(){
+      $scope.isCmpnyDisabled = false;
+      var agnetNameObj =JSON.parse($scope.addAgentRow.name);
+      if(angular.isUndefined(agnetNameObj.companyid) || agnetNameObj.companyid ==""){
+        $scope.addAgentRow.companyNameId = "";
+      }else{
+        $scope.addAgentRow.companyNameId=agnetNameObj.companyid;
+      }
+      $scope.addAgentRow.Email = agnetNameObj.email==null?"":agnetNameObj.email;
+      $scope.addAgentRow.Phone = agnetNameObj.Phone==null?"":agnetNameObj.Phone;
+    };
+
+    $scope.selectTaletCmpny = {
+        formatNoMatches: function(term) {
+            //console.log("Term: " + term);
+            var message = '<a ng-click="addTagCmpnyName()" >Add:"' + term + '"</a>';
+            if(!$scope.$$phase) {
+                $scope.$apply(function() {
+                    $scope.cmpnyNameNoResult = term;
+                });
+            }
+            return message;
+        }
+    };
+
+    $scope.selectTaletAgent = {
+        formatNoMatches: function(term) {
+            //console.log("Term: " + term);
+            var message = '<a ng-click="addTagAgentName()">Add:"' + term + '"</a>';
+            if(!$scope.$$phase) {
+                $scope.$apply(function() {
+                    $scope.talenNameNoResult = term;
+                });
+            }
+            return message;
+        }
+    };
+
+    $scope.addTagCmpnyName = function() {
+      
+        $scope.allAgentDetails.push({
+            companyid: $scope.cmpnyNameNoResult+'#newCmpny',
+            companyname: $scope.cmpnyNameNoResult
+        });
+        alert("New company name added into list.");
+        //console.log("hiii");
+    };
+
+    $scope.addTagAgentName = function() {
+        alert("New agent name added into list.");
+        //$scope.addAgentRow.name = $scope.talenNameNoResult;
+        $scope.agentNameByType.push({
+            allAgentDetails: $scope.talenNameNoResult+'#newAgent',
+            name: $scope.talenNameNoResult
+        });
+        //console.log("hiiiiiiiii");
+        //console.log("hiii");
+    };
+
+    $scope.editAgentRecord = function($event,agentId,agentTypeId){
+      var getIdsList = {};
+      getIdsList['talentID']=$scope.activeElement.id;
+      getIdsList['agentTypeid']=agentTypeId;
+      getIdsList['agentID']=agentId;
+      talentFactory.getTalenNamesDataById(getIdsList,function(result) {
+              console.log(result);
+              $scope.isAgentTypeDisabled = true;
+              $scope.isNameDisabled = true;
+              $scope.isCmpnyDisabled = false;
+              $scope.addAgentPanel = false;
+              $scope.updateAgentPanel = true;
+              $scope.addAgentRow.updatedNameID = result[0].asdid;
+              $scope.addAgentRow.updatedName = result[0].name;
+              $scope.addAgentRow.type = result[0].atypeid;    
+              $scope.addAgentRow.companyNameId = result[0].companyid;
+              $scope.addAgentRow.Email = result[0].email;
+              $scope.addAgentRow.Phone = result[0].phone;
+        });
+    };
+    $scope.upDateAgentRow = function(){
+      console.log($scope.addAgentRow);
+        var dataList = {};
+        if($scope.addAgentRow.Email=="" || angular.isUndefined($scope.addAgentRow.Email)){
+            dataList['email_id'] = null;
+        }else{
+            if(validateEmail($scope.addAgentRow.Email)){
+              dataList['email_id'] = $scope.addAgentRow.Email;
+            }else{
+              alert("Please enter valid email Id.");
+              return false;
+            }
+            
+        }
+        if($scope.addAgentRow.Email=="" || angular.isUndefined($scope.addAgentRow.Email)){
+            dataList['phone_num'] = null;
+        }else{
+           var PhoneNumber = $scope.addAgentRow.Phone.replace(/[\s()-]+/gi, '');
+          if(PhoneNumber.length!==10 || isNaN(PhoneNumber)){
+            alert("Please enter valid phone number.");
+            return false;
+          }
+            dataList['phone_num'] = $scope.addAgentRow.Phone;
+        }
+        
+        dataList['type'] = $scope.addAgentRow.type;
+        dataList['agent_id'] = $scope.addAgentRow.updatedNameID;
+        dataList['talentID']=$scope.activeElement.id;
+        dataList['companynameIdVal']=$scope.addAgentRow.companyNameId;
+        talentFactory.updateAgentRowDetailsById(dataList,function(result) {
+            addFetchAssociateName();
+            applyCancel();
+
+        });
+
+    };
+    var applyCancel = function(){
+      $scope.addAgentRow = {};
+      $scope.addAgentPanel = true;
+      $scope.updateAgentPanel = false;
+      $scope.isAgentTypeDisabled = false;
+    };
+    $scope.cancelAgentRow = function(){
+        applyCancel();
+
+    };
+    $scope.$watch('talenNameNoResult', function(newVal, oldVal) {
+        if(newVal && newVal !== oldVal) {
+            $timeout(function() {
+                var noResultsLink = $('.select2-no-results');
+                console.log(noResultsLink.contents());
+                $compile(noResultsLink.contents())($scope);
+            });
+        }
+    }, true);
+
+    $scope.$watch('cmpnyNameNoResult', function(newVal, oldVal) {
+        if(newVal && newVal !== oldVal) {
+            $timeout(function() {
+                var noResultsLink = $('.select2-no-results');
+                console.log(noResultsLink.contents());
+                $compile(noResultsLink.contents())($scope);
+            });
+        }
+    }, true);
+
+    $scope.removeAgent = function($event,asdid,atypeid){
+      if(confirm("Are you sure you want to delete this record?")){
+        var indexVal = _.findIndex($scope.associateArray, {'asdid': asdid});
+        // $scope.associateArray.splice(indexVal, 1);
+        // return false;
+        talentFactory.removeTalentAgentJoin($scope.activeElement.id,asdid,atypeid,function(result) {
+              $scope.associateArray.splice(indexVal, 1);
+        });
+      }   
+    };
+
+    $scope.clearAgentAddRow = function(){
+      $scope.addAgentRow = {};
+    };
+
+    $scope.addAgentRowData = function(){
+      var objectForamtted = {};
+      console.log($scope.addAgentRow);
+      var isNewRow = 0;
+      var nameArray = {};
+      if($scope.addAgentRow.type=="0" || angular.isUndefined($scope.addAgentRow.type)){
+        $scope.addAgentRow.type = 5;
+      }
+      if($scope.addAgentRow.name=="" || angular.isUndefined($scope.addAgentRow.name)){
+        nameArray.name = 'NA';
+      }
+      if(angular.isUndefined($scope.addAgentRow.companyNameId) || $scope.addAgentRow.companyNameId==null){
+          alert("Please select company name.");
+          return false;
+        }
+        if($scope.addAgentRow.type!==5){
+          nameArray = JSON.parse($scope.addAgentRow.name);
+        }
+        if(angular.isUndefined(nameArray.asdid) || angular.isUndefined(nameArray.atypeid)){
+            objectForamtted['agentNameid'] = nameArray.name;
+            objectForamtted['agentTypeid'] = $scope.addAgentRow.type;
+            isNewRow = 1;
+        }else{
+            objectForamtted['agentNameid'] = nameArray.asdid;
+            objectForamtted['agentTypeid'] = nameArray.atypeid;
+        }
+        var isNewCmp = (($scope.addAgentRow.companyNameId).toString()).indexOf("#");
+        if(isNewCmp!=-1){
+          var cmnyArray = $scope.addAgentRow.companyNameId.split('#');
+          objectForamtted['cmpnyId'] = cmnyArray[0];
+          isNewRow = 1;
+        }else{
+          objectForamtted['cmpnyId'] = $scope.addAgentRow.companyNameId;
+        }
+
+        if($scope.addAgentRow.Email==null || angular.isUndefined($scope.addAgentRow.Email) || $scope.addAgentRow.Email ==""){
+          objectForamtted['agentEmail'] = null;
+        }else{
+          if(validateEmail($scope.addAgentRow.Email)){
+              objectForamtted['agentEmail'] = $scope.addAgentRow.Email;
+            }else{
+              alert("Please enter valid email Id.");
+              return false;
+            }
+        }
+        if($scope.addAgentRow.Phone==null || angular.isUndefined($scope.addAgentRow.Phone) || $scope.addAgentRow.Phone ==""){
+          objectForamtted['agentPhone'] = null;
+        }else{
+          var PhoneNumber = $scope.addAgentRow.Phone.replace(/[\s()-]+/gi, '');
+          if(PhoneNumber.length!==10 || isNaN(PhoneNumber)){
+            alert("Please enter valid phone number.");
+            return false;
+          }
+          objectForamtted['agentPhone'] = $scope.addAgentRow.Phone; 
+        }
+        if(angular.isUndefined($scope.addAgentRow.type)){
+            objectForamtted['agentTypeIDVal']  = null;
+        }else if(angular.isDefined($scope.addAgentRow.type)){
+          if($scope.addAgentRow.type ==="0"){
+            objectForamtted['agentTypeIDVal'] = null;
+          }else{
+              objectForamtted['agentTypeIDVal'] = $scope.addAgentRow.type;
+          }
+        }
+        
+      objectForamtted['talentId'] = $scope.activeElement.id;
+      talentFactory.addAgentDetails(isNewRow,objectForamtted,function(result) {
+              console.log(result.status);
+              if(result.status=="error"){
+                alert(result.text);
+                 return false;
+              }else{
+                addFetchAssociateName();
+                $scope.addAgentRow = {};
+                $scope.agentNameByType.length=0;
+                $scope.isCmpnyDisabled = true;
+                $scope.isNameDisabled = true;
+                alert(result.text);
+                return false;
+              }
+        });
+    };
+    //End agent Entry
+
             $scope.applyReset = function(){
                     $scope.filerByname = "";
                     $('.filter-option').prop('checked', false);
@@ -1736,6 +2035,8 @@
                         localStorageService.set("role-" + $(this).val().trim(), "");
                     }
                 });
+
+
 
                 $('div#genre_list input').each(function () {
                     if ($(this).val().trim() !== "" && $(this).prop("checked")) {
@@ -1866,16 +2167,7 @@
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
                         $scope.talentSection = 'main';
-                        /*creditFactory.getAllNames()
-                        .then(function(result) {
-                            $scope.data.Credit= {};
-                            $scope.data.Credit = result.data;
-                            $scope.setLoading(false);
-                            $("#cover").show();
-                            $(".hiddenPopUp").show();                        
-                            $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                            $("#mainTab").addClass('talent-form-menu-button-active');                         
-                        });*/
+                        
                         $scope.setLoading(false);
                         $("#cover").show();
                         $(".hiddenPopUp").show();

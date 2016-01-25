@@ -399,7 +399,7 @@
             <!-- management -->
 
             <div ng-show="talentSection==='management'">
-              <div ng-show="successmsgtalent" style="color:red;">Management info updated successfully</div>
+              <!-- <div ng-show="successmsgtalent" style="color:red;">Management info updated successfully</div>
           <p class="input-label">Attorney</p>
       <select name="attorney" id="attorney" ng-model="attorney" class="data-input select-input">
         <option value=''>Select</option>
@@ -424,7 +424,72 @@
         <option ng-repeat="publicist in publicists" value="{{publicist.associate_id}}" ng-selected="publicistname == publicist.name">{{publicist.name}}
         </option>
       </select>
-              <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="Update">
+              <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="Update"> -->
+              <div class="table-responsive  add-agent-table">
+          <table class="table">
+            <tr>
+              <td>Type</td>
+              <td>Name</td>
+              <td>Company Name</td>
+              <td>Email</td>
+              <td>Phone</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <select type="text" ng-model="addAgentRow.type" ng-change="getAgentNameByType()" ng-disabled="isAgentTypeDisabled">
+                  <option value="0">Select Type</option>
+                  <option value="1">Agent</option>
+                  <option value="2">Manager</option>
+                  <option value="3">Attorney</option>
+                  <option value="4">Publicist</option>
+              </select>
+              </td>
+              <td>
+                <input type="hidden" ng-model="addAgentRow.updatedNameID">
+                <input type="text" ng-model="addAgentRow.updatedName" ng-if="updateAgentPanel" ng-disabled="isAgentTypeDisabled">
+                <!-- <input type="text" ng-model="addAgentRow.name" /> -->
+                  <select style="width: 140px;" ng-if="addAgentPanel" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
+                  <option ng-repeat="allAgentDetail in agentNameByType" value="{{allAgentDetail}}">{{allAgentDetail.name}}</option>
+                  </select>
+              </td>
+              <td style="width:170px">
+                <!-- <input type="text" ng-model="addAgentRow.companyName" /> -->
+                <select style="width: 170px;" ui-select2="selectTaletCmpny" ng-model="addAgentRow.companyNameId">
+                  <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}">{{allAgentDetail.companyname}}</option>
+                  </select>
+              </td>
+              <td><input type="text" ng-model="addAgentRow.Email" /></td>
+              <td><input type="text" ng-model="addAgentRow.Phone" /></td>
+              <td>
+                <span ng-if="addAgentPanel">
+                <button class= "btn btn-primary btn-xs" ng-click="addAgentRowData()">
+                  Add</button>
+                  <button class= "btn btn-primary btn-xs" ng-click="clearAgentAddRow()">
+                  Clear</button>
+                </span>
+                <span ng-if="updateAgentPanel">
+                <button class= "btn btn-primary btn-xs" ng-click="upDateAgentRow()">
+                  Update</button>
+                  <button class= "btn btn-primary btn-xs" ng-click="cancelAgentRow()">
+                  Cancel</button>
+                </span>
+              </td>
+            </tr>
+            <tr ng-repeat="item in associateArray">
+              <td>{{item.associatename}}</td>
+              <td>{{item.fullname}}</td>
+              <td>{{item.companyname}}</td>
+              <td>{{item.email}}</td>
+              <td>{{item.phone}}</td>
+              <td><span class="delete-talent-credit-join-button addAgentRemoveLink" ng-click="removeAgent($event,item.asdid,item.atypeid)">x</span>&nbsp;&nbsp;
+                <a href="#" ng-click="editAgentRecord($event,item.asdid,item.atypeid)">
+                  <span class="addAgentEditLink">Edit</span>
+                </a>
+              </td>
+            </tr>  
+          </table>
+        </div>
             </div>
 
             <!-- social profiles -->
