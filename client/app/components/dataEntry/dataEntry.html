@@ -484,6 +484,8 @@
           </select>
         </div>
         <div class="talent-column">
+              <p class="input-label">Age</p>
+              <input class="data-input" ng-model="activeElement.age" validate="age" type="text" placeholder="Enter Age...">
               <p class="input-label">City</p>
           <input class="data-input" ng-model="activeElement.city" type="text" placeholder="Enter city...">
           <p class="input-label">State</p>
@@ -667,6 +669,7 @@
             <div class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</div>
           </div>
         </div> -->
+        <div class="table-responsive">
         <table class="table table-striped creditsRoleJoin">
                     <tr>
                       <th>Credit</th>
@@ -679,6 +682,7 @@
                       <td>{{join.role}}</td><td><span class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</span></td>
                     </tr>
                   </table>
+                  </div>
 
 
 

@@ -501,6 +501,7 @@ Talent.get = function (id, callback) {
       last_name, \
       email, \
       phone, \
+      age, \
       gender, \
       city, \
       State, \
