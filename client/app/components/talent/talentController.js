@@ -1885,8 +1885,16 @@
         dataList['talentID']=$scope.activeElement.id;
         dataList['companynameIdVal']=$scope.addAgentRow.companyNameId;
         talentFactory.updateAgentRowDetailsById(dataList,function(result) {
-            addFetchAssociateName();
-            applyCancel();
+            if(result.status=="error"){
+                alert(result.text);
+                 return false;
+              }else{
+                addFetchAssociateName();
+                applyCancel();
+                alert(result.text);
+                return false;
+              }
+
 
         });
 
