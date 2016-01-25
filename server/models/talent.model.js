@@ -47,27 +47,16 @@ Talent.getRowCout = function (callback) {
 };
 
 Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, callback) {
-  //console.log(filterArrayInput);
   var arrayLenVal = parseInt(arrayLenVal);
-
-  //var applyLimit = 1;
   var applyWhereFilter = '';
   var offSetLimitValueStr = '';
   var filterTalentName = '';
-
-  // if (filterArrayInput['gender'].length === 0 && filterArrayInput['nameVal'].length === 0 && filterArrayInput['role'].length === 0 && filterArrayInput['genres'].length === 0 && filterArrayInput['age'].length === 0 && filterArrayInput['country'].length === 0 && filterArrayInput['createdby'].length === 0 && filterArrayInput['EthnicityID'].length === 0) {
-  //   applyLimit = 0;
-  // }
-  //console.log(pageSize);
-  //console.log(pageNumber);
-  //console.log(pageSize);
   if (!arrayLenVal) {
     var pageNumber = parseInt(pageNumber);
     var pageSize = parseInt(pageSize);
     var reducedValue = parseInt(pageSize - 1);
     var limitValue = pageNumber * pageSize - reducedValue;
     offSetLimitValueStr = ' LIMIT ' + limitValue + ', ' + pageSize;
-    console.log(offSetLimitValueStr);
   } else {
     var addgender = '';
     var addName = "'%" + "%'";
@@ -128,15 +117,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     if (filterArrayInput['age'].length) {
       addAges = filetTalentByByAge(filterArrayInput);
     }
-    // if (filterArrayInput['budgetsValues'].length) {
-    //   addBudget = filetTalentByBudgetAndIncome('estimatedBudget', filterArrayInput);
-    // }
-    // if (filterArrayInput['incomeValues'].length) {
-    //   addIncome = filetTalentByBudgetAndIncome('box_office_income', filterArrayInput);
-    // }
-
-    //console.log(addAges);
-
+    
     applyWhereFilter = ' WHERE CONCAT(t.first_name, \' \', t.last_name) LIKE ' + addName;
     if (addRoles !== '' || addGenres != '') {
       applyWhereFilter = ', credit_talent_role_join cjoin1';
@@ -146,9 +127,6 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       if (addGenres != '') {
         applyWhereFilter = applyWhereFilter + ' inner join credits_genres_join cgj on cgj.credit_id = cjoin1.credit_id inner join genres g on g.id = cgj.genre_id';
       }
-      // if (addBudget != '' || addIncome != '' || addRatio != '') {
-      //   applyWhereFilter = applyWhereFilter + ' inner join credits c1 on c1.id = cjoin1.credit_id';
-      // }
       applyWhereFilter = applyWhereFilter + ' where cjoin1.talent_id = t.id';
       if (filterArrayInput['nameVal'].length) {
         applyWhereFilter = applyWhereFilter + ' AND CONCAT(t.first_name, \' \', t.last_name) LIKE ' + addName;
@@ -176,18 +154,8 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     if (addAges !== '') {
       applyWhereFilter = applyWhereFilter + addAges;
     }
-    // if (addBudget != '') {
-    //   applyWhereFilter = applyWhereFilter + addBudget;
-    // }
-    // if (addIncome != '') {
-    //   applyWhereFilter = applyWhereFilter + addIncome;
-    // }
-
-    //console.log(applyWhereFilter);
     offSetLimitValueStr = '';
   }
-  //console.log(applyWhereFilter);
-  //console.log(offSetLimitValueStr);
   db.knex.raw(' \
     SELECT \
     DISTINCT(t.id) as id, \
@@ -305,9 +273,6 @@ FROM talent t where t.id= ' + talentId)
 };
 
 Talent.removeTalentAgentJoin = function(talentId,associateId,associateTypeId, callback){
-  var sqlstr = 'DELETE FROM associate_talent_associate_type_join WHERE talent_id='+talentId+'AND associte_types_id='+associateTypeId+'AND associate_id='+associateTypeId;
-  console.log(sqlstr);
-
   db.knex.raw(' \
     DELETE \
     FROM associate_talent_associate_type_join \
@@ -381,13 +346,11 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
         INSERT INTO company(name) \
         values('+'"'+dataList['cmpnyId']+'"'+')')
         .then(function (results) {
-          console.log("add company details");
           newCmpnyIdVal = results[0].insertId;
           db.knex.raw(' \
             INSERT INTO  associate (firstName,lastName,phone,company_id,types,email) \
             values ('+'"'+dataList['agentNameid']+'"'+','+'null'+','+'"'+dataList['agentPhone']+'"'+','+newCmpnyIdVal+','+dataList['agentTypeid']+','+'"'+dataList['agentEmail']+'"'+')')
             .then(function (results) {
-              console.log("add agent details");
               newAgentId = results[0].insertId;
               db.knex.raw(' \
                 INSERT INTO  associate_talent_associate_type_join \
@@ -403,12 +366,10 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
         INSERT INTO company(name) \
         values('+'"'+dataList['cmpnyId']+'"'+')')
         .then(function (results) {
-          console.log("add company details");
           newCmpnyIdVal = results[0].insertId;
           db.knex.raw(' \
             UPDATE associate SET email='+'"'+dataList['agentEmail']+'"'+',company_id='+newCmpnyIdVal+',phone='+'"'+dataList['agentPhone']+'"'+' WHERE id='+dataList['agentNameid'])
             .then(function (results) {
-              console.log("add agent details");
               newAgentId = results[0].insertId;
               db.knex.raw(' \
                 INSERT INTO  associate_talent_associate_type_join \
@@ -425,7 +386,6 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
             INSERT INTO  associate (firstName,lastName,phone,company_id,types,email) \
             values ('+'"'+dataList['agentNameid']+'"'+','+'null'+','+'"'+dataList['agentPhone']+'"'+','+dataList['cmpnyId']+','+dataList['agentTypeid']+','+'"'+dataList['agentEmail']+'"'+')')
             .then(function (results) {
-              console.log("add agent details");
               newAgentId = results[0].insertId;
               db.knex.raw(' \
                 INSERT INTO  associate_talent_associate_type_join \
@@ -441,14 +401,30 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
       UPDATE associate SET email='+'"'+dataList['agentEmail']+'"'+',company_id='+dataList['cmpnyId']+',phone='+'"'+dataList['agentPhone']+'"'+' WHERE id='+dataList['agentNameid'])
       .then(function (results) {
         db.knex.raw(' \
-          INSERT INTO  associate_talent_associate_type_join \
-          (talent_id,associte_types_id,associate_id) \
-          VALUES ('+addParams+')')
+          SELECT count(*) as rowNum FROM associate_talent_associate_type_join \
+          where talent_id = '+dataList['talentId']+' \
+          and associte_types_id ='+dataList['agentTypeid']+' \
+          and associate_id='+dataList['agentNameid'])
         .then(function (results) {
-          callback(results[0]);
+          if(!results[0][0].rowNum){
+              db.knex.raw(' \
+                INSERT INTO  associate_talent_associate_type_join \
+                (talent_id,associte_types_id,associate_id) \
+                VALUES ('+addParams+')')
+              .then(function (results) {
+                return callback({
+                  status: 'success',
+                  text: "Successfully added Agent with talent."
+                });
+              });
+          }else{
+            return callback({
+              status: 'error',
+              text: "Agent with the same name already exist."
+            });
+          }
+        });
       });
-      });
-    
   }
   
 };
@@ -705,7 +681,6 @@ Talent.matchPartner = function (partnerId1, partnerId2) {
       })
       .fetch()
       .then(function (talent) {
-        console.log(talent);
         if (!talent.get('partner_id')) {
           console.log('talent doesnt have partner id');
           talent.set('partner_id', partnerId1)

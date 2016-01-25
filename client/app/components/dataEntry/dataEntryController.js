@@ -741,7 +741,12 @@
         if($scope.addAgentRow.Phone==null || angular.isUndefined($scope.addAgentRow.Phone) || $scope.addAgentRow.Phone ==""){
           objectForamtted['agentPhone'] = null;
         }else{
-          objectForamtted['agentPhone'] = $scope.addAgentRow.Phone;
+          var PhoneNumber = $scope.addAgentRow.Phone.replace(/[\s()-]+/gi, '');
+          if(PhoneNumber.length!==10 || isNaN(PhoneNumber)){
+            alert("Please enter valid phone number.");
+            return false;
+          }
+          objectForamtted['agentPhone'] = $scope.addAgentRow.Phone; 
         }
         if(angular.isUndefined($scope.addAgentRow.type)){
             objectForamtted['agentTypeIDVal']  = null;
@@ -755,12 +760,19 @@
         
       objectForamtted['talentId'] = $scope.activeElement.id;
       talentFactory.addAgentDetails(isNewRow,objectForamtted,function(result) {
-              addFetchAssociateName();
-              $scope.addAgentRow = {};
-              $scope.agentNameByType.length=0;
-              $scope.isCmpnyDisabled = true;
-              $scope.isNameDisabled = true;
-              //$scope.associateArray.splice(indexVal, 1);
+              console.log(result.status);
+              if(result.status=="error"){
+                alert(result.text);
+                 return false;
+              }else{
+                addFetchAssociateName();
+                $scope.addAgentRow = {};
+                $scope.agentNameByType.length=0;
+                $scope.isCmpnyDisabled = true;
+                $scope.isNameDisabled = true;
+                alert(result.text);
+                return false;
+              }
         });
     };
 
