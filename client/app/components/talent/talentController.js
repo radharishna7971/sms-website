@@ -205,6 +205,10 @@
                     if (!checkInputs('talent')) {
                         $scope.showmsg.errorText = 'Please fill all required fields in correct format';
                     } else {
+                        if(($scope.activeElement.first_name=="" && $scope.activeElement.last_name =="") || ($scope.activeElement.first_name==null && $scope.activeElement.last_name ==null)){
+                            $scope.showmsg.errorText = 'Please fill either firstname or lastname';
+                            return false;
+                        }
                         // Set blank values to null so they can be properly saved in database
                         for (var key in $scope.activeElement) {
                             if (!$scope.activeElement[key]) {
@@ -2185,5 +2189,19 @@
                     });
 
             });
+            $("#phoneNumberIdTalent").mask("(999)999-9999");
+            $("#phoneNumberIdTalent").on("blur", function() {
+                var last = $(this).val().substr( $(this).val().indexOf("-") + 1 );
+                
+                if( last.length == 3 ) {
+                    var move = $(this).val().substr( $(this).val().indexOf("-") - 1, 1 );
+                    var lastfour = move + last;
+                    
+                    var first = $(this).val().substr( 0, 9 );
+                    
+                    $(this).val( first + '-' + lastfour );
+                }
+              });
+    
         });
 })();
