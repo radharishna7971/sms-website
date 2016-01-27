@@ -159,7 +159,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
   db.knex.raw(' \
     SELECT \
     DISTINCT(t.id) as id, \
-    CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name, \
+    CONCAT(COALESCE(t.last_name,\'\'),\' \',COALESCE(t.first_name,\'\')) AS name, \
     t.age as age, \
     t.gender as gender, \
     t.country as country , \
