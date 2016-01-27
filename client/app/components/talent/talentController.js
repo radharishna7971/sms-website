@@ -1739,8 +1739,21 @@
                     });
             };
 
-            //start agent entry
-                    var addFetchAssociateName = function(){
+    $scope.deleteTalentRecordPopUp = function() {
+        if (confirm("Are you sure you want to delete this talent record ?")) {
+            talentFactory.deleteTalent($scope.activeElement.id, function(){
+                var index = _.findIndex($scope.talentGridOption.data, {'id': $scope.activeElement.id});;
+                $scope.talentGridOption.data.splice(index, 1);
+                $scope.activeElement = {};
+                $(".hiddenPopUp").hide();
+                $("#cover").hide();
+                $('.talent-right-container-content').hide();
+                $("#editLink").hide();
+            });
+        }
+    };
+    //start agent entry
+    var addFetchAssociateName = function(){
       var associateObj = {};
       $scope.associateArray = [];
       $scope.allAgentDetails = [];
