@@ -520,9 +520,8 @@
                   associateObj.fullname = value.firstName=='NA'?"":value.firstName+' '+associateObj.lastname;
                   associateObj.email = value.email=="null" || value.email==null?"":value.email;
                   associateObj.phone = value.phone==null || value.phone=="null"?"":value.phone;
-                  associateObj.companyname = value.companyname==null || value.companyname=="null"?"":value.companyname;
+                  associateObj.companyname = value.companyname==null || value.companyname=="null" || value.companyname=="NA"?"":value.companyname;
                   $scope.associateArray.push(associateObj);
-                  //typeArray.push(value.type);
                   associateObj = {};
               });
         }
@@ -725,6 +724,11 @@
           alert("Please select company name.");
           return false;
         }
+        else if($scope.addAgentRow.companyNameId==472 && nameArray.name=='NA'){
+            alert("Please select either Company name or Agent name.");
+            return false;
+        }
+        
         if($scope.addAgentRow.type!==5){
           nameArray = JSON.parse($scope.addAgentRow.name);
         }
