@@ -117,8 +117,8 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     if (filterArrayInput['age'].length) {
       addAges = filetTalentByByAge(filterArrayInput);
     }
-    
-    applyWhereFilter = ' WHERE CONCAT(t.first_name, \' \', t.last_name) LIKE ' + addName;
+    //CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name,
+    applyWhereFilter = ' AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
     if (addRoles !== '' || addGenres != '') {
       applyWhereFilter = ', credit_talent_role_join cjoin1';
       if (addRoles !== '') {
@@ -127,9 +127,9 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       if (addGenres != '') {
         applyWhereFilter = applyWhereFilter + ' inner join credits_genres_join cgj on cgj.credit_id = cjoin1.credit_id inner join genres g on g.id = cgj.genre_id';
       }
-      applyWhereFilter = applyWhereFilter + ' where cjoin1.talent_id = t.id';
+      applyWhereFilter = applyWhereFilter + ' AND cjoin1.talent_id = t.id';
       if (filterArrayInput['nameVal'].length) {
-        applyWhereFilter = applyWhereFilter + ' AND CONCAT(t.first_name, \' \', t.last_name) LIKE ' + addName;
+        applyWhereFilter = applyWhereFilter + ' AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
       }
     }
     if (addRoles !== '') {
@@ -187,7 +187,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \
     where cjoin.talent_id = t.id) as boxbudgetratio \
-  FROM talent t' + applyWhereFilter +' order by name asc '+ offSetLimitValueStr)
+  FROM talent t WHERE t.deleted = 0' + applyWhereFilter +' order by name asc '+ offSetLimitValueStr)
     .then(function (results) {
       var data = results[0];
       callback(data);
@@ -282,15 +282,16 @@ Talent.removeTalentAgentJoin = function(talentId,associateId,associateTypeId, ca
     });
 };
 // Return list of all talent names
+//
 Talent.getNames = function (nameChars, callback) {
   var findNameWith = "'" + "%" + nameChars + "%" + "'";
   db.knex.raw(' \
     SELECT \
       talent.id AS id, \
-      CONCAT(talent.first_name, \' \', talent.last_name) AS name, \
+      CONCAT(COALESCE(talent.first_name,\'\'),\' \',COALESCE(talent.last_name,\'\')) AS name, \
       talent.last_name AS last_name \
     FROM talent \
-    WHERE CONCAT(talent.first_name, \' \', talent.last_name) like ' + findNameWith + ' and talent.deleted = false LIMIT 10')
+    WHERE CONCAT(COALESCE(talent.first_name,\'\'),\' \',COALESCE(talent.last_name,\'\')) like ' + findNameWith + ' and talent.deleted = false LIMIT 10')
     .then(function (results) {
       callback(results[0]);
     });
@@ -303,13 +304,13 @@ Talent.getAgentDetails = function (CheckType,callback) {
     applyAgentType = " WHERE at.id="+CheckType;
   }
   db.knex.raw(' \
-    select `at`.type,at.id as atypeid,a.id as asdid, \
+    select distinct a.id as asdid,`at`.type,at.id as atypeid, \
     CONCAT(a.firstName, \' \', a.lastName) AS name,a.email as email,a.phone as phone, \
     c.`id` as companyid,c.`name` as companyname \
     from associate_talent_associate_type_join atj \
     inner join associate_types at ON atj.associte_types_id=`at`.id \
     inner join associate a ON a.id=atj.associate_id inner join \
-    company c on c.id=a.company_id'+applyAgentType)
+    company c on c.id=a.company_id'+applyAgentType+' group by c.`id`')
     .then(function (results) {
       callback(results[0]);
     });
@@ -359,7 +360,7 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
               .then(function (results) {
                 return callback({
                   status: 'success',
-                  text: "Successfully added Agent with talent."
+                  text: "Adding name."
                 });
               });
             });
@@ -381,7 +382,7 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
               .then(function (results) {
                 return callback({
                   status: 'success',
-                  text: "Successfully added Agent with talent."
+                  text: "Adding name."
                 });
               });
             });
@@ -400,7 +401,7 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
               .then(function (results) {
                 return callback({
                   status: 'success',
-                  text: "Successfully added Agent with talent."
+                  text: "Adding name."
                 });
               });
             });
@@ -423,7 +424,7 @@ Talent.addNewTalentAgentJoin = function (isNewrow,dataList,callback) {
               .then(function (results) {
                 return callback({
                   status: 'success',
-                  text: "Successfully added Agent with talent."
+                  text: "Adding name."
                 });
               });
           }else{
