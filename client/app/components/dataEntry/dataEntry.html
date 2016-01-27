@@ -249,7 +249,7 @@
   </div>
   <div class="data-left-column-data" ng-if="section==='Credit'">
     <div class="data-left-column-data-row">
-   <input type="text" ng-model="model.CreditInput" typeahead-on-select="getCreditDetails($item)" placeholder="Enter Credit Name ..." uib-typeahead="talentName as talentName.name for talentName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+   <input type="text" ng-model="model.CreditInput" typeahead-on-select="getCreditDetails($item)" placeholder="Enter Project Name..." uib-typeahead="talentName as talentName.name for talentName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
 
   </div>
@@ -536,7 +536,8 @@
               <td style="width:170px">
                 <!-- <input type="text" ng-model="addAgentRow.companyName" /> -->
                 <select style="width: 170px;" ui-select2="selectTaletCmpny" ng-model="addAgentRow.companyNameId">
-                  <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}">{{allAgentDetail.companyname}}</option>
+                  <option></option>
+                  <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}" >{{allAgentDetail.companyname}}</option>
                   </select>
               </td>
               <td><input type="text" ng-model="addAgentRow.Email" /></td>
@@ -599,7 +600,7 @@
             <p class="input-label">Credit(s)</p>
             <!-- <select class="talent-credit-select" multiple required> -->
             <div class="data-left-column-data-row">
-            <input type="text" class="role-input"  ng-model="model.creditsObj.CreditInputData" id="creditsIds"  placeholder="Enter Credit Name ..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+            <input type="text" class="role-input"  ng-model="model.creditsObj.CreditInputData" id="creditsIds"  placeholder="Enter Project Name..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
             <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
 
 
