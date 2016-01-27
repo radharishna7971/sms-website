@@ -107,6 +107,11 @@
    border-collapse:collapse;
    table-layout: fixed;
 }
+.table-responsive-popup {
+    width: 98%;
+    margin-bottom: 20px;
+    margin-left: -1%;
+}
 
 .talent-center-div {
   overflow-x: hidden;

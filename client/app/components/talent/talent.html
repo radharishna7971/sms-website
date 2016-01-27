@@ -401,6 +401,7 @@
 
             <div ng-show="talentSection==='management'">
       <div class="table-responsive  add-agent-table">
+      <div class="table-responsive-popup">
           <table class="table">
             <tr>
               <td>Type</td>
@@ -425,7 +426,7 @@
                 <input type="text" ng-model="addAgentRow.updatedName" ng-if="updateAgentPanel" ng-disabled="isAgentTypeDisabled">
                 <!-- <input type="text" ng-model="addAgentRow.name" /> -->
                   <select style="width: 140px;" ng-if="addAgentPanel" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
-                  <option ng-repeat="allAgentDetail in agentNameByType" value="{{allAgentDetail}}">{{allAgentDetail.name}}</option>
+                  <option ng-repeat="allAgentDetail in agentNameByType" value="{{allAgentDetail}}" ng-if="allAgentDetail.name!=null">{{allAgentDetail.name}}</option>
                   </select>
               </td>
               <td style="width:170px">
@@ -465,6 +466,7 @@
             </tr>  
           </table>
         </div>
+            </div>
             </div>
 
             <!-- social profiles -->
