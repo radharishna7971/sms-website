@@ -73,7 +73,7 @@
       <div id="ethnicity_list" class="filter-option-container">
         <input class="filter-option all-option" id="allEthnicity" ng-checked="{{allEthnicityChecked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox"  value="*">All
         <div ng-repeat="ethnicity in data.Ethnicities | orderBy : 'name'" ng-if="ethnicity.name!==''">
-          <input class="filter-option ethnicity-list-class" ng-checked="{{ethnicity.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.name}}">{{ethnicity.name}}
+          <input class="filter-option ethnicity-list-class" ng-checked="{{ethnicity.checked}}" ng-click="updateFiltersByChckBox($event)"  type="checkbox" col="primary_role" value="{{ethnicity.id}}">{{ethnicity.name}}
         </div>
       </div>
       <!-- div class="filter-header-container">
