@@ -51,12 +51,14 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
   var applyWhereFilter = '';
   var offSetLimitValueStr = '';
   var filterTalentName = '';
+  var filterDeletedRows = '';
   if (!arrayLenVal) {
     var pageNumber = parseInt(pageNumber);
     var pageSize = parseInt(pageSize);
     var reducedValue = parseInt(pageSize - 1);
     var limitValue = pageNumber * pageSize - reducedValue;
-    offSetLimitValueStr = ' WHERE t.deleted = 0 LIMIT ' + limitValue + ', ' + pageSize;
+    filterDeletedRows = ' WHERE t.deleted = 0';
+    offSetLimitValueStr = ' LIMIT ' + limitValue + ', ' + pageSize;
   } else {
     var addgender = '';
     var addName = "'%" + "%'";
@@ -118,7 +120,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       addAges = filetTalentByByAge(filterArrayInput);
     }
     //CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name,
-    applyWhereFilter = ' WHERE t.deleted = 0 AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
+    applyWhereFilter = ' WHERE CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
     if (addRoles !== '' || addGenres != '') {
       applyWhereFilter = ', credit_talent_role_join cjoin1';
       if (addRoles !== '') {
@@ -129,7 +131,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       }
       applyWhereFilter = applyWhereFilter + ' WHERE cjoin1.talent_id = t.id';
       if (filterArrayInput['nameVal'].length) {
-        applyWhereFilter = applyWhereFilter + ' AND t.deleted = 0 AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
+        applyWhereFilter = applyWhereFilter + ' AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
       }
     }
     if (addRoles !== '') {
@@ -154,7 +156,16 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     if (addAges !== '') {
       applyWhereFilter = applyWhereFilter + addAges;
     }
+    if(applyWhereFilter!=''){
+      applyWhereFilter = applyWhereFilter+' AND t.deleted = 0'; 
+    }else{
+      applyWhereFilter = ' WHERE t.deleted = 0';
+    }
+    //console.log("hiiiiiiiii");
+    //console.log(applyWhereFilter);
+
     offSetLimitValueStr = '';
+    filterDeletedRows = '';
   }//CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name
   db.knex.raw(' \
     SELECT \
@@ -187,7 +198,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \
     where cjoin.talent_id = t.id) as boxbudgetratio \
-  FROM talent t ' + applyWhereFilter +' order by name asc '+ offSetLimitValueStr)
+  FROM talent t '+ filterDeletedRows + applyWhereFilter +' order by name asc '+ offSetLimitValueStr)
     .then(function (results) {
       var data = results[0];
       callback(data);
