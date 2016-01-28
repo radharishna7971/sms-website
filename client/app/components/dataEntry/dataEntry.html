@@ -330,8 +330,10 @@
 <div class="data-main-section">
   <div class="form-title-div">
     <h1 class="data-form-title">{{section}} Form - <span ng-show="!editElement">New</span><span ng-hide="!editElement">Edit</span></h1>
+   <div class="form-title">
     <div class="form-button" ng-hide="!editElement" ng-click="clearForm()">New</div>
     <div class="form-button" ng-hide="!editElement" ng-click="deleteElement()">Delete</div>
+    </div>
   </div>
   <p class="data-main-error-text">{{errorText}}</p>
   <!-- Talent menu -->
