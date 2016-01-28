@@ -6,6 +6,7 @@
     $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
+    $scope.activeElementPopUp = {};
     $scope.activeElement.talentCreditJoins = {};
     $scope.editElement = null; // contains data for element whose data is being edited in the form
     $scope.filterData = 'last_name';
@@ -14,6 +15,7 @@
     $scope.addAgentRow = {};
     $scope.talenNameNoResult = null;
     $scope.cmpnyNameNoResult = null;
+    $scope.creditsNameNoResult = null;
     $scope.model ={};
     $scope.successmsg = false;
     $scope.isAgentTypeDisabled = false;
@@ -143,8 +145,6 @@
         contactFactory.getContact($scope.editElement.id, function(contactData) {
           $scope.activeElement = contactData;
         });
-        
-       
       },
       Talent: function() {
         talentFactory.getTalent($scope.editElement.id, function(talentData) {
@@ -152,6 +152,9 @@
            if(!parseInt(last_edited_date)){
               talentData.last_edited = "";
            }
+          creditFactory.getNames(function(result){
+            $scope.allCreditsName = result;
+          });
           $scope.activeElement = talentData;
           addFetchAssociateName();
         });
@@ -278,6 +281,40 @@
           });
         }
       },
+      CreditPopUpEntry: function() {
+          for (var key in $scope.activeElementPopUp) {
+            if (!$scope.activeElementPopUp[key]) {
+              $scope.activeElementPopUp[key] = null;
+            }
+          }
+          $scope.errorText = '';
+          //moment.utc(MYSQL_DATETIME, 'YYYY-MM-DD HH:mm:ss');
+          if(angular.isDefined($scope.activeElementPopUp.release_date) && $scope.activeElementPopUp.release_date!==null){
+            $scope.activeElementPopUp.release_date =$scope.activeElementPopUp.release_date+"-01-01";
+          }
+          
+          creditFactory.addOrEdit($scope.activeElementPopUp, function(res) {
+            if(angular.isDefined($scope.activeElementPopUp.release_date) && $scope.activeElementPopUp.release_date!==null){
+              var date_array = ($scope.activeElementPopUp.release_date).split("-");
+              $scope.activeElementPopUp.release_date = date_array[0];
+            }
+              creditFactory.getNames(function(result){
+                  $scope.allCreditsName = result;
+                  $scope.activeElementPopUp = {};
+                  alert('Successfully added credit.');
+                  $("#creditsCover").hide();
+                  $("#creditsEntryPopUp").hide();
+              });
+            if (res.status !== 'error') {
+              if (res.status === 'edit') {
+                $scope.editElement.name = res.name;
+              } 
+            }else{
+              alert('Credit already exists.');
+            }
+            //$scope.errorText = res.text;
+          });
+      },
       Contact: function() {
         if (!checkInputs()) {
           $scope.errorText = 'Please fill all required fields in correct format';
@@ -372,17 +409,7 @@
           //$scope.model.CreditInput.id
          
           var credits = [];
-          if(angular.isUndefined($scope.model.creditsObj)){
-            alert("Credit(s) is required filed.");
-            $("#creditsIds").focus();
-            return false;
-
-          }else if(angular.isUndefined($scope.model.creditsObj.CreditInputData)){
-            alert("Credit(s) is required filed.");
-            $("#creditsIds").focus();
-            return false;
-          }
-          else if(angular.isUndefined($scope.model.creditsObj.CreditInputData.id) || $scope.model.creditsObj.CreditInputData.id==null){
+           if(angular.isUndefined($scope.model.creditsObj.CreditInputData)){
             alert("Credit(s) is required filed.");
             $("#creditsIds").focus();
             return false;
@@ -392,7 +419,7 @@
             $("#roleId").focus();
             return false;
           }
-          var creditsId = $scope.model.creditsObj.CreditInputData.id;
+          var creditsId = $scope.model.creditsObj.CreditInputData;
           credits.push(creditsId);
 
 
@@ -554,6 +581,14 @@
       $scope.addAgentRow.Phone = agnetNameObj.Phone==null?"":agnetNameObj.Phone;
     };
 
+    $scope.getCreditsNames = function(val){
+      var talentNames = [];
+      return creditFactory.getCreditsNames(val, angular.noop).then(function(result){
+          return result.data;
+        });
+    };
+
+
     $scope.selectTaletCmpny = {
         formatNoMatches: function(term) {
             //console.log("Term: " + term);
@@ -580,25 +615,43 @@
         }
     };
 
+    $scope.selectCreditsName = {
+        formatNoMatches: function(term) {
+            //console.log("Term: " + term);
+            var message = '<a  id="newCreditTag" ng-click="addNewCreditsNames()">Add:"' + term + '"</a>';
+            if(!$scope.$$phase) {
+                $scope.$apply(function() {
+                    $scope.creditsNameNoResult = term;
+                });
+            }
+            return message;
+        }
+    };
+
     $scope.addTagCmpnyName = function() {
-      
         $scope.allAgentDetails.push({
             companyid: $scope.cmpnyNameNoResult+'#newCmpny',
             companyname: $scope.cmpnyNameNoResult
         });
         alert("New company name added into list.");
-        //console.log("hiii");
     };
 
     $scope.addTagAgentName = function() {
         alert("New agent name added into list.");
-        //$scope.addAgentRow.name = $scope.talenNameNoResult;
         $scope.agentNameByType.push({
             allAgentDetails: $scope.talenNameNoResult+'#newAgent',
             name: $scope.talenNameNoResult
         });
-        //console.log("hiiiiiiiii");
-        //console.log("hiii");
+    };
+
+    $scope.addNewCreditsNames = function(){
+      $("#creditsCover").show();
+      $("#creditsEntryPopUp").show();
+      $("#select2-drop").hide();
+    };
+    $scope.closepopup = function(){
+      $("#creditsCover").hide();
+      $("#creditsEntryPopUp").hide();
     };
 
     $scope.editAgentRecord = function($event,agentId,agentTypeId){
@@ -685,6 +738,16 @@
     }, true);
 
     $scope.$watch('cmpnyNameNoResult', function(newVal, oldVal) {
+        if(newVal && newVal !== oldVal) {
+            $timeout(function() {
+                var noResultsLink = $('.select2-no-results');
+                console.log(noResultsLink.contents());
+                $compile(noResultsLink.contents())($scope);
+            });
+        }
+    }, true);
+
+    $scope.$watch('creditsNameNoResult', function(newVal, oldVal) {
         if(newVal && newVal !== oldVal) {
             $timeout(function() {
                 var noResultsLink = $('.select2-no-results');
@@ -876,12 +939,8 @@
         });
     };
 
-    $scope.getCreditsNames = function(val){
-      var talentNames = [];
-      return creditFactory.getCreditsNames(val, angular.noop).then(function(result){
-          return result.data;
-        });
-    };
+    
+
     $scope.getCreditDetails = function (itemval) {
         $scope.editElement = itemval;
         activeElementSetter['Credit']();
@@ -948,6 +1007,9 @@
       return result;
     };
 
+    $scope.submitCreditdataPopData = function() {
+      dataSubmitter['CreditPopUpEntry']();
+    };
 
     $scope.submitData = function() {
       dataSubmitter[$scope.section]();
