@@ -571,6 +571,20 @@ table.creditSection th, table.creditSection td {
     overflow-y: auto;
 }*/
 
+.form-button-hiddenpopup {
+  float: left;
+  background-color: #E88080;
+  color: white;
+  border-radius: 5px;
+  width: 80px;
+  height: 30px;
+  margin-left: 68%;
+  margin-top: 22px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
 #table-wrapper {
   position:relative;
 }
