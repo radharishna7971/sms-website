@@ -629,32 +629,25 @@
     };
 
     $scope.addTagCmpnyName = function() {
-      
         $scope.allAgentDetails.push({
             companyid: $scope.cmpnyNameNoResult+'#newCmpny',
             companyname: $scope.cmpnyNameNoResult
         });
         alert("New company name added into list.");
-        //console.log("hiii");
     };
 
     $scope.addTagAgentName = function() {
         alert("New agent name added into list.");
-        //$scope.addAgentRow.name = $scope.talenNameNoResult;
         $scope.agentNameByType.push({
             allAgentDetails: $scope.talenNameNoResult+'#newAgent',
             name: $scope.talenNameNoResult
         });
-        //console.log("hiiiiiiiii");
-        //console.log("hiii");
     };
 
     $scope.addNewCreditsNames = function(){
       $("#creditsCover").show();
       $("#creditsEntryPopUp").show();
-      //$("#popupCreditId").focus();
-      $scope.model.creditsObj = {};
-      //$("#newCreditTag").hide();
+      $("#select2-drop").hide();
     };
     $scope.closepopup = function(){
       $("#creditsCover").hide();
