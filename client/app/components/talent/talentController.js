@@ -696,7 +696,7 @@
 
             $timeout(function() {
                 filterAll();
-            }, 500);
+            }, 900);
             function saveState() {
                 var state = $scope.gridApi.saveState.save();
                 localStorageService.set('gridState', state);
@@ -901,12 +901,12 @@
 
                 $('div#ethnicity_list input').each(function () {
                     if ($(this).val().trim() !== "" && $(this).prop("checked")) {
-                        localStorageService.set("ethnicity-" + $(this).val().trim(), $(this).val().trim());
+                        localStorageService.set("ethnicity-" + $(this).val(), $(this).val());
                     } else {
                         if ($(this).val().trim() === '*') {
                             localStorageService.set("allEthnicity", "unchecked");
                         }
-                        localStorageService.set("ethnicity-" + $(this).val().trim(), "");
+                        localStorageService.set("ethnicity-" + $(this).val(), "");
                     }
                 });
 
@@ -1376,8 +1376,8 @@
                 Ethnicity: ethnicityFactory.getNames(function (result) {
                     angular.forEach(result, function (items) {
                         if (items && items.name.trim()) {
-                            var ethnicity = localStorageService.get("ethnicity-" + items.name.trim());
-                            if (ethnicity && ethnicity.replace("ethnicity-", "") === items.name.trim()) {
+                            var ethnicity = parseInt(localStorageService.get("ethnicity-" + items.id));
+                            if (ethnicity && ethnicity === items.id) {
                                 items.checked = true;
                                 $('#ethnicity-arrow').addClass('arrow-down').addClass('arrow-right');
                                 $('#ethnicity_list').css("display", "block");
@@ -1499,8 +1499,6 @@
                 dataList['associte_types_id'] = typeid;
                 dataList['associate_id'] = associate_id;
                 contactFactory.addGetAssociateNamesById(dataList, function (result) {
-                    console.log('AssoResult');
-                    console.log(result);
                     if (result.details.length > 0) {
                         angular.forEach(result.details, function (value, key) {
                             if (value.type === 'Agent') {
@@ -1661,7 +1659,7 @@
                 if (!section) {
                     $('input:visible, select:visible').each(function () {
                         if ($(this).attr('required')) {
-                            console.log($(this).val());
+                            //console.log($(this).val());
                             if ($(this).val() === null || $(this).val().length === 0) {
                                 result = false;
                             }
@@ -1858,7 +1856,7 @@
       getIdsList['agentTypeid']=agentTypeId;
       getIdsList['agentID']=agentId;
       talentFactory.getTalenNamesDataById(getIdsList,function(result) {
-              console.log(result);
+              //console.log(result);
               $scope.isAgentTypeDisabled = true;
               $scope.isNameDisabled = true;
               $scope.isCmpnyDisabled = false;
@@ -1873,7 +1871,7 @@
         });
     };
     $scope.upDateAgentRow = function(){
-      console.log($scope.addAgentRow);
+      //console.log($scope.addAgentRow);
         var dataList = {};
         if($scope.addAgentRow.Email=="" || angular.isUndefined($scope.addAgentRow.Email)){
             dataList['email_id'] = null;
@@ -1930,7 +1928,7 @@
         if(newVal && newVal !== oldVal) {
             $timeout(function() {
                 var noResultsLink = $('.select2-no-results');
-                console.log(noResultsLink.contents());
+                //console.log(noResultsLink.contents());
                 $compile(noResultsLink.contents())($scope);
             });
         }
@@ -1940,7 +1938,7 @@
         if(newVal && newVal !== oldVal) {
             $timeout(function() {
                 var noResultsLink = $('.select2-no-results');
-                console.log(noResultsLink.contents());
+                //console.log(noResultsLink.contents());
                 $compile(noResultsLink.contents())($scope);
             });
         }
@@ -1963,7 +1961,7 @@
 
     $scope.addAgentRowData = function(){
       var objectForamtted = {};
-      console.log($scope.addAgentRow);
+      //console.log($scope.addAgentRow);
       var isNewRow = 0;
       var nameArray = {};
       if($scope.addAgentRow.type=="0" || angular.isUndefined($scope.addAgentRow.type)){
@@ -2032,7 +2030,7 @@
         
       objectForamtted['talentId'] = $scope.activeElement.id;
       talentFactory.addAgentDetails(isNewRow,objectForamtted,function(result) {
-              console.log(result.status);
+              //console.log(result.status);
               if(result.status=="error"){
                 alert(result.text);
                  return false;
@@ -2048,7 +2046,6 @@
         });
     };
     //End agent Entry
-
             $scope.applyReset = function(){
                     $scope.filerByname = "";
                     $('.filter-option').prop('checked', false);
@@ -2099,15 +2096,15 @@
                         localStorageService.set("age-" + $(this).val().trim(), "");
                     }
                 });
-
+                
                 $('div#ethnicity_list input').each(function () {
                     if ($(this).val().trim() !== "" && $(this).prop("checked")) {
-                        localStorageService.set("ethnicity-" + $(this).val().trim(), $(this).val().trim());
+                        localStorageService.set("ethnicity-" + $(this).val(), $(this).val());
                     } else {
                         if ($(this).val().trim() === '*') {
                             localStorageService.set("allEthnicity", "unchecked");
                         }
-                        localStorageService.set("ethnicity-" + $(this).val().trim(), "");
+                        localStorageService.set("ethnicity-" + $(this).val(), "");
                     }
                 });
 
@@ -2177,7 +2174,7 @@
                 angular.forEach($scope.gridApi.selection.getSelectedRows(), function (items) {
                     selectedTalentRowId.pay.push(items.id);
                 });
-                console.log(selectedTalentRowId);
+                //console.log(selectedTalentRowId);
                 talentFactory.exportTalentDetailXls(selectedTalentRowId, function (result) {
                     $scope.data.Contact = result;
                 });
