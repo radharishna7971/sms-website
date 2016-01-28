@@ -56,7 +56,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     var pageSize = parseInt(pageSize);
     var reducedValue = parseInt(pageSize - 1);
     var limitValue = pageNumber * pageSize - reducedValue;
-    offSetLimitValueStr = ' LIMIT ' + limitValue + ', ' + pageSize;
+    offSetLimitValueStr = ' WHERE t.deleted = 0 LIMIT ' + limitValue + ', ' + pageSize;
   } else {
     var addgender = '';
     var addName = "'%" + "%'";
@@ -118,7 +118,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       addAges = filetTalentByByAge(filterArrayInput);
     }
     //CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name,
-    applyWhereFilter = ' AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
+    applyWhereFilter = ' WHERE t.deleted = 0 AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
     if (addRoles !== '' || addGenres != '') {
       applyWhereFilter = ', credit_talent_role_join cjoin1';
       if (addRoles !== '') {
@@ -127,9 +127,9 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       if (addGenres != '') {
         applyWhereFilter = applyWhereFilter + ' inner join credits_genres_join cgj on cgj.credit_id = cjoin1.credit_id inner join genres g on g.id = cgj.genre_id';
       }
-      applyWhereFilter = applyWhereFilter + ' AND cjoin1.talent_id = t.id';
+      applyWhereFilter = applyWhereFilter + ' WHERE cjoin1.talent_id = t.id';
       if (filterArrayInput['nameVal'].length) {
-        applyWhereFilter = applyWhereFilter + ' AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
+        applyWhereFilter = applyWhereFilter + ' AND t.deleted = 0 AND CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
       }
     }
     if (addRoles !== '') {
@@ -159,7 +159,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
   db.knex.raw(' \
     SELECT \
     DISTINCT(t.id) as id, \
-    CONCAT(COALESCE(t.last_name,\'\'),\' \',COALESCE(t.first_name,\'\')) AS name, \
+    CONCAT(COALESCE(t.last_name,\'\'),\', \',COALESCE(t.first_name,\'\')) AS name, \
     t.age as age, \
     t.gender as gender, \
     t.country as country , \
@@ -187,7 +187,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     inner join credits_genres_join cgj on cgj.credit_id = cjoin.credit_id \
     inner join genres g on g.id = cgj.genre_id \
     where cjoin.talent_id = t.id) as boxbudgetratio \
-  FROM talent t WHERE t.deleted = 0' + applyWhereFilter +' order by name asc '+ offSetLimitValueStr)
+  FROM talent t ' + applyWhereFilter +' order by name asc '+ offSetLimitValueStr)
     .then(function (results) {
       var data = results[0];
       callback(data);
