@@ -249,7 +249,7 @@
   </div>
   <div class="data-left-column-data" ng-if="section==='Credit'">
     <div class="data-left-column-data-row">
-   <input type="text" ng-model="model.CreditInput" typeahead-on-select="getCreditDetails($item)" placeholder="Enter Project Name..." uib-typeahead="talentName as talentName.name for talentName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+   <input type="text" ng-model="model.CreditInput" typeahead-on-select="getCreditDetails($item)" placeholder="Enter Credit Name..." uib-typeahead="talentName as talentName.name for talentName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
 
   </div>
@@ -532,7 +532,7 @@
                 <input type="text" ng-model="addAgentRow.updatedName" ng-if="updateAgentPanel" ng-disabled="isAgentTypeDisabled">
                 <!-- <input type="text" ng-model="addAgentRow.name" /> -->
                   <select style="width: 140px;" ng-if="addAgentPanel" ui-select2="selectTaletAgent" ng-model="addAgentRow.name" ng-change="agentDataObj()" ng-disabled="isNameDisabled">
-                  <option ng-repeat="allAgentDetail in agentNameByType" 
+                  <option ng-repeat="allAgentDetail in agentNameByType"
                    value="{{allAgentDetail}}" ng-if="allAgentDetail.name!=null">{{allAgentDetail.name}}</option>
                   </select>
               </td>
@@ -601,64 +601,20 @@
         <form>
           <div class="talent-column">
             <p class="input-label">Credit(s)</p>
+             <select id="creditsIds" style="width: 170px;" ui-select2="selectCreditsName" ng-model="model.creditsObj.CreditInputData">
+                  <option></option>
+                  <option ng-repeat="credits in allCreditsName" value="{{credits.id}}" >{{credits.name}}</option>
+            </select>
             <!-- <select class="talent-credit-select" multiple required> -->
-            <div class="data-left-column-data-row">
+            <!-- <div class="data-left-column-data-row">
             <input type="text" class="role-input"  ng-model="model.creditsObj.CreditInputData" id="creditsIds"  placeholder="Enter Project Name..." uib-typeahead="creditsName as creditsName.name for creditsName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
             <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
             <div ng-show="noResults">
             <i class="glyphicon glyphicon-remove"></i> No Results Found
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </div>
+            </div> -->
             <!-- </select> -->
+
           </div>
           <div class="talent-column">
           <p class="input-label">Role</p>
@@ -668,7 +624,32 @@
             </select>
           </div>
           <input class="data-input data-submit" ng-click="submitTalentCreditData()" type="submit" value="{{btnTxt}}">
+        <div id="creditsEntryPopUp">
+          <span id="close-icon" class="glyphicon glyphicon-remove"  
+              ng-click="closepopup();" style="display:inline;float:right;"></span>
+        <div class="creditPopUpFrm">
+          <h1>Credit Form - <span>New</span></h1>
+          <form>
+            <input class="id-input" ng-model="activeElementPopUp.id" type="text">
+            <p class="input-label">Record</p>
+            <input class="data-input" id="popupCreditId" ng-model="activeElementPopUp.record_id" placeholder="Enter Record..." type="input" />
+            <p class="input-label">Credit Name (Required)</p>
+            <input class="data-input" ng-model="activeElementPopUp.name" placeholder="Enter Credit Name..." type="text" required="true">
+            <p class="input-label">Release Year (YYYY)</p>
+            <input class="data-input" ng-model="activeElementPopUp.release_date" placeholder="Enter Release Year (YYYY)" type="input">
+            <p class="input-label">LogLine</p>
+            <input class="data-input select-input" ng-model="activeElementPopUp.logline" placeholder="Enter LogLine..." type="input" />
+            <p class="input-label">Estimated Budget</p>
+            <input class="data-input select-input" ng-model="activeElementPopUp.estimatedBudget" placeholder="Enter Estimated Budget..." type="input"/>
+            <p class="input-label">Box Office Income</p>
+            <input class="data-input select-input" ng-model="activeElementPopUp.box_office_income" type="input" placeholder="Enter Box Office Income...">
+            <input class="data-input data-submit" ng-click="submitCreditdataPopData()" type="submit"  value="Add">
+          </form>
+        </div>
+        </div>
+          <div id="creditsCover" ></div>
         </form>
+
         <!-- <div class="talent-credit-join-container">
           <div ng-repeat="join in activeElement.talentCreditJoins">
             <p class="talent-credit-join-text">{{join.credit}} ({{join.release_date}}) | {{join.role}}</p>

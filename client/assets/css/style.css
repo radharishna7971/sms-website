@@ -150,6 +150,24 @@ body {
   display: none;
 }
 
+#creditsEntryPopUp{
+  position:absolute;
+  left:5%;
+  top:9%;
+  width: 50%;
+  height: 85%;
+  z-index:111111 !important;
+  background-color: white;
+  margin:-50px auto;
+  border:2px solid rgba(53, 97, 104, 0.58);
+  display: none;
+}
+
+.creditPopUpFrm{
+  margin-left: 20%;
+
+}
+
 .hiddenPopUp .data-main-section{
   overflow: hidden;
 }
@@ -170,7 +188,7 @@ body {
   background-color: #1E90FF;
 }
 
-#cover{ 
+#cover,#creditsCover{ 
   position:fixed; 
   top:0; 
   left:0; 
@@ -180,7 +198,6 @@ body {
   height:100%; 
   display:none; 
 }
-
 
 #veil {
   position: absolute;
