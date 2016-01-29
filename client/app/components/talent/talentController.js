@@ -1111,9 +1111,10 @@
                     $scope.associateData = associateArray;
 
 
-                    $('.right-talent-container-menu-link').removeClass('active-talent-link');
-                    $("#infoTab").addClass('active-talent-link');
-                    $scope.activeSectionInfo = 'info';
+                    if(!$('.right-talent-container-menu-link').hasClass('active-talent-link')){
+                        $("#infoTab").addClass('active-talent-link');
+                        $scope.activeSectionInfo = 'info';
+                    }
                 });
                 $('.active-talent').each(function () {
                     $(this).removeClass('active-talent');
