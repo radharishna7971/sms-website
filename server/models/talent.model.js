@@ -667,12 +667,22 @@ Talent.addOrEdit = function (talentData, callback) {
                   .then(function (talent) {
                     Talent.matchPartner(talent.get('id'), talent.get('partner_id'));
                     Talent.getName(talent.get('id'), function (name) {
-                      callback(null, {
-                        status: 'add',
-                        text: 'Added new talent ' + name,
+                    if (typeof talentData.id == 'undefined'){
+                        callback(null, {
+                          status: 'add',
+                          text: 'Added new talent ' + name,
+                          id: talent.get('id'),
+                          name: name
+                        });
+                    }
+                    else{
+                        callback(null, {
+                        status: 'edit',
+                        text: 'Successfully edited ' + name,
                         id: talent.get('id'),
                         name: name
-                      });
+                        });
+                      }
                     });
                   });
               }
@@ -684,14 +694,22 @@ Talent.addOrEdit = function (talentData, callback) {
             .then(function (talent) {
               Talent.matchPartner(talent.get('id'), talent.get('partner_id'));
               Talent.getName(talent.get('id'), function (name) {
-                console.log("kkkkkkkkkkkkkk....!!");
-                console.log(name);
+              if (typeof talentData.id == 'undefined'){
                 callback(null, {
                   status: 'add',
                   text: 'Added new talent ' + name,
                   id: talent.get('id'),
                   name: name
                 });
+              }
+              else{
+                callback(null, {
+                  status: 'edit',
+                  text: 'Successfully edited ' + name,
+                  id: talent.get('id'),
+                  name: name
+                });
+              }
               });
             });
         }

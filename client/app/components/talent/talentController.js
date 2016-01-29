@@ -246,6 +246,7 @@
                         talentFactory.addOrEdit($scope.activeElement, function (res) {
                             if (res.status !== 'error') {
                                 if (res.status === 'edit') {
+                                    filterAll();
                                     //$scope.editElement.name = res.name;
                                 } else {
                                     // $scope.data[$scope.section].push(res);
