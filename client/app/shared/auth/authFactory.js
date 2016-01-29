@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('authFactory', [])
-  .factory('authFactory', function($http, $state, localStorageService) {
+  .factory('authFactory', function($http, $state, $rootScope, localStorageService) {
     return {
       login: function(email, password) {
         return $http({
@@ -16,6 +16,7 @@
             window.localStorage.smstudiosId = res.data.id;
             window.localStorage.smstudiosPermission = res.data.permission;
             window.localStorage.smstudiosLoginUserName = res.data.name;
+            $rootScope.$broadcast('smstudiosLoginUserName', { name: res.data.name });
             window.localStorage.smstudiosLastLoggedIn = res.data.last_logged_in;
             
             // Remove links that user does not have privilege to access
@@ -52,6 +53,7 @@
               delete window.localStorage.smstudiosId;
               delete window.localStorage.smstudiosPermission;
               delete window.localStorage.smstudiosLastLoggedIn;
+              delete window.localStorage.smstudiosLoginUserName;
             }
             callback(res.data);
           });
@@ -73,6 +75,7 @@
         delete window.localStorage.smstudiosId;
         delete window.localStorage.smstudiosPermission;
         delete window.localStorage.smstudiosLastLoggedIn;
+        delete window.localStorage.smstudiosLoginUserName;
         $state.go('login');
       },
 
