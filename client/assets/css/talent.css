@@ -108,9 +108,8 @@
    table-layout: fixed;
 }
 .table-responsive-popup {
-    width: 98%;
+    width: 97%;
     margin-bottom: 20px;
-    margin-left: -1%;
 }
 
 .talent-center-div {
@@ -524,6 +523,7 @@ table.creditSection tr {
 table.creditSection th {
     background-color: #66B3F1;
     color: white;
+    font-weight: 600;
 }
 table.creditSection th, table.creditSection td {
     
@@ -572,19 +572,18 @@ table.creditSection th, table.creditSection td {
 }*/
 
 .form-button-hiddenpopup {
-  float: left;
-  background-color: #E88080;
-  color: white;
-  border-radius: 5px;
-  width: 80px;
-  height: 30px;
-  margin-left: 68%;
-  margin-top: 22px;
-  line-height: 30px;
-  text-align: center;
-  cursor: pointer;
+    float: right;
+    background-color: #E88080;
+    color: white;
+    border-radius: 5px;
+    width: 8%;
+    height: 30px;
+    margin-right: 3%;
+    margin-top: 22px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
 }
-
 #table-wrapper {
   position:relative;
 }
