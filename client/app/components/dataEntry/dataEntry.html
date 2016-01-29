@@ -5,7 +5,7 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Credit')">CREDIT</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Role')">ROLE</div>
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Genre')">GENRE</div>
-    <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'CreditType')">CREDIT TYPE</div>
+    <!-- <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'CreditType')">CREDIT TYPE</div> -->
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Ethnicity')">ETHNICITY</div>
 
 
@@ -371,12 +371,12 @@
     </form>
 
     <!-- CREDIT TYPE FORM -->
-    <form ng-show="section==='CreditType'">
+    <!-- <form ng-show="section==='CreditType'">
       <input class="id-input " ng-model="activeElement.id" type="text">
       <p class="input-label">Credit Type Name (Required)</p>
       <input class="data-input" ng-model="activeElement.name" placeholder="Enter Credit Type..." type="text" required="true">
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
-    </form>
+    </form> -->
 
 
 
@@ -578,19 +578,17 @@
       </div>
 
       <div ng-show="talentSection==='social'">
-        <div class="talent-column">
+        <div>
           <p class="input-label">Twitter Url</p>
-          <span class="input-url-pre-text">http://www.twitter.com/</span><input class="data-input" ng-model="activeElement.twitter_url" validate="twitter" type="text" placeholder="Enter your twitter name">
+          <span class="input-url-pre-text">http://www.twitter.com/</span><input class="data-input-dataentry1" ng-model="activeElement.twitter_url" validate="twitter" type="text" placeholder="Enter your twitter name">
           <p class="input-label">Facebook Url</p>
-          <span class="input-url-pre-text">http://www.facebook.com/</span><input class="data-input" ng-model="activeElement.facebook_url" validate="facebook" type="text" placeholder="Enter your facebook name">
+          <span class="input-url-pre-text">http://www.facebook.com/</span><input class="data-input-dataentry2" ng-model="activeElement.facebook_url" validate="facebook" type="text" placeholder="Enter your facebook name">
           <p class="input-label">Youtube Url</p>
-          <span class="input-url-pre-text">http://www.youtube.com/</span><input class="data-input" ng-model="activeElement.youtube_url" type="text" validate="youtube" placeholder="Enter your youtube name">
-        </div>
-        <div class="talent-column">
+          <span class="input-url-pre-text">http://www.youtube.com/</span><input class="data-input-dataentry3" ng-model="activeElement.youtube_url" type="text" validate="youtube" placeholder="Enter your youtube name">
           <p class="input-label">Vine Url</p>
-          <span class="input-url-pre-text">http://www.vine.co/</span><input class="data-input" ng-model="activeElement.vine_url" type="text" validate="vine" placeholder="Enter your vine name">
+          <span class="input-url-pre-text">http://www.vine.co/</span><input class="data-input-dataentry4" ng-model="activeElement.vine_url" type="text" validate="vine" placeholder="Enter your vine name">
           <p class="input-label">Instagram Url</p>
-          <span class="input-url-pre-text">http://www.instagram.com/</span><input class="data-input" ng-model="activeElement.instagram_url" type="text" validate="instagram" placeholder="Enter your instagram name">
+          <span class="input-url-pre-text">http://www.instagram.com/</span><input class="data-input-dataentry5" ng-model="activeElement.instagram_url" type="text" validate="instagram" placeholder="Enter your instagram name">
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>

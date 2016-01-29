@@ -6,6 +6,9 @@
       restrict: "E",
       templateUrl: 'app/shared/topnav/topnav.html',
       controller: function($scope, $rootScope, authFactory) {
+    	  $rootScope.$on('smstudiosLoginUserName', function (event, args) {
+    		  $scope.display_username = args.name;
+    	  });
 		  if(!!window.localStorage.smstudiosLoginUserName){
 			  $scope.display_username = window.localStorage.smstudiosLoginUserName;
 			  $scope.last_logged_in = window.localStorage.smstudiosLastLoggedIn;
