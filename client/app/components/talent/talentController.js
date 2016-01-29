@@ -1769,7 +1769,11 @@
             };
 
     $scope.deleteTalentRecordPopUp = function() {
-        var talentName  = $scope.activeElement.first_name+' '+$scope.activeElement.last_name;
+        var firstNameVal = "";
+        var lastNameVal = "";
+        firstNameVal = $scope.activeElement.first_name == null || $scope.activeElement.first_name == 'null'?"":$scope.activeElement.first_name;
+        lastNameVal = $scope.activeElement.last_name == null || $scope.activeElement.last_name == 'null'?"":$scope.activeElement.last_name;
+        var talentName  = firstNameVal+' '+lastNameVal;
         if (confirm("Are you sure you want to delete talent "+talentName+" ?")) {
             talentFactory.deleteTalent($scope.activeElement.id, function(){
                 var index = _.findIndex($scope.talentGridOption.data, {'id': $scope.activeElement.id});;
