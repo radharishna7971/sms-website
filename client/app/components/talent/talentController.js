@@ -1769,7 +1769,8 @@
             };
 
     $scope.deleteTalentRecordPopUp = function() {
-        if (confirm("Are you sure you want to delete this talent record ?")) {
+        var talentName  = $scope.activeElement.first_name+' '+$scope.activeElement.last_name;
+        if (confirm("Are you sure you want to delete talent "+talentName+" ?")) {
             talentFactory.deleteTalent($scope.activeElement.id, function(){
                 var index = _.findIndex($scope.talentGridOption.data, {'id': $scope.activeElement.id});;
                 $scope.talentGridOption.data.splice(index, 1);
