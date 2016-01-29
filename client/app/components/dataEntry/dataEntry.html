@@ -580,17 +580,17 @@
       <div ng-show="talentSection==='social'">
         <div class="talent-column">
           <p class="input-label">Twitter Url</p>
-          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.twitter_url" type="text" placeholder="Enter Twitter Url...">
+          <span class="input-url-pre-text">http://www.twitter.com/</span><input class="data-input" ng-model="activeElement.twitter_url" validate="twitter" type="text" placeholder="Enter your twitter name">
           <p class="input-label">Facebook Url</p>
-          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.facebook_url" type="text" placeholder="Enter Facebook Url...">
+          <span class="input-url-pre-text">http://www.facebook.com/</span><input class="data-input" ng-model="activeElement.facebook_url" validate="facebook" type="text" placeholder="Enter your facebook name">
           <p class="input-label">Youtube Url</p>
-          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.youtube_url" type="text" placeholder="Enter Youtube Url...">
+          <span class="input-url-pre-text">http://www.youtube.com/</span><input class="data-input" ng-model="activeElement.youtube_url" type="text" validate="youtube" placeholder="Enter your youtube name">
         </div>
         <div class="talent-column">
           <p class="input-label">Vine Url</p>
-          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.vine_url" type="text" placeholder="Enter Vine Url...">
+          <span class="input-url-pre-text">http://www.vine.co/</span><input class="data-input" ng-model="activeElement.vine_url" type="text" validate="vine" placeholder="Enter your vine name">
           <p class="input-label">Instagram Url</p>
-          <span class="input-url-pre-text">http://www.</span><input class="data-input" ng-model="activeElement.instagram_url" type="text" placeholder="Enter Instagram Url...">
+          <span class="input-url-pre-text">http://www.instagram.com/</span><input class="data-input" ng-model="activeElement.instagram_url" type="text" validate="instagram" placeholder="Enter your instagram name">
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
       </div>
@@ -643,7 +643,7 @@
             <input class="data-input select-input" ng-model="activeElementPopUp.estimatedBudget" placeholder="Enter Estimated Budget..." type="input"/>
             <p class="input-label">Box Office Income</p>
             <input class="data-input select-input" ng-model="activeElementPopUp.box_office_income" type="input" placeholder="Enter Box Office Income...">
-            <input class="data-input data-submit" ng-click="submitCreditdataPopData()" type="submit"  value="Add">
+            <input class="data-input data-submit" ng-click="submitCreditdataPopData()" type="submit" value="{{btnTxtCredit}}">
           </form>
         </div>
         </div>
