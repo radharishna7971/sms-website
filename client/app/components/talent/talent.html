@@ -474,22 +474,22 @@
             <div ng-show="talentSection==='social'">
                 <div class="talent-column">
                     <p class="input-label">Twitter Url</p>
-                    <span class="input-url-pre-text">http://www.</span>
-                    <input class="data-input" ng-model="activeElement.twitter_url" type="text">
+                    <span class="input-url-pre-text">http://www.twitter.com/</span>
+                    <input class="data-input" ng-model="activeElement.twitter_url" type="text" validate="twitter" placeholder="Enter your twitter name">
                     <p class="input-label">Facebook Url</p>
-                    <span class="input-url-pre-text">http://www.</span>
-                    <input class="data-input" ng-model="activeElement.facebook_url" type="text">
+                    <span class="input-url-pre-text">http://www.facebook.com/</span>
+                    <input class="data-input" ng-model="activeElement.facebook_url" type="text" validate="facebook" placeholder="Enter your facebook name">
                     <p class="input-label">Youtube Url</p>
-                    <span class="input-url-pre-text">http://www.</span>
-                    <input class="data-input" ng-model="activeElement.youtube_url" type="text">
+                    <span class="input-url-pre-text">http://www.youtube.com/</span>
+                    <input class="data-input" ng-model="activeElement.youtube_url" type="text" validate="youtube" placeholder="Enter your youtube name">
                 </div>
                 <div class="talent-column">
                     <p class="input-label">Vine Url</p>
-                    <span class="input-url-pre-text">http://www.</span>
-                    <input class="data-input" ng-model="activeElement.vine_url" type="text">
+                    <span class="input-url-pre-text">http://www.vine.co/</span>
+                    <input class="data-input" ng-model="activeElement.vine_url" type="text" validate="vine" placeholder="Enter your vine name">
                     <p class="input-label">Instagram Url</p>
-                    <span class="input-url-pre-text">http://www.</span>
-                    <input class="data-input" ng-model="activeElement.instagram_url" type="text">
+                    <span class="input-url-pre-text">http://www.instagram.com/</span>
+                    <input class="data-input" ng-model="activeElement.instagram_url" type="text" validate="instagram" placeholder="Enter your instagram name">
                 </div>
                 <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="Update">
             </div>

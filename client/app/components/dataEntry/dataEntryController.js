@@ -1001,6 +1001,36 @@
                 result = false;
               }
             }
+          	if ($(this).attr('validate') && $(this).attr('validate') === 'twitter' && $(this).val() !=='' && $(this).val() !=='null') {
+          	  var re = /^(https?|http?|www?|twitter.com?|twitter)/;
+                if (re.test($(this).val()) === true) {
+                  result = false;
+                }
+            }
+          	if ($(this).attr('validate') && $(this).attr('validate') === 'facebook' && $(this).val() !=='' && $(this).val() !=='null') {
+        	  var re = /^(https?|http?|www?|facebook.com?|facebook)/;
+              if (re.test($(this).val()) === true) {
+                result = false;
+              }
+            }
+          	if ($(this).attr('validate') && $(this).attr('validate') === 'youtube' && $(this).val() !=='' && $(this).val() !=='null') {
+          	  var re = /^(https?|http?|www?|youtube.com?|youtube)/;
+                if (re.test($(this).val()) === true) {
+                  result = false;
+                }
+              }
+          	if ($(this).attr('validate') && $(this).attr('validate') === 'vine' && $(this).val() !=='' && $(this).val() !=='null') {
+          	  var re = /^(https?|http?|www?|vine.co?|vine)/;
+                if (re.test($(this).val()) === true) {
+                  result = false;
+                }
+              }
+          	if ($(this).attr('validate') && $(this).attr('validate') === 'instagram' && $(this).val() !=='' && $(this).val() !=='null') {
+          	  var re = /^(https?|http?|www?|instagram.com?|instagram)/;
+                if (re.test($(this).val()) === true) {
+                  result = false;
+                }
+              }
         });
       }
       
