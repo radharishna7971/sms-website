@@ -2,8 +2,7 @@
     width: auto;
     padding-top: 10px;
     padding-bottom: 10px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: relative;
     height: -moz-calc(100% - 48px);
     height: -webkit-calc(100% - 48px);

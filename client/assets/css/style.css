@@ -172,7 +172,7 @@ body {
   overflow: hidden;
 }
 .hiddenPopUp .data-form-container {
-    overflow-x: scroll;
+    overflow-x: hidden;
     overflow-y: scroll;
     width: 102%;
     margin-left: 0%;

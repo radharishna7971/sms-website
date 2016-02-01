@@ -229,7 +229,7 @@
     <table class="creditSection">
     <thead>
         <tr>
-            <th class="col-md-2">Title</th>
+            <th class="col-md-1">Title</th>
             <th class="col-md-1">Release Date</th>
             <th class="col-md-3">Role</th>
             <th class="col-md-1">Budget</th>
@@ -241,7 +241,7 @@
 
     <tbody>
         <tr ng-repeat="credits in creditsData | orderBy:'releasedate'">
-            <td class="col-md-2">{{credits.title}}</td>
+            <td class="col-md-1">{{credits.title}}</td>
             <td class="col-md-1">{{credits.releasedate}}</td>
             <td class="col-md-3">{{credits.roll}}</td>
             <td class="col-md-1">{{credits.budget}}</td>
@@ -403,11 +403,11 @@
       <div class="table-responsive-popup">
           <table class="table">
             <tr>
-              <td>Type</td>
-              <td>Name</td>
-              <td>Company Name</td>
-              <td>Email</td>
-              <td>Phone</td>
+              <td style="font-weight:600;">Type</td>
+              <td style="font-weight:600;">Name</td>
+              <td style="font-weight:600;">Company Name</td>
+              <td style="font-weight:600;">Email</td>
+              <td style="font-weight:600;">Phone</td>
               <td></td>
             </tr>
             <tr>
@@ -435,7 +435,7 @@
                   <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}">{{allAgentDetail.companyname}}</option>
                   </select>
               </td>
-              <td><input type="text" ng-model="addAgentRow.Email" /></td>
+              <td><input type="text" ng-model="addAgentRow.Email"  /></td>
               <td><input type="text" id="phoneNumberIdTalent"  ng-model="addAgentRow.Phone" /></td>
               <td>
                 <span ng-if="addAgentPanel">
@@ -522,11 +522,11 @@
                         <div class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</div>
                     </div>
                 </div> -->
-                <table class="table table-striped creditsRoleJoin">
-                    <tr>
-                      <th>Credit</th>
-                      <th>Release Year</th>
-                      <th>Role</th>
+                  <table class="table table-striped creditsRoleJoin" style="width: 98%;">                    
+                      <tr>
+                      <th style="font-weight:600;">Credit</th>
+                      <th style="font-weight:600;">Release Year</th>
+                      <th style="font-weight:600;">Role</th>
                       <th></th>
                     </tr>
                     <tr ng-repeat="join in activeElement.talentCreditJoins">

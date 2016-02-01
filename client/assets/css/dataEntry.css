@@ -37,8 +37,7 @@
 
 .data-left-column-data {
   width: auto;
-  overflow-x:hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
   height: -moz-calc(100% - 48px);
   height: -webkit-calc(100% - 48px);
@@ -133,7 +132,7 @@
   font-size: 16px;
   width: 258px;
   margin: 5px 0px 5px 0px;
-  margin-left:2%;
+  margin-left:23px;
   background-color: white;
   -webkit-border-radius: 0px;
 }
@@ -148,7 +147,7 @@
   font-size: 16px;
   width: 258px;
   margin: 5px 0px 5px 0px;
-  margin-left: 1%;
+  margin-left: 9px;
   background-color: white;
   -webkit-border-radius: 0px;
 }
@@ -163,7 +162,7 @@
   font-size: 16px;
   width: 258px;
   margin: 5px 0px 5px 0px;
-  margin-left: 2%;
+  margin-left: 15px;
   background-color: white;
   -webkit-border-radius: 0px;
 }
@@ -178,7 +177,7 @@
   font-size: 16px;
   width: 258px;
   margin: 5px 0px 5px 0px;
-  margin-left: 6%;
+  margin-left: 52px;
   background-color: white;
   -webkit-border-radius: 0px;
 }
@@ -193,7 +192,7 @@
   font-size: 16px;
   width: 258px;
   margin: 5px 0px 5px 0px;
-  margin-left: 1%;
+  margin-left: 4px;
   background-color: white;
   -webkit-border-radius: 0px;
 }
@@ -382,7 +381,7 @@
   height: 60%;
   width: 280px;
   border: 1px solid #66B3F1;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .talent-data-comment-header {

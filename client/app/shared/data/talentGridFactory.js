@@ -11,7 +11,7 @@
                   //enableSelectAll: true,
                   //modifierKeysToMultiSelect:false,
                   noUnselect: false,
-                  enableFiltering:true,
+                  //enableFiltering:true,
                   paginationPageSizes: [100, 150, 200],
                   paginationPageSize: 100,           
                   columnDefs : [
