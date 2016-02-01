@@ -195,11 +195,11 @@
     <table class="creditSection">
     <thead>
         <tr>
-            <th class="col-md-2">Type</th>
-            <th class="col-md-3">Name</th>
-            <th class="col-md-2">Company</th>
-            <th class="col-md-3">Email</th>
-            <th class="col-md-2">Phone</th>
+            <th style="font-weight:600;" class="col-md-2">Type</th>
+            <th style="font-weight:600;" class="col-md-3">Name</th>
+            <th style="font-weight:600;" class="col-md-2">Company</th>
+            <th style="font-weight:600;" class="col-md-3">Email</th>
+            <th style="font-weight:600;" class="col-md-2">Phone</th>
         </tr>
     </thead>
     <tbody>
@@ -435,7 +435,7 @@
                   <option ng-repeat="allAgentDetail in allAgentDetails" value="{{allAgentDetail.companyid}}">{{allAgentDetail.companyname}}</option>
                   </select>
               </td>
-              <td><input type="text" ng-model="addAgentRow.Email" /></td>
+              <td><input type="text" ng-model="addAgentRow.Email"  /></td>
               <td><input type="text" id="phoneNumberIdTalent"  ng-model="addAgentRow.Phone" /></td>
               <td>
                 <span ng-if="addAgentPanel">
@@ -522,12 +522,12 @@
                         <div class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</div>
                     </div>
                 </div> -->
-                <table class="table table-striped creditsRoleJoin">
-                    <tr>
-                      <th>Credit</th>
-                      <th>Release Year</th>
-                      <th>Role</th>
-                      <th></th>
+                  <table class="table table-striped creditsRoleJoin" style="width: 98%;">                    
+                      <tr>
+                      <th style="font-weight:600;">Credit</th>
+                      <th style="font-weight:600;">Release Year</th>
+                      <th style="font-weight:600;">Role</th>
+                      <th style="font-weight:600;"></th>
                     </tr>
                     <tr ng-repeat="join in activeElement.talentCreditJoins">
                       <td>{{join.credit}}</td><td>{{join.release_date}}</td>
