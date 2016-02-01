@@ -266,7 +266,7 @@ FROM talent t where t.id= ' + talentId)
             .then(function (results2) {
               ob.awards = results2[0];
               //callback(ob);
-              db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\, \') as rolename,c.estimatedBudget,c.box_office_income,c.logline  from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id   where cjoin.talent_id =' + talentId + ' GROUP BY creditname')
+              db.knex.raw('select c.`name` as creditname,DATE_FORMAT(c.release_date,"%Y") as release_date, GROUP_CONCAT(r.`name` SEPARATOR \'\, \') as rolename,c.estimatedBudget,c.box_office_income,c.logline,g.`name` as genrename from credit_talent_role_join cjoin  inner join credits c on c.id = cjoin.credit_id  inner join roles r on r.id = cjoin.role_id inner join genres g on c.genre_id = g.id where cjoin.talent_id =' + talentId + ' GROUP BY creditname')
                 .then(function (results3) {
                   ob.credits = results3[0];
                   db.knex.raw('select `at`.type,at.id as atypeid,a.id as asdid, a.firstName,a.lastName,a.email,a.phone, c.`name` as companyname from associate_talent_associate_type_join atj inner join associate_types at ON atj.associte_types_id=`at`.id inner join associate a ON a.id=atj.associate_id inner join company c on c.id=a.company_id where atj.talent_id = ' + talentId)

@@ -430,9 +430,11 @@
 
       <p class="input-label">Box Office Income</p>
       <input class="data-input select-input" ng-model="activeElement.box_office_income" type="input" placeholder="Enter Box Office Income...">
-
-
-
+		<p class="input-label">Genre</p>
+		<select class="data-input select-input" ng-model="activeElement.genre_id">
+			<option value=''>Select</option>
+			<option ng-repeat="genre in data.Genre | orderBy : 'name'"  ng-checked="activeElement.genre_id" value="{{genre.id}}">{{genre.name}}</option>
+		</select>
 
 
 
