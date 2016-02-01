@@ -14,8 +14,7 @@ Credit.getNames = function(callback) {
       DATE_FORMAT(credits.release_date,"%Y") as release_date, \
       credits.logline, \
       credits.estimatedBudget, \
-      credits.box_office_income, \
-	  credits.genre_id \
+      credits.box_office_income \
       FROM credits \
       ')
   .then(function(results) {
@@ -34,8 +33,7 @@ Credit.namesByChars = function(Chars, callback) {
       DATE_FORMAT(credits.release_date,"%Y") as release_date, \
       credits.logline, \
       credits.estimatedBudget, \
-      credits.box_office_income, \
-	  credits.genre_id \
+      credits.box_office_income \
       FROM credits WHERE name like '+findNameWith+' LIMIT 10')
     .then(function(results) {
      callback(results[0]);
@@ -48,8 +46,7 @@ Credit.get = function(id, callback) {
       credits.id as id,credits.name as name,credits.record_id as record_id, \
       DATE_FORMAT(credits.release_date,"%Y") as release_date,credits.logline as logline, \
       credits.estimatedBudget as estimatedBudget, \
-      credits.box_office_income as box_office_income, \
-	  credits.genre_id \
+      credits.box_office_income as box_office_income \
       FROM credits \
       WHERE credits.id = ' + id)
   .then(function(results) {
