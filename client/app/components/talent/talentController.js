@@ -201,6 +201,7 @@
             $scope.addAgentPanel = true;
             $scope.updateAgentPanel = false;
             $scope.agentNameByType = [];
+
             // This contains functions for submitting data to the database
             var dataSubmitter = {
                 Talent: function () {
@@ -2265,6 +2266,9 @@
                 $scope.setLoading(true);
                 talentFactory.getTalentAllInfoById($scope.getTalentData.id)
                     .then(function (result) {
+                        if(!result.data.age){
+                            result.data.age = "";
+                        }
                         $scope.activeElement = result.data;
                         $scope.inputPartner = result.data.partner;
                         $scope.showmsg = {};
