@@ -179,6 +179,9 @@
           creditFactory.getNames(function(result){
             $scope.allCreditsName = result;
           });
+          if(!talentData.age){
+              talentData.age= "";
+            }
           $scope.activeElement = talentData;
           addFetchAssociateName();
         });
