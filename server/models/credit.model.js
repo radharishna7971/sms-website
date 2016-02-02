@@ -144,7 +144,9 @@ Credit.addOrEdit = function(creditData, getCreditGenre, callback) {
             }
           credit.save();
         }
-        addUpdateCreditGenre(creditData.id,getCreditGenre);
+        if(getCreditGenre[0]!=""){
+          addUpdateCreditGenre(creditData.id,getCreditGenre);
+        }
         callback(null, {status: 'edit', text: 'Successfully edited credit', id: credit.get('id'), name: credit.get('name')});
 
       } else {
@@ -162,7 +164,9 @@ Credit.addOrEdit = function(creditData, getCreditGenre, callback) {
             credit.save();
           }
           credit.save();
-          addUpdateCreditGenre(creditData.id,getCreditGenre);
+          if(getCreditGenre[0]!=""){
+            addUpdateCreditGenre(creditData.id,getCreditGenre);
+          }
           callback(null, {status: 'edit', text: 'Successfully edited credit', id: credit.get('id'), name: credit.get('name')});
         });
       } else {
@@ -170,7 +174,9 @@ Credit.addOrEdit = function(creditData, getCreditGenre, callback) {
         .save()
         .then(function(credit) {
           var cid = credit.get('id');
-          addUpdateCreditGenre(cid,getCreditGenre);
+          if(getCreditGenre[0]!=""){
+            addUpdateCreditGenre(cid,getCreditGenre);
+          }
           callback(null, {status: 'add', text: 'Created new credit', id: credit.get('id'), name: credit.get('name')});
         });
       }
