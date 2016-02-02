@@ -50,7 +50,13 @@ Credit.get = function(id, callback) {
       FROM credits \
       WHERE credits.id = ' + id)
   .then(function(results) {
-     callback(results[0][0]);
+    var data = results[0][0];
+    db.knex.raw(' \
+      SELECT cgj.genre_id as id,g.name as name FROM credits_genres_join cgj INNER JOIN genres g ON g.id=cgj.genre_id where cgj.credit_id ='+id)
+    .then(function(results) {
+      data.genresIds = results[0];
+      callback(data);
+    });
   });
 };
 
@@ -93,6 +99,23 @@ function createCreditRequest(data){
       return promise;
 }
 
+function addUpdateCreditGenre(id,genres){
+  var promise = [];
+    db.knex.raw(' \
+      DELETE FROM credits_genres_join WHERE credit_id='+id)
+    .then(function (results) {
+      for(var i in genres){
+        db.knex.raw(' \
+          INSERT INTO  credits_genres_join \
+          (credit_id,genre_id) \
+          VALUES ('+id+','+genres[i]+')')
+        .then(function (results) {
+          promise.push(results[0].insertId);
+        });
+      }
+    return promise;
+    });
+  }
 
 Credit.insertExcelData = function(data,callback){
   //console.log("krishna ....!!!!");
@@ -109,17 +132,19 @@ Credit.insertExcelData = function(data,callback){
 };
 
 // Check to see that name does not already exists.  If it doesn't either edit or add new.  If it does exist and the id is the same, edit that credit.
-Credit.addOrEdit = function(creditData, callback) {
-  console.log(creditData);
+Credit.addOrEdit = function(creditData, getCreditGenre, callback) {
   new Credit({name: creditData.name})
   .fetch()
   .then(function(credit) {
     if (credit) {
       if (credit.get('id') === creditData.id) {
         for (var key in creditData) {
-          credit.set(key, creditData[key]);
+            if(key!='genresIds'){
+              credit.set(key, creditData[key]);
+            }
           credit.save();
         }
+        addUpdateCreditGenre(creditData.id,getCreditGenre);
         callback(null, {status: 'edit', text: 'Successfully edited credit', id: credit.get('id'), name: credit.get('name')});
 
       } else {
@@ -131,16 +156,21 @@ Credit.addOrEdit = function(creditData, callback) {
         .fetch()
         .then(function(credit) {
           for (var key in creditData) {
-            credit.set(key, creditData[key]);
+             if(key!='genresIds'){
+              credit.set(key, creditData[key]);
+            }
             credit.save();
           }
           credit.save();
+          addUpdateCreditGenre(creditData.id,getCreditGenre);
           callback(null, {status: 'edit', text: 'Successfully edited credit', id: credit.get('id'), name: credit.get('name')});
         });
       } else {
         new Credit(creditData)
         .save()
         .then(function(credit) {
+          var cid = credit.get('id');
+          addUpdateCreditGenre(cid,getCreditGenre);
           callback(null, {status: 'add', text: 'Created new credit', id: credit.get('id'), name: credit.get('name')});
         });
       }

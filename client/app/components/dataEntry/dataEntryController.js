@@ -25,6 +25,9 @@
     $scope.addAgentPanel = true;
     $scope.updateAgentPanel = false;
     $scope.agentNameByType = [];
+    $scope.checkSelected = [];
+    $scope.ativeGenre = {}
+    //creditGenre = [];
 
     if(!!window.localStorage.smstudiosLoginUserName){
       $scope.data_entry_display_username = window.localStorage.smstudiosLoginUserName;
@@ -39,6 +42,13 @@
       $scope.section = section;
       $scope.talentSection = 'main';
       $scope.activeData = $scope.data[$scope.section];
+
+      if(section=='Credit'){
+        genreFactory.getNames(function(result) {
+            $scope.dataGenre = result;
+          });
+      }
+
       $scope.btnTxt = "Add";	
       $scope.model ={};
       if ($event) {
@@ -113,6 +123,12 @@
       $scope.errorText = '';
       $scope.talentSection = 'main';
       $scope.btnTxt = "Add";
+      if(angular.isDefined($scope.dataGenre)){
+          angular.forEach($scope.dataGenre, function(values){
+              $scope.checkSelected[values.id] = false;
+          });
+      }
+     
     };
 
     // This contains functions for fetching the data to the forms for editing
@@ -124,6 +140,7 @@
       },
       Ethnicity: function() {
         for (var key in $scope.editElement) {
+
           $scope.activeElement[key] = $scope.editElement[key];
         }
       },
@@ -139,6 +156,12 @@
       },
       Credit: function() {
         creditFactory.getCredit($scope.editElement.id, function(creditData) {
+              angular.forEach($scope.dataGenre, function(values){
+                      $scope.checkSelected[values.id] = false;
+              });
+            angular.forEach(creditData.genresIds, function(val){
+                    $scope.checkSelected[val.id] = true;
+            });
           $scope.activeElement = creditData;
         });
       },
@@ -259,8 +282,14 @@
           if(angular.isDefined($scope.activeElement.release_date) && $scope.activeElement.release_date!==null){
             $scope.activeElement.release_date =$scope.activeElement.release_date+"-01-01";
           }
-          
-          creditFactory.addOrEdit($scope.activeElement, function(res) {
+          if(angular.isDefined($scope.dataGenre)){
+              angular.forEach($scope.dataGenre, function(values){
+                if($scope.checkSelected[values.id]){
+                  $scope.ativeGenre.creditGenre.push(values.id);
+                }
+              });
+          }
+          creditFactory.addOrEdit($scope.activeElement,$scope.ativeGenre.creditGenre, function(res) {
             
             if(angular.isDefined($scope.activeElement.release_date) && $scope.activeElement.release_date!==null){
               var date_array = ($scope.activeElement.release_date).split("-");
@@ -397,6 +426,15 @@
       }
     };
 
+    $scope.handleSelect = function($event){
+        if (!$event.ctrlKey) {
+          if(angular.isDefined($scope.dataGenre)){
+              angular.forEach($scope.dataGenre, function(values){
+                $scope.checkSelected[values.id] = false;
+              });
+          }
+        }
+    };
 
     $scope.submitTalentCreditData = function() {
          //var credits = $('.talent-credit-select').val();

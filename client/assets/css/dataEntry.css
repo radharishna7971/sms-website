@@ -462,3 +462,12 @@
   font-weight: bold;
 }
 
+.creditGenreCls{
+  width: 240px;
+  height: 125px !important;
+  margin: 2px !important;
+}
+
+.creditGenreCls option[selected] {
+    background: blue;
+}
