@@ -40,11 +40,14 @@
           callback(res.data);
         });
       },
-      addOrEdit: function(creditData, callback) {
+      addOrEdit: function(creditData,creditGenre, callback) {
         return $http({
           method: 'POST',
           url: 'api/credit/add-edit',
-          data: creditData
+          data: {
+            creditData:creditData,
+            creditGenre:creditGenre
+          }
         }).then(function(res) {
           callback(res.data);
         });
