@@ -277,6 +277,7 @@
                 if (parseInt(checkRowId) === clickedRowId && $("#editLink").is(':visible')) {
                     $('.talent-right-container-content').hide();
                     $("#editLink").hide();
+                    $('#talentGrid').height(347);
                     //$("#exportLink").hide();
                     row.isrowSelectionChangedOnclcik = false;
                     return false;
@@ -287,6 +288,7 @@
                     $scope.getTalentData.id = row.entity.id;
                     $('.talent-right-container-content').show();
                     $("#editLink").show();
+                    $('#talentGrid').height(170);
                     //$("#exportLink").show();            
                     checkRowId = row.entity.id;
                     return false;
