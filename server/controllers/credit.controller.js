@@ -21,7 +21,9 @@ exports.getCredit = function(req, res) {
 };
 
 exports.addOrEdit = function(req, res) {
-  Credit.addOrEdit(req.body, function(err, result) {
+  var getCreditGenre = req.body.creditGenre;
+  var getcreditData = req.body.creditData;
+  Credit.addOrEdit(getcreditData, getCreditGenre, function(err, result) {
     if (!err) {
       res.json(result);
     } else {

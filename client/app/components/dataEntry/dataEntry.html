@@ -7,324 +7,29 @@
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Genre')">GENRE</div>
     <!-- <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'CreditType')">CREDIT TYPE</div> -->
     <div class="data-left-column-categories-div" ng-click="updateActiveSection($event, 'Ethnicity')">ETHNICITY</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
   <div class="data-left-column-data" ng-show="section!=='Talent' && section!=='Credit'">
     <div class="data-left-column-data-row"  ng-repeat="element in activeData | orderBy: filterData" ng-click="setActiveElement($event, element)" ng-class="{'active-element': element.id === activeElement.id}" ng-if="element.name!=''">{{element.name}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
   </div>
   <div class="data-left-column-data" ng-if="section==='Talent'">
     <div class="data-left-column-data-row">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    <input type="text" ng-model="model.talentNameInput" typeahead-on-select="getTalentDetails($item)" placeholder="Enter Talent Name ..." uib-typeahead="talentName as talentName.name for talentName in getTalentNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-
-
-
-
-
-
-
-
-
-
-
   </div>
-
-
     <div ng-show="noResults">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
-
-
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
   <div class="data-left-column-data" ng-if="section==='Credit'">
     <div class="data-left-column-data-row">
    <input type="text" ng-model="model.CreditInput" typeahead-on-select="getCreditDetails($item)" placeholder="Enter Credit Name..." uib-typeahead="talentName as talentName.name for talentName in getCreditsNames($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
     <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-
   </div>
-
-
-
     <div ng-show="noResults">
       <i class="glyphicon glyphicon-remove"></i> No Results Found
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
-
   </div>
-
 </div>
 <div class="data-main-section">
   <div class="form-title-div">
@@ -376,33 +81,9 @@
       <input class="data-input" ng-model="activeElement.name" placeholder="Enter Credit Type..." type="text" required="true">
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
     </form> -->
-
-
-
-
-
-
-
-
-
-
-
     <!-- CREDIT FORM -->
 
     <form ng-show="section==='Credit'">
-
-
-
-
-
-
-
-
-
-
-
-
-
       <input class="id-input" ng-model="activeElement.id" type="text">
       <!-- <p class="input-label">Record</p> -->
       <input class="data-input" ng-model="activeElement.record_id" placeholder="Enter Record..." type="hidden" />
@@ -410,33 +91,17 @@
       <input class="data-input" ng-model="activeElement.name" placeholder="Enter Credit Name..." type="text" required="true">
       <p class="input-label">Release Year (YYYY)</p>
       <input class="data-input" ng-model="activeElement.release_date" placeholder="Enter Release Year (YYYY)" type="input">
-
-
       <p class="input-label">LogLine</p>
       <input class="data-input select-input" ng-model="activeElement.logline" placeholder="Enter LogLine..." type="input" />
-
-
-
-
-
-
       <p class="input-label">Estimated Budget</p>
       <input class="data-input select-input" ng-model="activeElement.estimatedBudget" placeholder="Enter Estimated Budget..." type="input"/>
-
-
-
-
-
       <p class="input-label">Box Office Income</p>
       <input class="data-input select-input" ng-model="activeElement.box_office_income" type="input" placeholder="Enter Box Office Income...">
-
-
-
-
-
-
-
-
+      <p class="input-label">Genre</p>
+      <select class="creditGenreCls" multiple="multiple" ng-model="ativeGenre.creditGenre">
+        <option ng-click="handleSelect($event)"></option>
+        <option ng-repeat="genres in dataGenre" ng-click="handleSelect($event)" ng-selected="checkSelected[{{genres.id}}]"   value="{{genres.id}}">{{genres.name}}</option>
+      </select>
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
       </form>
 
@@ -509,11 +174,11 @@
            <div class="table-responsive">
           <table class="table">
             <tr>
-              <td style="font-weight:600;">Type</td>
-              <td style="font-weight:600;">Name</td>
-              <td style="font-weight:600;">Company Name</td>
-              <td style="font-weight:600;">Email</td>
-              <td style="font-weight:600;">Phone</td>
+              <td>Type</td>
+              <td>Name</td>
+              <td>Company Name</td>
+              <td>Email</td>
+              <td>Phone</td>
               <td></td>
             </tr>
             <tr>
@@ -655,45 +320,19 @@
         </div> -->
         <div class="table-responsive">
         <table class="table table-striped creditsRoleJoin">
-                    <tr>
-                      <th style="font-weight:600;">Credit</th>
-                      <th style="font-weight:600;">Release Year</th>
-                      <th style="font-weight:600;">Role</th>
-                      <th style="font-weight:600;"></th>
-                    </tr>
-                    <tr ng-repeat="join in activeElement.talentCreditJoins">
-                      <td>{{join.credit}}</td><td>{{join.release_date}}</td>
-                      <td>{{join.role}}</td><td><span class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</span></td>
-                    </tr>
-                  </table>
-                  </div>
-
-
-
-
-
-
+          <tr>
+            <th>Credit</th>
+            <th>Release Year</th>
+            <th>Role</th>
+            <th></th>
+          </tr>
+          <tr ng-repeat="join in activeElement.talentCreditJoins">
+            <td>{{join.credit}}</td><td>{{join.release_date}}</td>
+            <td>{{join.role}}</td><td><span class="delete-talent-credit-join-button" ng-click="removeTalentCreditJoin($event, join.id)">x</span></td>
+          </tr>
+        </table>
+        </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- Comments -->
     <div class="talent-data-comments-container"  ng-show="talentSection==='comments'">
       <div class="data-entry-comment-box">

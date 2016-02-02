@@ -191,7 +191,6 @@
             filerDataInputs.budgetsValues = [];
             filerDataInputs.incomeValues = [];
             filerDataInputs.awardsList = [];
-
             $scope.addAgentRow = {};
             $scope.isAgentTypeDisabled = false;
             $scope.isCmpnyDisabled = true;
