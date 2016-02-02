@@ -41,14 +41,17 @@
             }, {
                 "id": 4,
                 "name": "$5M-$10M"
-            }, {
+            },{
                 "id": 5,
-                "name": "$10M-$50M"
-            }, {
+                "name": "$10M-$25M"
+            },  {
                 "id": 6,
-                "name": "$50M-$100M"
+                "name": "$25M-$50M"
             }, {
                 "id": 7,
+                "name": "$50M-$100M"
+            }, {
+                "id": 8,
                 "name": "Above $100M"
             }];
             $scope.boxofficerev = [{
@@ -276,6 +279,7 @@
                 if (parseInt(checkRowId) === clickedRowId && $("#editLink").is(':visible')) {
                     $('.talent-right-container-content').hide();
                     $("#editLink").hide();
+                    $('#talentGrid').height(347);
                     //$("#exportLink").hide();
                     row.isrowSelectionChangedOnclcik = false;
                     return false;
@@ -286,6 +290,7 @@
                     $scope.getTalentData.id = row.entity.id;
                     $('.talent-right-container-content').show();
                     $("#editLink").show();
+                    $('#talentGrid').height(170);
                     //$("#exportLink").show();            
                     checkRowId = row.entity.id;
                     return false;
@@ -484,8 +489,13 @@
                                             findBudgetFlag = true;
                                         }
                                     }
-                                    if (selectedNames === "$10m-$50m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
-                                        if (lowerLimitDigit >= 10 && upperLimitDigit < 50) {
+                                    if (selectedNames === "$10m-$25m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 10 && upperLimitDigit < 25) {
+                                            findBudgetFlag = true;
+                                        }
+                                    }
+                                    if (selectedNames === "$25m-$50m" && lowerLimitSuffix === "m" && upperLimitSuffix === "m") {
+                                        if (lowerLimitDigit >= 25 && upperLimitDigit < 50) {
                                             findBudgetFlag = true;
                                         }
                                     }
