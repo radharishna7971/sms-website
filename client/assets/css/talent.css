@@ -522,7 +522,7 @@ table.creditSection thead, table.creditSection tbody {
 }
 table.creditSection tbody {
     overflow: auto;
-    height: 150px;
+    height: 320px;
     margin-top: 15px;
     margin-left: -4px;
 }
