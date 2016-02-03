@@ -26,7 +26,9 @@
     $scope.updateAgentPanel = false;
     $scope.agentNameByType = [];
     $scope.checkSelected = [];
+    $scope.selectedGenresNames = [];
     $scope.ativeGenre = {}
+    $scope.showGenresOptions = false;
     //creditGenre = [];
 
     if(!!window.localStorage.smstudiosLoginUserName){
@@ -123,6 +125,7 @@
       $scope.errorText = '';
       $scope.talentSection = 'main';
       $scope.btnTxt = "Add";
+      $scope.selectedGenresNames.length=0;
       if(angular.isDefined($scope.dataGenre)){
           angular.forEach($scope.dataGenre, function(values){
               $scope.checkSelected[values.id] = false;
@@ -160,6 +163,7 @@
                       $scope.checkSelected[values.id] = false;
               });
             angular.forEach(creditData.genresIds, function(val){
+                    $scope.selectedGenresNames.push(val.name);
                     $scope.checkSelected[val.id] = true;
             });
           $scope.activeElement = creditData;
@@ -836,6 +840,15 @@
 
     $scope.clearAgentAddRow = function(){
       $scope.addAgentRow = {};
+    };
+
+    $scope.showHideGenres = function($event){
+        $scope.showGenresOptions = !$scope.showGenresOptions;
+        if($scope.showGenresOptions){
+          $("#editGenresLink").html("Hide");
+        }else{
+          $("#editGenresLink").html("Edit");
+        }
     };
 
     $scope.addAgentRowData = function(){
