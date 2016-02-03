@@ -104,7 +104,7 @@
       </div>
       <select ng-show="showGenresOptions" class="creditGenreCls" multiple="multiple" ng-model="ativeGenre.creditGenre">
         <option ng-click="handleSelect($event)"></option>
-        <option ng-repeat="genres in dataGenre" ng-click="handleSelect($event)" ng-selected="checkSelected[{{genres.id}}]"   value="{{genres.id}}">{{genres.name}}</option>
+        <option ng-repeat="genres in dataGenre | orderBy:'name'" ng-click="handleSelect($event)" ng-selected="checkSelected[{{genres.id}}]"   value="{{genres.id}}">{{genres.name}}</option>
       </select>
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
       </form>
