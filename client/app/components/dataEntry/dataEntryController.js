@@ -158,11 +158,13 @@
         }
       },
       Credit: function() {
+        $scope.selectedGenresNames.length = 0;
         creditFactory.getCredit($scope.editElement.id, function(creditData) {
               angular.forEach($scope.dataGenre, function(values){
                       $scope.checkSelected[values.id] = false;
               });
             angular.forEach(creditData.genresIds, function(val){
+
                     $scope.selectedGenresNames.push(val.name);
                     $scope.checkSelected[val.id] = true;
             });
@@ -306,6 +308,7 @@
             if (res.status !== 'error') {
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
+                activeElementSetter[$scope.section]();
               } else {
                 //$scope.activeElement.release_date = ($scope.activeElement.release_date).split("-")[0];
                 $scope.data[$scope.section].push(res);
