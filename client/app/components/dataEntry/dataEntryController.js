@@ -416,7 +416,7 @@
           $scope.activeElement.last_edited_by = window.localStorage.smstudiosId;
           $scope.activeElement.last_edited = moment().format('YYYY-MM-DD HH:mm:ss');
           if(angular.isDefined($scope.activeElement.twitter_url)){
-        	  if($scope.activeElement.twitter_url.charAt(0) === '@'){
+        	  if($scope.activeElement.twitter_url !== null && $scope.activeElement.twitter_url.charAt(0) === '@'){
         		  $scope.activeElement.twitter_url = ($scope.activeElement.twitter_url.replace('@','')).trim(); 
         	  }else{
         		  $scope.activeElement.twitter_url = $scope.activeElement.twitter_url === null?$scope.activeElement.twitter_url:($scope.activeElement.twitter_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
@@ -424,7 +424,7 @@
           }
 
           if(angular.isDefined($scope.activeElement.facebook_url)){
-        	  if($scope.activeElement.facebook_url.charAt(0) === '@'){
+        	  if($scope.activeElement.facebook_url !== null && $scope.activeElement.facebook_url.charAt(0) === '@'){
         		  $scope.activeElement.facebook_url = ($scope.activeElement.facebook_url.replace('@','')).trim();
         	  }else{
         		  $scope.activeElement.facebook_url = $scope.activeElement.facebook_url === null?$scope.activeElement.facebook_url:($scope.activeElement.facebook_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
@@ -432,7 +432,7 @@
           }
         	  
           if(angular.isDefined($scope.activeElement.youtube_url)){
-        	  if($scope.activeElement.youtube_url.charAt(0) === '@'){
+        	  if($scope.activeElement.youtube_url !== null && $scope.activeElement.youtube_url.charAt(0) === '@'){
         		  $scope.activeElement.youtube_url = ($scope.activeElement.youtube_url.replace('@','')).trim();
         	  }else{
         		  $scope.activeElement.youtube_url = $scope.activeElement.youtube_url === null?$scope.activeElement.youtube_url:($scope.activeElement.youtube_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
@@ -440,14 +440,14 @@
           }
         	  
           if(angular.isDefined($scope.activeElement.vine_url)){
-        	if($scope.activeElement.vine_url.charAt(0) === '@'){
+        	if($scope.activeElement.vine_url !== null && $scope.activeElement.vine_url.charAt(0) === '@'){
         		$scope.activeElement.vine_url = ($scope.activeElement.vine_url.replace('@','')).trim();
         	}else{
         		$scope.activeElement.vine_url = $scope.activeElement.vine_url === null?$scope.activeElement.vine_url:($scope.activeElement.vine_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
         	}
           }
           if(angular.isDefined($scope.activeElement.instagram_url)){
-        	  if($scope.activeElement.instagram_url.charAt(0) === '@'){
+        	  if($scope.activeElement.instagram_url !== null && $scope.activeElement.instagram_url.charAt(0) === '@'){
         		  $scope.activeElement.instagram_url = ($scope.activeElement.instagram_url.replace('@','')).trim();
         	  }else{
         		  $scope.activeElement.instagram_url = $scope.activeElement.instagram_url === null?$scope.activeElement.instagram_url:($scope.activeElement.instagram_url).replace("https://www.", '').replace("http://www.", '').replace("http://", '').replace("https://", '').replace("www.", '');
