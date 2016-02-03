@@ -99,7 +99,7 @@
       <input class="data-input select-input" ng-model="activeElement.box_office_income" type="input" placeholder="Enter Box Office Income...">
       <p class="input-label">Genre</p>
       <div>
-        <span ng-repeat="itme in selectedGenresNames" class="selectedGenresCls">{{itme}}</span>
+        <span ng-repeat="itme in selectedGenresNames" class="selectedGenresCls">{{itme}}{{$last ? '' : ', '}}</span>
         <a href="#" ng-click="showHideGenres($event)" id="editGenresLink">Edit</a>
       </div>
       <select ng-show="showGenresOptions" class="creditGenreCls" multiple="multiple" ng-model="ativeGenre.creditGenre">
