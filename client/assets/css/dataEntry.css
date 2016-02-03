@@ -471,3 +471,9 @@
 .creditGenreCls option[selected] {
     background: blue;
 }
+
+.selectedGenresCls{
+  color: blue;
+  font-weight: bold;
+  margin: 2px;
+}
