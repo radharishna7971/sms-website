@@ -310,6 +310,7 @@
 
 .talent-form-menu-button-active {
   background-color: #A8CEEC;
+  font-weight: 500;
 }
 
 .talent-form-menu-button-inactive {
@@ -462,10 +463,11 @@
   font-weight: bold;
 }
 
-.creditGenreCls{
-  width: 240px;
-  height: 125px !important;
-  margin: 2px !important;
+.creditGenreCls {
+    width: 27%;
+    height: 125px !important;
+    margin: 2px !important;
+    border: 1px solid #66B3F1;
 }
 
 .creditGenreCls option[selected] {
