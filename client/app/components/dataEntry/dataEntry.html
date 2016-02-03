@@ -42,7 +42,7 @@
   <p class="data-main-error-text">{{errorText}}</p>
   <!-- Talent menu -->
   <div class="talent-form-menu" ng-show="section==='Talent'">
-    <div class="talent-form-menu-button" talent-form-section="main" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'main'}">Main</div>
+    <div class="talent-form-menu-button" talent-form-section="main" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'main', 'talent-form-menu-button-inactive': !editElement}">Main</div>
     <div class="talent-form-menu-button" talent-form-section="management" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'management', 'talent-form-menu-button-inactive': !editElement}">Management</div>
     <div class="talent-form-menu-button" talent-form-section="social" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'social', 'talent-form-menu-button-inactive': !editElement}">Social Profiles</div>
     <div class="talent-form-menu-button" talent-form-section="credits" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'credits', 'talent-form-menu-button-inactive': !editElement}">Credits</div>
