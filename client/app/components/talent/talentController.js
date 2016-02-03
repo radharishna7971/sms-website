@@ -324,6 +324,14 @@
                     $scope.getTalentData.id = row.entity.id;
                     $('.talent-right-container-content').show();
                     $("#editLink").show();
+                    var getBottomTabs = localStorageService.get("talentBottomTabs");
+                    if(getBottomTabs){
+                    	$("#"+getBottomTabs).addClass('active-talent-link');
+                        $scope.activeSectionInfo = getBottomTabs;
+                    }else{
+                    	$("#info").addClass('active-talent-link');
+                        $scope.activeSectionInfo = 'info';
+                    }
                     //$('#talentGrid').height(170);
                     //$("#exportLink").show();            
                     checkRowId = row.entity.id;
@@ -351,6 +359,7 @@
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                     $($event.target).addClass('talent-form-menu-button-active');
                 }
+                localStorageService.set("talentEditTabs",sectioname);
                 $scope.talentSection = sectioname;
 
             };
@@ -1154,10 +1163,10 @@
                     $scope.associateData = associateArray;
 
 
-                    if(!$('.right-talent-container-menu-link').hasClass('active-talent-link')){
+                    /*if(!$('.right-talent-container-menu-link').hasClass('active-talent-link')){
                         $("#infoTab").addClass('active-talent-link');
                         $scope.activeSectionInfo = 'info';
-                    }
+                    }*/
                 });
                 $('.active-talent').each(function () {
                     $(this).removeClass('active-talent');
@@ -1182,6 +1191,7 @@
             $scope.updateTalentSection = function ($event, section) {
                 $('.right-talent-container-menu-link').removeClass('active-talent-link');
                 $($event.target).addClass('active-talent-link');
+                localStorageService.set("talentBottomTabs",section);
                 $scope.activeSectionInfo = section;
             };
             $scope.updateFiltersKeyUp = function ($event) {
@@ -2275,13 +2285,19 @@
                         $scope.model = {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
-                        $scope.talentSection = 'main';
                         
                         $scope.setLoading(false);
                         $("#cover").show();
                         $(".hiddenPopUp").show();
                         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                        $("#mainTab").addClass('talent-form-menu-button-active');
+                        var getEditTabs = localStorageService.get("talentEditTabs");
+                        if(getEditTabs){
+                        	$("#"+getEditTabs).addClass('talent-form-menu-button-active');
+                        	$scope.talentSection = getEditTabs;
+                        }else{
+                        	$("#main").addClass('talent-form-menu-button-active');
+                        	$scope.talentSection = 'main';
+                        }
 
                     });
 

@@ -42,7 +42,7 @@
   <p class="data-main-error-text">{{errorText}}</p>
   <!-- Talent menu -->
   <div class="talent-form-menu" ng-show="section==='Talent'">
-    <div class="talent-form-menu-button" talent-form-section="main" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'main'}">Main</div>
+    <div class="talent-form-menu-button" talent-form-section="main" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'main', 'talent-form-menu-button-inactive': !editElement}">Main</div>
     <div class="talent-form-menu-button" talent-form-section="management" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'management', 'talent-form-menu-button-inactive': !editElement}">Management</div>
     <div class="talent-form-menu-button" talent-form-section="social" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'social', 'talent-form-menu-button-inactive': !editElement}">Social Profiles</div>
     <div class="talent-form-menu-button" talent-form-section="credits" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'credits', 'talent-form-menu-button-inactive': !editElement}">Credits</div>
@@ -99,12 +99,12 @@
       <input class="data-input select-input" ng-model="activeElement.box_office_income" type="input" placeholder="Enter Box Office Income...">
       <p class="input-label">Genre</p>
       <div>
-        <span ng-repeat="itme in selectedGenresNames" class="selectedGenresCls">{{itme}}</span>
+        <span ng-repeat="itme in selectedGenresNames" class="selectedGenresCls">{{itme}}{{$last ? '' : ', '}}</span>
         <a href="#" ng-click="showHideGenres($event)" id="editGenresLink">Edit</a>
       </div>
       <select ng-show="showGenresOptions" class="creditGenreCls" multiple="multiple" ng-model="ativeGenre.creditGenre">
         <option ng-click="handleSelect($event)"></option>
-        <option ng-repeat="genres in dataGenre" ng-click="handleSelect($event)" ng-selected="checkSelected[{{genres.id}}]"   value="{{genres.id}}">{{genres.name}}</option>
+        <option ng-repeat="genres in dataGenre | orderBy:'name'" ng-click="handleSelect($event)" ng-selected="checkSelected[{{genres.id}}]"   value="{{genres.id}}">{{genres.name}}</option>
       </select>
       <input class="data-input data-submit" ng-click="submitData()" type="submit"  value="{{btnTxt}}">
       </form>

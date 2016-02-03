@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'creditTypeFactory', 'commentFactory', 'ethnicityFactory'])
-  .controller('dataEntryController', function($scope,$compile,$timeout, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory, ethnicityFactory) {
+  .controller('dataEntryController', function($scope,$compile,$timeout, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory, ethnicityFactory, localStorageService) {
     $scope.section = 'Talent'; // Represents current section
     $scope.talentSection = 'main'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
@@ -42,9 +42,15 @@
       $scope.activeElement = {};
       $scope.errorText = '';
       $scope.section = section;
-      $scope.talentSection = 'main';
-      $scope.activeData = $scope.data[$scope.section];
-
+      
+      var getDataEntryTab = localStorageService.get('dataEntryTabs');
+      if(getDataEntryTab && section === 'Talent'){
+    	  $scope.talentSection = getDataEntryTab;  
+      }else{
+    	  $scope.talentSection = 'main';
+      }
+      $scope.activeData = $scope.data[$scope.section];  
+    	  
       if(section=='Credit'){
         genreFactory.getNames(function(result) {
             $scope.dataGenre = result;
@@ -77,6 +83,7 @@
       if (!$($event.target).hasClass('talent-form-menu-button-inactive')) {
         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
         $($event.target).addClass('talent-form-menu-button-active');
+        localStorageService.set('dataEntryTabs',$($event.target).attr('talent-form-section'));
         $scope.talentSection = $($event.target).attr('talent-form-section');
         if ($scope.section !== 'main') {
           $scope.errorText = 'Modifying ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;

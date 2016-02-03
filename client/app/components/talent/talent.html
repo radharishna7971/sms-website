@@ -156,13 +156,13 @@
     <div class="clear"></div>
     <div class="talent-right-container-content" ng-show="true">
     <div class="right-talent-container-menu">
-                <button id="infoTab"  class=" right-talent-container-menu-link credit-info" ng-click="updateTalentSection($event, 'info')">Profile</button>
-                <button class=" right-talent-container-menu-link credit-info" ng-click="updateTalentSection($event, 'reps')">Reps</button>
-                <button class=" right-talent-container-menu-link credit-info" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</button>
-                <button class=" right-talent-container-menu-link credit-info" ng-click="updateTalentSection($event, 'credits')">Credits</button>
-                <button class="right-talent-container-menu-link credit-info" ng-click="updateTalentSection($event, 'award')">Awards</button>
-                <button class=" right-talent-container-menu-link credit-info" ng-click="updateTalentSection($event, 'comments')">Comments</button>
-                <button class=" right-talent-container-menu-link credit-info" ng-click="updateTalentSection($event, 'contacts')">Other Info</button>
+                <button class=" right-talent-container-menu-link credit-info" id="info" ng-click="updateTalentSection($event, 'info')">Profile</button>
+                <button class=" right-talent-container-menu-link credit-info" id="reps" ng-click="updateTalentSection($event, 'reps')">Reps</button>
+                <button class=" right-talent-container-menu-link credit-info" id="socialprofiles" ng-click="updateTalentSection($event, 'socialprofiles')">Social Profiles</button>
+                <button class=" right-talent-container-menu-link credit-info" id="credits" ng-click="updateTalentSection($event, 'credits')">Credits</button>
+                <button class="right-talent-container-menu-link credit-info" id="award" ng-click="updateTalentSection($event, 'award')">Awards</button>
+                <button class=" right-talent-container-menu-link credit-info" id="comments" ng-click="updateTalentSection($event, 'comments')">Comments</button>
+                <button class=" right-talent-container-menu-link credit-info" id="contacts" ng-click="updateTalentSection($event, 'contacts')">Other Info</button>
             </div>
 
     <div class="talent-right-container-other-div" ng-show="activeSectionInfo==='info'">
@@ -344,12 +344,12 @@
 
           <!-- Talent menu -->
           <div class="talent-form-menu" ng-show="section==='Talent'">
-              <span id="mainTab" class="talent-form-menu-button" ng-click="showsection($event, 'main')">Main</span>
-              <span class="talent-form-menu-button" ng-click="showsection($event,'management')">Management</span>
-              <span class="talent-form-menu-button" ng-click="showsection($event,'social')">Social Profiles</span>
-              <span class="talent-form-menu-button" ng-click="showsection($event,'credits')">Credits</span>
-              <span class="talent-form-menu-button" ng-click="showsection($event,'comments')">Comments</span>
-              <span class="talent-form-menu-button" ng-click="showsection($event,'info')">Info</span>
+              <span id="main" class="talent-form-menu-button" id="main" ng-click="showsection($event, 'main')">Main</span>
+              <span class="talent-form-menu-button" id="management" ng-click="showsection($event,'management')">Management</span>
+              <span class="talent-form-menu-button" id="social" ng-click="showsection($event,'social')">Social Profiles</span>
+              <span class="talent-form-menu-button" id="credits" ng-click="showsection($event,'credits')">Credits</span>
+              <span class="talent-form-menu-button" id="comments" ng-click="showsection($event,'comments')">Comments</span>
+              <span class="talent-form-menu-button" id="info" ng-click="showsection($event,'info')">Info</span>
           </div>
       </div>
         <p class="data-main-error-text">{{showmsg.errorText}}</p>
