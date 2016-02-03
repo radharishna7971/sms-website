@@ -225,7 +225,6 @@
             if (res.status !== 'error') {
               if (res.status === 'edit') {
                 $scope.editElement.name = res.name;
-                activeElementSetter[$scope.section]();
               } else {
                 $scope.data[$scope.section].push(res);
                 $scope.editElement = res;
