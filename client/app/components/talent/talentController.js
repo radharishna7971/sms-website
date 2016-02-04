@@ -99,6 +99,7 @@
             $scope.talentGridOption = {};
             $scope.activeSectionInfo = false;
             $scope.filerByname = "";
+            $scope.filerBycomment = "";
             var Rolls = [];
             var Genres = [];
             $scope.showmsg = {};
@@ -190,6 +191,7 @@
             filerDataInputs.age = [];
             filerDataInputs.country = [];
             filerDataInputs.createdby = [];
+            filerDataInputs.createdbycomments = [];
             filerDataInputs.EthnicityID = [];
             filerDataInputs.budgetsValues = [];
             filerDataInputs.incomeValues = [];
@@ -680,6 +682,7 @@
                 filerDataInputs.country.length = 0;
                 filerDataInputs.createdby.length = 0;
                 filerDataInputs.EthnicityID.length = 0;
+                filerDataInputs.createdbycomments.length = 0;
                 filerDataInputs.budgetsValues.length = 0;
                 filerDataInputs.incomeValues.length = 0;
                 var isValidOptionRatios = ($scope.budgetMultipleOption !== null) && !(angular.isUndefined($scope.budgetMultipleOption)) && ($scope.budgetMultipleOption !== "");
@@ -690,6 +693,13 @@
                     filerDataInputs.nameVal.push($scope.filerByname);
                     arrayLenths = 1;
                 }
+
+                if ($scope.filerBycomment !== '' && $scope.filerBycomment != null && !angular.isUndefined($scope.filerBycomment)) {
+                    //alert($scope.filerBycomment);
+                    filerDataInputs.createdbycomments.push($scope.filerBycomment);
+                    arrayLenths = 1;
+                }
+                
                 var checkValues = $('div.filter-option-container input[type=checkbox]:checked').map(function () {
                     if ($(this).hasClass('gender-input')) {
                         filerDataInputs.gender.push($(this).val());

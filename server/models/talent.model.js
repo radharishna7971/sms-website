@@ -67,11 +67,17 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     var addAges = '';
     var addCountry = '';
     var addCreatedby = '';
+    var addcreatedbycomments = "'%" + "%'";
     var addCountry = '';
     var addEthnicity = '';
     var addBudget = '';
     var addIncome = '';
     var addRatio = '';
+
+    if (filterArrayInput['createdbycomments'].length) {
+      addcreatedbycomments = "'%" + filterArrayInput['createdbycomments'][0] +  "%'";
+    }
+    
     if (filterArrayInput['nameVal'].length) {
       addName = "'%" + filterArrayInput['nameVal'][0] + "%'";
     }
@@ -120,7 +126,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       addAges = filetTalentByByAge(filterArrayInput);
     }
     //CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name,
-    applyWhereFilter = ' WHERE CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
+        applyWhereFilter = ' WHERE CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName  + ' and t.createdbycomments LIKE '+ addcreatedbycomments;
     if (addRoles !== '' || addGenres != '') {
       applyWhereFilter = ', credit_talent_role_join cjoin1';
       if (addRoles !== '') {
