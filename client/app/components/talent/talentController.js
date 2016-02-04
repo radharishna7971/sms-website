@@ -345,7 +345,7 @@
             $scope.talentGridOption = talentGridFactory.getGridOptions();
             $scope.talentGridOption.appScopeProvider = $scope.myAppScopeProvider;
             $scope.section = 'Talent';
-            $scope.talentSection = 'main';
+            $scope.talentSection = 'info';
             $scope.showPopUp = '';
 
             function validateEmail(email) {
@@ -359,7 +359,6 @@
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                     $($event.target).addClass('talent-form-menu-button-active');
                 }
-                localStorageService.set("talentEditTabs",sectioname);
                 $scope.talentSection = sectioname;
 
             };
@@ -1812,12 +1811,12 @@
                         $scope.showmsg = {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
-                        $scope.talentSection = 'main';
+                        $scope.talentSection = 'info';
                         $scope.setLoading(false);
                         $("#cover").show();
                         $(".hiddenPopUp").show();
                         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                        $("#mainTab").addClass('talent-form-menu-button-active');
+                        $("#info").addClass('talent-form-menu-button-active');
 
                     });
             };
@@ -2290,13 +2289,13 @@
                         $("#cover").show();
                         $(".hiddenPopUp").show();
                         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                        var getEditTabs = localStorageService.get("talentEditTabs");
+                        var getEditTabs = localStorageService.get("talentBottomTabs");
                         if(getEditTabs){
                         	$("#"+getEditTabs).addClass('talent-form-menu-button-active');
                         	$scope.talentSection = getEditTabs;
                         }else{
-                        	$("#main").addClass('talent-form-menu-button-active');
-                        	$scope.talentSection = 'main';
+                        	$("#info").addClass('talent-form-menu-button-active');
+                        	$scope.talentSection = 'info';
                         }
 
                     });

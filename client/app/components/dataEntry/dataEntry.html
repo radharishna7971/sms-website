@@ -42,12 +42,12 @@
   <p class="data-main-error-text">{{errorText}}</p>
   <!-- Talent menu -->
   <div class="talent-form-menu" ng-show="section==='Talent'">
-    <div class="talent-form-menu-button" talent-form-section="main" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'main', 'talent-form-menu-button-inactive': !editElement}">Main</div>
-    <div class="talent-form-menu-button" talent-form-section="management" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'management', 'talent-form-menu-button-inactive': !editElement}">Management</div>
-    <div class="talent-form-menu-button" talent-form-section="social" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'social', 'talent-form-menu-button-inactive': !editElement}">Social Profiles</div>
+    <div class="talent-form-menu-button" talent-form-section="info" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'info', 'talent-form-menu-button-inactive': !editElement}">Profile</div>
+    <div class="talent-form-menu-button" talent-form-section="reps" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'reps', 'talent-form-menu-button-inactive': !editElement}">Reps</div>
+    <div class="talent-form-menu-button" talent-form-section="socialprofiles" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'socialprofiles', 'talent-form-menu-button-inactive': !editElement}">Social Profiles</div>
     <div class="talent-form-menu-button" talent-form-section="credits" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'credits', 'talent-form-menu-button-inactive': !editElement}">Credits</div>
     <div class="talent-form-menu-button" talent-form-section="comments" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'comments', 'talent-form-menu-button-inactive': !editElement}">Comments</div>
-  <div class="talent-form-menu-button" talent-form-section="info" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'info', 'talent-form-menu-button-inactive': !editElement}">Info</div>
+  <div class="talent-form-menu-button" talent-form-section="contacts" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'contacts', 'talent-form-menu-button-inactive': !editElement}">Other Info</div>
   </div>
 
 
@@ -135,7 +135,7 @@
 
     <!-- Main, Management, Social -->
     <form class="talent-form" name="talent-form" ng-show="section==='Talent'" novalidate>
-       <div ng-show="talentSection==='main'">
+       <div ng-show="talentSection==='info'">
         <div class="talent-column">
           <input class="id-input" ng-model="activeElement.id" type="text">
           <p class="input-label">First Name</p>
@@ -172,7 +172,7 @@
         </div>
         <input class="data-input data-submit" ng-click="submitData('talent')" type="submit" value="{{btnTxt}}">
        </div>
-      <div ng-show="talentSection==='management'">
+      <div ng-show="talentSection==='reps'">
           <div id="mgntmsg" ng-show="successmsg" style="color:red;">Management info updated successfully</div>
           <!-- <div><span><input type=""/></span><span></span><span></span><span></span></div> -->
            <div class="table-responsive">
@@ -245,7 +245,7 @@
        <!--  <input class="data-input data-submit" ng-click="submitManagement()" type="submit" value="{{btnTxt}}"> -->
       </div>
 
-      <div ng-show="talentSection==='social'">
+      <div ng-show="talentSection==='socialprofiles'">
         <div>
           <p class="input-label">Twitter Url</p>
           <span class="input-url-pre-text">http://www.twitter.com/</span><input class="data-input-dataentry1" ng-model="activeElement.twitter_url" validate="twitter" type="text" placeholder="Enter your twitter name">
@@ -362,7 +362,7 @@
   
   <!-- Info -->
   
-  <div ng-show="talentSection==='info'">
+  <div ng-show="talentSection==='contacts'">
       <p class="input-label">Created By: {{activeElement.createdby}}</p>
       <p class="input-label">Created Date:{{activeElement.created_at | date }}</p>
       <p class="input-label">Modified By:{{activeElement.modifiedby}}</p>
