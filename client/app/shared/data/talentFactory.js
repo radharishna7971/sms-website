@@ -132,6 +132,17 @@
             callback(res.data);
           });
         },
+        talentUndelete: function (id, callback) {
+            return $http({
+              method: 'GET',
+              url: 'api/talent/undelete',
+              params: {
+                'talent_id': id
+              }
+            }).then(function (res) {
+              callback(res.data);
+            });
+          },
         updateTalentPartnerName: function (id, partnerName, callback) {
           return $http({
             method: 'GET',
