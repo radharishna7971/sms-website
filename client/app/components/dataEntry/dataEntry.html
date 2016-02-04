@@ -32,14 +32,18 @@
   </div>
 </div>
 <div class="data-main-section">
-  <div class="form-title-div">
+  <div class="form-title-div" style='display: inline-block;'>
     <h1 class="data-form-title">{{section}} Form - <span ng-show="!editElement">New</span><span ng-hide="!editElement">Edit</span></h1>
    <div class="form-title">
     <div class="form-button" ng-hide="!editElement" ng-click="clearForm()">New</div>
     <div class="form-button" ng-hide="!editElement" ng-click="deleteElement()">Delete</div>
     </div>
   </div>
-  <p class="data-main-error-text">{{errorText}}</p>
+  <div style='margin-top:20px;'>
+	  <span class="data-main-error-text" style='top:-8px;position: relative;'>{{errorText}}</span>
+	  <span ng-show="undeletedButton" style='display: inline-block;'><input class="form-button" ng-click="callUndelete(undeleteId)" type="button" value="Undelete"></span>
+	  <span ng-show="cancelButton" style='display: inline-block;'><input class="form-button" ng-click="cancelUndelete()" type="button" value="Cancel"></span>
+  </div>
   <!-- Talent menu -->
   <div class="talent-form-menu" ng-show="section==='Talent'">
     <div class="talent-form-menu-button" talent-form-section="info" ng-click="updateTalentForm($event)" ng-class="{'talent-form-menu-button-active': talentSection === 'info', 'talent-form-menu-button-inactive': !editElement}">Profile</div>

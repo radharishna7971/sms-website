@@ -29,6 +29,9 @@
     $scope.selectedGenresNames = [];
     $scope.ativeGenre = {}
     $scope.showGenresOptions = false;
+    $scope.undeletedButton = false;
+    $scope.cancelButton = false;
+    $scope.undeleteId = '';
     //creditGenre = [];
 
     if(!!window.localStorage.smstudiosLoginUserName){
@@ -466,11 +469,42 @@
               }
             }
             $scope.errorText = res.text;
+            if(res.option && res.option === 'undelete'){
+            	$scope.undeletedButton = true;
+                $scope.cancelButton = true;
+                $scope.undeleteId = res.id;
+            }
           });
         }
       }
     };
 
+    $scope.callUndelete = function(undeleteId) {
+    	var r = confirm("Do you really want to undelete this talent?");
+        if (r == true) {
+        	talentFactory.talentUndelete(undeleteId, function(res) {
+        		$scope.errorText = 'Talent has been undeleted, now please enter the talent name to update the details';
+        		$scope.undeletedButton = false;
+                $scope.cancelButton = false;
+                $timeout(function () { 
+                	$scope.errorText = '';
+                	$scope.activeElement = {};
+                }, 3000);
+        	});
+        } else {
+            //return false;
+        }
+    }
+    
+    $scope.cancelUndelete = function() {
+    	// Reset elements and form
+        $scope.editElement = null;
+        $scope.activeElement = {};
+        $scope.model ={};
+        $scope.errorText = '';
+		      $scope.btnTxt = "Add";
+    }
+    
     $scope.handleSelect = function($event){
         if (!$event.ctrlKey) {
           if(angular.isDefined($scope.dataGenre)){

@@ -25,6 +25,12 @@ exports.getProfile = function (req, res) {
   });
 };
 
+exports.getUndelete = function (req, res) {
+  var talentId = req.query.talent_id;
+  Talent.getUndelete(talentId, function (result) {
+    res.json(result);
+  });
+};
 
 exports.removeTalentAgent = function (req, res) {
   var talentId = req.query.talentID;
