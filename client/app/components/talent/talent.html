@@ -104,6 +104,11 @@
         </div>
       </div>
 
+      <div class="filter-header-container">
+        <p class="filter-header">Creator Comment</p>
+      </div>
+      <input class="filter-text-comment-input" ng-model="filerBycomment" type="text" col="name" />
+
       <div class="filter-header-container clickable">
         <p class="filter-header"> Awards </p>
         <div class="arrow " id='award-arrow'></div>
@@ -344,18 +349,18 @@
 
           <!-- Talent menu -->
           <div class="talent-form-menu" ng-show="section==='Talent'">
-              <span id="main" class="talent-form-menu-button" id="main" ng-click="showsection($event, 'main')">Main</span>
-              <span class="talent-form-menu-button" id="management" ng-click="showsection($event,'management')">Management</span>
-              <span class="talent-form-menu-button" id="social" ng-click="showsection($event,'social')">Social Profiles</span>
+              <span class="talent-form-menu-button" id="info" ng-click="showsection($event, 'info')">Profiles</span>
+              <span class="talent-form-menu-button" id="reps" ng-click="showsection($event,'reps')">Reps</span>
+              <span class="talent-form-menu-button" id="socialprofiles" ng-click="showsection($event,'socialprofiles')">Social Profiles</span>
               <span class="talent-form-menu-button" id="credits" ng-click="showsection($event,'credits')">Credits</span>
               <span class="talent-form-menu-button" id="comments" ng-click="showsection($event,'comments')">Comments</span>
-              <span class="talent-form-menu-button" id="info" ng-click="showsection($event,'info')">Info</span>
+              <span class="talent-form-menu-button" id="contacts" ng-click="showsection($event,'contacts')">Other Info</span>
           </div>
       </div>
         <p class="data-main-error-text">{{showmsg.errorText}}</p>
         <!-- Main, Management, Social -->
         <form class="talent-form" name="talent-form" ng-show="section==='Talent'" novalidate>
-            <div ng-show="talentSection==='main'">
+            <div ng-show="talentSection==='info'">
                 <div class="talent-column">
                     <input class="id-input" ng-model="activeElement.id" type="text">
                     <p class="input-label">First Name</p>
@@ -399,7 +404,7 @@
 
             <!-- management -->
 
-            <div ng-show="talentSection==='management'">
+            <div ng-show="talentSection==='reps'">
       <div class="table-responsive-popup">
           <table class="table">
             <tr>
@@ -470,7 +475,7 @@
           
 
             <!-- social profiles -->
-            <div ng-show="talentSection==='social'">
+            <div ng-show="talentSection==='socialprofiles'">
                 <div>
                     <p class="input-label">Twitter Url</p>
                     <span class="input-url-pre-text">http://www.twitter.com/</span>
@@ -555,7 +560,7 @@
               </div>
               <!-- Info -->
               
-              <div ng-show="talentSection==='info'">
+              <div ng-show="talentSection==='contacts'">
                   <p class="input-label">Created By: {{activeElement.createdby}}</p>
                   <p class="input-label">Created Date:{{activeElement.created_at | date }}</p>
                   <p class="input-label">Modified By:{{activeElement.modifiedby}}</p>

@@ -67,11 +67,17 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
     var addAges = '';
     var addCountry = '';
     var addCreatedby = '';
+    var addcreatedbycomments = "'%" + "%'";
     var addCountry = '';
     var addEthnicity = '';
     var addBudget = '';
     var addIncome = '';
     var addRatio = '';
+
+    if (filterArrayInput['createdbycomments'].length) {
+      addcreatedbycomments = "'%" + filterArrayInput['createdbycomments'][0] +  "%'";
+    }
+    
     if (filterArrayInput['nameVal'].length) {
       addName = "'%" + filterArrayInput['nameVal'][0] + "%'";
     }
@@ -120,7 +126,7 @@ Talent.getAll = function (pageNumber, pageSize, filterArrayInput, arrayLenVal, c
       addAges = filetTalentByByAge(filterArrayInput);
     }
     //CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) AS name,
-    applyWhereFilter = ' WHERE CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName;
+        applyWhereFilter = ' WHERE CONCAT(COALESCE(t.first_name,\'\'),\' \',COALESCE(t.last_name,\'\')) LIKE ' + addName  + ' and t.createdbycomments LIKE '+ addcreatedbycomments;
     if (addRoles !== '' || addGenres != '') {
       applyWhereFilter = ', credit_talent_role_join cjoin1';
       if (addRoles !== '') {
@@ -281,6 +287,16 @@ FROM talent t where t.id= ' + talentId)
         });
     });
 
+};
+
+Talent.getUndelete = function(talentId, callback){
+  db.knex.raw(' \
+    UPDATE \
+    talent set deleted = 0 \
+    WHERE id='+talentId)
+    .then(function (results) {
+      callback(results[0]);
+    });
 };
 
 Talent.removeTalentAgentJoin = function(talentId,associateId,associateTypeId, callback){
@@ -621,10 +637,21 @@ Talent.addOrEdit = function (talentData, callback) {
             })
         } else {
           // Given name already exists with different email
-          return callback({
-            status: 'error',
-            text: "Talent with same name already exists"
-          });
+          if(talent.get('deleted') && talent.get('deleted') === 1){
+        	  return callback({
+                  status: 'error',
+                  option:'undelete',
+                  id:talent.get('id'),
+                  text: "Talent with same name already exists, but has been deleted."
+                });
+          }else{
+        	  return callback({
+                  status: 'error',
+                  option:'',
+                  id:'',
+                  text: "Talent with same name already exists"
+                });
+          }
         }
         // If talent with given name doesn't exist
       } else {

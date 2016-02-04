@@ -3,7 +3,7 @@
   angular.module('dataEntryController', ['talentFactory', 'contactFactory', 'creditFactory', 'roleFactory', 'genreFactory', 'creditTypeFactory', 'commentFactory', 'ethnicityFactory'])
   .controller('dataEntryController', function($scope,$compile,$timeout, $stateParams, talentFactory, contactFactory, creditFactory, roleFactory, genreFactory, creditTypeFactory, commentFactory, ethnicityFactory, localStorageService) {
     $scope.section = 'Talent'; // Represents current section
-    $scope.talentSection = 'main'; // Represents the visible section of talent form
+    $scope.talentSection = 'info'; // Represents the visible section of talent form
     $scope.errorText = ''; // error text for form
     $scope.activeElement = {}; // data that will change in form
     $scope.activeElementPopUp = {};
@@ -29,6 +29,9 @@
     $scope.selectedGenresNames = [];
     $scope.ativeGenre = {}
     $scope.showGenresOptions = false;
+    $scope.undeletedButton = false;
+    $scope.cancelButton = false;
+    $scope.undeleteId = '';
     //creditGenre = [];
 
     if(!!window.localStorage.smstudiosLoginUserName){
@@ -47,7 +50,7 @@
       if(getDataEntryTab && section === 'Talent'){
     	  $scope.talentSection = getDataEntryTab;  
       }else{
-    	  $scope.talentSection = 'main';
+    	  $scope.talentSection = 'info';
       }
       $scope.activeData = $scope.data[$scope.section];  
     	  
@@ -85,7 +88,7 @@
         $($event.target).addClass('talent-form-menu-button-active');
         localStorageService.set('dataEntryTabs',$($event.target).attr('talent-form-section'));
         $scope.talentSection = $($event.target).attr('talent-form-section');
-        if ($scope.section !== 'main') {
+        if ($scope.section !== 'info') {
           $scope.errorText = 'Modifying ' + $scope.activeElement.first_name + ' ' + $scope.activeElement.last_name;
 		      $scope.btnTxt = "Update";
         }
@@ -100,7 +103,7 @@
 
     $scope.setActiveElement = function($event, element) {
       $scope.errorText = '';
-      $scope.talentSection = 'main';
+      $scope.talentSection = 'info';
 
       // if element clicked is currently active, make it inactive and clear out form data
       if ($($event.target).hasClass('active-element')) {
@@ -130,7 +133,7 @@
       $scope.activeElement = {};
       $scope.model ={};
       $scope.errorText = '';
-      $scope.talentSection = 'main';
+      $scope.talentSection = 'info';
       $scope.btnTxt = "Add";
       $scope.selectedGenresNames.length=0;
       if(angular.isDefined($scope.dataGenre)){
@@ -466,11 +469,42 @@
               }
             }
             $scope.errorText = res.text;
+            if(res.option && res.option === 'undelete'){
+            	$scope.undeletedButton = true;
+                $scope.cancelButton = true;
+                $scope.undeleteId = res.id;
+            }
           });
         }
       }
     };
 
+    $scope.callUndelete = function(undeleteId) {
+    	var r = confirm("Do you really want to undelete this talent?");
+        if (r == true) {
+        	talentFactory.talentUndelete(undeleteId, function(res) {
+        		$scope.errorText = 'Talent has been undeleted, now please enter the talent name to update the details';
+        		$scope.undeletedButton = false;
+                $scope.cancelButton = false;
+                $timeout(function () { 
+                	$scope.errorText = '';
+                	$scope.activeElement = {};
+                }, 3000);
+        	});
+        } else {
+            //return false;
+        }
+    }
+    
+    $scope.cancelUndelete = function() {
+    	// Reset elements and form
+        $scope.editElement = null;
+        $scope.activeElement = {};
+        $scope.model ={};
+        $scope.errorText = '';
+		      $scope.btnTxt = "Add";
+    }
+    
     $scope.handleSelect = function($event){
         if (!$event.ctrlKey) {
           if(angular.isDefined($scope.dataGenre)){

@@ -99,6 +99,7 @@
             $scope.talentGridOption = {};
             $scope.activeSectionInfo = false;
             $scope.filerByname = "";
+            $scope.filerBycomment = "";
             var Rolls = [];
             var Genres = [];
             $scope.showmsg = {};
@@ -190,6 +191,7 @@
             filerDataInputs.age = [];
             filerDataInputs.country = [];
             filerDataInputs.createdby = [];
+            filerDataInputs.createdbycomments = [];
             filerDataInputs.EthnicityID = [];
             filerDataInputs.budgetsValues = [];
             filerDataInputs.incomeValues = [];
@@ -345,7 +347,7 @@
             $scope.talentGridOption = talentGridFactory.getGridOptions();
             $scope.talentGridOption.appScopeProvider = $scope.myAppScopeProvider;
             $scope.section = 'Talent';
-            $scope.talentSection = 'main';
+            $scope.talentSection = 'info';
             $scope.showPopUp = '';
 
             function validateEmail(email) {
@@ -359,7 +361,6 @@
                     $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
                     $($event.target).addClass('talent-form-menu-button-active');
                 }
-                localStorageService.set("talentEditTabs",sectioname);
                 $scope.talentSection = sectioname;
 
             };
@@ -681,6 +682,7 @@
                 filerDataInputs.country.length = 0;
                 filerDataInputs.createdby.length = 0;
                 filerDataInputs.EthnicityID.length = 0;
+                filerDataInputs.createdbycomments.length = 0;
                 filerDataInputs.budgetsValues.length = 0;
                 filerDataInputs.incomeValues.length = 0;
                 var isValidOptionRatios = ($scope.budgetMultipleOption !== null) && !(angular.isUndefined($scope.budgetMultipleOption)) && ($scope.budgetMultipleOption !== "");
@@ -691,6 +693,13 @@
                     filerDataInputs.nameVal.push($scope.filerByname);
                     arrayLenths = 1;
                 }
+
+                if ($scope.filerBycomment !== '' && $scope.filerBycomment != null && !angular.isUndefined($scope.filerBycomment)) {
+                    //alert($scope.filerBycomment);
+                    filerDataInputs.createdbycomments.push($scope.filerBycomment);
+                    arrayLenths = 1;
+                }
+                
                 var checkValues = $('div.filter-option-container input[type=checkbox]:checked').map(function () {
                     if ($(this).hasClass('gender-input')) {
                         filerDataInputs.gender.push($(this).val());
@@ -1812,12 +1821,12 @@
                         $scope.showmsg = {};
                         $scope.agentModel = {};
                         $scope.section = 'Talent';
-                        $scope.talentSection = 'main';
+                        $scope.talentSection = 'info';
                         $scope.setLoading(false);
                         $("#cover").show();
                         $(".hiddenPopUp").show();
                         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                        $("#mainTab").addClass('talent-form-menu-button-active');
+                        $("#info").addClass('talent-form-menu-button-active');
 
                     });
             };
@@ -2290,13 +2299,13 @@
                         $("#cover").show();
                         $(".hiddenPopUp").show();
                         $('.talent-form-menu-button-active').removeClass('talent-form-menu-button-active');
-                        var getEditTabs = localStorageService.get("talentEditTabs");
+                        var getEditTabs = localStorageService.get("talentBottomTabs");
                         if(getEditTabs){
                         	$("#"+getEditTabs).addClass('talent-form-menu-button-active');
                         	$scope.talentSection = getEditTabs;
                         }else{
-                        	$("#main").addClass('talent-form-menu-button-active');
-                        	$scope.talentSection = 'main';
+                        	$("#info").addClass('talent-form-menu-button-active');
+                        	$scope.talentSection = 'info';
                         }
 
                     });
