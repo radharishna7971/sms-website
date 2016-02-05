@@ -293,16 +293,6 @@ FROM talent t where t.id= ' + talentId)
 
 };
 
-Talent.getUndelete = function(talentId, callback){
-  db.knex.raw(' \
-    UPDATE \
-    talent set deleted = 0 \
-    WHERE id='+talentId)
-    .then(function (results) {
-      callback(results[0]);
-    });
-};
-
 Talent.removeTalentAgentJoin = function(talentId,associateId,associateTypeId, callback){
   db.knex.raw(' \
     DELETE \
@@ -686,10 +676,21 @@ Talent.addOrEdit = function (talentData, callback) {
                       });
                     });
                 } else {
-                  return callback({
-                    status: 'error',
-                    text: "Talent with same email already exists"
-                  });
+                	if(talent.get('deleted') && talent.get('deleted') === 1){
+                  	  return callback({
+                            status: 'error',
+                            option:'undelete',
+                            id:talent.get('id'),
+                            text: "Talent with same email already exists, but has been deleted."
+                          });
+                    }else{
+                  	  return callback({
+                            status: 'error',
+                            option:'',
+                            id:'',
+                            text: "Talent with same email already exists"
+                          });
+                    }
                 }
               } else {
                 // Otherwise create new talent
@@ -766,6 +767,26 @@ Talent.matchPartner = function (partnerId1, partnerId2) {
   }
 };
 
+Talent.getUndelete = function(talentId, callback){
+	
+	new Talent({
+	      id: talentId
+	    })
+	    .fetch()
+	    .then(function (talent) {
+	    	if(talent){
+	    		db.knex.raw(' \
+				UPDATE \
+				talent set deleted = 0 \
+				WHERE id='+talentId)
+				.then(function (results) {
+				  callback(talent);
+				});
+	    	}else{
+	    		return callback(false);
+	    	}
+	    });
+};
 
 Talent.remove = function (data, callback) {
   new Talent({

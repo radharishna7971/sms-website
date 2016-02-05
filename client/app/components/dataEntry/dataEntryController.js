@@ -392,8 +392,8 @@
           $scope.errorText = 'Please fill all required fields in correct format';
 
         } else {
-          if(($scope.activeElement.first_name=="" && $scope.activeElement.last_name =="") || ($scope.activeElement.first_name==null && $scope.activeElement.last_name ==null)){
-            $scope.errorText = 'Please fill either firstname or lastname';
+    if(($scope.activeElement.first_name=="" && $scope.activeElement.last_name =="") || ($scope.activeElement.first_name==null && $scope.activeElement.last_name ==null) || ($scope.activeElement.last_name ==null) || ($scope.activeElement.first_name==null)){            
+            $scope.errorText = 'Please fill both firstname and lastname';
             return false;
           }
           // Set blank values to null so they can be properly saved in database
@@ -480,16 +480,22 @@
     };
 
     $scope.callUndelete = function(undeleteId) {
+    	var talentObj = {};
     	var r = confirm("Do you really want to undelete this talent?");
         if (r == true) {
         	talentFactory.talentUndelete(undeleteId, function(res) {
-        		$scope.errorText = 'Talent has been undeleted, now please enter the talent name to update the details';
+        		$scope.errorText = 'Talent has been undeleted, now please update the talent details';
         		$scope.undeletedButton = false;
                 $scope.cancelButton = false;
+                if(res && res.id){
+                	talentObj.id = res.id,
+                	talentObj.name = res.first_name+' '+res.last_name,
+                	talentObj.last_name = res.last_name
+                }
                 $timeout(function () { 
                 	$scope.errorText = '';
-                	$scope.activeElement = {};
-                }, 3000);
+                	$scope.getTalentDetails(talentObj);
+                }, 5000);
         	});
         } else {
             //return false;
@@ -498,6 +504,8 @@
     
     $scope.cancelUndelete = function() {
     	// Reset elements and form
+    	$scope.undeletedButton = false;
+        $scope.cancelButton = false;
         $scope.editElement = null;
         $scope.activeElement = {};
         $scope.model ={};
@@ -774,7 +782,7 @@
       getIdsList['agentTypeid']=agentTypeId;
       getIdsList['agentID']=agentId;
       talentFactory.getTalenNamesDataById(getIdsList,function(result) {
-              console.log(result);
+              //console.log(result);
               $scope.isAgentTypeDisabled = true;
               $scope.isNameDisabled = true;
               $scope.isCmpnyDisabled = false;
@@ -789,7 +797,7 @@
         });
     };
     $scope.upDateAgentRow = function(){
-      console.log($scope.addAgentRow);
+      //console.log($scope.addAgentRow);
         var dataList = {};
         if($scope.addAgentRow.Email=="" || angular.isUndefined($scope.addAgentRow.Email)){
             dataList['email_id'] = null;
@@ -845,7 +853,7 @@
         if(newVal && newVal !== oldVal) {
             $timeout(function() {
                 var noResultsLink = $('.select2-no-results');
-                console.log(noResultsLink.contents());
+                //console.log(noResultsLink.contents());
                 $compile(noResultsLink.contents())($scope);
             });
         }
@@ -855,7 +863,7 @@
         if(newVal && newVal !== oldVal) {
             $timeout(function() {
                 var noResultsLink = $('.select2-no-results');
-                console.log(noResultsLink.contents());
+                //console.log(noResultsLink.contents());
                 $compile(noResultsLink.contents())($scope);
             });
         }
@@ -865,7 +873,7 @@
         if(newVal && newVal !== oldVal) {
             $timeout(function() {
                 var noResultsLink = $('.select2-no-results');
-                console.log(noResultsLink.contents());
+                //console.log(noResultsLink.contents());
                 $compile(noResultsLink.contents())($scope);
             });
         }
@@ -897,7 +905,7 @@
 
     $scope.addAgentRowData = function(){
       var objectForamtted = {};
-      console.log($scope.addAgentRow);
+      //console.log($scope.addAgentRow);
       var isNewRow = 0;
       var nameArray = {};
       if($scope.addAgentRow.type=="0" || angular.isUndefined($scope.addAgentRow.type)){
@@ -967,7 +975,7 @@
         
       objectForamtted['talentId'] = $scope.activeElement.id;
       talentFactory.addAgentDetails(isNewRow,objectForamtted,function(result) {
-              console.log(result.status);
+              //console.log(result.status);
               if(result.status=="error"){
                 alert(result.text);
                  return false;
