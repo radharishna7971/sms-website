@@ -293,16 +293,6 @@ FROM talent t where t.id= ' + talentId)
 
 };
 
-Talent.getUndelete = function(talentId, callback){
-  db.knex.raw(' \
-    UPDATE \
-    talent set deleted = 0 \
-    WHERE id='+talentId)
-    .then(function (results) {
-      callback(results[0]);
-    });
-};
-
 Talent.removeTalentAgentJoin = function(talentId,associateId,associateTypeId, callback){
   db.knex.raw(' \
     DELETE \
@@ -766,6 +756,26 @@ Talent.matchPartner = function (partnerId1, partnerId2) {
   }
 };
 
+Talent.getUndelete = function(talentId, callback){
+	
+	new Talent({
+	      id: talentId
+	    })
+	    .fetch()
+	    .then(function (talent) {
+	    	if(talent){
+	    		db.knex.raw(' \
+				UPDATE \
+				talent set deleted = 0 \
+				WHERE id='+talentId)
+				.then(function (results) {
+				  callback(talent);
+				});
+	    	}else{
+	    		return callback(false);
+	    	}
+	    });
+};
 
 Talent.remove = function (data, callback) {
   new Talent({
