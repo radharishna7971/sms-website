@@ -392,8 +392,8 @@
           $scope.errorText = 'Please fill all required fields in correct format';
 
         } else {
-          if(($scope.activeElement.first_name=="" && $scope.activeElement.last_name =="") || ($scope.activeElement.first_name==null && $scope.activeElement.last_name ==null)){
-            $scope.errorText = 'Please fill either firstname or lastname';
+    if(($scope.activeElement.first_name=="" && $scope.activeElement.last_name =="") || ($scope.activeElement.first_name==null && $scope.activeElement.last_name ==null) || ($scope.activeElement.last_name ==null) || ($scope.activeElement.first_name==null)){            
+            $scope.errorText = 'Please fill both firstname and lastname';
             return false;
           }
           // Set blank values to null so they can be properly saved in database
