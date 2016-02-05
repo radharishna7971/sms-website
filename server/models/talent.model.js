@@ -676,10 +676,21 @@ Talent.addOrEdit = function (talentData, callback) {
                       });
                     });
                 } else {
-                  return callback({
-                    status: 'error',
-                    text: "Talent with same email already exists"
-                  });
+                	if(talent.get('deleted') && talent.get('deleted') === 1){
+                  	  return callback({
+                            status: 'error',
+                            option:'undelete',
+                            id:talent.get('id'),
+                            text: "Talent with same email already exists, but has been deleted."
+                          });
+                    }else{
+                  	  return callback({
+                            status: 'error',
+                            option:'',
+                            id:'',
+                            text: "Talent with same email already exists"
+                          });
+                    }
                 }
               } else {
                 // Otherwise create new talent
